@@ -4,7 +4,7 @@ import 'package:ehreader/screens/gallery/args.dart';
 import 'package:ehreader/screens/gallery/screen.dart';
 import 'package:ehreader/stores/gallery.dart';
 import 'package:ehreader/widgets/center_progress_indicator.dart';
-import 'package:ehreader/widgets/rating_bar.dart';
+import 'package:ehreader/widgets/gallery_header.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -68,16 +68,18 @@ class _GalleryTabContentState extends State<_GalleryTabContent> {
         final galleries = galleryStore.data.values
             .where((element) => pagination.index.contains(element.id));
 
-        return ListView.separated(
+        return ListView.builder(
           controller: _scrollController,
           itemBuilder: (context, i) {
             if (i >= galleries.length) {
-              return CenterProgressIndicator();
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 16),
+                child: CenterProgressIndicator(),
+              );
             }
 
             return _buildRow(context, galleries.elementAt(i));
           },
-          separatorBuilder: (context, i) => Divider(height: 1),
           itemCount:
               pagination.noMore ? galleries.length : galleries.length + 1,
         );
@@ -87,7 +89,8 @@ class _GalleryTabContentState extends State<_GalleryTabContent> {
 
   Widget _buildRow(BuildContext context, Gallery gallery) {
     final ThemeData theme = Theme.of(context);
-    final thumbSize = 92.0;
+    final thumbWidth = 112.0;
+    final thumbHeight = 88.0;
 
     return InkWell(
       child: Row(
@@ -96,44 +99,37 @@ class _GalleryTabContentState extends State<_GalleryTabContent> {
         children: <Widget>[
           CachedNetworkImage(
             imageUrl: gallery.thumbnail,
-            width: thumbSize,
-            height: thumbSize,
+            width: thumbWidth,
+            height: thumbHeight,
             fit: BoxFit.cover,
           ),
           Expanded(
-            child: Padding(
-              padding: EdgeInsets.all(8),
+            child: Container(
+              height: thumbHeight,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            '${gallery.category} / ${gallery.fileCount}P',
-                            style: theme.textTheme.caption,
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          top: 8, bottom: 8, left: 16, right: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Expanded(
+                            child: Text(
+                              gallery.title,
+                              style: theme.textTheme.subtitle1,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                        Text(
-                          '${gallery.rating}',
-                          style: theme.textTheme.caption,
-                        ),
-                        RatingBar(
-                          gallery.rating,
-                          size: 16,
-                          color: theme.primaryColor,
-                        ),
-                      ],
+                          GalleryHeader(gallery),
+                        ],
+                      ),
                     ),
                   ),
-                  Text(
-                    gallery.title,
-                    style: theme.textTheme.subtitle1,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  Divider(height: 1),
                 ],
               ),
             ),
