@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/screens/gallery.dart';
+import 'package:ehreader/screens/gallery/args.dart';
+import 'package:ehreader/screens/gallery/screen.dart';
 import 'package:ehreader/stores/gallery.dart';
 import 'package:ehreader/widgets/center_progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class _GalleryListContentState extends State<_GalleryListContent> {
   @override
   void initState() {
     super.initState();
-    galleryStore.loadNextPage(_paginationKey);
+    galleryStore.loadInitialPage(_paginationKey);
     _scrollController = ScrollController()..addListener(_handleScroll);
   }
 
@@ -97,7 +98,8 @@ class _GalleryListContentState extends State<_GalleryListContent> {
         Navigator.pushNamed(
           context,
           GalleryScreen.routeName,
-          arguments: GalleryScreenArguments(id: gallery.id),
+          arguments:
+              GalleryScreenArguments((b) => b..id = gallery.id.toBuilder()),
         );
       },
     );

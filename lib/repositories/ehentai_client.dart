@@ -6,6 +6,7 @@ import 'package:ehreader/models/gallery.dart';
 import 'package:ehreader/models/http_exception.dart';
 import 'package:ehreader/models/image.dart';
 import 'package:ehreader/utils/css.dart';
+import 'package:ehreader/utils/string.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
@@ -48,7 +49,9 @@ class EHentaiClient {
       final token = segments[2];
       if (id == null || token == null) continue;
 
-      ids.add(GalleryId(id: id, token: token));
+      ids.add(GalleryId((b) => b
+        ..id = id
+        ..token = token));
     }
 
     return ids;
@@ -123,7 +126,10 @@ class EHentaiClient {
       final page = int.tryParse(parts[1]);
       if (gid == null || page == null || gid != galleryId.id) continue;
 
-      ids.add(ImageId(galleryId: galleryId, page: page, key: key));
+      ids.add(ImageId((b) => b
+        ..galleryId = galleryId.toBuilder()
+        ..page = page
+        ..key = key));
     }
 
     return ids;
@@ -146,11 +152,10 @@ class EHentaiClient {
     final src = img.attributes['src'];
     final style = parseRules(img.attributes['style']);
 
-    return Image(
-      id: id,
-      url: src,
-      width: int.tryParse(style['width']),
-      height: int.tryParse(style['height']),
-    );
+    return Image((b) => b
+      ..id = id.toBuilder()
+      ..url = src
+      ..width = int.tryParse(trimSuffix(style['width'], 'px'))
+      ..height = int.tryParse(trimSuffix(style['height'], 'px')));
   }
 }

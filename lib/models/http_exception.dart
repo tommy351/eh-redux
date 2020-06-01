@@ -1,30 +1,35 @@
-import 'package:equatable/equatable.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:http/http.dart';
-import 'package:meta/meta.dart';
 
-@immutable
-class HttpException extends Equatable implements Exception {
-  final String message;
-  final int statusCode;
-  final String body;
+part 'http_exception.g.dart';
 
-  HttpException({
-    this.message = 'HTTP error',
-    this.statusCode = -1,
-    this.body = '',
-  });
+abstract class HttpException
+    implements Built<HttpException, HttpExceptionBuilder>, Exception {
+  static Serializer<HttpException> get serializer => _$httpExceptionSerializer;
+
+  String get message;
+  int get statusCode;
+  String get body;
+
+  factory HttpException([Function(HttpExceptionBuilder) updates]) =
+      _$HttpException;
+  HttpException._();
 
   factory HttpException.fromResponse({String message, Response response}) {
-    return HttpException(
-      message: message,
-      statusCode: response.statusCode,
-      body: response.body,
-    );
+    return HttpException((b) => b
+      ..message = message
+      ..statusCode = response.statusCode
+      ..body = response.body);
   }
+}
 
-  @override
-  String toString() => "$message (status $statusCode): $body";
+abstract class HttpExceptionBuilder
+    implements Builder<HttpException, HttpExceptionBuilder> {
+  String message = '';
+  int statusCode = -1;
+  String body = '';
 
-  @override
-  List<Object> get props => [message, statusCode, body];
+  factory HttpExceptionBuilder() = _$HttpExceptionBuilder;
+  HttpExceptionBuilder._();
 }

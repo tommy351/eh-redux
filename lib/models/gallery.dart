@@ -1,106 +1,79 @@
+import 'package:built_collection/built_collection.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:ehreader/utils/datetime.dart';
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
-@immutable
-class Gallery extends Equatable {
-  final GalleryId id;
-  final String title;
-  final String titleJpn;
-  final String category;
-  final String thumbnail;
-  final String uploader;
-  final int fileCount;
-  final int fileSize;
-  final bool expunged;
-  final double rating;
-  final List<String> tags;
-  final DateTime posted;
+part 'gallery.g.dart';
 
-  Gallery({
-    @required this.id,
-    this.title,
-    this.titleJpn,
-    this.category,
-    this.thumbnail,
-    this.uploader,
-    this.fileCount,
-    this.fileSize,
-    this.expunged,
-    this.rating,
-    this.tags,
-    this.posted,
-  }) : assert(id != null);
+abstract class Gallery implements Built<Gallery, GalleryBuilder> {
+  static Serializer<Gallery> get serializer => _$gallerySerializer;
+
+  GalleryId get id;
+  String get title;
+  String get titleJpn;
+  String get category;
+  String get thumbnail;
+  String get uploader;
+  int get fileCount;
+  int get fileSize;
+  bool get expunged;
+  double get rating;
+  BuiltList<String> get tags;
+  DateTime get posted;
+
+  factory Gallery([Function(GalleryBuilder) updates]) = _$Gallery;
+  Gallery._();
 
   factory Gallery.fromJson(Map<String, dynamic> json) {
-    return Gallery(
-      id: GalleryId(id: json['gid'], token: json['token']),
-      title: json['title'],
-      titleJpn: json['title_jpn'],
-      category: json['category'],
-      thumbnail: json['thumb'],
-      uploader: json['uploader'],
-      fileCount: int.tryParse(json['filecount']) ?? 0,
-      fileSize: json['filesize'],
-      expunged: json['expunged'],
-      rating: double.tryParse(json['rating']) ?? 0,
-      tags: List<String>.from(json['tags']),
-      posted: tryParseSecondsSinceEpoch(json['posted']),
-    );
+    final id = GalleryIdBuilder()
+      ..id = json['gid']
+      ..token = json['token'];
+
+    return Gallery((b) => b
+      ..id = id
+      ..title = json['title']
+      ..titleJpn = json['title_jpn']
+      ..category = json['category']
+      ..thumbnail = json['thumb']
+      ..uploader = json['uploader']
+      ..fileCount = int.tryParse(json['filecount'])
+      ..fileSize = json['filesize']
+      ..expunged = json['expunged']
+      ..rating = double.tryParse(json['rating'])
+      ..tags = BuiltList<String>.from(json['tags']).toBuilder()
+      ..posted = tryParseSecondsSinceEpoch(json['posted']));
   }
-
-  @override
-  List<Object> get props => [
-        id,
-        title,
-        titleJpn,
-        category,
-        thumbnail,
-        uploader,
-        fileCount,
-        fileSize,
-        expunged,
-        rating,
-        tags,
-        posted,
-      ];
 }
 
-@immutable
-class GalleryId extends Equatable {
-  final int id;
-  final String token;
+abstract class GalleryId implements Built<GalleryId, GalleryIdBuilder> {
+  static Serializer<GalleryId> get serializer => _$galleryIdSerializer;
 
-  GalleryId({
-    @required this.id,
-    @required this.token,
-  })  : assert(id != null),
-        assert(token != null);
+  int get id;
+  String get token;
 
-  @override
-  List<Object> get props => [id, token];
-
-  @override
-  String toString() => "GalleryId { id: $id, token: $token }";
+  factory GalleryId([Function(GalleryIdBuilder) updates]) = _$GalleryId;
+  GalleryId._();
 }
 
-class GalleryPaginationKey extends Equatable {
-  @override
-  List<Object> get props => [];
+abstract class GalleryPaginationKey
+    implements Built<GalleryPaginationKey, GalleryPaginationKeyBuilder> {
+  static Serializer<GalleryPaginationKey> get serializer =>
+      _$galleryPaginationKeySerializer;
+
+  factory GalleryPaginationKey(
+      [Function(GalleryPaginationKeyBuilder) updates]) = _$GalleryPaginationKey;
+  GalleryPaginationKey._();
 }
 
-@immutable
-class GalleryIdWithPage extends Equatable {
-  final GalleryId galleryId;
-  final int page;
+abstract class GalleryIdWithPage
+    implements Built<GalleryIdWithPage, GalleryIdWithPageBuilder> {
+  static Serializer<GalleryIdWithPage> get serializer =>
+      _$galleryIdWithPageSerializer;
 
-  GalleryIdWithPage({
-    @required this.galleryId,
-    @required this.page,
-  })  : assert(galleryId != null),
-        assert(page != null),
-        assert(page >= 0);
+  GalleryId get galleryId;
+  int get page;
 
-  @override
-  List<Object> get props => [galleryId, page];
+  factory GalleryIdWithPage([Function(GalleryIdWithPageBuilder) updates]) =
+      _$GalleryIdWithPage;
+  GalleryIdWithPage._();
 }

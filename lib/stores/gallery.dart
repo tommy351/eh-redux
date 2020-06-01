@@ -33,11 +33,20 @@ abstract class _GalleryStoreBase with Store {
   }
 
   @action
+  Future<void> loadInitialPage(GalleryPaginationKey key) async {
+    final pagination = paginations[key];
+
+    if (pagination == null || pagination.currentPage < 0) {
+      return loadNextPage(key);
+    }
+  }
+
+  @action
   Future<void> loadNextPage(GalleryPaginationKey key) async {
     final pagination = paginations[key] ?? Pagination<GalleryId>();
     if (pagination.loading) return;
 
-    paginations[key] = pagination.copyWith(loading: true);
+    paginations[key] = pagination.rebuild((b) => b.loading = true);
 
     final nextPage = pagination.currentPage + 1;
     final ids = await client.getGalleryIds(nextPage);
@@ -45,10 +54,9 @@ abstract class _GalleryStoreBase with Store {
 
     addAll(galleries);
 
-    paginations[key] = pagination.copyWith(
-      loading: false,
-      index: pagination.index.rebuild((b) => b.addAll(ids)),
-      currentPage: nextPage,
-    );
+    paginations[key] = pagination.rebuild((b) => b
+      ..loading = false
+      ..index = pagination.index.rebuild((b) => b.addAll(ids))
+      ..currentPage = nextPage);
   }
 }

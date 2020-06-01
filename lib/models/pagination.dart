@@ -1,37 +1,31 @@
-import 'dart:collection';
-
 import 'package:built_collection/built_collection.dart';
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 
-@immutable
-class Pagination<T> extends Equatable {
-  final BuiltSet<T> index;
-  final bool loading;
-  final bool noMore;
-  final int currentPage;
+part 'pagination.g.dart';
 
-  Pagination({
-    BuiltSet<T> index,
-    this.loading = false,
-    this.noMore = false,
-    this.currentPage = -1,
-  }) : this.index = index ?? BuiltSet.from(LinkedHashSet());
+abstract class Pagination<T>
+    implements Built<Pagination<T>, PaginationBuilder<T>> {
+  static Serializer<Pagination<Object>> get serializer =>
+      _$paginationSerializer;
 
-  Pagination<T> copyWith({
-    BuiltSet<T> index,
-    bool loading,
-    bool noMore,
-    int currentPage,
-  }) {
-    return Pagination<T>(
-      index: index ?? this.index,
-      loading: loading ?? this.loading,
-      noMore: noMore ?? this.noMore,
-      currentPage: currentPage ?? this.currentPage,
-    );
-  }
+  BuiltSet<T> get index;
+  bool get loading;
+  bool get noMore;
+  int get currentPage;
 
-  @override
-  List<Object> get props => [index, loading, noMore, currentPage];
+  factory Pagination([Function(PaginationBuilder<T>) updates]) =
+      _$Pagination<T>;
+  Pagination._();
+}
+
+abstract class PaginationBuilder<T>
+    implements Builder<Pagination<T>, PaginationBuilder<T>> {
+  BuiltSet<T> index = BuiltSet();
+  bool loading = false;
+  bool noMore = false;
+  int currentPage = -1;
+
+  factory PaginationBuilder() = _$PaginationBuilder<T>;
+  PaginationBuilder._();
 }

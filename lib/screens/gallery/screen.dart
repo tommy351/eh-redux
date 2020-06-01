@@ -1,19 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/screens/view.dart';
+import 'package:ehreader/screens/gallery/args.dart';
+import 'package:ehreader/screens/view/args.dart';
+import 'package:ehreader/screens/view/screen.dart';
 import 'package:ehreader/stores/gallery.dart';
 import 'package:ehreader/widgets/center_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-
-class GalleryScreenArguments {
-  final GalleryId id;
-
-  GalleryScreenArguments({
-    @required this.id,
-  }) : assert(id != null);
-}
 
 class GalleryScreen extends StatelessWidget {
   static String routeName = '/gallery';
@@ -58,7 +51,8 @@ class GalleryScreen extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 ViewScreen.routeName,
-                arguments: ViewScreenArguments(id: gallery.id),
+                arguments:
+                    ViewScreenArguments((b) => b..id = gallery.id.toBuilder()),
               );
             },
           ),

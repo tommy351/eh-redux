@@ -1,43 +1,28 @@
+import 'package:built_value/built_value.dart';
+import 'package:built_value/serializer.dart';
 import 'package:ehreader/models/gallery.dart';
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 
-@immutable
-class ImageId extends Equatable {
-  final GalleryId galleryId;
-  final int page;
-  final String key;
+part 'image.g.dart';
 
-  ImageId({
-    @required this.galleryId,
-    @required this.page,
-    @required this.key,
-  })  : assert(galleryId != null),
-        assert(page != null),
-        assert(key != null);
+abstract class ImageId implements Built<ImageId, ImageIdBuilder> {
+  static Serializer<ImageId> get serializer => _$imageIdSerializer;
 
-  @override
-  List<Object> get props => [galleryId, page, key];
+  GalleryId get galleryId;
+  int get page;
+  String get key;
 
-  @override
-  String toString() =>
-      'ImageId { galleryId: $galleryId, page: $page, key: $key }';
+  factory ImageId([Function(ImageIdBuilder) updates]) = _$ImageId;
+  ImageId._();
 }
 
-@immutable
-class Image extends Equatable {
-  final ImageId id;
-  final int width;
-  final int height;
-  final String url;
+abstract class Image implements Built<Image, ImageBuilder> {
+  static Serializer<Image> get serializer => _$imageSerializer;
 
-  Image({
-    @required this.id,
-    this.width,
-    this.height,
-    this.url,
-  }) : assert(id != null);
+  ImageId get id;
+  int get width;
+  int get height;
+  String get url;
 
-  @override
-  List<Object> get props => [id, width, height, url];
+  factory Image([Function(ImageBuilder) updates]) = _$Image;
+  Image._();
 }

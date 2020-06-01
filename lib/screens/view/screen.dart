@@ -1,19 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ehreader/models/gallery.dart';
+import 'package:ehreader/screens/view/args.dart';
 import 'package:ehreader/stores/gallery.dart';
 import 'package:ehreader/stores/image.dart';
 import 'package:ehreader/widgets/center_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-
-class ViewScreenArguments {
-  final GalleryId id;
-
-  ViewScreenArguments({
-    @required this.id,
-  }) : assert(id != null);
-}
 
 class ViewScreen extends StatelessWidget {
   static String routeName = '/view';
@@ -139,7 +132,9 @@ class _ViewImageContentState extends State<_ViewImageContent> {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        final page = GalleryIdWithPage(galleryId: galleryId, page: imagePage);
+        final page = GalleryIdWithPage((b) => b
+          ..galleryId = galleryId.toBuilder()
+          ..page = imagePage);
         final image = imageStore.data[imageStore.index[page]];
 
         if (image == null) {
