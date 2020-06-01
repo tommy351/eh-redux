@@ -1,6 +1,7 @@
-import 'package:ehreader/screens/gallery_list.dart';
-import 'package:ehreader/screens/user.dart';
 import 'package:flutter/material.dart';
+
+import 'gallery_tab.dart';
+import 'user_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = '/';
@@ -13,8 +14,8 @@ class _HomeScreenState extends State<HomeScreen> {
   int _currentTab = 0;
 
   static const _widgets = <Widget>[
-    GalleryListScreen(),
-    UserScreen(),
+    GalleryTab(),
+    UserTab(),
   ];
 
   @override

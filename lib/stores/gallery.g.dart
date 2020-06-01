@@ -40,6 +40,14 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
     });
   }
 
+  final _$loadInitialPageAsyncAction =
+      AsyncAction('_GalleryStoreBase.loadInitialPage');
+
+  @override
+  Future<void> loadInitialPage(GalleryPaginationKey key) {
+    return _$loadInitialPageAsyncAction.run(() => super.loadInitialPage(key));
+  }
+
   final _$loadNextPageAsyncAction =
       AsyncAction('_GalleryStoreBase.loadNextPage');
 

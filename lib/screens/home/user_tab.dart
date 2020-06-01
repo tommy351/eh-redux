@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class UserScreen extends StatelessWidget {
-  const UserScreen({Key key}) : super(key: key);
+class UserTab extends StatelessWidget {
+  const UserTab({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

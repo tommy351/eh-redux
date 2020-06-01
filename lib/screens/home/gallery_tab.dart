@@ -8,34 +8,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-class GalleryListScreen extends StatelessWidget {
-  const GalleryListScreen({Key key}) : super(key: key);
+class GalleryTab extends StatelessWidget {
+  const GalleryTab({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return _GalleryListContent(
+    return _GalleryTabContent(
       galleryStore: Provider.of<GalleryStore>(context),
     );
   }
 }
 
-class _GalleryListContent extends StatefulWidget {
+class _GalleryTabContent extends StatefulWidget {
   final GalleryStore galleryStore;
 
-  _GalleryListContent({
+  _GalleryTabContent({
     @required this.galleryStore,
   }) : assert(galleryStore != null);
 
   @override
-  State createState() => _GalleryListContentState(galleryStore: galleryStore);
+  State createState() => _GalleryTabContentState(galleryStore: galleryStore);
 }
 
-class _GalleryListContentState extends State<_GalleryListContent> {
+class _GalleryTabContentState extends State<_GalleryTabContent> {
   final GalleryStore galleryStore;
   final _paginationKey = GalleryPaginationKey();
   ScrollController _scrollController;
 
-  _GalleryListContentState({
+  _GalleryTabContentState({
     @required this.galleryStore,
   }) : assert(galleryStore != null);
 

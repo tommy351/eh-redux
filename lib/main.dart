@@ -1,6 +1,6 @@
 import 'package:ehreader/repositories/ehentai_client.dart';
 import 'package:ehreader/screens/gallery/screen.dart';
-import 'package:ehreader/screens/home.dart';
+import 'package:ehreader/screens/home/screen.dart';
 import 'package:ehreader/screens/view/screen.dart';
 import 'package:ehreader/stores/gallery.dart';
 import 'package:ehreader/stores/image.dart';
