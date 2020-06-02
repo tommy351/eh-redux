@@ -41,6 +41,7 @@ class _GalleryTabState extends State<GalleryTab> {
     return StatefulWrapper(
       onInit: (context) {
         galleryStore.loadInitialPage(_paginationKey);
+        return () => {};
       },
       builder: (context) {
         return Observer(

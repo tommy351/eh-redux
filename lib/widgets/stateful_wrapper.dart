@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class StatefulWrapper extends StatefulWidget {
   final Widget Function(BuildContext) builder;
-  final Function(BuildContext) onInit;
+  final Function Function(BuildContext) onInit;
   final Function() onDispose;
 
   const StatefulWrapper({
@@ -18,19 +18,25 @@ class StatefulWrapper extends StatefulWidget {
 }
 
 class _StatefulWrapperState extends State<StatefulWrapper> {
+  final _disposes = <Function>[];
+
   @override
   void initState() {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       if (widget.onInit != null) {
-        widget.onInit(context);
+        _disposes.add(widget.onInit(context));
       }
     });
   }
 
   @override
   void dispose() {
+    for (final dispose in _disposes) {
+      dispose();
+    }
+
     if (widget.onDispose != null) {
       widget.onDispose();
     }
