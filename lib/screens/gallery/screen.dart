@@ -14,10 +14,12 @@ import 'package:provider/provider.dart';
 class GalleryScreen extends StatelessWidget {
   static String routeName = '/gallery';
 
+  const GalleryScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final GalleryScreenArguments args =
-        ModalRoute.of(context).settings.arguments;
+    final args =
+        ModalRoute.of(context).settings.arguments as GalleryScreenArguments;
     final galleryStore = Provider.of<GalleryStore>(context);
 
     return Observer(
@@ -25,7 +27,7 @@ class GalleryScreen extends StatelessWidget {
         final gallery = galleryStore.data[args.id];
 
         if (gallery == null) {
-          return CenterProgressIndicator();
+          return const CenterProgressIndicator();
         }
 
         return Scaffold(
@@ -45,7 +47,7 @@ class GalleryScreen extends StatelessWidget {
           ),
           floatingActionButton: FloatingActionButton.extended(
             icon: Icon(Icons.chevron_right),
-            label: Text('Read'),
+            label: const Text('Read'),
             backgroundColor: Colors.pinkAccent,
             onPressed: () {
               Navigator.pushNamed(
@@ -70,15 +72,15 @@ class GalleryScreen extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, Gallery gallery) {
     return Padding(
-      padding: EdgeInsets.all(16),
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           GalleryHeader(gallery),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           _buildTitle(context, gallery),
           _buildSubtitle(context, gallery),
-          Divider(),
+          const Divider(),
           _buildTags(context, gallery),
         ],
       ),
@@ -102,7 +104,7 @@ class GalleryScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: 8),
       child: Text(
         gallery.titleJpn,
         style: theme.textTheme.subtitle2,
@@ -124,13 +126,13 @@ class GalleryScreen extends StatelessWidget {
           'Tags',
           style: theme.textTheme.bodyText1,
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Container(
           height: 36,
           child: ListView.separated(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
-            separatorBuilder: (context, i) => SizedBox(width: 8),
+            separatorBuilder: (context, i) => const SizedBox(width: 8),
             itemBuilder: (context, i) {
               return Chip(label: Text(gallery.tags[i]));
             },

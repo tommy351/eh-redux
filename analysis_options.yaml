@@ -1,1 +1,9 @@
-include: package:pedantic/analysis_options.yaml
+include: package:lint/analysis_options_package.yaml
+
+linter:
+  rules:
+    no_logic_in_create_state: false
+
+analyzer:
+  exclude:
+    - "**/*.g.dart"

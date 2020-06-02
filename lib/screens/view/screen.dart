@@ -11,21 +11,24 @@ import 'package:provider/provider.dart';
 class ViewScreen extends StatelessWidget {
   static String routeName = '/view';
 
+  const ViewScreen({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final ViewScreenArguments args = ModalRoute.of(context).settings.arguments;
+    final args =
+        ModalRoute.of(context).settings.arguments as ViewScreenArguments;
     final galleryStore = Provider.of<GalleryStore>(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('View'),
+        title: const Text('View'),
       ),
       body: Observer(
         builder: (context) {
           final gallery = galleryStore.data[args.id];
 
           if (gallery == null) {
-            return CenterProgressIndicator();
+            return const CenterProgressIndicator();
           }
 
           return _ViewScreenContent(gallery: gallery);
@@ -38,7 +41,7 @@ class ViewScreen extends StatelessWidget {
 class _ViewScreenContent extends StatefulWidget {
   final Gallery gallery;
 
-  _ViewScreenContent({
+  const _ViewScreenContent({
     @required this.gallery,
   }) : assert(gallery != null);
 
@@ -72,11 +75,13 @@ class _ViewImage extends StatelessWidget {
   final Gallery gallery;
   final int imagePage;
 
-  _ViewImage({
+  const _ViewImage({
+    Key key,
     @required this.gallery,
     @required this.imagePage,
   })  : assert(gallery != null),
-        assert(imagePage != null);
+        assert(imagePage != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,13 +98,15 @@ class _ViewImageContent extends StatefulWidget {
   final ImageStore imageStore;
   final int imagePage;
 
-  _ViewImageContent({
+  const _ViewImageContent({
+    Key key,
     @required this.galleryId,
     @required this.imageStore,
     @required this.imagePage,
   })  : assert(galleryId != null),
         assert(imageStore != null),
-        assert(imagePage != null);
+        assert(imagePage != null),
+        super(key: key);
 
   @override
   _ViewImageContentState createState() => _ViewImageContentState(
@@ -138,7 +145,7 @@ class _ViewImageContentState extends State<_ViewImageContent> {
         final image = imageStore.data[imageStore.index[page]];
 
         if (image == null) {
-          return CenterProgressIndicator();
+          return const CenterProgressIndicator();
         }
 
         return CachedNetworkImage(

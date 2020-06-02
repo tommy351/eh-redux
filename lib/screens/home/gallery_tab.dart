@@ -24,7 +24,7 @@ class GalleryTab extends StatelessWidget {
 class _GalleryTabContent extends StatefulWidget {
   final GalleryStore galleryStore;
 
-  _GalleryTabContent({
+  const _GalleryTabContent({
     @required this.galleryStore,
   }) : assert(galleryStore != null);
 
@@ -62,7 +62,7 @@ class _GalleryTabContentState extends State<_GalleryTabContent> {
 
         if (pagination == null ||
             (pagination.index.isEmpty && pagination.loading)) {
-          return CenterProgressIndicator();
+          return const CenterProgressIndicator();
         }
 
         final galleries = galleryStore.data.values
@@ -72,7 +72,7 @@ class _GalleryTabContentState extends State<_GalleryTabContent> {
           controller: _scrollController,
           itemBuilder: (context, i) {
             if (i >= galleries.length) {
-              return Padding(
+              return const Padding(
                 padding: EdgeInsets.symmetric(vertical: 16),
                 child: CenterProgressIndicator(),
               );
@@ -89,10 +89,15 @@ class _GalleryTabContentState extends State<_GalleryTabContent> {
 
   Widget _buildRow(BuildContext context, Gallery gallery) {
     final theme = Theme.of(context);
-    final thumbWidth = 112.0;
-    final thumbHeight = 88.0;
+    const thumbWidth = 112.0;
+    const thumbHeight = 88.0;
 
     return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, GalleryScreen.routeName,
+            arguments:
+                GalleryScreenArguments((b) => b..id = gallery.id.toBuilder()));
+      },
       child: Row(
         key: Key('${gallery.id.id}'),
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -111,7 +116,7 @@ class _GalleryTabContentState extends State<_GalleryTabContent> {
                 children: <Widget>[
                   Expanded(
                     child: Padding(
-                      padding: EdgeInsets.only(
+                      padding: const EdgeInsets.only(
                           top: 8, bottom: 8, left: 16, right: 8),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,18 +134,13 @@ class _GalleryTabContentState extends State<_GalleryTabContent> {
                       ),
                     ),
                   ),
-                  Divider(height: 1),
+                  const Divider(height: 1),
                 ],
               ),
             ),
           ),
         ],
       ),
-      onTap: () {
-        Navigator.pushNamed(context, GalleryScreen.routeName,
-            arguments:
-                GalleryScreenArguments((b) => b..id = gallery.id.toBuilder()));
-      },
     );
   }
 

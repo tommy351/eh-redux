@@ -16,7 +16,7 @@ class RatingBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: Iterable.generate(5)
+      children: Iterable<int>.generate(5)
           .map((e) => Icon(
                 _getIconData(rating - e),
                 color: color,

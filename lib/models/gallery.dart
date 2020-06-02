@@ -26,22 +26,22 @@ abstract class Gallery implements Built<Gallery, GalleryBuilder> {
 
   factory Gallery.fromJson(Map<String, dynamic> json) {
     final id = GalleryIdBuilder()
-      ..id = json['gid']
-      ..token = json['token'];
+      ..id = json['gid'] as int
+      ..token = json['token'].toString();
 
     return Gallery((b) => b
       ..id = id
-      ..title = json['title']
-      ..titleJpn = json['title_jpn']
-      ..category = json['category']
-      ..thumbnail = json['thumb']
-      ..uploader = json['uploader']
-      ..fileCount = int.tryParse(json['filecount'])
-      ..fileSize = json['filesize']
-      ..expunged = json['expunged']
-      ..rating = double.tryParse(json['rating'])
-      ..tags = BuiltList<String>.from(json['tags']).toBuilder()
-      ..posted = tryParseSecondsSinceEpoch(json['posted']));
+      ..title = json['title'].toString()
+      ..titleJpn = json['title_jpn'].toString()
+      ..category = json['category'].toString()
+      ..thumbnail = json['thumb'].toString()
+      ..uploader = json['uploader'].toString()
+      ..fileCount = int.tryParse(json['filecount'].toString())
+      ..fileSize = json['filesize'] as int
+      ..expunged = json['expunged'] as bool
+      ..rating = double.tryParse(json['rating'].toString())
+      ..tags = BuiltList<String>.from(json['tags'] as List<String>).toBuilder()
+      ..posted = tryParseSecondsSinceEpoch(json['posted'].toString()));
   }
 }
 

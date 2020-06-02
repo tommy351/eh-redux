@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class GalleryHeader extends StatelessWidget {
   final Gallery gallery;
 
-  GalleryHeader(
+  const GalleryHeader(
     this.gallery, {
     Key key,
   })  : assert(gallery != null),

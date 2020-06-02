@@ -9,10 +9,12 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(EHentaiReaderApp());
+  runApp(const EHentaiReaderApp());
 }
 
 class EHentaiReaderApp extends StatelessWidget {
+  const EHentaiReaderApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final httpClient = http.Client();
@@ -35,9 +37,9 @@ class EHentaiReaderApp extends StatelessWidget {
         ),
         initialRoute: HomeScreen.routeName,
         routes: {
-          HomeScreen.routeName: (context) => HomeScreen(),
-          GalleryScreen.routeName: (context) => GalleryScreen(),
-          ViewScreen.routeName: (context) => ViewScreen(),
+          HomeScreen.routeName: (context) => const HomeScreen(),
+          GalleryScreen.routeName: (context) => const GalleryScreen(),
+          ViewScreen.routeName: (context) => const ViewScreen(),
         },
       ),
     );
