@@ -22,6 +22,10 @@ abstract class _GalleryStoreBase with Store {
   ObservableMap<GalleryPaginationKey, Pagination<GalleryId>> paginations =
       ObservableMap.of({});
 
+  Pagination<GalleryId> _getPaginationByKey(GalleryPaginationKey key) {
+    return paginations[key] ?? Pagination<GalleryId>();
+  }
+
   @action
   void add(Gallery gallery) {
     data[gallery.id] = gallery;
@@ -43,20 +47,25 @@ abstract class _GalleryStoreBase with Store {
 
   @action
   Future<void> loadNextPage(GalleryPaginationKey key) async {
-    final pagination = paginations[key] ?? Pagination<GalleryId>();
-    if (pagination.loading) return;
+    if (_getPaginationByKey(key).loading) return;
 
-    paginations[key] = pagination.rebuild((b) => b.loading = true);
+    paginations[key] =
+        _getPaginationByKey(key).rebuild((b) => b.loading = true);
 
-    final nextPage = pagination.currentPage + 1;
-    final ids = await client.getGalleryIds(nextPage);
-    final galleries = await client.getGalleriesData(ids);
+    try {
+      final pagination = _getPaginationByKey(key);
+      final nextPage = pagination.currentPage + 1;
+      final ids = await client.getGalleryIds(nextPage);
+      final galleries = await client.getGalleriesData(ids);
 
-    addAll(galleries);
+      addAll(galleries);
 
-    paginations[key] = pagination.rebuild((b) => b
-      ..loading = false
-      ..index = pagination.index.rebuild((b) => b.addAll(ids))
-      ..currentPage = nextPage);
+      paginations[key] = _getPaginationByKey(key).rebuild((b) => b
+        ..index = pagination.index.rebuild((b) => b.addAll(ids))
+        ..currentPage = nextPage);
+    } finally {
+      paginations[key] =
+          _getPaginationByKey(key).rebuild((b) => b..loading = false);
+    }
   }
 }

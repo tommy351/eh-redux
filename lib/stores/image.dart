@@ -44,23 +44,34 @@ abstract class _ImageStoreBase with Store {
 
     _imageLoading[page] = true;
 
-    final imageId = await _getImageId(galleryId, imagePage);
-    final image = await client.getImageData(imageId);
+    try {
+      final imageId = await _getImageId(galleryId, imagePage);
+      final image = await client.getImageData(imageId);
 
-    add(image);
-    index[page] = image.id;
-    _imageLoading.remove(page);
+      add(image);
+      index[page] = image.id;
+    } finally {
+      _imageLoading.remove(page);
+    }
+  }
+
+  Future<List<ImageId>> _getImageIds(GalleryIdWithPage page) async {
+    final future = _imageIdsFutures[page];
+
+    if (future != null) {
+      try {
+        return await future;
+      } catch (_) {}
+    }
+
+    return client.getImageIds(page.galleryId, page.page);
   }
 
   Future<ImageId> _getImageId(GalleryId galleryId, int imagePage) async {
     final page = GalleryIdWithPage((b) => b
       ..galleryId = galleryId.toBuilder()
       ..page = imagePage ~/ 40);
-
-    final future = _imageIdsFutures[page] =
-        _imageIdsFutures[page] ?? client.getImageIds(page.galleryId, page.page);
-
-    final ids = await future;
+    final ids = await _getImageIds(page);
 
     return ids.firstWhere((element) => element.page == imagePage);
   }

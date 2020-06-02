@@ -4,6 +4,7 @@ import 'package:ehreader/screens/view/args.dart';
 import 'package:ehreader/stores/gallery.dart';
 import 'package:ehreader/stores/image.dart';
 import 'package:ehreader/widgets/center_progress_indicator.dart';
+import 'package:ehreader/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -19,142 +20,134 @@ class ViewScreen extends StatelessWidget {
         ModalRoute.of(context).settings.arguments as ViewScreenArguments;
     final galleryStore = Provider.of<GalleryStore>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('View'),
-      ),
-      body: Observer(
-        builder: (context) {
-          final gallery = galleryStore.data[args.id];
+    return Observer(
+      builder: (context) {
+        final gallery = galleryStore.data[args.id];
 
-          if (gallery == null) {
-            return const CenterProgressIndicator();
-          }
+        if (gallery == null) {
+          return const CenterProgressIndicator();
+        }
 
-          return _ViewScreenContent(gallery: gallery);
-        },
-      ),
+        return Provider.value(
+          value: gallery,
+          child: _ViewScreenContent(),
+        );
+      },
     );
   }
 }
 
 class _ViewScreenContent extends StatefulWidget {
-  final Gallery gallery;
-
-  const _ViewScreenContent({
-    @required this.gallery,
-  }) : assert(gallery != null);
-
   @override
-  _ViewScreenContentState createState() =>
-      _ViewScreenContentState(gallery: gallery);
+  _ViewScreenContentState createState() => _ViewScreenContentState();
 }
 
 class _ViewScreenContentState extends State<_ViewScreenContent> {
-  final Gallery gallery;
+  PageController _pageController;
+  double _sliderValue = 0;
+  int _currentPage = 0;
 
-  _ViewScreenContentState({
-    @required this.gallery,
-  }) : assert(gallery != null);
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return PageView.builder(
-      itemBuilder: (context, i) {
-        return _ViewImage(
-          gallery: gallery,
-          imagePage: i + 1,
-        );
-      },
-      itemCount: gallery.fileCount,
+    final gallery = Provider.of<Gallery>(context);
+    final navBarBackground = Colors.black.withOpacity(0.5);
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: navBarBackground,
+        title: Text('${_currentPage + 1} / ${gallery.fileCount}'),
+        elevation: 0,
+      ),
+      extendBody: true,
+      extendBodyBehindAppBar: true,
+      body: PageView.builder(
+        controller: _pageController,
+        itemBuilder: (context, i) {
+          return _ViewImage(
+            imagePage: i + 1,
+          );
+        },
+        onPageChanged: (int page) {
+          setState(() {
+            _currentPage = page;
+            _sliderValue = page.toDouble();
+          });
+        },
+      ),
+      bottomNavigationBar: Container(
+        height: 60,
+        color: navBarBackground,
+        child: Slider(
+          min: 0,
+          max: gallery.fileCount.toDouble() - 1,
+          value: _sliderValue,
+          divisions: gallery.fileCount,
+          onChanged: (double value) {
+            setState(() {
+              _sliderValue = value;
+            });
+          },
+          onChangeEnd: (double value) {
+            _pageController.jumpToPage(value.toInt());
+          },
+        ),
+      ),
     );
   }
 }
 
 class _ViewImage extends StatelessWidget {
-  final Gallery gallery;
   final int imagePage;
 
   const _ViewImage({
     Key key,
-    @required this.gallery,
     @required this.imagePage,
-  })  : assert(gallery != null),
-        assert(imagePage != null),
+  })  : assert(imagePage != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return _ViewImageContent(
-      galleryId: gallery.id,
-      imageStore: Provider.of<ImageStore>(context),
-      imagePage: imagePage,
-    );
-  }
-}
+    final gallery = Provider.of<Gallery>(context);
+    final imageStore = Provider.of<ImageStore>(context);
+    final page = GalleryIdWithPage((b) => b
+      ..galleryId = gallery.id.toBuilder()
+      ..page = imagePage);
 
-class _ViewImageContent extends StatefulWidget {
-  final GalleryId galleryId;
-  final ImageStore imageStore;
-  final int imagePage;
-
-  const _ViewImageContent({
-    Key key,
-    @required this.galleryId,
-    @required this.imageStore,
-    @required this.imagePage,
-  })  : assert(galleryId != null),
-        assert(imageStore != null),
-        assert(imagePage != null),
-        super(key: key);
-
-  @override
-  _ViewImageContentState createState() => _ViewImageContentState(
-        galleryId: galleryId,
-        imageStore: imageStore,
-        imagePage: imagePage,
-      );
-}
-
-class _ViewImageContentState extends State<_ViewImageContent> {
-  final GalleryId galleryId;
-  final ImageStore imageStore;
-  final int imagePage;
-
-  _ViewImageContentState({
-    @required this.galleryId,
-    @required this.imageStore,
-    @required this.imagePage,
-  })  : assert(galleryId != null),
-        assert(imageStore != null),
-        assert(imagePage != null);
-
-  @override
-  void initState() {
-    super.initState();
-    imageStore.loadImage(galleryId, imagePage);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Observer(
+    return StatefulWrapper(
+      onInit: (context) {
+        imageStore.loadImage(gallery.id, imagePage);
+      },
       builder: (context) {
-        final page = GalleryIdWithPage((b) => b
-          ..galleryId = galleryId.toBuilder()
-          ..page = imagePage);
-        final image = imageStore.data[imageStore.index[page]];
+        return Observer(
+          builder: (context) {
+            final image = imageStore.data[imageStore.index[page]];
 
-        if (image == null) {
-          return const CenterProgressIndicator();
-        }
+            if (image == null) {
+              return const CenterProgressIndicator();
+            }
 
-        return CachedNetworkImage(
-          imageUrl: image.url,
-          progressIndicatorBuilder: (context, _, downloadProgress) => Center(
-            child: CircularProgressIndicator(
-              value: downloadProgress.progress,
-            ),
-          ),
+            return CachedNetworkImage(
+              imageUrl: image.url,
+              progressIndicatorBuilder: (context, _, downloadProgress) {
+                return CenterProgressIndicator(
+                  value: downloadProgress.progress,
+                );
+              },
+            );
+          },
         );
       },
     );

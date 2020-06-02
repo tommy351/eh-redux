@@ -40,7 +40,7 @@ abstract class Gallery implements Built<Gallery, GalleryBuilder> {
       ..fileSize = json['filesize'] as int
       ..expunged = json['expunged'] as bool
       ..rating = double.tryParse(json['rating'].toString())
-      ..tags = BuiltList<String>.from(json['tags'] as List<String>).toBuilder()
+      ..tags = BuiltList<String>.from(json['tags'] as List).toBuilder()
       ..posted = tryParseSecondsSinceEpoch(json['posted'].toString()));
   }
 }
