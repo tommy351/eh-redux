@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 HashMap<String, String> parseRules(String style) {
-  final rules = new HashMap<String, String>();
+  final rules = HashMap<String, String>();
 
   for (final rule in style.split(';')) {
     final index = rule.indexOf(':');

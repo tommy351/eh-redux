@@ -33,7 +33,7 @@ class EHentaiClient {
     }
 
     final document = parse(res.body);
-    final List<GalleryId> ids = [];
+    final ids = [];
 
     for (final element in document.querySelectorAll('.glname > a')) {
       final href = element.attributes['href'];
@@ -79,7 +79,7 @@ class EHentaiClient {
 
     Map data = jsonDecode(res.body);
 
-    List<Gallery> galleries = [];
+    final galleries = [];
 
     for (final json in data['gmetadata'] ?? []) {
       final value = json as Map<String, dynamic>;
@@ -105,7 +105,7 @@ class EHentaiClient {
     }
 
     final document = parse(res.body);
-    final List<ImageId> ids = [];
+    final ids = [];
 
     for (final element in document.querySelectorAll('.gdtm a')) {
       final href = element.attributes['href'];

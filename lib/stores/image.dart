@@ -21,8 +21,8 @@ abstract class _ImageStoreBase with Store {
   @observable
   ObservableMap<GalleryIdWithPage, ImageId> index = ObservableMap.of({});
 
-  Map<GalleryIdWithPage, bool> _imageLoading = Map();
-  Map<GalleryIdWithPage, Future<List<ImageId>>> _imageIdsFutures = Map();
+  final Map<GalleryIdWithPage, bool> _imageLoading = {};
+  final Map<GalleryIdWithPage, Future<List<ImageId>>> _imageIdsFutures = {};
 
   @action
   void add(Image image) {

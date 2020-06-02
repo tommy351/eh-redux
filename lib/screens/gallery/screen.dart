@@ -86,7 +86,7 @@ class GalleryScreen extends StatelessWidget {
   }
 
   Widget _buildTitle(BuildContext context, Gallery gallery) {
-    final ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
 
     return Text(
       gallery.title,
@@ -99,7 +99,7 @@ class GalleryScreen extends StatelessWidget {
       return Container();
     }
 
-    final ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
 
     return Padding(
       padding: EdgeInsets.only(top: 8),
@@ -115,7 +115,7 @@ class GalleryScreen extends StatelessWidget {
       return Container();
     }
 
-    final ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -88,7 +88,7 @@ class _GalleryTabContentState extends State<_GalleryTabContent> {
   }
 
   Widget _buildRow(BuildContext context, Gallery gallery) {
-    final ThemeData theme = Theme.of(context);
+    final theme = Theme.of(context);
     final thumbWidth = 112.0;
     final thumbHeight = 88.0;
 
