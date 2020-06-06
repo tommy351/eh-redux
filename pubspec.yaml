@@ -23,6 +23,7 @@ dependencies:
   share: ^0.6.4+3
   photo_view: ^0.9.2
   shared_preferences: ^0.5.7+3
+  preload_page_view: ^0.1.4
 
 dev_dependencies:
   flutter_test:

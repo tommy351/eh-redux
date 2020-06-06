@@ -3,6 +3,7 @@ import 'package:ehreader/screens/view/store.dart';
 import 'package:ehreader/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:preload_page_view/preload_page_view.dart';
 import 'package:provider/provider.dart';
 
 import 'image.dart';
@@ -15,12 +16,12 @@ class ViewBody extends StatefulWidget {
 }
 
 class _ViewBodyState extends State<ViewBody> {
-  PageController _pageController;
+  PreloadPageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
+    _pageController = PreloadPageController();
   }
 
   @override
@@ -41,7 +42,7 @@ class _ViewBodyState extends State<ViewBody> {
         });
       },
       builder: (context) {
-        return PageView.builder(
+        return PreloadPageView.builder(
           controller: _pageController,
           itemCount: gallery.fileCount,
           itemBuilder: (context, i) {
