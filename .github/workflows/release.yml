@@ -1,10 +1,11 @@
-name: Android
+name: Release
 on:
   push:
-  pull_request:
+    tags:
+      - "*"
 
 jobs:
-  build:
+  android:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -14,18 +15,17 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           channel: stable
-      - run: echo $KEYSTORE_FILE | base64 -d > android/app/key.jks
+      - run: flutter pub get
+      - run: echo $KEYSTORE_FILE | base64 -d > /tmp/keystore.jks
         env:
           KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
-      - run: flutter pub get
-      - run: flutter analyze
       - run: flutter build apk --split-per-abi
         env:
           KEYSTORE_STORE_PASSWORD: ${{ secrets.KEYSTORE_STORE_PASSWORD }}
           KEYSTORE_KEY_PASSWORD: ${{ secrets.KEYSTORE_KEY_PASSWORD }}
           KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
-          KEYSTORE_PATH: key.jks
+          KEYSTORE_PATH: /tmp/keystore.jks
       - uses: actions/upload-artifact@v2
         with:
-          name: apk
-          path: build/app/outputs/apk/release/*.apk
+          name: apk-release
+          path: build/app/outputs/apk/release/

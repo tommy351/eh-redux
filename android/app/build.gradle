@@ -11,10 +11,10 @@ def keystorePropertiesFile = rootProject.file('key.properties')
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 } else {
-    keystoreProperties.setProperty('storePassword', System.getenv('KEYSTORE_STORE_PASSWORD'));
-    keystoreProperties.setProperty('keyPassword', System.getenv('KEYSTORE_KEY_PASSWORD'));
-    keystoreProperties.setProperty('keyAlias', System.getenv('KEYSTORE_ALIAS'));
-    keystoreProperties.setProperty('storeFile', System.getenv('KEYSTORE_PATH'));
+    keystoreProperties.setProperty('storePassword', String.valueOf(System.getenv('KEYSTORE_STORE_PASSWORD')));
+    keystoreProperties.setProperty('keyPassword', String.valueOf(System.getenv('KEYSTORE_KEY_PASSWORD')));
+    keystoreProperties.setProperty('keyAlias', String.valueOf(System.getenv('KEYSTORE_ALIAS')));
+    keystoreProperties.setProperty('storeFile', String.valueOf(System.getenv('KEYSTORE_PATH')));
 }
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
@@ -48,7 +48,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "app.ehreader"
         minSdkVersion 16
         targetSdkVersion 28
@@ -66,6 +65,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+        }
+
         release {
             signingConfig signingConfigs.release
         }
