@@ -56,6 +56,13 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
     return _$loadNextPageAsyncAction.run(() => super.loadNextPage(key));
   }
 
+  final _$refreshPageAsyncAction = AsyncAction('_GalleryStoreBase.refreshPage');
+
+  @override
+  Future<void> refreshPage(GalleryPaginationKey key) {
+    return _$refreshPageAsyncAction.run(() => super.refreshPage(key));
+  }
+
   final _$_GalleryStoreBaseActionController =
       ActionController(name: '_GalleryStoreBase');
 

@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:ehreader/models/gallery.dart';
 import 'package:ehreader/models/pagination.dart';
 import 'package:ehreader/repositories/ehentai_client.dart';
@@ -43,29 +44,51 @@ abstract class _GalleryStoreBase with Store {
     final pagination = paginations[key];
 
     if (pagination == null || pagination.currentPage < 0) {
-      return loadNextPage(key);
+      await loadNextPage(key);
     }
   }
 
   @action
   Future<void> loadNextPage(GalleryPaginationKey key) async {
+    final pagination = _getPaginationByKey(key);
+
+    await _loadPage(
+      key: key,
+      page: pagination.currentPage + 1,
+      updateIndex: (index, ids) => index.rebuild((b) => b.addAll(ids)),
+    );
+  }
+
+  @action
+  Future<void> refreshPage(GalleryPaginationKey key) async {
+    await _loadPage(
+      key: key,
+      page: 0,
+      updateIndex: (index, ids) => BuiltSet.from(ids),
+    );
+  }
+
+  Future<void> _loadPage({
+    @required GalleryPaginationKey key,
+    @required int page,
+    @required
+        BuiltSet<GalleryId> Function(
+                BuiltSet<GalleryId> currentIndex, List<GalleryId> newIndex)
+            updateIndex,
+  }) async {
     if (_getPaginationByKey(key).loading) return;
 
     paginations[key] =
         _getPaginationByKey(key).rebuild((b) => b.loading = true);
 
     try {
-      final pagination = _getPaginationByKey(key);
-      final nextPage = pagination.currentPage + 1;
       final ids =
-          await client.getGalleryIds(path: _getListPath(key), page: nextPage);
+          await client.getGalleryIds(path: _getListPath(key), page: page);
       final galleries = await client.getGalleriesData(ids);
 
-      addAll(galleries);
-
       paginations[key] = _getPaginationByKey(key).rebuild((b) => b
-        ..index = pagination.index.rebuild((b) => b.addAll(ids))
-        ..currentPage = nextPage
+        ..index = updateIndex(b.index, ids)
+        ..currentPage = page
         ..noMore = galleries.length < _galleryPerPage);
     } finally {
       paginations[key] =

@@ -42,6 +42,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: _tabs.map((e) => e.title).elementAt(_currentTab),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.search),
+            tooltip: 'Search',
+            onPressed: () {
+              //
+            },
+          ),
+        ],
       ),
       body: _widgets[_currentTab],
       bottomNavigationBar: BottomNavigationBar(

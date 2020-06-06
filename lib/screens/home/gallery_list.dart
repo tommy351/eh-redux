@@ -53,12 +53,15 @@ class _GalleryListState extends State<GalleryList> {
           builder: (context) {
             final pagination = galleryStore.paginations[widget.paginationKey];
 
-            if (pagination == null ||
-                (pagination.index.isEmpty && pagination.loading)) {
+            if (pagination == null) {
               return const CenterProgressIndicator();
             }
 
-            if (pagination.index.isEmpty && pagination.noMore) {
+            if (pagination.index.isEmpty) {
+              if (pagination.loading) {
+                return const CenterProgressIndicator();
+              }
+
               return Center(
                 child: Text('No data', style: theme.textTheme.headline6),
               );
@@ -67,20 +70,25 @@ class _GalleryListState extends State<GalleryList> {
             final galleries = galleryStore.data.values
                 .where((element) => pagination.index.contains(element.id));
 
-            return ListView.builder(
-              controller: _scrollController,
-              itemBuilder: (context, i) {
-                if (i >= galleries.length) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: CenterProgressIndicator(),
-                  );
-                }
-
-                return _buildRow(galleries.elementAt(i));
+            return RefreshIndicator(
+              onRefresh: () async {
+                await galleryStore.refreshPage(widget.paginationKey);
               },
-              itemCount:
-                  pagination.noMore ? galleries.length : galleries.length + 1,
+              child: ListView.builder(
+                controller: _scrollController,
+                itemBuilder: (context, i) {
+                  if (i >= galleries.length) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 16),
+                      child: CenterProgressIndicator(),
+                    );
+                  }
+
+                  return _buildRow(galleries.elementAt(i));
+                },
+                itemCount:
+                    pagination.noMore ? galleries.length : galleries.length + 1,
+              ),
             );
           },
         );
