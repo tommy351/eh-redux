@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'favorite_tab.dart';
 import 'gallery_tab.dart';
 import 'user_tab.dart';
 
@@ -17,27 +18,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static const _widgets = <Widget>[
     GalleryTab(),
+    FavoriteTab(),
     UserTab(),
+  ];
+
+  static const _tabs = <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+      icon: Icon(Icons.photo_library),
+      title: Text('Gallery'),
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.favorite),
+      title: Text('Favorites'),
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(Icons.person),
+      title: Text('User'),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home'),
+        title: _tabs.map((e) => e.title).elementAt(_currentTab),
       ),
       body: _widgets[_currentTab],
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.photo_library),
-            title: Text('Gallery'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('User'),
-          )
-        ],
+        items: _tabs,
         onTap: _handleTabTapped,
         currentIndex: _currentTab,
       ),

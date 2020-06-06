@@ -9,6 +9,8 @@ part 'image.g.dart';
 class ImageStore = _ImageStoreBase with _$ImageStore;
 
 abstract class _ImageStoreBase with Store {
+  static const _imagePerPage = 40;
+
   final EHentaiClient client;
 
   _ImageStoreBase({
@@ -70,7 +72,7 @@ abstract class _ImageStoreBase with Store {
   Future<ImageId> _getImageId(GalleryId galleryId, int imagePage) async {
     final page = GalleryIdWithPage((b) => b
       ..galleryId = galleryId.toBuilder()
-      ..page = imagePage ~/ 40);
+      ..page = imagePage ~/ _imagePerPage);
     final ids = await _getImageIds(page);
 
     return ids.firstWhere((element) => element.page == imagePage);

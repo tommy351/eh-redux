@@ -21,9 +21,10 @@ class EHentaiClient {
     @required this.httpClient,
   }) : assert(httpClient != null);
 
-  Future<List<GalleryId>> getGalleryIds(int page) async {
+  Future<List<GalleryId>> getGalleryIds(
+      {String path = '/', int page = 0}) async {
     developer.log('Get gallery ids (page: $page)');
-    final res = await httpClient.get('$baseUrl/?page=$page');
+    final res = await httpClient.get('$baseUrl$path?page=$page');
 
     if (res.statusCode != 200) {
       throw HttpException.fromResponse(

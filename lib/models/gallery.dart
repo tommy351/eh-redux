@@ -55,14 +55,16 @@ abstract class GalleryId implements Built<GalleryId, GalleryIdBuilder> {
   GalleryId._();
 }
 
-abstract class GalleryPaginationKey
-    implements Built<GalleryPaginationKey, GalleryPaginationKeyBuilder> {
-  static Serializer<GalleryPaginationKey> get serializer =>
-      _$galleryPaginationKeySerializer;
+class GalleryPaginationKey {
+  const GalleryPaginationKey();
+}
 
-  factory GalleryPaginationKey(
-      [Function(GalleryPaginationKeyBuilder) updates]) = _$GalleryPaginationKey;
-  GalleryPaginationKey._();
+class GalleryPaginationKeyFrontPage extends GalleryPaginationKey {
+  const GalleryPaginationKeyFrontPage();
+}
+
+class GalleryPaginationKeyFavorite extends GalleryPaginationKey {
+  const GalleryPaginationKeyFavorite();
 }
 
 abstract class GalleryIdWithPage

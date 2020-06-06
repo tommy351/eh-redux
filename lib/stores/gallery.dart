@@ -9,6 +9,8 @@ part 'gallery.g.dart';
 class GalleryStore = _GalleryStoreBase with _$GalleryStore;
 
 abstract class _GalleryStoreBase with Store {
+  static const _galleryPerPage = 25;
+
   final EHentaiClient client;
 
   _GalleryStoreBase({
@@ -55,17 +57,27 @@ abstract class _GalleryStoreBase with Store {
     try {
       final pagination = _getPaginationByKey(key);
       final nextPage = pagination.currentPage + 1;
-      final ids = await client.getGalleryIds(nextPage);
+      final ids =
+          await client.getGalleryIds(path: _getListPath(key), page: nextPage);
       final galleries = await client.getGalleriesData(ids);
 
       addAll(galleries);
 
       paginations[key] = _getPaginationByKey(key).rebuild((b) => b
         ..index = pagination.index.rebuild((b) => b.addAll(ids))
-        ..currentPage = nextPage);
+        ..currentPage = nextPage
+        ..noMore = galleries.length < _galleryPerPage);
     } finally {
       paginations[key] =
           _getPaginationByKey(key).rebuild((b) => b..loading = false);
     }
+  }
+
+  String _getListPath(GalleryPaginationKey key) {
+    if (key is GalleryPaginationKeyFavorite) {
+      return '/favorites.php';
+    }
+
+    return '';
   }
 }

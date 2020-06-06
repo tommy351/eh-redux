@@ -8,8 +8,6 @@ part of 'gallery.dart';
 
 Serializer<Gallery> _$gallerySerializer = new _$GallerySerializer();
 Serializer<GalleryId> _$galleryIdSerializer = new _$GalleryIdSerializer();
-Serializer<GalleryPaginationKey> _$galleryPaginationKeySerializer =
-    new _$GalleryPaginationKeySerializer();
 Serializer<GalleryIdWithPage> _$galleryIdWithPageSerializer =
     new _$GalleryIdWithPageSerializer();
 
@@ -176,31 +174,6 @@ class _$GalleryIdSerializer implements StructuredSerializer<GalleryId> {
     }
 
     return result.build();
-  }
-}
-
-class _$GalleryPaginationKeySerializer
-    implements StructuredSerializer<GalleryPaginationKey> {
-  @override
-  final Iterable<Type> types = const [
-    GalleryPaginationKey,
-    _$GalleryPaginationKey
-  ];
-  @override
-  final String wireName = 'GalleryPaginationKey';
-
-  @override
-  Iterable<Object> serialize(
-      Serializers serializers, GalleryPaginationKey object,
-      {FullType specifiedType = FullType.unspecified}) {
-    return <Object>[];
-  }
-
-  @override
-  GalleryPaginationKey deserialize(
-      Serializers serializers, Iterable<Object> serialized,
-      {FullType specifiedType = FullType.unspecified}) {
-    return new GalleryPaginationKeyBuilder().build();
   }
 }
 
@@ -608,66 +581,6 @@ class GalleryIdBuilder implements Builder<GalleryId, GalleryIdBuilder> {
   @override
   _$GalleryId build() {
     final _$result = _$v ?? new _$GalleryId._(id: id, token: token);
-    replace(_$result);
-    return _$result;
-  }
-}
-
-class _$GalleryPaginationKey extends GalleryPaginationKey {
-  factory _$GalleryPaginationKey(
-          [void Function(GalleryPaginationKeyBuilder) updates]) =>
-      (new GalleryPaginationKeyBuilder()..update(updates)).build();
-
-  _$GalleryPaginationKey._() : super._();
-
-  @override
-  GalleryPaginationKey rebuild(
-          void Function(GalleryPaginationKeyBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
-
-  @override
-  GalleryPaginationKeyBuilder toBuilder() =>
-      new GalleryPaginationKeyBuilder()..replace(this);
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(other, this)) return true;
-    return other is GalleryPaginationKey;
-  }
-
-  @override
-  int get hashCode {
-    return 617357914;
-  }
-
-  @override
-  String toString() {
-    return newBuiltValueToStringHelper('GalleryPaginationKey').toString();
-  }
-}
-
-class GalleryPaginationKeyBuilder
-    implements Builder<GalleryPaginationKey, GalleryPaginationKeyBuilder> {
-  _$GalleryPaginationKey _$v;
-
-  GalleryPaginationKeyBuilder();
-
-  @override
-  void replace(GalleryPaginationKey other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
-    _$v = other as _$GalleryPaginationKey;
-  }
-
-  @override
-  void update(void Function(GalleryPaginationKeyBuilder) updates) {
-    if (updates != null) updates(this);
-  }
-
-  @override
-  _$GalleryPaginationKey build() {
-    final _$result = _$v ?? new _$GalleryPaginationKey._();
     replace(_$result);
     return _$result;
   }
