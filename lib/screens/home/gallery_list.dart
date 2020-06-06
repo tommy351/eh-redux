@@ -77,7 +77,7 @@ class _GalleryListState extends State<GalleryList> {
                   );
                 }
 
-                return _buildRow(context, galleries.elementAt(i));
+                return _buildRow(galleries.elementAt(i));
               },
               itemCount:
                   pagination.noMore ? galleries.length : galleries.length + 1,
@@ -88,10 +88,10 @@ class _GalleryListState extends State<GalleryList> {
     );
   }
 
-  Widget _buildRow(BuildContext context, Gallery gallery) {
+  Widget _buildRow(Gallery gallery) {
     final theme = Theme.of(context);
     const thumbWidth = 112.0;
-    const thumbHeight = 88.0;
+    const thumbHeight = 112.0;
 
     return InkWell(
       onTap: () {
@@ -130,6 +130,8 @@ class _GalleryListState extends State<GalleryList> {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
+                          _buildTagList(gallery.tags.toList()),
+                          const SizedBox(height: 8),
                           GalleryHeader(gallery),
                         ],
                       ),
@@ -141,6 +143,24 @@ class _GalleryListState extends State<GalleryList> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildTagList(List<String> tags) {
+    final theme = Theme.of(context);
+    final textStyle = theme.textTheme.caption;
+
+    return SizedBox(
+      height: 16,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        shrinkWrap: true,
+        separatorBuilder: (context, i) => Text(', ', style: textStyle),
+        itemBuilder: (context, i) {
+          return Text(tags[i], style: textStyle);
+        },
+        itemCount: tags.length,
       ),
     );
   }
