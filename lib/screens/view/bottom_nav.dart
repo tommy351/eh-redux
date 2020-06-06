@@ -7,7 +7,12 @@ import 'package:provider/provider.dart';
 import 'store.dart';
 
 class ViewBottomNavigation extends StatefulWidget {
-  const ViewBottomNavigation({Key key}) : super(key: key);
+  final EdgeInsets padding;
+
+  const ViewBottomNavigation({
+    Key key,
+    this.padding = EdgeInsets.zero,
+  }) : super(key: key);
 
   @override
   _ViewBottomNavigationState createState() => _ViewBottomNavigationState();
@@ -63,9 +68,10 @@ class _ViewBottomNavigationState extends State<ViewBottomNavigation>
         };
       },
       builder: (context) {
-        const height = 60.0;
+        final height = 60.0 + widget.padding.top + widget.padding.bottom;
+
         final position = Tween<Offset>(
-          begin: const Offset(0, height),
+          begin: Offset(0, height),
           end: const Offset(0, 0),
         ).animate(_animationController);
 
@@ -73,6 +79,7 @@ class _ViewBottomNavigationState extends State<ViewBottomNavigation>
           position: position,
           child: Container(
             height: height,
+            padding: widget.padding,
             color: Colors.black.withOpacity(0.5),
             child: SliderTheme(
               data: SliderTheme.of(context),
