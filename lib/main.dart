@@ -1,6 +1,7 @@
 import 'package:ehreader/repositories/ehentai_client.dart';
 import 'package:ehreader/screens/gallery/screen.dart';
 import 'package:ehreader/screens/home/screen.dart';
+import 'package:ehreader/screens/search/screen.dart';
 import 'package:ehreader/screens/view/screen.dart';
 import 'package:ehreader/stores/gallery.dart';
 import 'package:ehreader/stores/image.dart';
@@ -40,6 +41,7 @@ class EHentaiReaderApp extends StatelessWidget {
           HomeScreen.routeName: (context) => const HomeScreen(),
           GalleryScreen.routeName: (context) => const GalleryScreen(),
           ViewScreen.routeName: (context) => const ViewScreen(),
+          SearchScreen.routeName: (context) => const SearchScreen(),
         },
       ),
     );

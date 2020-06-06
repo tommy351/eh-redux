@@ -1,3 +1,4 @@
+import 'package:ehreader/screens/search/screen.dart';
 import 'package:flutter/material.dart';
 
 import 'favorite_tab.dart';
@@ -47,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.search),
             tooltip: 'Search',
             onPressed: () {
-              //
+              Navigator.pushNamed(context, SearchScreen.routeName);
             },
           ),
         ],
