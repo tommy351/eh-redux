@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ehreader/models/gallery.dart';
 import 'package:ehreader/stores/image.dart';
 import 'package:ehreader/widgets/center_progress_indicator.dart';
 import 'package:ehreader/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
 class ViewImage extends StatelessWidget {
@@ -38,11 +38,15 @@ class ViewImage extends StatelessWidget {
               return const CenterProgressIndicator();
             }
 
-            return CachedNetworkImage(
-              imageUrl: image.url,
-              progressIndicatorBuilder: (context, _, downloadProgress) {
+            return PhotoView(
+              imageProvider: NetworkImage(image.url),
+              minScale: PhotoViewComputedScale.contained,
+              maxScale: PhotoViewComputedScale.covered * 3,
+              loadingBuilder: (context, event) {
                 return CenterProgressIndicator(
-                  value: downloadProgress.progress,
+                  value: event == null
+                      ? 0
+                      : event.cumulativeBytesLoaded / event.expectedTotalBytes,
                 );
               },
             );
