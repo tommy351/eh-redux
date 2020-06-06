@@ -21,8 +21,10 @@ class EHentaiClient {
     @required this.httpClient,
   }) : assert(httpClient != null);
 
-  Future<List<GalleryId>> getGalleryIds(
-      {String path = '/', int page = 0}) async {
+  Future<List<GalleryId>> getGalleryIds({
+    String path = '/',
+    int page = 0,
+  }) async {
     developer.log('Get gallery ids (page: $page)');
     final res = await httpClient.get('$baseUrl$path?page=$page');
 
@@ -61,7 +63,7 @@ class EHentaiClient {
   Future<List<Gallery>> getGalleriesData(List<GalleryId> ids) async {
     developer.log('Get galleries data (ids: $ids)');
     final res = await httpClient.post(
-      'https://api.e-hentai.org/api.php',
+      apiUrl,
       body: jsonEncode({
         'method': 'gdata',
         'gidlist': ids.map((e) => [e.id, e.token]).toList(growable: false),
@@ -92,10 +94,17 @@ class EHentaiClient {
     return galleries;
   }
 
+  String getGalleryUrl(GalleryId id) {
+    return '$baseUrl/g/${id.id}/${id.token}';
+  }
+
+  String getImageUrl(ImageId id) {
+    return '$baseUrl/s/${id.key}/${id.galleryId.id}-${id.page}';
+  }
+
   Future<List<ImageId>> getImageIds(GalleryId galleryId, int page) async {
     developer.log('Get image ids (id: $galleryId, page: $page)');
-    final res = await httpClient.get(
-        'https://e-hentai.org/g/${galleryId.id}/${galleryId.token}/?p=$page');
+    final res = await httpClient.get('${getGalleryUrl(galleryId)}/?p=$page');
 
     if (res.statusCode != 200) {
       throw HttpException.fromResponse(
@@ -137,8 +146,7 @@ class EHentaiClient {
 
   Future<Image> getImageData(ImageId id) async {
     developer.log('Fetch image data (id: $id)');
-    final res = await httpClient
-        .get('https://e-hentai.org/s/${id.key}/${id.galleryId.id}-${id.page}');
+    final res = await httpClient.get(getImageUrl(id));
 
     if (res.statusCode != 200) {
       throw HttpException.fromResponse(

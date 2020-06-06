@@ -86,6 +86,8 @@ abstract class _GalleryStoreBase with Store {
           await client.getGalleryIds(path: _getListPath(key), page: page);
       final galleries = await client.getGalleriesData(ids);
 
+      addAll(galleries);
+
       paginations[key] = _getPaginationByKey(key).rebuild((b) => b
         ..index = updateIndex(b.index, ids)
         ..currentPage = page

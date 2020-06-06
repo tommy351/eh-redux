@@ -24,6 +24,9 @@ class EHentaiReaderApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider(
+          create: (context) => eHentaiClient,
+        ),
+        Provider(
           create: (context) => GalleryStore(client: eHentaiClient),
         ),
         Provider(

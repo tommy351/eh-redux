@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ehreader/models/gallery.dart';
+import 'package:ehreader/repositories/ehentai_client.dart';
 import 'package:ehreader/screens/gallery/args.dart';
 import 'package:ehreader/screens/view/args.dart';
 import 'package:ehreader/screens/view/screen.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 
 class GalleryScreen extends StatelessWidget {
   static String routeName = '/gallery';
@@ -21,6 +23,7 @@ class GalleryScreen extends StatelessWidget {
     final args =
         ModalRoute.of(context).settings.arguments as GalleryScreenArguments;
     final galleryStore = Provider.of<GalleryStore>(context);
+    final client = Provider.of<EHentaiClient>(context);
 
     return Observer(
       builder: (context) {
@@ -37,6 +40,18 @@ class GalleryScreen extends StatelessWidget {
                 floating: true,
                 flexibleSpace: _buildPlaceholder(context, gallery),
                 expandedHeight: 200,
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.share),
+                    tooltip: 'Share',
+                    onPressed: () {
+                      Share.share(
+                        client.getGalleryUrl(gallery.id),
+                        subject: gallery.title,
+                      );
+                    },
+                  )
+                ],
               ),
               SliverList(
                 delegate: SliverChildListDelegate([
@@ -64,9 +79,30 @@ class GalleryScreen extends StatelessWidget {
   }
 
   Widget _buildPlaceholder(BuildContext context, Gallery gallery) {
-    return CachedNetworkImage(
-      imageUrl: gallery.thumbnail,
-      fit: BoxFit.cover,
+    return Stack(
+      children: <Widget>[
+        Positioned.fill(
+          child: CachedNetworkImage(
+            imageUrl: gallery.thumbnail,
+            fit: BoxFit.cover,
+          ),
+        ),
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            height: MediaQuery.of(context).padding.top + 56,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.black.withOpacity(0.5), Colors.transparent],
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
