@@ -24,6 +24,21 @@ mixin _$ViewStore on _ViewStoreBase, Store {
     });
   }
 
+  final _$navVisibleAtom = Atom(name: '_ViewStoreBase.navVisible');
+
+  @override
+  bool get navVisible {
+    _$navVisibleAtom.reportRead();
+    return super.navVisible;
+  }
+
+  @override
+  set navVisible(bool value) {
+    _$navVisibleAtom.reportWrite(value, super.navVisible, () {
+      super.navVisible = value;
+    });
+  }
+
   final _$_ViewStoreBaseActionController =
       ActionController(name: '_ViewStoreBase');
 
@@ -39,9 +54,21 @@ mixin _$ViewStore on _ViewStoreBase, Store {
   }
 
   @override
+  void toggleNav() {
+    final _$actionInfo = _$_ViewStoreBaseActionController.startAction(
+        name: '_ViewStoreBase.toggleNav');
+    try {
+      return super.toggleNav();
+    } finally {
+      _$_ViewStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
-currentPage: ${currentPage}
+currentPage: ${currentPage},
+navVisible: ${navVisible}
     ''';
   }
 }
