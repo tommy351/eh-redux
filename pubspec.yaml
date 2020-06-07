@@ -1,7 +1,7 @@
 name: ehreader
 description: E-Hentai Reader
 publish_to: 'none'
-version: 0.0.2
+version: 0.0.3
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
