@@ -20,9 +20,9 @@ class ViewBottomNavigation extends StatefulWidget {
 
 class _ViewBottomNavigationState extends State<ViewBottomNavigation>
     with TickerProviderStateMixin {
+  static const _height = 60.0;
   AnimationController _animationController;
   double _value = 0;
-  double _height;
   Animation<Offset> _animation;
 
   @override
@@ -32,9 +32,8 @@ class _ViewBottomNavigationState extends State<ViewBottomNavigation>
       vsync: this,
       duration: const Duration(milliseconds: 500),
     );
-    _height = 60 + widget.padding.top + widget.padding.bottom;
     _animation = Tween<Offset>(
-      begin: Offset(0, _height),
+      begin: Offset(0, _height + widget.padding.top + widget.padding.bottom),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _animationController,
@@ -80,25 +79,27 @@ class _ViewBottomNavigationState extends State<ViewBottomNavigation>
         return SlideTransition(
           position: _animation,
           child: Container(
-            height: _height,
             padding: widget.padding,
-            color: Colors.black.withOpacity(0.5),
-            child: SliderTheme(
-              data: SliderTheme.of(context),
-              child: Slider(
-                min: 0,
-                max: gallery.fileCount.toDouble() - 1,
-                value: _value,
-                divisions: gallery.fileCount,
-                label: '${_value.toInt() + 1}',
-                onChanged: (double value) {
-                  setState(() {
-                    _value = value;
-                  });
-                },
-                onChangeEnd: (double value) {
-                  viewStore.setPage(value.toInt());
-                },
+            child: Container(
+              height: _height,
+              color: Colors.black.withOpacity(0.4),
+              child: SliderTheme(
+                data: SliderTheme.of(context),
+                child: Slider(
+                  min: 0,
+                  max: gallery.fileCount.toDouble() - 1,
+                  value: _value,
+                  divisions: gallery.fileCount,
+                  label: '${_value.toInt() + 1}',
+                  onChanged: (double value) {
+                    setState(() {
+                      _value = value;
+                    });
+                  },
+                  onChangeEnd: (double value) {
+                    viewStore.setPage(value.toInt());
+                  },
+                ),
               ),
             ),
           ),

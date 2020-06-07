@@ -26,9 +26,9 @@ class EHentaiClient {
   })  : assert(httpClient != null),
         assert(sessionStore != null);
 
-  Map<String, String> _getRequestHeaders() {
+  Future<Map<String, String>> _getRequestHeaders() async {
     return {
-      HttpHeaders.cookieHeader: sessionStore.session,
+      HttpHeaders.cookieHeader: await sessionStore.session,
     };
   }
 
@@ -39,7 +39,7 @@ class EHentaiClient {
     developer.log('Get gallery ids (page: $page)');
     final res = await httpClient.get(
       '$baseUrl$path?page=$page',
-      headers: _getRequestHeaders(),
+      headers: await _getRequestHeaders(),
     );
 
     if (res.statusCode != 200) {
@@ -84,7 +84,7 @@ class EHentaiClient {
         'namespace': '1',
       }),
       headers: {
-        ..._getRequestHeaders(),
+        ...await _getRequestHeaders(),
         'Content-Type': 'application/json',
       },
     );
@@ -122,7 +122,7 @@ class EHentaiClient {
     developer.log('Get image ids (id: $galleryId, page: $page)');
     final res = await httpClient.get(
       '${getGalleryUrl(galleryId)}/?p=$page',
-      headers: _getRequestHeaders(),
+      headers: await _getRequestHeaders(),
     );
 
     if (res.statusCode != 200) {
@@ -167,7 +167,7 @@ class EHentaiClient {
     developer.log('Fetch image data (id: $id)');
     final res = await httpClient.get(
       getImageUrl(id),
-      headers: _getRequestHeaders(),
+      headers: await _getRequestHeaders(),
     );
 
     if (res.statusCode != 200) {

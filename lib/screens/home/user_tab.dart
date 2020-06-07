@@ -3,6 +3,7 @@ import 'package:ehreader/screens/setting/screen.dart';
 import 'package:ehreader/stores/session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 class UserTab extends StatelessWidget {
@@ -16,7 +17,8 @@ class UserTab extends StatelessWidget {
       children: <Widget>[
         Observer(
           builder: (context) {
-            if (sessionStore.loggedIn) {
+            if (sessionStore.session.status == FutureStatus.fulfilled &&
+                sessionStore.session.value.isNotEmpty) {
               return ListTile(
                 title: const Text('Log out'),
                 leading: Icon(Icons.exit_to_app),
@@ -28,7 +30,8 @@ class UserTab extends StatelessWidget {
 
             return ListTile(
               title: const Text('Log in'),
-              leading: Icon(Icons.person),
+              leading: const Icon(Icons.person),
+              enabled: sessionStore.session.status != FutureStatus.pending,
               onTap: () {
                 Navigator.pushNamed(context, LoginScreen.routeName);
               },

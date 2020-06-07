@@ -12,11 +12,16 @@ import 'package:share/share.dart';
 import 'store.dart';
 
 class ViewAppBar extends StatefulWidget implements PreferredSizeWidget {
-  @override
-  // ignore: avoid_field_initializers_in_const_classes
-  final Size preferredSize = const Size.fromHeight(56);
+  final EdgeInsets padding;
 
-  const ViewAppBar({Key key}) : super(key: key);
+  @override
+  final Size preferredSize;
+
+  ViewAppBar({
+    Key key,
+    this.padding = EdgeInsets.zero,
+  })  : preferredSize = Size.fromHeight(56 + padding.top),
+        super(key: key);
 
   @override
   _ViewAppBarState createState() => _ViewAppBarState();
@@ -82,25 +87,28 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
                 ..page = viewStore.currentPage + 1);
               final image = imageStore.data[imageStore.index[page]];
 
-              return AppBar(
-                elevation: 0,
-                backgroundColor: Colors.black.withOpacity(0.5),
-                title:
-                    Text('${viewStore.currentPage + 1} / ${gallery.fileCount}'),
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.share),
-                    tooltip: 'Share',
-                    onPressed: () {
-                      if (image != null) {
-                        Share.share(
-                          client.getImageUrl(image.id),
-                          subject: gallery.title,
-                        );
-                      }
-                    },
-                  )
-                ],
+              return Container(
+                padding: widget.padding,
+                child: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.black.withOpacity(0.25),
+                  title: Text(
+                      '${viewStore.currentPage + 1} / ${gallery.fileCount}'),
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(Icons.share),
+                      tooltip: 'Share',
+                      onPressed: () {
+                        if (image != null) {
+                          Share.share(
+                            client.getImageUrl(image.id),
+                            subject: gallery.title,
+                          );
+                        }
+                      },
+                    )
+                  ],
+                ),
               );
             },
           ),

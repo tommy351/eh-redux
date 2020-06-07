@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer' as developer;
 
 import 'package:ehreader/stores/session.dart';
@@ -45,8 +46,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> _checkCookie(SessionStore sessionStore) async {
     final controller = await _webViewController.future;
-    final cookieString = await controller.evaluateJavascript('document.cookie');
-    final cookies = parseCookies(cookieString.replaceAll(RegExp(r'^"|"$'), ''));
+    final cookieString =
+        jsonDecode(await controller.evaluateJavascript('document.cookie'))
+            as String;
+    final cookies = parseCookies(cookieString);
     developer.log('Get cookies: $cookies');
 
     if (cookies.containsKey('ipb_member_id')) {

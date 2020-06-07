@@ -49,27 +49,27 @@ class _ViewScreenContentState extends State<_ViewScreenContent> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final paddingBottom = mediaQuery.padding.bottom;
-    final padding = mediaQuery.padding.copyWith(bottom: 0);
 
-    return Provider.value(
-      value: _viewStore,
+    return Provider(
+      create: (_) => _viewStore,
       child: MediaQuery(
         data: mediaQuery.copyWith(
-          padding: padding,
-          viewPadding: padding,
-          viewInsets: padding,
+          padding: EdgeInsets.zero,
+          viewPadding: EdgeInsets.zero,
+          viewInsets: EdgeInsets.zero,
         ),
         child: Scaffold(
           backgroundColor: Colors.black,
-          appBar: const ViewAppBar(),
+          appBar: ViewAppBar(
+            padding: EdgeInsets.only(
+              top: mediaQuery.padding.top,
+            ),
+          ),
           extendBody: true,
           extendBodyBehindAppBar: true,
           body: const ViewBody(),
           bottomNavigationBar: ViewBottomNavigation(
-            padding: EdgeInsets.only(
-              bottom: paddingBottom,
-            ),
+            padding: mediaQuery.viewInsets,
           ),
         ),
       ),
