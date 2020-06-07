@@ -38,7 +38,7 @@ class GalleryScreen extends StatelessWidget {
           body: CustomScrollView(
             slivers: <Widget>[
               SliverAppBar(
-                floating: true,
+                pinned: true,
                 flexibleSpace: _buildPlaceholder(context, gallery),
                 expandedHeight: 200,
                 actions: <Widget>[
