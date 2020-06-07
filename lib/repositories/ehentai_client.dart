@@ -67,6 +67,7 @@ class EHentaiClient {
       body: jsonEncode({
         'method': 'gdata',
         'gidlist': ids.map((e) => [e.id, e.token]).toList(growable: false),
+        'namespace': '1',
       }),
       headers: {
         'Content-Type': 'application/json',
