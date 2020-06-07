@@ -91,7 +91,7 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
                 padding: widget.padding,
                 child: AppBar(
                   elevation: 0,
-                  backgroundColor: Colors.black.withOpacity(0.25),
+                  backgroundColor: Colors.black.withOpacity(0.4),
                   title: Text(
                       '${viewStore.currentPage + 1} / ${gallery.fileCount}'),
                   actions: <Widget>[
