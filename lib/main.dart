@@ -78,7 +78,9 @@ class _EHentaiReaderAppState extends State<EHentaiReaderApp> {
           ViewScreen.routeName: (context) => _buildRoute(
                 context: context,
                 child: const ViewScreen(),
-                navigationBarColor: Colors.transparent,
+                style: SystemUiOverlayStyle.dark.copyWith(
+                  systemNavigationBarColor: Colors.transparent,
+                ),
               ),
           SearchScreen.routeName: (context) => _buildRoute(
                 context: context,
@@ -92,31 +94,42 @@ class _EHentaiReaderAppState extends State<EHentaiReaderApp> {
   Widget _buildRoute({
     @required BuildContext context,
     @required Widget child,
-    Color navigationBarColor = Colors.black,
+    SystemUiOverlayStyle style,
   }) {
     if (_padding == null) {
       return Container();
     }
 
-    return MediaQuery(
-      data: MediaQuery.of(context).copyWith(
-        padding: _padding,
-        viewPadding: _padding,
-        viewInsets: _padding,
-      ),
-      child: Stack(
-        children: <Widget>[
-          Positioned.fill(child: child),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            height: _padding.bottom,
-            child: Container(
-              color: navigationBarColor,
+    final theme = Theme.of(context);
+
+    final overlayStyle = style ??
+        SystemUiOverlayStyle.light.copyWith(
+          systemNavigationBarIconBrightness: Brightness.dark,
+          systemNavigationBarColor: theme.scaffoldBackgroundColor,
+        );
+
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: overlayStyle,
+      child: MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          padding: _padding,
+          viewPadding: _padding,
+          viewInsets: _padding,
+        ),
+        child: Stack(
+          children: <Widget>[
+            Positioned.fill(child: child),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              height: _padding.bottom,
+              child: Container(
+                color: overlayStyle.systemNavigationBarColor,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
