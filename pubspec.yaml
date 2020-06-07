@@ -25,6 +25,8 @@ dependencies:
   shared_preferences: ">=0.5.7+3 <2.0.0"
   preload_page_view: ^0.1.4
   collection: ^1.14.12
+  flutter_secure_storage: ^3.3.3
+  webview_flutter: ^0.3.22+1
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
+import 'dart:io';
 
 import 'package:ehreader/models/gallery.dart';
 import 'package:ehreader/models/http_exception.dart';
 import 'package:ehreader/models/image.dart';
+import 'package:ehreader/stores/session.dart';
 import 'package:ehreader/utils/css.dart';
 import 'package:ehreader/utils/string.dart';
 import 'package:html/parser.dart' show parse;
@@ -16,17 +18,29 @@ class EHentaiClient {
   static const apiUrl = 'https://api.e-hentai.org/api.php';
 
   final http.Client httpClient;
+  final SessionStore sessionStore;
 
   EHentaiClient({
     @required this.httpClient,
-  }) : assert(httpClient != null);
+    @required this.sessionStore,
+  })  : assert(httpClient != null),
+        assert(sessionStore != null);
+
+  Map<String, String> _getRequestHeaders() {
+    return {
+      HttpHeaders.cookieHeader: sessionStore.session,
+    };
+  }
 
   Future<List<GalleryId>> getGalleryIds({
     String path = '/',
     int page = 0,
   }) async {
     developer.log('Get gallery ids (page: $page)');
-    final res = await httpClient.get('$baseUrl$path?page=$page');
+    final res = await httpClient.get(
+      '$baseUrl$path?page=$page',
+      headers: _getRequestHeaders(),
+    );
 
     if (res.statusCode != 200) {
       throw HttpException.fromResponse(
@@ -70,6 +84,7 @@ class EHentaiClient {
         'namespace': '1',
       }),
       headers: {
+        ..._getRequestHeaders(),
         'Content-Type': 'application/json',
       },
     );
@@ -105,7 +120,10 @@ class EHentaiClient {
 
   Future<List<ImageId>> getImageIds(GalleryId galleryId, int page) async {
     developer.log('Get image ids (id: $galleryId, page: $page)');
-    final res = await httpClient.get('${getGalleryUrl(galleryId)}/?p=$page');
+    final res = await httpClient.get(
+      '${getGalleryUrl(galleryId)}/?p=$page',
+      headers: _getRequestHeaders(),
+    );
 
     if (res.statusCode != 200) {
       throw HttpException.fromResponse(
@@ -147,7 +165,10 @@ class EHentaiClient {
 
   Future<Image> getImageData(ImageId id) async {
     developer.log('Fetch image data (id: $id)');
-    final res = await httpClient.get(getImageUrl(id));
+    final res = await httpClient.get(
+      getImageUrl(id),
+      headers: _getRequestHeaders(),
+    );
 
     if (res.statusCode != 200) {
       throw HttpException.fromResponse(

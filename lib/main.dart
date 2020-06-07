@@ -3,14 +3,20 @@ import 'dart:ui';
 import 'package:ehreader/repositories/ehentai_client.dart';
 import 'package:ehreader/screens/gallery/screen.dart';
 import 'package:ehreader/screens/home/screen.dart';
+import 'package:ehreader/screens/login/screen.dart';
 import 'package:ehreader/screens/search/screen.dart';
+import 'package:ehreader/screens/setting/screen.dart';
 import 'package:ehreader/screens/view/screen.dart';
 import 'package:ehreader/stores/gallery.dart';
 import 'package:ehreader/stores/image.dart';
+import 'package:ehreader/stores/session.dart';
+import 'package:ehreader/stores/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 const channel = MethodChannel('app.ehreader/main');
 
@@ -44,19 +50,42 @@ class _EHentaiReaderAppState extends State<EHentaiReaderApp> {
 
   @override
   Widget build(BuildContext context) {
-    final httpClient = http.Client();
-    final eHentaiClient = EHentaiClient(httpClient: httpClient);
-
     return MultiProvider(
       providers: [
-        Provider(
-          create: (context) => eHentaiClient,
+        FutureProvider<SharedPreferences>(
+          lazy: false,
+          create: (_) async => SharedPreferences.getInstance(),
         ),
-        Provider(
-          create: (context) => GalleryStore(client: eHentaiClient),
+        FutureProvider<SessionStore>(
+          lazy: false,
+          create: (_) async {
+            final sessionStore = SessionStore(
+              secureStorage: const FlutterSecureStorage(),
+            );
+            await sessionStore.loadSession();
+            return sessionStore;
+          },
         ),
-        Provider(
-          create: (context) => ImageStore(client: eHentaiClient),
+        ProxyProvider0<SettingStore>(
+          update: (context, _) => SettingStore(
+            sharedPreferences: Provider.of<SharedPreferences>(context),
+          ),
+        ),
+        ProxyProvider0<EHentaiClient>(
+          update: (context, _) => EHentaiClient(
+            httpClient: http.Client(),
+            sessionStore: Provider.of<SessionStore>(context),
+          ),
+        ),
+        ProxyProvider0<GalleryStore>(
+          update: (context, _) => GalleryStore(
+            client: Provider.of<EHentaiClient>(context),
+          ),
+        ),
+        ProxyProvider0<ImageStore>(
+          update: (context, _) => ImageStore(
+            client: Provider.of<EHentaiClient>(context),
+          ),
         ),
       ],
       child: MaterialApp(
@@ -85,6 +114,14 @@ class _EHentaiReaderAppState extends State<EHentaiReaderApp> {
           SearchScreen.routeName: (context) => _buildRoute(
                 context: context,
                 child: const SearchScreen(),
+              ),
+          LoginScreen.routeName: (context) => _buildRoute(
+                context: context,
+                child: const LoginScreen(),
+              ),
+          SettingScreen.routeName: (context) => _buildRoute(
+                context: context,
+                child: const SettingScreen(),
               ),
         },
       ),
