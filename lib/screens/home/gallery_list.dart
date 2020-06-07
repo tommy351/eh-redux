@@ -4,6 +4,7 @@ import 'package:ehreader/models/gallery.dart';
 import 'package:ehreader/screens/gallery/args.dart';
 import 'package:ehreader/screens/gallery/screen.dart';
 import 'package:ehreader/stores/gallery.dart';
+import 'package:ehreader/stores/setting.dart';
 import 'package:ehreader/widgets/center_progress_indicator.dart';
 import 'package:ehreader/widgets/gallery_header.dart';
 import 'package:ehreader/widgets/stateful_wrapper.dart';
@@ -98,7 +99,6 @@ class _GalleryListState extends State<GalleryList> {
   }
 
   Widget _buildRow(Gallery gallery) {
-    final theme = Theme.of(context);
     const thumbWidth = 112.0;
     const thumbHeight = 112.0;
 
@@ -132,12 +132,7 @@ class _GalleryListState extends State<GalleryList> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Expanded(
-                            child: Text(
-                              gallery.title,
-                              style: theme.textTheme.subtitle1,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                            child: _buildTitle(gallery),
                           ),
                           _buildTagList(gallery.tags),
                           const SizedBox(height: 8),
@@ -153,6 +148,27 @@ class _GalleryListState extends State<GalleryList> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildTitle(Gallery gallery) {
+    final theme = Theme.of(context);
+    final settingStore = Provider.of<SettingStore>(context);
+
+    return Observer(
+      builder: (context) {
+        final displayJapaneseTitle =
+            settingStore.displayJapaneseTitle.value ?? false;
+
+        return Text(
+          displayJapaneseTitle && gallery.titleJpn.isNotEmpty
+              ? gallery.titleJpn
+              : gallery.title,
+          style: theme.textTheme.subtitle1,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        );
+      },
     );
   }
 

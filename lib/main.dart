@@ -8,6 +8,7 @@ import 'package:ehreader/screens/view/screen.dart';
 import 'package:ehreader/stores/gallery.dart';
 import 'package:ehreader/stores/image.dart';
 import 'package:ehreader/stores/session.dart';
+import 'package:ehreader/stores/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -27,6 +28,7 @@ class _EHentaiReaderAppState extends State<EHentaiReaderApp> {
   EHentaiClient _eHentaiClient;
   GalleryStore _galleryStore;
   ImageStore _imageStore;
+  SettingStore _settingStore;
 
   @override
   void initState() {
@@ -40,6 +42,7 @@ class _EHentaiReaderAppState extends State<EHentaiReaderApp> {
     );
     _galleryStore = GalleryStore(client: _eHentaiClient);
     _imageStore = ImageStore(client: _eHentaiClient);
+    _settingStore = SettingStore();
   }
 
   @override
@@ -51,6 +54,9 @@ class _EHentaiReaderAppState extends State<EHentaiReaderApp> {
         ),
         Provider(
           create: (_) => _eHentaiClient,
+        ),
+        Provider(
+          create: (_) => _settingStore,
         ),
         Provider(
           create: (_) => _galleryStore,
