@@ -19,18 +19,27 @@ class ViewBottomNavigation extends StatefulWidget {
 }
 
 class _ViewBottomNavigationState extends State<ViewBottomNavigation>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   AnimationController _animationController;
   double _value = 0;
+  double _height;
+  Animation<Offset> _animation;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 300),
-      value: 0,
+      duration: const Duration(milliseconds: 500),
     );
+    _height = 60 + widget.padding.top + widget.padding.bottom;
+    _animation = Tween<Offset>(
+      begin: Offset(0, _height),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.ease,
+    ));
   }
 
   @override
@@ -68,17 +77,10 @@ class _ViewBottomNavigationState extends State<ViewBottomNavigation>
         };
       },
       builder: (context) {
-        final height = 60.0 + widget.padding.top + widget.padding.bottom;
-
-        final position = Tween<Offset>(
-          begin: Offset(0, height),
-          end: const Offset(0, 0),
-        ).animate(_animationController);
-
         return SlideTransition(
-          position: position,
+          position: _animation,
           child: Container(
-            height: height,
+            height: _height,
             padding: widget.padding,
             color: Colors.black.withOpacity(0.5),
             child: SliderTheme(
