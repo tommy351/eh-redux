@@ -9,6 +9,8 @@ part of 'gallery.dart';
 Serializer<Gallery> _$gallerySerializer = new _$GallerySerializer();
 Serializer<GalleryId> _$galleryIdSerializer = new _$GalleryIdSerializer();
 Serializer<GalleryTag> _$galleryTagSerializer = new _$GalleryTagSerializer();
+Serializer<GallerySearchOptions> _$gallerySearchOptionsSerializer =
+    new _$GallerySearchOptionsSerializer();
 Serializer<GalleryIdWithPage> _$galleryIdWithPageSerializer =
     new _$GalleryIdWithPageSerializer();
 
@@ -215,6 +217,52 @@ class _$GalleryTagSerializer implements StructuredSerializer<GalleryTag> {
           break;
         case 'tag':
           result.tag = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GallerySearchOptionsSerializer
+    implements StructuredSerializer<GallerySearchOptions> {
+  @override
+  final Iterable<Type> types = const [
+    GallerySearchOptions,
+    _$GallerySearchOptions
+  ];
+  @override
+  final String wireName = 'GallerySearchOptions';
+
+  @override
+  Iterable<Object> serialize(
+      Serializers serializers, GallerySearchOptions object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'query',
+      serializers.serialize(object.query,
+          specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GallerySearchOptions deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GallerySearchOptionsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'query':
+          result.query = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -719,6 +767,87 @@ class GalleryTagBuilder implements Builder<GalleryTag, GalleryTagBuilder> {
   @override
   _$GalleryTag build() {
     final _$result = _$v ?? new _$GalleryTag._(namespace: namespace, tag: tag);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GallerySearchOptions extends GallerySearchOptions {
+  @override
+  final String query;
+
+  factory _$GallerySearchOptions(
+          [void Function(GallerySearchOptionsBuilder) updates]) =>
+      (new GallerySearchOptionsBuilder()..update(updates)).build();
+
+  _$GallerySearchOptions._({this.query}) : super._() {
+    if (query == null) {
+      throw new BuiltValueNullFieldError('GallerySearchOptions', 'query');
+    }
+  }
+
+  @override
+  GallerySearchOptions rebuild(
+          void Function(GallerySearchOptionsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GallerySearchOptionsBuilder toBuilder() =>
+      new GallerySearchOptionsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GallerySearchOptions && query == other.query;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc(0, query.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GallerySearchOptions')
+          ..add('query', query))
+        .toString();
+  }
+}
+
+class GallerySearchOptionsBuilder
+    implements Builder<GallerySearchOptions, GallerySearchOptionsBuilder> {
+  _$GallerySearchOptions _$v;
+
+  String _query;
+  String get query => _$this._query;
+  set query(String query) => _$this._query = query;
+
+  GallerySearchOptionsBuilder();
+
+  GallerySearchOptionsBuilder get _$this {
+    if (_$v != null) {
+      _query = _$v.query;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GallerySearchOptions other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GallerySearchOptions;
+  }
+
+  @override
+  void update(void Function(GallerySearchOptionsBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GallerySearchOptions build() {
+    final _$result = _$v ?? new _$GallerySearchOptions._(query: query);
     replace(_$result);
     return _$result;
   }

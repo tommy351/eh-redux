@@ -32,13 +32,10 @@ class EHentaiClient {
     };
   }
 
-  Future<List<GalleryId>> getGalleryIds({
-    String path = '/',
-    int page = 0,
-  }) async {
-    developer.log('Get gallery ids (page: $page)');
+  Future<List<GalleryId>> getGalleryIds(String path) async {
+    developer.log('Get gallery ids (path: $path)');
     final res = await httpClient.get(
-      '$baseUrl$path?page=$page',
+      '$baseUrl$path',
       headers: await _getRequestHeaders(),
     );
 

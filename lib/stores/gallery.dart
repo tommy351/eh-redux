@@ -82,8 +82,7 @@ abstract class _GalleryStoreBase with Store {
         _getPaginationByKey(key).rebuild((b) => b.loading = true);
 
     try {
-      final ids =
-          await client.getGalleryIds(path: _getListPath(key), page: page);
+      final ids = await client.getGalleryIds(_getListPath(key, page));
       final galleries = await client.getGalleriesData(ids);
 
       addAll(galleries);
@@ -98,11 +97,21 @@ abstract class _GalleryStoreBase with Store {
     }
   }
 
-  String _getListPath(GalleryPaginationKey key) {
+  String _getListPath(GalleryPaginationKey key, int page) {
+    String path = '/';
+    final params = <String, String>{'page': '$page'};
+
     if (key is GalleryPaginationKeyFavorite) {
-      return '/favorites.php';
+      path = '/favorites.php';
+    } else if (key is GalleryPaginationKeySearch) {
+      params['f_search'] = key.options.query;
     }
 
-    return '';
+    final query = params.entries
+        .map((e) =>
+            '${Uri.encodeQueryComponent(e.key)}=${Uri.encodeQueryComponent(e.value)}')
+        .join('&');
+
+    return '$path?$query';
   }
 }

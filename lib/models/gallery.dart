@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:ehreader/utils/datetime.dart';
+import 'package:meta/meta.dart';
 
 part 'gallery.g.dart';
 
@@ -99,6 +100,41 @@ class GalleryPaginationKeyFrontPage extends GalleryPaginationKey {
 
 class GalleryPaginationKeyFavorite extends GalleryPaginationKey {
   const GalleryPaginationKeyFavorite();
+}
+
+class GalleryPaginationKeySearch extends GalleryPaginationKey {
+  final GallerySearchOptions options;
+
+  GalleryPaginationKeySearch({
+    @required this.options,
+  }) : assert(options != null);
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is GalleryPaginationKeySearch &&
+          runtimeType == other.runtimeType &&
+          options == other.options;
+
+  @override
+  int get hashCode => options.hashCode;
+
+  @override
+  String toString() {
+    return 'GalleryPaginationKeySearch{options: $options}';
+  }
+}
+
+abstract class GallerySearchOptions
+    implements Built<GallerySearchOptions, GallerySearchOptionsBuilder> {
+  static Serializer<GallerySearchOptions> get serializer =>
+      _$gallerySearchOptionsSerializer;
+
+  String get query;
+
+  factory GallerySearchOptions(
+      [Function(GallerySearchOptionsBuilder) updates]) = _$GallerySearchOptions;
+  GallerySearchOptions._();
 }
 
 abstract class GalleryIdWithPage
