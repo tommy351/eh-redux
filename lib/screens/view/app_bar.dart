@@ -52,6 +52,10 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
   @override
   void dispose() {
     _animationController.dispose();
+    SystemChrome.setEnabledSystemUIOverlays([
+      SystemUiOverlay.top,
+      SystemUiOverlay.bottom,
+    ]);
     super.dispose();
   }
 
