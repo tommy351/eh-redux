@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:collection/collection.dart';
 import 'package:ehreader/models/gallery.dart';
 import 'package:ehreader/repositories/ehentai_client.dart';
 import 'package:ehreader/screens/gallery/args.dart';
@@ -60,19 +61,6 @@ class GalleryScreen extends StatelessWidget {
               ),
             ],
           ),
-          floatingActionButton: FloatingActionButton.extended(
-            icon: Icon(Icons.chevron_right),
-            label: const Text('Read'),
-            backgroundColor: Colors.pinkAccent,
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                ViewScreen.routeName,
-                arguments:
-                    ViewScreenArguments((b) => b..id = gallery.id.toBuilder()),
-              );
-            },
-          ),
         );
       },
     );
@@ -116,7 +104,7 @@ class GalleryScreen extends StatelessWidget {
           const SizedBox(height: 8),
           _buildTitle(context, gallery),
           _buildSubtitle(context, gallery),
-          const Divider(),
+          _buildActions(context, gallery),
           _buildTags(context, gallery),
         ],
       ),
@@ -148,33 +136,82 @@ class GalleryScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildActions(BuildContext context, Gallery gallery) {
+    return ButtonBar(
+      alignment: MainAxisAlignment.center,
+      children: <Widget>[
+        FlatButton.icon(
+          icon: Icon(Icons.play_arrow),
+          label: const Text('Read'),
+          onPressed: () {
+            Navigator.pushNamed(
+              context,
+              ViewScreen.routeName,
+              arguments:
+                  ViewScreenArguments((b) => b..id = gallery.id.toBuilder()),
+            );
+          },
+        ),
+        FlatButton.icon(
+          icon: Icon(Icons.star_border),
+          label: const Text('Fav'),
+          onPressed: () {
+            //
+          },
+        )
+      ],
+    );
+  }
+
+  Widget _buildDivider() {
+    return const Divider(height: 32);
+  }
+
+  Widget _buildSectionTitle(BuildContext context, String title) {
+    final theme = Theme.of(context);
+
+    return Text(
+      title,
+      style: theme.textTheme.headline6.copyWith(fontWeight: FontWeight.normal),
+    );
+  }
+
   Widget _buildTags(BuildContext context, Gallery gallery) {
     if (gallery.tags == null || gallery.tags.isEmpty) {
       return Container();
     }
 
     final theme = Theme.of(context);
+    final groups = groupBy<GalleryTag, String>(
+        gallery.tags, (tag) => tag.namespace.isEmpty ? 'misc' : tag.namespace);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Tags',
-          style: theme.textTheme.bodyText1,
-        ),
-        const SizedBox(height: 8),
-        Container(
-          height: 36,
-          child: ListView.separated(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            separatorBuilder: (context, i) => const SizedBox(width: 8),
-            itemBuilder: (context, i) {
-              return Chip(label: Text(gallery.tags[i].fullTag()));
-            },
-            itemCount: gallery.tags.length,
-          ),
-        ),
+        _buildDivider(),
+        _buildSectionTitle(context, 'Tags'),
+        ...groups.entries.map((e) {
+          return Row(
+            children: <Widget>[
+              Text(e.key, style: theme.textTheme.bodyText2),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Container(
+                  height: 42,
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, i) {
+                      return Chip(label: Text(e.value[i].tag));
+                    },
+                    separatorBuilder: (context, i) => const SizedBox(width: 8),
+                    itemCount: e.value.length,
+                  ),
+                ),
+              ),
+            ],
+          );
+        }),
       ],
     );
   }
