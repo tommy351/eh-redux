@@ -18,7 +18,7 @@ abstract class Gallery implements Built<Gallery, GalleryBuilder> {
   int get fileSize;
   bool get expunged;
   double get rating;
-  BuiltList<String> get tags;
+  BuiltList<GalleryTag> get tags;
   DateTime get posted;
 
   factory Gallery([Function(GalleryBuilder) updates]) = _$Gallery;
@@ -28,6 +28,8 @@ abstract class Gallery implements Built<Gallery, GalleryBuilder> {
     final id = GalleryIdBuilder()
       ..id = json['gid'] as int
       ..token = json['token'].toString();
+    final tags =
+        (json['tags'] as List).map((e) => GalleryTag.fromString(e as String));
 
     return Gallery((b) => b
       ..id = id
@@ -40,7 +42,7 @@ abstract class Gallery implements Built<Gallery, GalleryBuilder> {
       ..fileSize = json['filesize'] as int
       ..expunged = json['expunged'] as bool
       ..rating = double.tryParse(json['rating'].toString())
-      ..tags = BuiltList<String>.from(json['tags'] as List).toBuilder()
+      ..tags = BuiltList<GalleryTag>.from(tags).toBuilder()
       ..posted = tryParseSecondsSinceEpoch(json['posted'].toString()));
   }
 }
@@ -53,6 +55,38 @@ abstract class GalleryId implements Built<GalleryId, GalleryIdBuilder> {
 
   factory GalleryId([Function(GalleryIdBuilder) updates]) = _$GalleryId;
   GalleryId._();
+}
+
+abstract class GalleryTag implements Built<GalleryTag, GalleryTagBuilder> {
+  static const delimiter = ':';
+
+  static Serializer<GalleryTag> get serializer => _$galleryTagSerializer;
+
+  String get namespace;
+  String get tag;
+
+  factory GalleryTag([Function(GalleryTagBuilder) updates]) = _$GalleryTag;
+  GalleryTag._();
+
+  factory GalleryTag.fromString(String s) {
+    final parts = s.split(delimiter);
+
+    if (parts.length < 2) {
+      return GalleryTag((b) => b
+        ..namespace = ''
+        ..tag = parts[0]);
+    }
+
+    return GalleryTag((b) => b
+      ..namespace = parts[0]
+      ..tag = parts.sublist(1).join(delimiter));
+  }
+
+  String fullTag() => namespace.isEmpty ? tag : '$namespace$delimiter$tag';
+
+  String shortTag() => namespace.isEmpty || namespace == 'language'
+      ? tag
+      : '${namespace.substring(0, 1)}$delimiter$tag';
 }
 
 class GalleryPaginationKey {

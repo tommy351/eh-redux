@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ehreader/models/gallery.dart';
 import 'package:ehreader/screens/gallery/args.dart';
@@ -138,7 +139,7 @@ class _GalleryListState extends State<GalleryList> {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          _buildTagList(gallery.tags.toList()),
+                          _buildTagList(gallery.tags),
                           const SizedBox(height: 8),
                           GalleryHeader(gallery),
                         ],
@@ -155,7 +156,7 @@ class _GalleryListState extends State<GalleryList> {
     );
   }
 
-  Widget _buildTagList(List<String> tags) {
+  Widget _buildTagList(BuiltList<GalleryTag> tags) {
     final theme = Theme.of(context);
     final textStyle = theme.textTheme.caption;
 
@@ -166,7 +167,7 @@ class _GalleryListState extends State<GalleryList> {
         shrinkWrap: true,
         separatorBuilder: (context, i) => Text(', ', style: textStyle),
         itemBuilder: (context, i) {
-          return Text(tags[i], style: textStyle);
+          return Text(tags.elementAt(i).shortTag(), style: textStyle);
         },
         itemCount: tags.length,
       ),

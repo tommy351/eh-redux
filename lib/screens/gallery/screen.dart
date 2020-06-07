@@ -170,7 +170,7 @@ class GalleryScreen extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             separatorBuilder: (context, i) => const SizedBox(width: 8),
             itemBuilder: (context, i) {
-              return Chip(label: Text(gallery.tags[i]));
+              return Chip(label: Text(gallery.tags[i].fullTag()));
             },
             itemCount: gallery.tags.length,
           ),

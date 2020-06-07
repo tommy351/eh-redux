@@ -8,6 +8,7 @@ part of 'gallery.dart';
 
 Serializer<Gallery> _$gallerySerializer = new _$GallerySerializer();
 Serializer<GalleryId> _$galleryIdSerializer = new _$GalleryIdSerializer();
+Serializer<GalleryTag> _$galleryTagSerializer = new _$GalleryTagSerializer();
 Serializer<GalleryIdWithPage> _$galleryIdWithPageSerializer =
     new _$GalleryIdWithPageSerializer();
 
@@ -54,7 +55,7 @@ class _$GallerySerializer implements StructuredSerializer<Gallery> {
       'tags',
       serializers.serialize(object.tags,
           specifiedType:
-              const FullType(BuiltList, const [const FullType(String)])),
+              const FullType(BuiltList, const [const FullType(GalleryTag)])),
       'posted',
       serializers.serialize(object.posted,
           specifiedType: const FullType(DateTime)),
@@ -116,8 +117,8 @@ class _$GallerySerializer implements StructuredSerializer<Gallery> {
           break;
         case 'tags':
           result.tags.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(String)]))
+                  specifiedType: const FullType(
+                      BuiltList, const [const FullType(GalleryTag)]))
               as BuiltList<Object>);
           break;
         case 'posted':
@@ -168,6 +169,52 @@ class _$GalleryIdSerializer implements StructuredSerializer<GalleryId> {
           break;
         case 'token':
           result.token = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GalleryTagSerializer implements StructuredSerializer<GalleryTag> {
+  @override
+  final Iterable<Type> types = const [GalleryTag, _$GalleryTag];
+  @override
+  final String wireName = 'GalleryTag';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, GalleryTag object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'namespace',
+      serializers.serialize(object.namespace,
+          specifiedType: const FullType(String)),
+      'tag',
+      serializers.serialize(object.tag, specifiedType: const FullType(String)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GalleryTag deserialize(Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GalleryTagBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'namespace':
+          result.namespace = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'tag':
+          result.tag = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
       }
@@ -247,7 +294,7 @@ class _$Gallery extends Gallery {
   @override
   final double rating;
   @override
-  final BuiltList<String> tags;
+  final BuiltList<GalleryTag> tags;
   @override
   final DateTime posted;
 
@@ -419,9 +466,10 @@ class GalleryBuilder implements Builder<Gallery, GalleryBuilder> {
   double get rating => _$this._rating;
   set rating(double rating) => _$this._rating = rating;
 
-  ListBuilder<String> _tags;
-  ListBuilder<String> get tags => _$this._tags ??= new ListBuilder<String>();
-  set tags(ListBuilder<String> tags) => _$this._tags = tags;
+  ListBuilder<GalleryTag> _tags;
+  ListBuilder<GalleryTag> get tags =>
+      _$this._tags ??= new ListBuilder<GalleryTag>();
+  set tags(ListBuilder<GalleryTag> tags) => _$this._tags = tags;
 
   DateTime _posted;
   DateTime get posted => _$this._posted;
@@ -581,6 +629,96 @@ class GalleryIdBuilder implements Builder<GalleryId, GalleryIdBuilder> {
   @override
   _$GalleryId build() {
     final _$result = _$v ?? new _$GalleryId._(id: id, token: token);
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GalleryTag extends GalleryTag {
+  @override
+  final String namespace;
+  @override
+  final String tag;
+
+  factory _$GalleryTag([void Function(GalleryTagBuilder) updates]) =>
+      (new GalleryTagBuilder()..update(updates)).build();
+
+  _$GalleryTag._({this.namespace, this.tag}) : super._() {
+    if (namespace == null) {
+      throw new BuiltValueNullFieldError('GalleryTag', 'namespace');
+    }
+    if (tag == null) {
+      throw new BuiltValueNullFieldError('GalleryTag', 'tag');
+    }
+  }
+
+  @override
+  GalleryTag rebuild(void Function(GalleryTagBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GalleryTagBuilder toBuilder() => new GalleryTagBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GalleryTag &&
+        namespace == other.namespace &&
+        tag == other.tag;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, namespace.hashCode), tag.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GalleryTag')
+          ..add('namespace', namespace)
+          ..add('tag', tag))
+        .toString();
+  }
+}
+
+class GalleryTagBuilder implements Builder<GalleryTag, GalleryTagBuilder> {
+  _$GalleryTag _$v;
+
+  String _namespace;
+  String get namespace => _$this._namespace;
+  set namespace(String namespace) => _$this._namespace = namespace;
+
+  String _tag;
+  String get tag => _$this._tag;
+  set tag(String tag) => _$this._tag = tag;
+
+  GalleryTagBuilder();
+
+  GalleryTagBuilder get _$this {
+    if (_$v != null) {
+      _namespace = _$v.namespace;
+      _tag = _$v.tag;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GalleryTag other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GalleryTag;
+  }
+
+  @override
+  void update(void Function(GalleryTagBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GalleryTag build() {
+    final _$result = _$v ?? new _$GalleryTag._(namespace: namespace, tag: tag);
     replace(_$result);
     return _$result;
   }
