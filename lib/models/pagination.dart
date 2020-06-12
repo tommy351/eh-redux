@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
@@ -21,7 +23,8 @@ abstract class Pagination<T>
 
 abstract class PaginationBuilder<T>
     implements Builder<Pagination<T>, PaginationBuilder<T>> {
-  BuiltSet<T> index = BuiltSet();
+  BuiltSet<T> index =
+      (SetBuilder<T>()..withBase(() => LinkedHashSet<T>())).build();
   bool loading = false;
   bool noMore = false;
   int currentPage = -1;
