@@ -1,9 +1,8 @@
+import 'package:eh_redux/screens/search/body.dart';
 import 'package:eh_redux/screens/search/store.dart';
 import 'package:eh_redux/screens/search/text_field.dart';
 import 'package:eh_redux/stores/gallery.dart';
-import 'package:eh_redux/widgets/gallery_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -51,15 +50,7 @@ class _SearchScreenContent extends StatelessWidget {
           )
         ],
       ),
-      body: Observer(
-        builder: (context) {
-          if (searchStore.paginationKey == null) {
-            return Container();
-          }
-
-          return GalleryList(paginationKey: searchStore.paginationKey);
-        },
-      ),
+      body: const SearchBody(),
     );
   }
 }

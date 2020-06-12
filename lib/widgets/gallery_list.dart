@@ -7,7 +7,6 @@ import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/stores/setting.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:eh_redux/widgets/gallery_header.dart';
-import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +31,7 @@ class _GalleryListState extends State<GalleryList> {
   void initState() {
     super.initState();
     _scrollController = ScrollController()..addListener(_handleScroll);
+    _loadInitialPage();
   }
 
   @override
@@ -41,64 +41,72 @@ class _GalleryListState extends State<GalleryList> {
   }
 
   @override
+  void didUpdateWidget(GalleryList oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.paginationKey != widget.paginationKey) {
+      _loadInitialPage();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final galleryStore = Provider.of<GalleryStore>(context);
     final theme = Theme.of(context);
 
-    return StatefulWrapper(
-      onInit: (context) {
-        galleryStore.loadInitialPage(widget.paginationKey);
-        return () => {};
-      },
+    return Observer(
       builder: (context) {
-        return Observer(
-          builder: (context) {
-            final pagination = galleryStore.paginations[widget.paginationKey];
+        final pagination = galleryStore.paginations[widget.paginationKey];
 
-            if (pagination == null) {
-              return const CenterProgressIndicator();
-            }
+        if (pagination == null) {
+          return const CenterProgressIndicator();
+        }
 
-            final index = pagination.index;
+        final index = pagination.index;
 
-            if (index.isEmpty) {
-              if (pagination.loading) {
-                return const CenterProgressIndicator();
+        if (index.isEmpty) {
+          if (pagination.loading) {
+            return const CenterProgressIndicator();
+          }
+
+          return Center(
+            child: Text('No data', style: theme.textTheme.headline6),
+          );
+        }
+
+        final galleries = index
+            .map((id) => galleryStore.data[id])
+            .where((element) => element != null);
+
+        return RefreshIndicator(
+          onRefresh: () async {
+            await galleryStore.refreshPage(widget.paginationKey);
+          },
+          child: ListView.builder(
+            controller: _scrollController,
+            itemBuilder: (context, i) {
+              if (i >= galleries.length) {
+                return const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: CenterProgressIndicator(),
+                );
               }
 
-              return Center(
-                child: Text('No data', style: theme.textTheme.headline6),
-              );
-            }
-
-            final galleries = index
-                .map((id) => galleryStore.data[id])
-                .where((element) => element != null);
-
-            return RefreshIndicator(
-              onRefresh: () async {
-                await galleryStore.refreshPage(widget.paginationKey);
-              },
-              child: ListView.builder(
-                controller: _scrollController,
-                itemBuilder: (context, i) {
-                  if (i >= galleries.length) {
-                    return const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: CenterProgressIndicator(),
-                    );
-                  }
-
-                  return _buildRow(galleries.elementAt(i));
-                },
-                itemCount:
-                    pagination.noMore ? galleries.length : galleries.length + 1,
-              ),
-            );
-          },
+              return _buildRow(galleries.elementAt(i));
+            },
+            itemCount:
+                pagination.noMore ? galleries.length : galleries.length + 1,
+          ),
         );
       },
     );
+  }
+
+  void _loadInitialPage() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      final galleryStore = Provider.of<GalleryStore>(context, listen: false);
+      galleryStore.loadInitialPage(widget.paginationKey);
+    });
   }
 
   Widget _buildRow(Gallery gallery) {
