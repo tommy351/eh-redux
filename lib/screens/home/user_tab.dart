@@ -11,33 +11,9 @@ class UserTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sessionStore = Provider.of<SessionStore>(context);
-
     return ListView(
       children: <Widget>[
-        Observer(
-          builder: (context) {
-            if (sessionStore.session.status == FutureStatus.fulfilled &&
-                sessionStore.session.value.isNotEmpty) {
-              return ListTile(
-                title: const Text('Log out'),
-                leading: Icon(Icons.exit_to_app),
-                onTap: () {
-                  sessionStore.deleteSession();
-                },
-              );
-            }
-
-            return ListTile(
-              title: const Text('Log in'),
-              leading: const Icon(Icons.person),
-              enabled: sessionStore.session.status != FutureStatus.pending,
-              onTap: () {
-                Navigator.pushNamed(context, LoginScreen.routeName);
-              },
-            );
-          },
-        ),
+        _buildLoginTile(context),
         ListTile(
           title: const Text('Settings'),
           leading: Icon(Icons.settings),
@@ -46,6 +22,35 @@ class UserTab extends StatelessWidget {
           },
         ),
       ],
+    );
+  }
+
+  Widget _buildLoginTile(BuildContext context) {
+    final sessionStore = Provider.of<SessionStore>(context);
+
+    return Observer(
+      builder: (context) {
+        final session = sessionStore.session;
+
+        if (session.status == FutureStatus.fulfilled &&
+            session.value != null &&
+            session.value.isNotEmpty) {
+          return ListTile(
+            title: const Text('Log out'),
+            leading: Icon(Icons.exit_to_app),
+            onTap: () {},
+          );
+        }
+
+        return ListTile(
+          title: const Text('Log in'),
+          leading: const Icon(Icons.person),
+          enabled: session.status != FutureStatus.pending,
+          onTap: () {
+            Navigator.pushNamed(context, LoginScreen.routeName);
+          },
+        );
+      },
     );
   }
 }
