@@ -1,5 +1,5 @@
-import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/widgets/gallery_list.dart';
+import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/widgets/gallery_list.dart';
 import 'package:flutter/material.dart';
 
 class FavoriteTab extends StatelessWidget {

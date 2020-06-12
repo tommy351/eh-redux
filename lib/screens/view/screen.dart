@@ -1,5 +1,5 @@
-import 'package:ehreader/stores/gallery.dart';
-import 'package:ehreader/widgets/center_progress_indicator.dart';
+import 'package:eh_redux/stores/gallery.dart';
+import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';

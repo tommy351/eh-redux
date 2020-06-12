@@ -1,6 +1,6 @@
-import 'package:ehreader/screens/login/screen.dart';
-import 'package:ehreader/screens/setting/screen.dart';
-import 'package:ehreader/stores/session.dart';
+import 'package:eh_redux/screens/login/screen.dart';
+import 'package:eh_redux/screens/setting/screen.dart';
+import 'package:eh_redux/stores/session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';

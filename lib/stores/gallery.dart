@@ -1,7 +1,7 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/models/pagination.dart';
-import 'package:ehreader/repositories/ehentai_client.dart';
+import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/models/pagination.dart';
+import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 

@@ -1,4 +1,4 @@
-import 'package:ehreader/screens/search/store.dart';
+import 'package:eh_redux/screens/search/store.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

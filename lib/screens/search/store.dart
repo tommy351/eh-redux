@@ -1,5 +1,5 @@
-import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/stores/gallery.dart';
+import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/stores/gallery.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 

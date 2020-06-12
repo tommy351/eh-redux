@@ -1,6 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
-import 'package:ehreader/models/gallery.dart';
+import 'package:eh_redux/models/gallery.dart';
 
 part 'image.g.dart';
 

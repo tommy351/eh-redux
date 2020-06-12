@@ -1,7 +1,7 @@
-import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/stores/image.dart';
-import 'package:ehreader/widgets/center_progress_indicator.dart';
-import 'package:ehreader/widgets/stateful_wrapper.dart';
+import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/stores/image.dart';
+import 'package:eh_redux/widgets/center_progress_indicator.dart';
+import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:photo_view/photo_view.dart';

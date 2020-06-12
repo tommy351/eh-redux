@@ -1,7 +1,7 @@
-import 'package:ehreader/screens/search/store.dart';
-import 'package:ehreader/screens/search/text_field.dart';
-import 'package:ehreader/stores/gallery.dart';
-import 'package:ehreader/widgets/gallery_list.dart';
+import 'package:eh_redux/screens/search/store.dart';
+import 'package:eh_redux/screens/search/text_field.dart';
+import 'package:eh_redux/stores/gallery.dart';
+import 'package:eh_redux/widgets/gallery_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';

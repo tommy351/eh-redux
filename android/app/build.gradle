@@ -48,7 +48,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "app.ehreader"
+        applicationId "app.ehredux"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()

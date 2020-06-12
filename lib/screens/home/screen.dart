@@ -1,4 +1,4 @@
-import 'package:ehreader/screens/search/screen.dart';
+import 'package:eh_redux/screens/search/screen.dart';
 import 'package:flutter/material.dart';
 
 import 'favorite_tab.dart';

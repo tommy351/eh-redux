@@ -1,7 +1,7 @@
-import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/repositories/ehentai_client.dart';
-import 'package:ehreader/stores/image.dart';
-import 'package:ehreader/widgets/stateful_wrapper.dart';
+import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/repositories/ehentai_client.dart';
+import 'package:eh_redux/stores/image.dart';
+import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
-import 'package:ehreader/stores/session.dart';
-import 'package:ehreader/utils/cookie.dart';
+import 'package:eh_redux/stores/session.dart';
+import 'package:eh_redux/utils/cookie.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';

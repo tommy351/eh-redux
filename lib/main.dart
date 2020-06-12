@@ -1,14 +1,14 @@
-import 'package:ehreader/repositories/ehentai_client.dart';
-import 'package:ehreader/screens/gallery/screen.dart';
-import 'package:ehreader/screens/home/screen.dart';
-import 'package:ehreader/screens/login/screen.dart';
-import 'package:ehreader/screens/search/screen.dart';
-import 'package:ehreader/screens/setting/screen.dart';
-import 'package:ehreader/screens/view/screen.dart';
-import 'package:ehreader/stores/gallery.dart';
-import 'package:ehreader/stores/image.dart';
-import 'package:ehreader/stores/session.dart';
-import 'package:ehreader/stores/setting.dart';
+import 'package:eh_redux/repositories/ehentai_client.dart';
+import 'package:eh_redux/screens/gallery/screen.dart';
+import 'package:eh_redux/screens/home/screen.dart';
+import 'package:eh_redux/screens/login/screen.dart';
+import 'package:eh_redux/screens/search/screen.dart';
+import 'package:eh_redux/screens/setting/screen.dart';
+import 'package:eh_redux/screens/view/screen.dart';
+import 'package:eh_redux/stores/gallery.dart';
+import 'package:eh_redux/stores/image.dart';
+import 'package:eh_redux/stores/session.dart';
+import 'package:eh_redux/stores/setting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -66,7 +66,7 @@ class _EHentaiReaderAppState extends State<EHentaiReaderApp> {
         ),
       ],
       child: MaterialApp(
-        title: 'E-Hentai Reader',
+        title: 'EH Redux',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,

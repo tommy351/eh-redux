@@ -1,6 +1,6 @@
-import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/models/image.dart';
-import 'package:ehreader/repositories/ehentai_client.dart';
+import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/models/image.dart';
+import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 

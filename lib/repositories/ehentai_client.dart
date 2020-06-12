@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
-import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/models/http_exception.dart';
-import 'package:ehreader/models/image.dart';
-import 'package:ehreader/stores/session.dart';
-import 'package:ehreader/utils/css.dart';
-import 'package:ehreader/utils/string.dart';
+import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/models/http_exception.dart';
+import 'package:eh_redux/models/image.dart';
+import 'package:eh_redux/stores/session.dart';
+import 'package:eh_redux/utils/css.dart';
+import 'package:eh_redux/utils/string.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';

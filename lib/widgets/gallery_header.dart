@@ -1,5 +1,5 @@
-import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/widgets/rating_bar.dart';
+import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/widgets/rating_bar.dart';
 import 'package:flutter/material.dart';
 
 class GalleryHeader extends StatelessWidget {

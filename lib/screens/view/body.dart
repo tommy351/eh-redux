@@ -1,5 +1,5 @@
-import 'package:ehreader/models/gallery.dart';
-import 'package:ehreader/widgets/stateful_wrapper.dart';
+import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:preload_page_view/preload_page_view.dart';
