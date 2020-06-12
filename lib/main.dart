@@ -14,16 +14,16 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-void main() => runApp(const EHentaiReaderApp());
+void main() => runApp(const MainApp());
 
-class EHentaiReaderApp extends StatefulWidget {
-  const EHentaiReaderApp({Key key}) : super(key: key);
+class MainApp extends StatefulWidget {
+  const MainApp({Key key}) : super(key: key);
 
   @override
-  _EHentaiReaderAppState createState() => _EHentaiReaderAppState();
+  _MainAppState createState() => _MainAppState();
 }
 
-class _EHentaiReaderAppState extends State<EHentaiReaderApp> {
+class _MainAppState extends State<MainApp> {
   SessionStore _sessionStore;
   EHentaiClient _eHentaiClient;
   GalleryStore _galleryStore;
