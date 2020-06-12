@@ -13,8 +13,6 @@ class SearchBody extends StatelessWidget {
 
     return Observer(
       builder: (context) {
-        print(searchStore.paginationKey);
-
         if (searchStore.paginationKey == null) {
           return Container();
         }
