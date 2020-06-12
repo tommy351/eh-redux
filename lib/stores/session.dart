@@ -4,6 +4,12 @@ import 'package:mobx/mobx.dart';
 
 part 'session.g.dart';
 
+enum LoginStatus {
+  pending,
+  notLoggedIn,
+  loggedIn,
+}
+
 class SessionStore = _SessionStoreBase with _$SessionStore;
 
 abstract class _SessionStoreBase with Store {
@@ -14,6 +20,17 @@ abstract class _SessionStoreBase with Store {
 
   @observable
   ObservableFuture<String> session;
+
+  @computed
+  LoginStatus get loginStatus {
+    if (session.value != null && session.value.isNotEmpty) {
+      return LoginStatus.loggedIn;
+    }
+
+    return session.status == FutureStatus.pending
+        ? LoginStatus.pending
+        : LoginStatus.notLoggedIn;
+  }
 
   _SessionStoreBase({
     @required this.secureStorage,

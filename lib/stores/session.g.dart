@@ -9,6 +9,14 @@ part of 'session.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SessionStore on _SessionStoreBase, Store {
+  Computed<LoginStatus> _$loginStatusComputed;
+
+  @override
+  LoginStatus get loginStatus =>
+      (_$loginStatusComputed ??= Computed<LoginStatus>(() => super.loginStatus,
+              name: '_SessionStoreBase.loginStatus'))
+          .value;
+
   final _$sessionAtom = Atom(name: '_SessionStoreBase.session');
 
   @override
@@ -42,7 +50,8 @@ mixin _$SessionStore on _SessionStoreBase, Store {
   @override
   String toString() {
     return '''
-session: ${session}
+session: ${session},
+loginStatus: ${loginStatus}
     ''';
   }
 }

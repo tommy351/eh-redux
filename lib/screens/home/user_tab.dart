@@ -3,7 +3,6 @@ import 'package:eh_redux/screens/setting/screen.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 class UserTab extends StatelessWidget {
@@ -30,11 +29,7 @@ class UserTab extends StatelessWidget {
 
     return Observer(
       builder: (context) {
-        final session = sessionStore.session;
-
-        if (session.status == FutureStatus.fulfilled &&
-            session.value != null &&
-            session.value.isNotEmpty) {
+        if (sessionStore.loginStatus == LoginStatus.loggedIn) {
           return ListTile(
             title: const Text('Log out'),
             leading: Icon(Icons.exit_to_app),
@@ -45,7 +40,7 @@ class UserTab extends StatelessWidget {
         return ListTile(
           title: const Text('Log in'),
           leading: const Icon(Icons.person),
-          enabled: session.status != FutureStatus.pending,
+          enabled: sessionStore.loginStatus != LoginStatus.pending,
           onTap: () {
             Navigator.pushNamed(context, LoginScreen.routeName);
           },
