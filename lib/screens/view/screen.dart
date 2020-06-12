@@ -61,15 +61,15 @@ class _ViewScreenContentState extends State<_ViewScreenContent> {
         child: Scaffold(
           backgroundColor: Colors.black,
           appBar: ViewAppBar(
-            padding: EdgeInsets.only(
-              top: mediaQuery.padding.top,
-            ),
+            padding: mediaQuery.viewInsets == EdgeInsets.zero
+                ? mediaQuery.padding
+                : EdgeInsets.only(top: mediaQuery.padding.top),
           ),
           extendBody: true,
           extendBodyBehindAppBar: true,
           body: const ViewBody(),
           bottomNavigationBar: ViewBottomNavigation(
-            padding: mediaQuery.viewInsets,
+            padding: mediaQuery.padding,
           ),
         ),
       ),

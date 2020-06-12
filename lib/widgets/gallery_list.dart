@@ -53,6 +53,7 @@ class _GalleryListState extends State<GalleryList> {
   Widget build(BuildContext context) {
     final galleryStore = Provider.of<GalleryStore>(context);
     final theme = Theme.of(context);
+    final padding = MediaQuery.of(context).padding;
 
     return Observer(
       builder: (context) {
@@ -83,6 +84,7 @@ class _GalleryListState extends State<GalleryList> {
             await galleryStore.refreshPage(widget.paginationKey);
           },
           child: ListView.builder(
+            padding: padding,
             controller: _scrollController,
             itemBuilder: (context, i) {
               if (i >= galleries.length) {
@@ -190,6 +192,7 @@ class _GalleryListState extends State<GalleryList> {
     return SizedBox(
       height: 16,
       child: ListView.separated(
+        padding: EdgeInsets.zero,
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         separatorBuilder: (context, i) => Text(', ', style: textStyle),

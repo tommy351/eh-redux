@@ -95,8 +95,12 @@ class GalleryScreen extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context, Gallery gallery) {
+    final mediaQuery = MediaQuery.of(context);
+    final padding =
+        mediaQuery.padding.copyWith(top: 0) + const EdgeInsets.all(16);
+
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: padding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -199,6 +203,7 @@ class GalleryScreen extends StatelessWidget {
                 child: Container(
                   height: 42,
                   child: ListView.separated(
+                    padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, i) {
