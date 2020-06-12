@@ -59,7 +59,9 @@ class _GalleryListState extends State<GalleryList> {
               return const CenterProgressIndicator();
             }
 
-            if (pagination.index.isEmpty) {
+            final index = pagination.index;
+
+            if (index.isEmpty) {
               if (pagination.loading) {
                 return const CenterProgressIndicator();
               }
@@ -69,8 +71,9 @@ class _GalleryListState extends State<GalleryList> {
               );
             }
 
-            final galleries = galleryStore.data.values
-                .where((element) => pagination.index.contains(element.id));
+            final galleries = index
+                .map((id) => galleryStore.data[id])
+                .where((element) => element != null);
 
             return RefreshIndicator(
               onRefresh: () async {

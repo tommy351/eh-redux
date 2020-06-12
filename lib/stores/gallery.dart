@@ -64,7 +64,7 @@ abstract class _GalleryStoreBase with Store {
     await _loadPage(
       key: key,
       page: 0,
-      updateIndex: (index, ids) => BuiltSet.from(ids),
+      updateIndex: (index, ids) => index.rebuild((b) => b.replace(ids)),
     );
   }
 
