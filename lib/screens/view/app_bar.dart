@@ -29,23 +29,18 @@ class ViewAppBar extends StatefulWidget implements PreferredSizeWidget {
 
 class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
   AnimationController _animationController;
-  Animation<Offset> _animation;
+  Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
       value: 0,
     );
-    _animation = Tween<Offset>(
-      begin: Offset(0, -widget.preferredSize.height),
-      end: const Offset(0, 0),
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.ease,
-    ));
+    _animation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.ease));
     SystemChrome.setEnabledSystemUIOverlays([]);
   }
 
@@ -82,8 +77,8 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
         });
       },
       builder: (context) {
-        return SlideTransition(
-          position: _animation,
+        return FadeTransition(
+          opacity: _animation,
           child: Observer(
             builder: (context) {
               final page = GalleryIdWithPage((b) => b

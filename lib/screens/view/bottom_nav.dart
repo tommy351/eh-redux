@@ -23,22 +23,17 @@ class _ViewBottomNavigationState extends State<ViewBottomNavigation>
   static const _height = 60.0;
   AnimationController _animationController;
   double _value = 0;
-  Animation<Offset> _animation;
+  Animation<double> _animation;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 300),
     );
-    _animation = Tween<Offset>(
-      begin: Offset(0, _height + widget.padding.top + widget.padding.bottom),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(
-      parent: _animationController,
-      curve: Curves.ease,
-    ));
+    _animation = Tween<double>(begin: 0, end: 1).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.ease));
   }
 
   @override
@@ -76,8 +71,8 @@ class _ViewBottomNavigationState extends State<ViewBottomNavigation>
         };
       },
       builder: (context) {
-        return SlideTransition(
-          position: _animation,
+        return FadeTransition(
+          opacity: _animation,
           child: Container(
             padding: widget.padding,
             child: Container(
