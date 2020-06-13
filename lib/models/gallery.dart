@@ -152,3 +152,16 @@ abstract class GalleryIdWithPage
       _$GalleryIdWithPage;
   GalleryIdWithPage._();
 }
+
+abstract class GalleryDetails
+    implements Built<GalleryDetails, GalleryDetailsBuilder> {
+  static Serializer<GalleryDetails> get serializer =>
+      _$galleryDetailsSerializer;
+
+  int get favoritesCount;
+  int get ratingCount;
+
+  factory GalleryDetails([void Function(GalleryDetailsBuilder) updates]) =
+      _$GalleryDetails;
+  GalleryDetails._();
+}

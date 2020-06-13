@@ -9,6 +9,7 @@ import 'package:eh_redux/models/image.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/utils/css.dart';
 import 'package:eh_redux/utils/string.dart';
+import 'package:html/dom.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
@@ -105,6 +106,34 @@ class EHentaiClient {
     }
 
     return galleries;
+  }
+
+  Future<GalleryDetails> getGalleryDetails(GalleryId id) async {
+    developer.log('Get gallery details (id: $id)');
+    final res = await httpClient.get(
+      getGalleryUrl(id),
+      headers: await _getRequestHeaders(),
+    );
+
+    if (res.statusCode != 200) {
+      throw HttpException.fromResponse(
+        message: 'Failed to get gallery details',
+        response: res,
+      );
+    }
+
+    final document = parse(res.body);
+
+    return GalleryDetails((b) => b
+      ..favoritesCount = _getFavoritesCount(document) ?? 0
+      ..ratingCount =
+          int.tryParse(document.getElementById('rating_count')?.text) ?? 0);
+  }
+
+  int _getFavoritesCount(Document document) {
+    final element = document.getElementById('favcount');
+    if (element == null) return null;
+    return int.tryParse(trimSuffix(element.text, 'times'));
   }
 
   String getGalleryUrl(GalleryId id) {

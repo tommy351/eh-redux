@@ -41,7 +41,7 @@ class _SettingTabState extends State<SettingTab> {
           _buildLoginTile(context),
           ListTile(
             title: const Text('Settings'),
-            leading: Icon(Icons.settings),
+            leading: const Icon(Icons.settings),
             onTap: () {
               Navigator.pushNamed(context, SettingScreen.routeName);
             },
@@ -49,7 +49,7 @@ class _SettingTabState extends State<SettingTab> {
           const Divider(),
           ListTile(
             title: const Text('Project Page'),
-            leading: Icon(Icons.home),
+            leading: const Icon(Icons.home),
             onTap: () {
               canLaunch(_projectUrl).then((value) {
                 if (value) launch(_projectUrl);
@@ -58,7 +58,7 @@ class _SettingTabState extends State<SettingTab> {
           ),
           ListTile(
             title: const Text('Licenses'),
-            leading: Icon(Icons.account_balance),
+            leading: const Icon(Icons.account_balance),
             onTap: () {
               showLicensePage(context: context);
             },

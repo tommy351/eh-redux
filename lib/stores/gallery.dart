@@ -22,6 +22,9 @@ abstract class _GalleryStoreBase with Store {
   ObservableMap<GalleryId, Gallery> data = ObservableMap.of({});
 
   @observable
+  ObservableMap<GalleryId, GalleryDetails> details = ObservableMap.of({});
+
+  @observable
   ObservableMap<GalleryPaginationKey, Pagination<GalleryId>> paginations =
       ObservableMap.of({});
 
@@ -66,6 +69,17 @@ abstract class _GalleryStoreBase with Store {
       page: 0,
       updateIndex: (index, ids) => index.rebuild((b) => b.replace(ids)),
     );
+  }
+
+  @action
+  Future<void> loadGalleryDetails(GalleryId id) async {
+    if (data[id] == null) {
+      addAll(await client.getGalleriesData([id]));
+    }
+
+    if (details[id] == null) {
+      details[id] = await client.getGalleryDetails(id);
+    }
   }
 
   Future<void> _loadPage({

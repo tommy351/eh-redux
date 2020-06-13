@@ -24,6 +24,21 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
     });
   }
 
+  final _$detailsAtom = Atom(name: '_GalleryStoreBase.details');
+
+  @override
+  ObservableMap<GalleryId, GalleryDetails> get details {
+    _$detailsAtom.reportRead();
+    return super.details;
+  }
+
+  @override
+  set details(ObservableMap<GalleryId, GalleryDetails> value) {
+    _$detailsAtom.reportWrite(value, super.details, () {
+      super.details = value;
+    });
+  }
+
   final _$paginationsAtom = Atom(name: '_GalleryStoreBase.paginations');
 
   @override
@@ -63,6 +78,15 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
     return _$refreshPageAsyncAction.run(() => super.refreshPage(key));
   }
 
+  final _$loadGalleryDetailsAsyncAction =
+      AsyncAction('_GalleryStoreBase.loadGalleryDetails');
+
+  @override
+  Future<void> loadGalleryDetails(GalleryId id) {
+    return _$loadGalleryDetailsAsyncAction
+        .run(() => super.loadGalleryDetails(id));
+  }
+
   final _$_GalleryStoreBaseActionController =
       ActionController(name: '_GalleryStoreBase');
 
@@ -92,6 +116,7 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
   String toString() {
     return '''
 data: ${data},
+details: ${details},
 paginations: ${paginations}
     ''';
   }

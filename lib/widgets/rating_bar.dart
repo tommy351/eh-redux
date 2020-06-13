@@ -4,18 +4,21 @@ class RatingBar extends StatelessWidget {
   final double rating;
   final double size;
   final Color color;
+  final MainAxisAlignment mainAxisAlignment;
 
   const RatingBar(
     this.rating, {
     Key key,
     this.size,
     this.color,
+    this.mainAxisAlignment = MainAxisAlignment.center,
   })  : assert(rating != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: mainAxisAlignment,
       children: Iterable<int>.generate(5)
           .map((e) => Icon(
                 _getIconData(rating - e),

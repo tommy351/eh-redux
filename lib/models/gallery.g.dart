@@ -13,6 +13,8 @@ Serializer<GallerySearchOptions> _$gallerySearchOptionsSerializer =
     new _$GallerySearchOptionsSerializer();
 Serializer<GalleryIdWithPage> _$galleryIdWithPageSerializer =
     new _$GalleryIdWithPageSerializer();
+Serializer<GalleryDetails> _$galleryDetailsSerializer =
+    new _$GalleryDetailsSerializer();
 
 class _$GallerySerializer implements StructuredSerializer<Gallery> {
   @override
@@ -334,6 +336,55 @@ class _$GalleryIdWithPageSerializer
           break;
         case 'page':
           result.page = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+      }
+    }
+
+    return result.build();
+  }
+}
+
+class _$GalleryDetailsSerializer
+    implements StructuredSerializer<GalleryDetails> {
+  @override
+  final Iterable<Type> types = const [GalleryDetails, _$GalleryDetails];
+  @override
+  final String wireName = 'GalleryDetails';
+
+  @override
+  Iterable<Object> serialize(Serializers serializers, GalleryDetails object,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = <Object>[
+      'favoritesCount',
+      serializers.serialize(object.favoritesCount,
+          specifiedType: const FullType(int)),
+      'ratingCount',
+      serializers.serialize(object.ratingCount,
+          specifiedType: const FullType(int)),
+    ];
+
+    return result;
+  }
+
+  @override
+  GalleryDetails deserialize(
+      Serializers serializers, Iterable<Object> serialized,
+      {FullType specifiedType = FullType.unspecified}) {
+    final result = new GalleryDetailsBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'favoritesCount':
+          result.favoritesCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'ratingCount':
+          result.ratingCount = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
       }
@@ -1048,6 +1099,101 @@ class GalleryIdWithPageBuilder
       }
       rethrow;
     }
+    replace(_$result);
+    return _$result;
+  }
+}
+
+class _$GalleryDetails extends GalleryDetails {
+  @override
+  final int favoritesCount;
+  @override
+  final int ratingCount;
+
+  factory _$GalleryDetails([void Function(GalleryDetailsBuilder) updates]) =>
+      (new GalleryDetailsBuilder()..update(updates)).build();
+
+  _$GalleryDetails._({this.favoritesCount, this.ratingCount}) : super._() {
+    if (favoritesCount == null) {
+      throw new BuiltValueNullFieldError('GalleryDetails', 'favoritesCount');
+    }
+    if (ratingCount == null) {
+      throw new BuiltValueNullFieldError('GalleryDetails', 'ratingCount');
+    }
+  }
+
+  @override
+  GalleryDetails rebuild(void Function(GalleryDetailsBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
+
+  @override
+  GalleryDetailsBuilder toBuilder() =>
+      new GalleryDetailsBuilder()..replace(this);
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(other, this)) return true;
+    return other is GalleryDetails &&
+        favoritesCount == other.favoritesCount &&
+        ratingCount == other.ratingCount;
+  }
+
+  @override
+  int get hashCode {
+    return $jf($jc($jc(0, favoritesCount.hashCode), ratingCount.hashCode));
+  }
+
+  @override
+  String toString() {
+    return (newBuiltValueToStringHelper('GalleryDetails')
+          ..add('favoritesCount', favoritesCount)
+          ..add('ratingCount', ratingCount))
+        .toString();
+  }
+}
+
+class GalleryDetailsBuilder
+    implements Builder<GalleryDetails, GalleryDetailsBuilder> {
+  _$GalleryDetails _$v;
+
+  int _favoritesCount;
+  int get favoritesCount => _$this._favoritesCount;
+  set favoritesCount(int favoritesCount) =>
+      _$this._favoritesCount = favoritesCount;
+
+  int _ratingCount;
+  int get ratingCount => _$this._ratingCount;
+  set ratingCount(int ratingCount) => _$this._ratingCount = ratingCount;
+
+  GalleryDetailsBuilder();
+
+  GalleryDetailsBuilder get _$this {
+    if (_$v != null) {
+      _favoritesCount = _$v.favoritesCount;
+      _ratingCount = _$v.ratingCount;
+      _$v = null;
+    }
+    return this;
+  }
+
+  @override
+  void replace(GalleryDetails other) {
+    if (other == null) {
+      throw new ArgumentError.notNull('other');
+    }
+    _$v = other as _$GalleryDetails;
+  }
+
+  @override
+  void update(void Function(GalleryDetailsBuilder) updates) {
+    if (updates != null) updates(this);
+  }
+
+  @override
+  _$GalleryDetails build() {
+    final _$result = _$v ??
+        new _$GalleryDetails._(
+            favoritesCount: favoritesCount, ratingCount: ratingCount);
     replace(_$result);
     return _$result;
   }
