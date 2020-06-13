@@ -83,8 +83,10 @@ class _MainAppState extends State<MainApp> {
       child: MaterialApp(
         title: 'EH Redux',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.brown,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          brightness: Brightness.light,
+          accentColor: Colors.deepOrangeAccent,
         ),
         initialRoute: HomeScreen.routeName,
         routes: {

@@ -45,7 +45,7 @@ class GalleryHeader extends StatelessWidget {
         RatingBar(
           gallery.rating,
           size: 16,
-          color: theme.primaryColor,
+          color: theme.accentColor,
         ),
       ],
     );
