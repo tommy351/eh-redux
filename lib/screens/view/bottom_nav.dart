@@ -74,10 +74,10 @@ class _ViewBottomNavigationState extends State<ViewBottomNavigation>
         return FadeTransition(
           opacity: _animation,
           child: Container(
+            color: Colors.black.withOpacity(0.4),
             padding: widget.padding,
             child: Container(
               height: _height,
-              color: Colors.black.withOpacity(0.4),
               child: SliderTheme(
                 data: SliderTheme.of(context),
                 child: Slider(

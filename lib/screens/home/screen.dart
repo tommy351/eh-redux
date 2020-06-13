@@ -41,6 +41,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: _tabs.map((e) => e.title).elementAt(_currentTab),
@@ -56,10 +58,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: _widgets[_currentTab],
-      bottomNavigationBar: BottomNavigationBar(
-        items: _tabs,
-        onTap: _handleTabTapped,
-        currentIndex: _currentTab,
+      bottomNavigationBar: MediaQuery(
+        data: mediaQuery.copyWith(
+          padding: mediaQuery.padding + mediaQuery.viewInsets,
+        ),
+        child: BottomNavigationBar(
+          elevation: 0,
+          items: _tabs,
+          onTap: _handleTabTapped,
+          currentIndex: _currentTab,
+        ),
       ),
     );
   }

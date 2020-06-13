@@ -69,7 +69,9 @@ class _ViewScreenContentState extends State<_ViewScreenContent> {
           extendBodyBehindAppBar: true,
           body: const ViewBody(),
           bottomNavigationBar: ViewBottomNavigation(
-            padding: mediaQuery.padding,
+            padding: mediaQuery.viewInsets == EdgeInsets.zero
+                ? mediaQuery.padding.copyWith(top: 0)
+                : mediaQuery.viewInsets,
           ),
         ),
       ),

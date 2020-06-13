@@ -88,48 +88,14 @@ class _MainAppState extends State<MainApp> {
         ),
         initialRoute: HomeScreen.routeName,
         routes: {
-          HomeScreen.routeName: (_) => const _Route(
-                child: HomeScreen(),
-              ),
-          GalleryScreen.routeName: (_) => const _Route(
-                child: GalleryScreen(),
-              ),
-          ViewScreen.routeName: (_) => const _Route(
-                child: ViewScreen(),
-              ),
-          SearchScreen.routeName: (_) => const _Route(
-                child: SearchScreen(),
-              ),
-          LoginScreen.routeName: (_) => const _Route(
-                child: LoginScreen(),
-              ),
-          SettingScreen.routeName: (_) => const _Route(
-                child: SettingScreen(),
-              ),
+          HomeScreen.routeName: (_) => const HomeScreen(),
+          GalleryScreen.routeName: (_) => const GalleryScreen(),
+          ViewScreen.routeName: (_) => const ViewScreen(),
+          SearchScreen.routeName: (_) => const SearchScreen(),
+          LoginScreen.routeName: (_) => const LoginScreen(),
+          SettingScreen.routeName: (_) => const SettingScreen(),
         },
       ),
-    );
-  }
-}
-
-class _Route extends StatelessWidget {
-  final Widget child;
-
-  const _Route({
-    Key key,
-    @required this.child,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-
-    return MediaQuery(
-      data: MediaQuery.of(context).copyWith(
-        padding: mediaQuery.padding + mediaQuery.viewInsets,
-        viewPadding: mediaQuery.viewPadding + mediaQuery.viewInsets,
-      ),
-      child: child,
     );
   }
 }
