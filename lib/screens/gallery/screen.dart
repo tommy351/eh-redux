@@ -3,6 +3,8 @@ import 'package:collection/collection.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:eh_redux/screens/gallery/args.dart';
+import 'package:eh_redux/screens/search/args.dart';
+import 'package:eh_redux/screens/search/screen.dart';
 import 'package:eh_redux/screens/view/args.dart';
 import 'package:eh_redux/screens/view/screen.dart';
 import 'package:eh_redux/stores/gallery.dart';
@@ -207,7 +209,14 @@ class GalleryScreen extends StatelessWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, i) {
-                      return Chip(label: Text(e.value[i].tag));
+                      return ActionChip(
+                        onPressed: () {
+                          Navigator.pushNamed(context, SearchScreen.routeName,
+                              arguments: SearchScreenArguments(
+                                  (b) => b..query = e.value[i].fullTag()));
+                        },
+                        label: Text(e.value[i].tag),
+                      );
                     },
                     separatorBuilder: (context, i) => const SizedBox(width: 8),
                     itemCount: e.value.length,

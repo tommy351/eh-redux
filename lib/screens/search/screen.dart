@@ -1,3 +1,4 @@
+import 'package:eh_redux/screens/search/args.dart';
 import 'package:eh_redux/screens/search/body.dart';
 import 'package:eh_redux/screens/search/store.dart';
 import 'package:eh_redux/screens/search/text_field.dart';
@@ -12,10 +13,21 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context).settings.arguments as SearchScreenArguments;
     final galleryStore = Provider.of<GalleryStore>(context);
 
     return Provider(
-      create: (_) => SearchStore(galleryStore: galleryStore),
+      create: (_) {
+        final searchStore = SearchStore(galleryStore: galleryStore);
+
+        if (args.query != null && args.query.isNotEmpty) {
+          searchStore.setQuery(args.query);
+          searchStore.updatePaginationKey();
+        }
+
+        return searchStore;
+      },
       child: _SearchScreenContent(),
     );
   }

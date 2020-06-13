@@ -1,3 +1,4 @@
+import 'package:eh_redux/screens/search/args.dart';
 import 'package:eh_redux/screens/search/screen.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: const Icon(Icons.search),
             tooltip: 'Search',
             onPressed: () {
-              Navigator.pushNamed(context, SearchScreen.routeName);
+              Navigator.pushNamed(context, SearchScreen.routeName,
+                  arguments: SearchScreenArguments());
             },
           ),
         ],
