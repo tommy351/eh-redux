@@ -39,6 +39,21 @@ mixin _$SearchStore on _SearchStoreBase, Store {
     });
   }
 
+  final _$categoryFilterAtom = Atom(name: '_SearchStoreBase.categoryFilter');
+
+  @override
+  int get categoryFilter {
+    _$categoryFilterAtom.reportRead();
+    return super.categoryFilter;
+  }
+
+  @override
+  set categoryFilter(int value) {
+    _$categoryFilterAtom.reportWrite(value, super.categoryFilter, () {
+      super.categoryFilter = value;
+    });
+  }
+
   final _$_SearchStoreBaseActionController =
       ActionController(name: '_SearchStoreBase');
 
@@ -48,6 +63,17 @@ mixin _$SearchStore on _SearchStoreBase, Store {
         name: '_SearchStoreBase.setQuery');
     try {
       return super.setQuery(value);
+    } finally {
+      _$_SearchStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCategoryFilter(int value) {
+    final _$actionInfo = _$_SearchStoreBaseActionController.startAction(
+        name: '_SearchStoreBase.setCategoryFilter');
+    try {
+      return super.setCategoryFilter(value);
     } finally {
       _$_SearchStoreBaseActionController.endAction(_$actionInfo);
     }
@@ -68,7 +94,8 @@ mixin _$SearchStore on _SearchStoreBase, Store {
   String toString() {
     return '''
 query: ${query},
-paginationKey: ${paginationKey}
+paginationKey: ${paginationKey},
+categoryFilter: ${categoryFilter}
     ''';
   }
 }

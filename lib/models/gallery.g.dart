@@ -244,6 +244,9 @@ class _$GallerySearchOptionsSerializer
       'query',
       serializers.serialize(object.query,
           specifiedType: const FullType(String)),
+      'categoryFilter',
+      serializers.serialize(object.categoryFilter,
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -264,6 +267,10 @@ class _$GallerySearchOptionsSerializer
         case 'query':
           result.query = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
+          break;
+        case 'categoryFilter':
+          result.categoryFilter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -775,14 +782,20 @@ class GalleryTagBuilder implements Builder<GalleryTag, GalleryTagBuilder> {
 class _$GallerySearchOptions extends GallerySearchOptions {
   @override
   final String query;
+  @override
+  final int categoryFilter;
 
   factory _$GallerySearchOptions(
           [void Function(GallerySearchOptionsBuilder) updates]) =>
       (new GallerySearchOptionsBuilder()..update(updates)).build();
 
-  _$GallerySearchOptions._({this.query}) : super._() {
+  _$GallerySearchOptions._({this.query, this.categoryFilter}) : super._() {
     if (query == null) {
       throw new BuiltValueNullFieldError('GallerySearchOptions', 'query');
+    }
+    if (categoryFilter == null) {
+      throw new BuiltValueNullFieldError(
+          'GallerySearchOptions', 'categoryFilter');
     }
   }
 
@@ -798,18 +811,21 @@ class _$GallerySearchOptions extends GallerySearchOptions {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is GallerySearchOptions && query == other.query;
+    return other is GallerySearchOptions &&
+        query == other.query &&
+        categoryFilter == other.categoryFilter;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, query.hashCode));
+    return $jf($jc($jc(0, query.hashCode), categoryFilter.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('GallerySearchOptions')
-          ..add('query', query))
+          ..add('query', query)
+          ..add('categoryFilter', categoryFilter))
         .toString();
   }
 }
@@ -822,11 +838,17 @@ class GallerySearchOptionsBuilder
   String get query => _$this._query;
   set query(String query) => _$this._query = query;
 
+  int _categoryFilter;
+  int get categoryFilter => _$this._categoryFilter;
+  set categoryFilter(int categoryFilter) =>
+      _$this._categoryFilter = categoryFilter;
+
   GallerySearchOptionsBuilder();
 
   GallerySearchOptionsBuilder get _$this {
     if (_$v != null) {
       _query = _$v.query;
+      _categoryFilter = _$v.categoryFilter;
       _$v = null;
     }
     return this;
@@ -847,7 +869,9 @@ class GallerySearchOptionsBuilder
 
   @override
   _$GallerySearchOptions build() {
-    final _$result = _$v ?? new _$GallerySearchOptions._(query: query);
+    final _$result = _$v ??
+        new _$GallerySearchOptions._(
+            query: query, categoryFilter: categoryFilter);
     replace(_$result);
     return _$result;
   }

@@ -131,6 +131,7 @@ abstract class GallerySearchOptions
       _$gallerySearchOptionsSerializer;
 
   String get query;
+  int get categoryFilter;
 
   factory GallerySearchOptions(
       [Function(GallerySearchOptionsBuilder) updates]) = _$GallerySearchOptions;

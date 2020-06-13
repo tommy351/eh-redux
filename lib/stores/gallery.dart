@@ -105,6 +105,10 @@ abstract class _GalleryStoreBase with Store {
       path = '/favorites.php';
     } else if (key is GalleryPaginationKeySearch) {
       params['f_search'] = key.options.query;
+
+      if (key.options.categoryFilter > 0) {
+        params['f_cats'] = key.options.categoryFilter.toString();
+      }
     }
 
     final query = params.entries

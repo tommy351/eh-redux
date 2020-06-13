@@ -20,10 +20,19 @@ abstract class _SearchStoreBase with Store {
   @observable
   GalleryPaginationKeySearch paginationKey;
 
+  @observable
+  int categoryFilter = 0;
+
   // ignore: use_setters_to_change_properties
   @action
   void setQuery(String value) {
     query = value;
+  }
+
+  // ignore: use_setters_to_change_properties
+  @action
+  void setCategoryFilter(int value) {
+    categoryFilter = value;
   }
 
   @action
@@ -31,7 +40,9 @@ abstract class _SearchStoreBase with Store {
     if (query.isEmpty) return;
 
     paginationKey = GalleryPaginationKeySearch(
-      options: GallerySearchOptions((b) => b..query = query),
+      options: GallerySearchOptions((b) => b
+        ..query = query
+        ..categoryFilter = categoryFilter),
     );
   }
 }

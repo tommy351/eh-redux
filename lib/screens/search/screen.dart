@@ -1,5 +1,6 @@
 import 'package:eh_redux/screens/search/args.dart';
 import 'package:eh_redux/screens/search/body.dart';
+import 'package:eh_redux/screens/search/filter.dart';
 import 'package:eh_redux/screens/search/store.dart';
 import 'package:eh_redux/screens/search/text_field.dart';
 import 'package:eh_redux/stores/gallery.dart';
@@ -54,13 +55,7 @@ class _SearchScreenContent extends StatelessWidget {
           ),
           title: const SearchTextField(),
           actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.filter_list),
-              tooltip: 'Filter',
-              onPressed: () {
-                //
-              },
-            ),
+            const _SearchFilterButton(),
             IconButton(
               icon: const Icon(Icons.search),
               tooltip: 'Search',
@@ -72,7 +67,23 @@ class _SearchScreenContent extends StatelessWidget {
           ],
         ),
         body: const SearchBody(),
+        endDrawer: const SearchFilter(),
       ),
+    );
+  }
+}
+
+class _SearchFilterButton extends StatelessWidget {
+  const _SearchFilterButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.filter_list),
+      tooltip: 'Filter',
+      onPressed: () {
+        Scaffold.of(context).openEndDrawer();
+      },
     );
   }
 }

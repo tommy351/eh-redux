@@ -1,22 +1,10 @@
+import 'package:eh_redux/models/category_colors.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/widgets/rating_bar.dart';
 import 'package:flutter/material.dart';
 
 class GalleryHeader extends StatelessWidget {
   final Gallery gallery;
-
-  static final _categoryColors = <String, Color>{
-    'Doujinshi': Colors.red,
-    'Manga': Colors.orange,
-    'Artist CG': Colors.yellow,
-    'Game CG': Colors.green,
-    'Western': Colors.lightGreen,
-    'Non-H': Colors.lightBlue,
-    'Image Set': Colors.indigo,
-    'Cosplay': Colors.purple,
-    'Asian Porn': Colors.deepPurple,
-    '': Colors.grey,
-  };
 
   const GalleryHeader(
     this.gallery, {
@@ -39,8 +27,7 @@ class GalleryHeader extends StatelessWidget {
                 height: categoryIndicatorSize,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color:
-                      _categoryColors[gallery.category] ?? _categoryColors[''],
+                  color: categoryColors[gallery.category] ?? categoryColors[''],
                 ),
               ),
               const SizedBox(width: 6),
