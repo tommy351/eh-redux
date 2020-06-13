@@ -3,10 +3,27 @@ import 'package:eh_redux/screens/setting/screen.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class UserTab extends StatelessWidget {
-  const UserTab({Key key}) : super(key: key);
+class SettingTab extends StatefulWidget {
+  const SettingTab({Key key}) : super(key: key);
+
+  @override
+  _SettingTabState createState() => _SettingTabState();
+}
+
+class _SettingTabState extends State<SettingTab> {
+  static const _projectUrl = 'https://github.com/tommy351/eh-redux';
+
+  Future<PackageInfo> _packageInfoFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _packageInfoFuture = PackageInfo.fromPlatform();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +37,17 @@ class UserTab extends StatelessWidget {
             Navigator.pushNamed(context, SettingScreen.routeName);
           },
         ),
+        const Divider(),
+        ListTile(
+          title: const Text('Project Page'),
+          leading: Icon(Icons.home),
+          onTap: () {
+            canLaunch(_projectUrl).then((value) {
+              if (value) launch(_projectUrl);
+            });
+          },
+        ),
+        _buildVersionTile(),
       ],
     );
   }
@@ -70,6 +98,27 @@ class UserTab extends StatelessWidget {
           onTap: () {
             Navigator.pushNamed(context, LoginScreen.routeName);
           },
+        );
+      },
+    );
+  }
+
+  Widget _buildVersionTile() {
+    final theme = Theme.of(context);
+
+    return FutureBuilder<PackageInfo>(
+      future: _packageInfoFuture,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Container();
+        }
+
+        return ListTile(
+          dense: true,
+          title: Text(
+            'Version ${snapshot.data.version} (Build ${snapshot.data.buildNumber})',
+            style: theme.textTheme.caption,
+          ),
         );
       },
     );

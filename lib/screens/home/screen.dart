@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'favorite_tab.dart';
 import 'gallery_tab.dart';
-import 'user_tab.dart';
+import 'setting_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   static String routeName = '/';
@@ -21,7 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static const _widgets = <Widget>[
     GalleryTab(),
     FavoriteTab(),
-    UserTab(),
+    SettingTab(),
   ];
 
   static const _tabs = <BottomNavigationBarItem>[
@@ -34,8 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
       title: Text('Favorites'),
     ),
     BottomNavigationBarItem(
-      icon: Icon(Icons.person),
-      title: Text('User'),
+      icon: Icon(Icons.settings),
+      title: Text('Settings'),
     ),
   ];
 
