@@ -47,6 +47,13 @@ class _SettingTabState extends State<SettingTab> {
             });
           },
         ),
+        ListTile(
+          title: const Text('Licenses'),
+          leading: Icon(Icons.account_balance),
+          onTap: () {
+            showLicensePage(context: context);
+          },
+        ),
         _buildVersionTile(),
       ],
     );
