@@ -26,31 +26,41 @@ class _SearchScreenContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final searchStore = Provider.of<SearchStore>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: IconThemeData(
-          color: Colors.black,
-        ),
-        title: const SearchTextField(),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.filter_list),
-            tooltip: 'Filter',
-            onPressed: () {
-              //
-            },
+    return GestureDetector(
+      onTap: () {
+        final currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          iconTheme: IconThemeData(
+            color: Colors.black,
           ),
-          IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'Search',
-            onPressed: () {
-              searchStore.updatePaginationKey();
-            },
-          )
-        ],
+          title: const SearchTextField(),
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(Icons.filter_list),
+              tooltip: 'Filter',
+              onPressed: () {
+                //
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.search),
+              tooltip: 'Search',
+              onPressed: () {
+                searchStore.updatePaginationKey();
+                FocusScope.of(context).unfocus();
+              },
+            )
+          ],
+        ),
+        body: const SearchBody(),
       ),
-      body: const SearchBody(),
     );
   }
 }
