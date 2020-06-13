@@ -1,5 +1,3 @@
-import 'package:eh_redux/screens/search/args.dart';
-import 'package:eh_redux/screens/search/screen.dart';
 import 'package:flutter/material.dart';
 
 import 'favorite_tab.dart';
@@ -44,19 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final mediaQuery = MediaQuery.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: _tabs.map((e) => e.title).elementAt(_currentTab),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: 'Search',
-            onPressed: () {
-              Navigator.pushNamed(context, SearchScreen.routeName,
-                  arguments: SearchScreenArguments());
-            },
-          ),
-        ],
-      ),
       body: _widgets[_currentTab],
       bottomNavigationBar: MediaQuery(
         data: mediaQuery.copyWith(

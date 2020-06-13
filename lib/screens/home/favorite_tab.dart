@@ -13,19 +13,27 @@ class FavoriteTab extends StatelessWidget {
     final sessionStore = Provider.of<SessionStore>(context);
     final theme = Theme.of(context);
 
-    return Observer(
-      builder: (context) {
-        if (sessionStore.loginStatus != LoginStatus.loggedIn) {
-          return Center(
-            child:
-                Text('Please log in first', style: theme.textTheme.headline6),
-          );
-        }
+    return NestedScrollView(
+      headerSliverBuilder: (context, _) => [
+        const SliverAppBar(
+          title: Text('Favorites'),
+          forceElevated: true,
+        )
+      ],
+      body: Observer(
+        builder: (context) {
+          if (sessionStore.loginStatus != LoginStatus.loggedIn) {
+            return Center(
+              child:
+                  Text('Please log in first', style: theme.textTheme.headline6),
+            );
+          }
 
-        return const GalleryList(
-          paginationKey: GalleryPaginationKeyFavorite(),
-        );
-      },
+          return const GalleryList(
+            paginationKey: GalleryPaginationKeyFavorite(),
+          );
+        },
+      ),
     );
   }
 }

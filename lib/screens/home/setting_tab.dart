@@ -27,35 +27,45 @@ class _SettingTabState extends State<SettingTab> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: <Widget>[
-        _buildLoginTile(context),
-        ListTile(
-          title: const Text('Settings'),
-          leading: Icon(Icons.settings),
-          onTap: () {
-            Navigator.pushNamed(context, SettingScreen.routeName);
-          },
-        ),
-        const Divider(),
-        ListTile(
-          title: const Text('Project Page'),
-          leading: Icon(Icons.home),
-          onTap: () {
-            canLaunch(_projectUrl).then((value) {
-              if (value) launch(_projectUrl);
-            });
-          },
-        ),
-        ListTile(
-          title: const Text('Licenses'),
-          leading: Icon(Icons.account_balance),
-          onTap: () {
-            showLicensePage(context: context);
-          },
-        ),
-        _buildVersionTile(),
+    return NestedScrollView(
+      headerSliverBuilder: (context, _) => [
+        const SliverAppBar(
+          title: Text('Settings'),
+          pinned: true,
+          forceElevated: true,
+        )
       ],
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          _buildLoginTile(context),
+          ListTile(
+            title: const Text('Settings'),
+            leading: Icon(Icons.settings),
+            onTap: () {
+              Navigator.pushNamed(context, SettingScreen.routeName);
+            },
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('Project Page'),
+            leading: Icon(Icons.home),
+            onTap: () {
+              canLaunch(_projectUrl).then((value) {
+                if (value) launch(_projectUrl);
+              });
+            },
+          ),
+          ListTile(
+            title: const Text('Licenses'),
+            leading: Icon(Icons.account_balance),
+            onTap: () {
+              showLicensePage(context: context);
+            },
+          ),
+          _buildVersionTile(),
+        ],
+      ),
     );
   }
 

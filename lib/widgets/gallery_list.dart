@@ -53,7 +53,7 @@ class _GalleryListState extends State<GalleryList> {
   Widget build(BuildContext context) {
     final galleryStore = Provider.of<GalleryStore>(context);
     final theme = Theme.of(context);
-    final padding = MediaQuery.of(context).padding;
+    final padding = MediaQuery.of(context).padding.copyWith(top: 0);
 
     return Observer(
       builder: (context) {
