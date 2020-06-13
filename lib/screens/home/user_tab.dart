@@ -32,8 +32,34 @@ class UserTab extends StatelessWidget {
         if (sessionStore.loginStatus == LoginStatus.loggedIn) {
           return ListTile(
             title: const Text('Log out'),
-            leading: Icon(Icons.exit_to_app),
-            onTap: () {},
+            leading: const Icon(Icons.exit_to_app),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: const Text('Log out?'),
+                    content: const Text(
+                        'This will delete the session stored on this device.'),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Cancel'),
+                      ),
+                      FlatButton(
+                        onPressed: () {
+                          sessionStore.deleteSession();
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Log out'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
           );
         }
 
