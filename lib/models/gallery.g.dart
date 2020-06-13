@@ -247,6 +247,13 @@ class _$GallerySearchOptionsSerializer
       'categoryFilter',
       serializers.serialize(object.categoryFilter,
           specifiedType: const FullType(int)),
+      'advancedOptions',
+      serializers.serialize(object.advancedOptions,
+          specifiedType: const FullType(
+              BuiltMap, const [const FullType(String), const FullType(bool)])),
+      'minimumRating',
+      serializers.serialize(object.minimumRating,
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -270,6 +277,15 @@ class _$GallerySearchOptionsSerializer
           break;
         case 'categoryFilter':
           result.categoryFilter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'advancedOptions':
+          result.advancedOptions.replace(serializers.deserialize(value,
+              specifiedType: const FullType(BuiltMap,
+                  const [const FullType(String), const FullType(bool)])));
+          break;
+        case 'minimumRating':
+          result.minimumRating = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
       }
@@ -784,18 +800,35 @@ class _$GallerySearchOptions extends GallerySearchOptions {
   final String query;
   @override
   final int categoryFilter;
+  @override
+  final BuiltMap<String, bool> advancedOptions;
+  @override
+  final int minimumRating;
 
   factory _$GallerySearchOptions(
           [void Function(GallerySearchOptionsBuilder) updates]) =>
       (new GallerySearchOptionsBuilder()..update(updates)).build();
 
-  _$GallerySearchOptions._({this.query, this.categoryFilter}) : super._() {
+  _$GallerySearchOptions._(
+      {this.query,
+      this.categoryFilter,
+      this.advancedOptions,
+      this.minimumRating})
+      : super._() {
     if (query == null) {
       throw new BuiltValueNullFieldError('GallerySearchOptions', 'query');
     }
     if (categoryFilter == null) {
       throw new BuiltValueNullFieldError(
           'GallerySearchOptions', 'categoryFilter');
+    }
+    if (advancedOptions == null) {
+      throw new BuiltValueNullFieldError(
+          'GallerySearchOptions', 'advancedOptions');
+    }
+    if (minimumRating == null) {
+      throw new BuiltValueNullFieldError(
+          'GallerySearchOptions', 'minimumRating');
     }
   }
 
@@ -813,19 +846,26 @@ class _$GallerySearchOptions extends GallerySearchOptions {
     if (identical(other, this)) return true;
     return other is GallerySearchOptions &&
         query == other.query &&
-        categoryFilter == other.categoryFilter;
+        categoryFilter == other.categoryFilter &&
+        advancedOptions == other.advancedOptions &&
+        minimumRating == other.minimumRating;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, query.hashCode), categoryFilter.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, query.hashCode), categoryFilter.hashCode),
+            advancedOptions.hashCode),
+        minimumRating.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('GallerySearchOptions')
           ..add('query', query)
-          ..add('categoryFilter', categoryFilter))
+          ..add('categoryFilter', categoryFilter)
+          ..add('advancedOptions', advancedOptions)
+          ..add('minimumRating', minimumRating))
         .toString();
   }
 }
@@ -843,12 +883,24 @@ class GallerySearchOptionsBuilder
   set categoryFilter(int categoryFilter) =>
       _$this._categoryFilter = categoryFilter;
 
+  MapBuilder<String, bool> _advancedOptions;
+  MapBuilder<String, bool> get advancedOptions =>
+      _$this._advancedOptions ??= new MapBuilder<String, bool>();
+  set advancedOptions(MapBuilder<String, bool> advancedOptions) =>
+      _$this._advancedOptions = advancedOptions;
+
+  int _minimumRating;
+  int get minimumRating => _$this._minimumRating;
+  set minimumRating(int minimumRating) => _$this._minimumRating = minimumRating;
+
   GallerySearchOptionsBuilder();
 
   GallerySearchOptionsBuilder get _$this {
     if (_$v != null) {
       _query = _$v.query;
       _categoryFilter = _$v.categoryFilter;
+      _advancedOptions = _$v.advancedOptions?.toBuilder();
+      _minimumRating = _$v.minimumRating;
       _$v = null;
     }
     return this;
@@ -869,9 +921,25 @@ class GallerySearchOptionsBuilder
 
   @override
   _$GallerySearchOptions build() {
-    final _$result = _$v ??
-        new _$GallerySearchOptions._(
-            query: query, categoryFilter: categoryFilter);
+    _$GallerySearchOptions _$result;
+    try {
+      _$result = _$v ??
+          new _$GallerySearchOptions._(
+              query: query,
+              categoryFilter: categoryFilter,
+              advancedOptions: advancedOptions.build(),
+              minimumRating: minimumRating);
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'advancedOptions';
+        advancedOptions.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'GallerySearchOptions', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }

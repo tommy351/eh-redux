@@ -54,6 +54,36 @@ mixin _$SearchStore on _SearchStoreBase, Store {
     });
   }
 
+  final _$advancedOptionsAtom = Atom(name: '_SearchStoreBase.advancedOptions');
+
+  @override
+  ObservableMap<String, bool> get advancedOptions {
+    _$advancedOptionsAtom.reportRead();
+    return super.advancedOptions;
+  }
+
+  @override
+  set advancedOptions(ObservableMap<String, bool> value) {
+    _$advancedOptionsAtom.reportWrite(value, super.advancedOptions, () {
+      super.advancedOptions = value;
+    });
+  }
+
+  final _$minimumRatingAtom = Atom(name: '_SearchStoreBase.minimumRating');
+
+  @override
+  int get minimumRating {
+    _$minimumRatingAtom.reportRead();
+    return super.minimumRating;
+  }
+
+  @override
+  set minimumRating(int value) {
+    _$minimumRatingAtom.reportWrite(value, super.minimumRating, () {
+      super.minimumRating = value;
+    });
+  }
+
   final _$_SearchStoreBaseActionController =
       ActionController(name: '_SearchStoreBase');
 
@@ -80,6 +110,28 @@ mixin _$SearchStore on _SearchStoreBase, Store {
   }
 
   @override
+  void setAdvancedOption({@required String key, @required bool value}) {
+    final _$actionInfo = _$_SearchStoreBaseActionController.startAction(
+        name: '_SearchStoreBase.setAdvancedOption');
+    try {
+      return super.setAdvancedOption(key: key, value: value);
+    } finally {
+      _$_SearchStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMinimumRating(int value) {
+    final _$actionInfo = _$_SearchStoreBaseActionController.startAction(
+        name: '_SearchStoreBase.setMinimumRating');
+    try {
+      return super.setMinimumRating(value);
+    } finally {
+      _$_SearchStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void updatePaginationKey() {
     final _$actionInfo = _$_SearchStoreBaseActionController.startAction(
         name: '_SearchStoreBase.updatePaginationKey');
@@ -95,7 +147,9 @@ mixin _$SearchStore on _SearchStoreBase, Store {
     return '''
 query: ${query},
 paginationKey: ${paginationKey},
-categoryFilter: ${categoryFilter}
+categoryFilter: ${categoryFilter},
+advancedOptions: ${advancedOptions},
+minimumRating: ${minimumRating}
     ''';
   }
 }

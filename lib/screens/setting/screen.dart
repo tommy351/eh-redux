@@ -23,9 +23,7 @@ class SettingScreen extends StatelessWidget {
               CheckboxListTile(
                 title: const Text('Display Japanese title if available'),
                 value: settingStore.displayJapaneseTitle.value ?? false,
-                onChanged: (bool value) {
-                  settingStore.setDisplayJapaneseTitle(value);
-                },
+                onChanged: settingStore.setDisplayJapaneseTitle,
               ),
             ],
           );

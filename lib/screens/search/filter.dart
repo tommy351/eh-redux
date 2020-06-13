@@ -12,7 +12,7 @@ class SearchFilter extends StatefulWidget {
 }
 
 class _SearchFilterState extends State<SearchFilter> {
-  static const _categoryIndicatorSize = 16.0;
+  static const _categoryIndicatorSize = 20.0;
   static const _categories = <String, int>{
     'Doujinshi': 1 << 1,
     'Manga': 1 << 2,
@@ -24,6 +24,23 @@ class _SearchFilterState extends State<SearchFilter> {
     'Cosplay': 1 << 6,
     'Asian Porn': 1 << 7,
     'Misc': 1 << 0
+  };
+  static const _advancedOptions = <String, String>{
+    'f_sname': 'Search Gallery Name',
+    'f_stags': 'Search Gallery Tags',
+    'f_sdesc': 'Search Gallery Description',
+    'f_storr': 'Search Torrent Filenames',
+    'f_sto': 'Only Show Galleries With Torrents',
+    'f_sdt1': 'Search Low-Power Tags',
+    'f_sdt2': 'Search Downvoted Tags',
+    'f_sh': 'Show Expunged Galleries',
+  };
+  static const _ratingOptions = <int, String>{
+    0: 'No Filter',
+    2: '2 stars',
+    3: '3 stars',
+    4: '4 stars',
+    5: '5 stars',
   };
 
   @override
@@ -39,12 +56,7 @@ class _SearchFilterState extends State<SearchFilter> {
               title: Text('Filter', style: theme.textTheme.headline6),
             ),
             const Divider(),
-            ListTile(
-              title: Text('Categories',
-                  style: theme.textTheme.bodyText1.copyWith(
-                    color: theme.textTheme.caption.color,
-                  )),
-            ),
+            _buildSectionTile('Categories'),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -56,9 +68,46 @@ class _SearchFilterState extends State<SearchFilter> {
               },
               itemCount: _categories.length,
             ),
+            const Divider(),
+            _buildSectionTile('Advanced Options'),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (_, index) {
+                return _buildAdvancedOptionTile(
+                  label: _advancedOptions.values.elementAt(index),
+                  key: _advancedOptions.keys.elementAt(index),
+                );
+              },
+              itemCount: _advancedOptions.length,
+            ),
+            const Divider(),
+            _buildSectionTile('Minimum Rating'),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (_, index) {
+                return _buildRatingTile(
+                  value: _ratingOptions.keys.elementAt(index),
+                  label: _ratingOptions.values.elementAt(index),
+                );
+              },
+              itemCount: _ratingOptions.length,
+            ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSectionTile(String title) {
+    final theme = Theme.of(context);
+
+    return ListTile(
+      title: Text(title,
+          style: theme.textTheme.bodyText1.copyWith(
+            color: theme.textTheme.caption.color,
+          )),
     );
   }
 
@@ -81,7 +130,7 @@ class _SearchFilterState extends State<SearchFilter> {
                   color: categoryColors[label] ?? categoryColors[''],
                 ),
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: 16),
               Expanded(
                 child: Text(label),
               ),
@@ -95,6 +144,40 @@ class _SearchFilterState extends State<SearchFilter> {
               searchStore.setCategoryFilter(searchStore.categoryFilter + value);
             }
           },
+        );
+      },
+    );
+  }
+
+  Widget _buildAdvancedOptionTile({
+    @required String label,
+    @required String key,
+  }) {
+    final searchStore = Provider.of<SearchStore>(context);
+
+    return Observer(
+      builder: (context) {
+        return CheckboxListTile(
+          title: Text(label),
+          value: searchStore.advancedOptions[key] ?? false,
+          onChanged: (value) {
+            searchStore.setAdvancedOption(key: key, value: value);
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildRatingTile({@required int value, @required String label}) {
+    final searchStore = Provider.of<SearchStore>(context);
+
+    return Observer(
+      builder: (context) {
+        return RadioListTile<int>(
+          title: Text(label),
+          value: value,
+          groupValue: searchStore.minimumRating,
+          onChanged: searchStore.setMinimumRating,
         );
       },
     );

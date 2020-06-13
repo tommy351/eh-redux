@@ -1,3 +1,4 @@
+import 'package:built_collection/built_collection.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/stores/gallery.dart';
 import 'package:meta/meta.dart';
@@ -23,6 +24,15 @@ abstract class _SearchStoreBase with Store {
   @observable
   int categoryFilter = 0;
 
+  @observable
+  ObservableMap<String, bool> advancedOptions = ObservableMap.of({
+    'f_sname': true,
+    'f_stags': true,
+  });
+
+  @observable
+  int minimumRating = 0;
+
   // ignore: use_setters_to_change_properties
   @action
   void setQuery(String value) {
@@ -36,13 +46,29 @@ abstract class _SearchStoreBase with Store {
   }
 
   @action
+  void setAdvancedOption({
+    @required String key,
+    @required bool value,
+  }) {
+    advancedOptions[key] = value;
+  }
+
+  // ignore: use_setters_to_change_properties
+  @action
+  void setMinimumRating(int value) {
+    minimumRating = value;
+  }
+
+  @action
   void updatePaginationKey() {
     if (query.isEmpty) return;
 
     paginationKey = GalleryPaginationKeySearch(
       options: GallerySearchOptions((b) => b
         ..query = query
-        ..categoryFilter = categoryFilter),
+        ..categoryFilter = categoryFilter
+        ..advancedOptions = BuiltMap<String, bool>(advancedOptions).toBuilder()
+        ..minimumRating = minimumRating),
     );
   }
 }

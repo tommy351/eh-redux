@@ -132,6 +132,8 @@ abstract class GallerySearchOptions
 
   String get query;
   int get categoryFilter;
+  BuiltMap<String, bool> get advancedOptions;
+  int get minimumRating;
 
   factory GallerySearchOptions(
       [Function(GallerySearchOptionsBuilder) updates]) = _$GallerySearchOptions;
