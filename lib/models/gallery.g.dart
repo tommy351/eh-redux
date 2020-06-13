@@ -362,6 +362,9 @@ class _$GalleryDetailsSerializer
       'ratingCount',
       serializers.serialize(object.ratingCount,
           specifiedType: const FullType(int)),
+      'currentFavorite',
+      serializers.serialize(object.currentFavorite,
+          specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -385,6 +388,10 @@ class _$GalleryDetailsSerializer
           break;
         case 'ratingCount':
           result.ratingCount = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int;
+          break;
+        case 'currentFavorite':
+          result.currentFavorite = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int;
           break;
       }
@@ -1109,16 +1116,23 @@ class _$GalleryDetails extends GalleryDetails {
   final int favoritesCount;
   @override
   final int ratingCount;
+  @override
+  final int currentFavorite;
 
   factory _$GalleryDetails([void Function(GalleryDetailsBuilder) updates]) =>
       (new GalleryDetailsBuilder()..update(updates)).build();
 
-  _$GalleryDetails._({this.favoritesCount, this.ratingCount}) : super._() {
+  _$GalleryDetails._(
+      {this.favoritesCount, this.ratingCount, this.currentFavorite})
+      : super._() {
     if (favoritesCount == null) {
       throw new BuiltValueNullFieldError('GalleryDetails', 'favoritesCount');
     }
     if (ratingCount == null) {
       throw new BuiltValueNullFieldError('GalleryDetails', 'ratingCount');
+    }
+    if (currentFavorite == null) {
+      throw new BuiltValueNullFieldError('GalleryDetails', 'currentFavorite');
     }
   }
 
@@ -1135,19 +1149,22 @@ class _$GalleryDetails extends GalleryDetails {
     if (identical(other, this)) return true;
     return other is GalleryDetails &&
         favoritesCount == other.favoritesCount &&
-        ratingCount == other.ratingCount;
+        ratingCount == other.ratingCount &&
+        currentFavorite == other.currentFavorite;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, favoritesCount.hashCode), ratingCount.hashCode));
+    return $jf($jc($jc($jc(0, favoritesCount.hashCode), ratingCount.hashCode),
+        currentFavorite.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('GalleryDetails')
           ..add('favoritesCount', favoritesCount)
-          ..add('ratingCount', ratingCount))
+          ..add('ratingCount', ratingCount)
+          ..add('currentFavorite', currentFavorite))
         .toString();
   }
 }
@@ -1165,12 +1182,18 @@ class GalleryDetailsBuilder
   int get ratingCount => _$this._ratingCount;
   set ratingCount(int ratingCount) => _$this._ratingCount = ratingCount;
 
+  int _currentFavorite;
+  int get currentFavorite => _$this._currentFavorite;
+  set currentFavorite(int currentFavorite) =>
+      _$this._currentFavorite = currentFavorite;
+
   GalleryDetailsBuilder();
 
   GalleryDetailsBuilder get _$this {
     if (_$v != null) {
       _favoritesCount = _$v.favoritesCount;
       _ratingCount = _$v.ratingCount;
+      _currentFavorite = _$v.currentFavorite;
       _$v = null;
     }
     return this;
@@ -1193,7 +1216,9 @@ class GalleryDetailsBuilder
   _$GalleryDetails build() {
     final _$result = _$v ??
         new _$GalleryDetails._(
-            favoritesCount: favoritesCount, ratingCount: ratingCount);
+            favoritesCount: favoritesCount,
+            ratingCount: ratingCount,
+            currentFavorite: currentFavorite);
     replace(_$result);
     return _$result;
   }

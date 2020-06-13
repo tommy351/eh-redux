@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
+import 'package:eh_redux/models/favorite.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/models/http_exception.dart';
 import 'package:eh_redux/models/image.dart';
@@ -127,13 +128,53 @@ class EHentaiClient {
     return GalleryDetails((b) => b
       ..favoritesCount = _getFavoritesCount(document) ?? 0
       ..ratingCount =
-          int.tryParse(document.getElementById('rating_count')?.text) ?? 0);
+          int.tryParse(document.getElementById('rating_count')?.text) ?? 0
+      ..currentFavorite = _getCurrentFavorite(document));
   }
 
   int _getFavoritesCount(Document document) {
     final element = document.getElementById('favcount');
     if (element == null) return null;
     return int.tryParse(trimSuffix(element.text, 'times'));
+  }
+
+  int _getCurrentFavorite(Document document) {
+    final element = document.getElementById('favoritelink');
+    if (element == null) return -1;
+    return int.tryParse(trimPrefix(element.text, 'Favorites ')) ?? -1;
+  }
+
+  Future<FavoriteStatus> getFavoriteStatus(GalleryId id) async {
+    developer.log('Get favorite status (id: $id)');
+    final res = await httpClient.get(
+      '$baseUrl/gallerypopups.php?gid=${id.id}&t=${id.token}&act=addfav',
+      headers: await _getRequestHeaders(),
+    );
+
+    if (res.statusCode != 200) {
+      throw HttpException.fromResponse(
+        message: 'Failed to get favorite status',
+        response: res,
+      );
+    }
+
+    final document = parse(res.body);
+
+    return FavoriteStatus((b) => b
+      ..favorite = _getFavorite(document)
+      ..note = document.querySelector('textarea[name="favnote"]').innerHtml);
+  }
+
+  int _getFavorite(Document document) {
+    for (var i = 0; i <= 9; i++) {
+      final element = document.getElementById('fav$i');
+
+      if (element.attributes['checked'] == 'checked') {
+        return i;
+      }
+    }
+
+    return -1;
   }
 
   String getGalleryUrl(GalleryId id) {

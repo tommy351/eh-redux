@@ -7,6 +7,7 @@ import 'package:eh_redux/screens/login/screen.dart';
 import 'package:eh_redux/screens/search/screen.dart';
 import 'package:eh_redux/screens/setting/screen.dart';
 import 'package:eh_redux/screens/view/screen.dart';
+import 'package:eh_redux/stores/favorite.dart';
 import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/stores/session.dart';
@@ -44,6 +45,7 @@ class _MainAppState extends State<MainApp> {
   GalleryStore _galleryStore;
   ImageStore _imageStore;
   SettingStore _settingStore;
+  FavoriteStore _favoriteStore;
 
   @override
   void initState() {
@@ -58,6 +60,7 @@ class _MainAppState extends State<MainApp> {
     _galleryStore = GalleryStore(client: _eHentaiClient);
     _imageStore = ImageStore(client: _eHentaiClient);
     _settingStore = SettingStore();
+    _favoriteStore = FavoriteStore(client: _eHentaiClient);
   }
 
   @override
@@ -78,6 +81,9 @@ class _MainAppState extends State<MainApp> {
         ),
         Provider(
           create: (_) => _imageStore,
+        ),
+        Provider(
+          create: (_) => _favoriteStore,
         ),
       ],
       child: MaterialApp(

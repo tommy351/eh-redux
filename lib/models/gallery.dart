@@ -160,6 +160,7 @@ abstract class GalleryDetails
 
   int get favoritesCount;
   int get ratingCount;
+  int get currentFavorite;
 
   factory GalleryDetails([void Function(GalleryDetailsBuilder) updates]) =
       _$GalleryDetails;
