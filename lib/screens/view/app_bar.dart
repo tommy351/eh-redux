@@ -96,7 +96,7 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
                       '${viewStore.currentPage + 1} / ${gallery.fileCount}'),
                   actions: <Widget>[
                     IconButton(
-                      icon: Icon(Icons.share),
+                      icon: const Icon(Icons.share),
                       tooltip: 'Share',
                       onPressed: () {
                         if (image != null) {
