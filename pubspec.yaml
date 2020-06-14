@@ -30,6 +30,7 @@ dependencies:
   sentry: ^3.0.1
   package_info: ">=0.4.1 <2.0.0"
   url_launcher: ^5.4.10
+  filesize: ^1.0.4
 
 dev_dependencies:
   flutter_test:
