@@ -62,21 +62,21 @@ abstract class _SettingStoreBase with Store {
   @action
   // ignore: avoid_positional_boolean_parameters
   Future<void> setDisplayJapaneseTitle(bool value) async {
-    return displayJapaneseTitle =
-        _setBool(SettingKey.displayJapaneseTitle, value).then((_) => value);
+    await _setBool(SettingKey.displayJapaneseTitle, value);
+    displayJapaneseTitle = ObservableFuture.value(value);
   }
 
   @action
   Future<void> setOrientation(OrientationSetting value) async {
-    return orientation =
-        _setString(SettingKey.orientation, value.toString()).then((_) => value);
+    await _setString(SettingKey.orientation, value.toString());
+    orientation = ObservableFuture.value(value);
   }
 
   @action
   // ignore: avoid_positional_boolean_parameters
   Future<void> setTurnPagesWithVolumeKeys(bool value) async {
-    return turnPagesWithVolumeKeys =
-        _setBool(SettingKey.turnPagesWithVolumeKeys, value).then((_) => value);
+    await _setBool(SettingKey.turnPagesWithVolumeKeys, value);
+    turnPagesWithVolumeKeys = ObservableFuture.value(value);
   }
 
   ObservableFuture<T> _getValue<T>(SettingKey key, [T defaultValue]) {

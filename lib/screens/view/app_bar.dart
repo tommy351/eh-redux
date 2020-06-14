@@ -63,7 +63,7 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
 
     return StatefulWrapper(
       onInit: (context) {
-        return reaction((_) => viewStore.navVisible, (bool visible) {
+        return reaction<bool>((_) => viewStore.navVisible, (visible) {
           if (visible) {
             _animationController.forward();
             SystemChrome.setEnabledSystemUIOverlays([
@@ -106,7 +106,7 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
                           );
                         }
                       },
-                    )
+                    ),
                   ],
                 ),
               );
