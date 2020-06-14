@@ -4,6 +4,7 @@ import 'package:eh_redux/screens/search/filter.dart';
 import 'package:eh_redux/screens/search/store.dart';
 import 'package:eh_redux/screens/search/text_field.dart';
 import 'package:eh_redux/stores/gallery.dart';
+import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,9 +35,14 @@ class SearchScreen extends StatelessWidget {
   }
 }
 
-class _SearchScreenContent extends StatelessWidget {
+class _SearchScreenContent extends StatefulWidget {
   const _SearchScreenContent({Key key}) : super(key: key);
 
+  @override
+  __SearchScreenContentState createState() => __SearchScreenContentState();
+}
+
+class __SearchScreenContentState extends State<_SearchScreenContent> {
   @override
   Widget build(BuildContext context) {
     final searchStore = Provider.of<SearchStore>(context);
@@ -69,7 +75,14 @@ class _SearchScreenContent extends StatelessWidget {
           ],
         ),
         body: const SearchBody(),
-        endDrawer: const SearchFilter(),
+        endDrawer: StatefulWrapper(
+          onDispose: () {
+            WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+              searchStore.updatePaginationKey();
+            });
+          },
+          builder: (_) => const SearchFilter(),
+        ),
       ),
     );
   }

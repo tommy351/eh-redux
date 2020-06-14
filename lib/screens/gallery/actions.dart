@@ -64,17 +64,13 @@ class GalleryActions extends StatelessWidget {
       ),
       label: favorited ? Text('Fav $currentFavorite') : const Text('Fav'),
       onPressed: () {
-        if (sessionStore.loginStatus == LoginStatus.loggedIn) {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (context) {
-              return GalleryFavSheet(galleryId: gallery.id);
-            },
-          );
-        } else {
-          // TODO: Show login hint
-        }
+        showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          builder: (context) {
+            return GalleryFavSheet(galleryId: gallery.id);
+          },
+        );
       },
     );
   }
