@@ -3,6 +3,7 @@ import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
@@ -49,45 +50,80 @@ class _ViewBodyState extends State<ViewBody> {
         });
       },
       builder: (context) {
-        return PreloadPhotoViewGallery(
-          controller: _pageController,
-          onPageChanged: viewStore.setPage,
-          itemCount: gallery.fileCount,
-          loadingBuilder: (context, event) {
-            if (event == null) {
-              return const CenterProgressIndicator();
-            }
+        return Stack(
+          children: <Widget>[
+            Positioned.fill(
+              child: PreloadPhotoViewGallery(
+                controller: _pageController,
+                onPageChanged: viewStore.setPage,
+                itemCount: gallery.fileCount,
+                loadingBuilder: (context, event) {
+                  if (event == null) {
+                    return const CenterProgressIndicator();
+                  }
 
-            return CenterProgressIndicator(
-              value: event.cumulativeBytesLoaded / event.expectedTotalBytes,
-            );
-          },
-          itemBuilder: (context, index) {
-            return PhotoViewGalleryPageOptions(
-              minScale: PhotoViewComputedScale.contained,
-              maxScale: PhotoViewComputedScale.covered * 3,
-              onTapUp: (context, details, controllerValue) {
-                final dx = details.localPosition.dx;
-                const duration = Duration(milliseconds: 500);
-                const curve = Curves.easeOutCubic;
+                  return CenterProgressIndicator(
+                    value:
+                        event.cumulativeBytesLoaded / event.expectedTotalBytes,
+                  );
+                },
+                itemBuilder: (context, index) {
+                  return PhotoViewGalleryPageOptions(
+                    minScale: PhotoViewComputedScale.contained,
+                    maxScale: PhotoViewComputedScale.covered * 3,
+                    onTapUp: (context, details, controllerValue) {
+                      final dx = details.localPosition.dx;
+                      const duration = Duration(milliseconds: 500);
+                      const curve = Curves.easeOutCubic;
 
-                if (dx < width / 3) {
-                  _pageController.previousPage(
-                      duration: duration, curve: curve);
-                } else if (dx > width / 3 * 2) {
-                  _pageController.nextPage(duration: duration, curve: curve);
-                } else {
-                  viewStore.toggleNav();
-                }
-              },
-              imageProvider: ViewImage(
-                imageStore: imageStore,
-                page: GalleryIdWithPage((b) => b
-                  ..galleryId = gallery.id.toBuilder()
-                  ..page = index + 1),
+                      if (dx < width / 3) {
+                        _pageController.previousPage(
+                            duration: duration, curve: curve);
+                      } else if (dx > width / 3 * 2) {
+                        _pageController.nextPage(
+                            duration: duration, curve: curve);
+                      } else {
+                        viewStore.toggleNav();
+                      }
+                    },
+                    imageProvider: ViewImage(
+                      imageStore: imageStore,
+                      page: GalleryIdWithPage((b) => b
+                        ..galleryId = gallery.id.toBuilder()
+                        ..page = index + 1),
+                    ),
+                  );
+                },
               ),
-            );
-          },
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: _buildStatus(),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildStatus() {
+    final theme = Theme.of(context);
+    final viewStore = Provider.of<ViewStore>(context);
+    final gallery = Provider.of<Gallery>(context);
+
+    return Observer(
+      builder: (context) {
+        return Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.5),
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(8)),
+          ),
+          child: Text(
+            '${viewStore.currentPage + 1} / ${gallery.fileCount}',
+            style: theme.textTheme.bodyText2.copyWith(color: Colors.white),
+          ),
         );
       },
     );
