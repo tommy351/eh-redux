@@ -1,3 +1,4 @@
+import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/material.dart';
 
 import 'favorite_tab.dart';
@@ -13,7 +14,7 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> with RouteAware {
   int _currentTab = 0;
 
   static const _widgets = <Widget>[
@@ -38,6 +39,19 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    firebaseAnalyticsObserver.subscribe(
+        this, ModalRoute.of(context) as PageRoute);
+  }
+
+  @override
+  void dispose() {
+    firebaseAnalyticsObserver.unsubscribe(this);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
 
@@ -56,9 +70,26 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  @override
+  void didPush() {
+    _sendCurrentTabToAnalytics(_currentTab);
+  }
+
+  @override
+  void didPopNext() {
+    _sendCurrentTabToAnalytics(_currentTab);
+  }
+
   void _handleTabTapped(int index) {
     setState(() {
       _currentTab = index;
     });
+    _sendCurrentTabToAnalytics(index);
+  }
+
+  void _sendCurrentTabToAnalytics(int index) {
+    analytics.setCurrentScreen(
+      screenName: '${HomeScreen.routeName}homeTab$index',
+    );
   }
 }

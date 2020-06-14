@@ -1,5 +1,6 @@
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/stores/image.dart';
+import 'package:eh_redux/utils/firebase.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,10 @@ class _ViewBodyState extends State<ViewBody> {
             Positioned.fill(
               child: PreloadPhotoViewGallery(
                 controller: _pageController,
-                onPageChanged: viewStore.setPage,
+                onPageChanged: (value) {
+                  viewStore.setPage(value);
+                  analytics.logEvent(name: 'update_view_page');
+                },
                 itemCount: gallery.fileCount,
                 loadingBuilder: (context, event) {
                   if (event == null) {

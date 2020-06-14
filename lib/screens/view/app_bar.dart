@@ -2,6 +2,7 @@ import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:eh_redux/screens/setting/screen.dart';
 import 'package:eh_redux/stores/image.dart';
+import 'package:eh_redux/utils/firebase.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -75,9 +76,11 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
               SystemUiOverlay.top,
               SystemUiOverlay.bottom,
             ]);
+            analytics.logEvent(name: 'show_view_screen_ui');
           } else {
             _animationController.reverse();
             SystemChrome.setEnabledSystemUIOverlays([]);
+            analytics.logEvent(name: 'hide_view_screen_ui');
           }
         });
       },

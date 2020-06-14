@@ -1,6 +1,7 @@
 import 'package:eh_redux/screens/login/screen.dart';
 import 'package:eh_redux/screens/setting/screen.dart';
 import 'package:eh_redux/stores/session.dart';
+import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:package_info/package_info.dart';
@@ -96,6 +97,7 @@ class _SettingTabState extends State<SettingTab> {
                       FlatButton(
                         onPressed: () {
                           sessionStore.deleteSession();
+                          analytics.logEvent(name: 'logout');
                           Navigator.pop(context);
                         },
                         child: const Text('Log out'),
@@ -133,7 +135,7 @@ class _SettingTabState extends State<SettingTab> {
         return ListTile(
           dense: true,
           title: Text(
-            'Version ${snapshot.data.version} (Build ${snapshot.data.buildNumber})',
+            'Version ${snapshot.data.version}',
             style: theme.textTheme.caption,
           ),
         );

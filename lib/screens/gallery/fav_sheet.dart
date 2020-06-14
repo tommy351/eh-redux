@@ -2,6 +2,7 @@ import 'package:eh_redux/models/favorite.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/gallery/fav_sheet_store.dart';
 import 'package:eh_redux/stores/favorite.dart';
+import 'package:eh_redux/utils/firebase.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,7 +11,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
-class GalleryFavSheet extends StatelessWidget {
+class GalleryFavSheet extends StatefulWidget {
   final GalleryId galleryId;
 
   const GalleryFavSheet({
@@ -20,15 +21,32 @@ class GalleryFavSheet extends StatelessWidget {
         super(key: key);
 
   @override
+  _GalleryFavSheetState createState() => _GalleryFavSheetState();
+}
+
+class _GalleryFavSheetState extends State<GalleryFavSheet> {
+  @override
+  void initState() {
+    super.initState();
+    analytics.logEvent(name: 'open_fav_sheet');
+  }
+
+  @override
+  void dispose() {
+    analytics.logEvent(name: 'close_fav_sheet');
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final favoriteStore = Provider.of<FavoriteStore>(context);
 
     return Provider(
       create: (_) => FavSheetStore(
-        galleryId: galleryId,
+        galleryId: widget.galleryId,
         favoriteStore: favoriteStore,
       ),
-      child: _FavSheetContent(galleryId: galleryId),
+      child: _FavSheetContent(galleryId: widget.galleryId),
     );
   }
 }

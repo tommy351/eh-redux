@@ -4,6 +4,7 @@ import 'dart:developer' as developer;
 
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/utils/cookie.dart';
+import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -55,6 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (cookies.containsKey('ipb_member_id')) {
       await sessionStore.setSession(cookieString);
       await _cookieManager.clearCookies();
+      analytics.logLogin(loginMethod: 'webview');
       Navigator.pop(context);
     }
   }

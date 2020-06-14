@@ -13,7 +13,6 @@ import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/stores/setting.dart';
 import 'package:eh_redux/utils/firebase.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -94,7 +93,7 @@ class _MainAppState extends State<MainApp> {
           accentColor: Colors.deepOrangeAccent,
         ),
         navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: analytics),
+          firebaseAnalyticsObserver,
         ],
         initialRoute: HomeScreen.routeName,
         routes: {

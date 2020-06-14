@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:eh_redux/models/category_colors.dart';
 import 'package:eh_redux/screens/search/store.dart';
+import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -37,6 +38,18 @@ class _SearchFilterState extends State<SearchFilter> {
     'f_sdt2': 'Search Downvoted Tags',
     'f_sh': 'Show Expunged Galleries',
   };
+
+  @override
+  void initState() {
+    super.initState();
+    analytics.logEvent(name: 'open_search_filter');
+  }
+
+  @override
+  void dispose() {
+    analytics.logEvent(name: 'close_search_filter');
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
