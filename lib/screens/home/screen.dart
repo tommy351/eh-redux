@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: mediaQuery.padding + mediaQuery.viewInsets,
         ),
         child: BottomNavigationBar(
-          elevation: 0,
           items: _tabs,
           onTap: _handleTabTapped,
           currentIndex: _currentTab,

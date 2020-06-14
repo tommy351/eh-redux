@@ -12,7 +12,9 @@ import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/stores/setting.dart';
+import 'package:eh_redux/utils/firebase.dart';
 import 'package:eh_redux/utils/sentry.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -97,6 +99,9 @@ class _MainAppState extends State<MainApp> {
           brightness: Brightness.light,
           accentColor: Colors.deepOrangeAccent,
         ),
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: analytics),
+        ],
         initialRoute: HomeScreen.routeName,
         routes: {
           HomeScreen.routeName: (_) => const HomeScreen(),
