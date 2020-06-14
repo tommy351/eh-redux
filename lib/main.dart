@@ -13,25 +13,19 @@ import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/stores/setting.dart';
 import 'package:eh_redux/utils/firebase.dart';
-import 'package:eh_redux/utils/sentry.dart';
 import 'package:firebase_analytics/observer.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
 void main() {
-  FlutterError.onError = (FlutterErrorDetails details) {
-    if (isInDebugMode) {
-      FlutterError.dumpErrorToConsole(details);
-    } else {
-      Zone.current.handleUncaughtError(details.exception, details.stack);
-    }
-  };
+  FlutterError.onError = Crashlytics.instance.recordFlutterError;
 
-  runZonedGuarded(() async {
+  runZonedGuarded(() {
     runApp(const MainApp());
-  }, reportError);
+  }, Crashlytics.instance.recordError);
 }
 
 class MainApp extends StatefulWidget {
