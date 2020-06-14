@@ -18,7 +18,7 @@ Using devices that do not support ARM64? See [other versions](https://github.com
 
 ## Screenshots
 
-![](docs/screenshot-list.png) ![](docs/screenshot-info.png) ![](docs/screenshot-view.png)
+![](docs/screenshot-list.png) ![](docs/screenshot-info.png) ![](docs/screenshot-view.png) ![](docs/screenshot-search.png)
 
 ## Contributing
 
