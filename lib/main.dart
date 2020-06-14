@@ -14,9 +14,12 @@ import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/stores/setting.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -34,7 +37,29 @@ class MainApp extends StatefulWidget {
   _MainAppState createState() => _MainAppState();
 }
 
-class _MainAppState extends State<MainApp> {
+class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
+  static const _accentColor = Colors.deepOrangeAccent;
+  static final _themeData = <ThemeSetting, ThemeData>{
+    ThemeSetting.light: ThemeData(
+      primarySwatch: Colors.brown,
+      accentColor: _accentColor,
+      brightness: Brightness.light,
+    ),
+    ThemeSetting.dark: ThemeData(
+      accentColor: _accentColor,
+      toggleableActiveColor: _accentColor,
+      brightness: Brightness.dark,
+    ),
+    ThemeSetting.black: ThemeData(
+      accentColor: _accentColor,
+      toggleableActiveColor: _accentColor,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: Colors.black,
+      dividerColor: Colors.grey[800],
+    ),
+  };
+
+  Brightness _platformBrightness;
   SessionStore _sessionStore;
   EHentaiClient _eHentaiClient;
   GalleryStore _galleryStore;
@@ -45,6 +70,8 @@ class _MainAppState extends State<MainApp> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    _updatePlatformBrightness();
     _sessionStore = SessionStore(
       secureStorage: const FlutterSecureStorage(),
     );
@@ -59,6 +86,21 @@ class _MainAppState extends State<MainApp> {
       client: _eHentaiClient,
       galleryStore: _galleryStore,
     );
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangePlatformBrightness() {
+    super.didChangePlatformBrightness();
+
+    setState(() {
+      _updatePlatformBrightness();
+    });
   }
 
   @override
@@ -84,27 +126,55 @@ class _MainAppState extends State<MainApp> {
           create: (_) => _favoriteStore,
         ),
       ],
-      child: MaterialApp(
-        title: 'EH Redux',
-        theme: ThemeData(
-          primarySwatch: Colors.brown,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          brightness: Brightness.light,
-          accentColor: Colors.deepOrangeAccent,
-        ),
-        navigatorObservers: [
-          firebaseAnalyticsObserver,
-        ],
-        initialRoute: HomeScreen.routeName,
-        routes: {
-          HomeScreen.routeName: (_) => const HomeScreen(),
-          GalleryScreen.routeName: (_) => const GalleryScreen(),
-          ViewScreen.routeName: (_) => const ViewScreen(),
-          SearchScreen.routeName: (_) => const SearchScreen(),
-          LoginScreen.routeName: (_) => const LoginScreen(),
-          SettingScreen.routeName: (_) => const SettingScreen(),
-        },
-      ),
+      child: _buildApp(),
     );
+  }
+
+  void _updatePlatformBrightness() {
+    _platformBrightness = WidgetsBinding.instance.window.platformBrightness;
+  }
+
+  Widget _buildApp() {
+    return Observer(
+      builder: (context) {
+        if (_settingStore.theme.status == FutureStatus.pending) {
+          return Container();
+        }
+
+        return MaterialApp(
+          title: 'EH Redux',
+          theme:
+              _getThemeData(_settingStore.theme.value ?? ThemeSetting.system),
+          navigatorObservers: [
+            firebaseAnalyticsObserver,
+          ],
+          initialRoute: HomeScreen.routeName,
+          routes: {
+            HomeScreen.routeName: (_) => const HomeScreen(),
+            GalleryScreen.routeName: (_) => const GalleryScreen(),
+            ViewScreen.routeName: (_) => const ViewScreen(),
+            SearchScreen.routeName: (_) => const SearchScreen(),
+            LoginScreen.routeName: (_) => const LoginScreen(),
+            SettingScreen.routeName: (_) => const SettingScreen(),
+          },
+        );
+      },
+    );
+  }
+
+  ThemeData _getThemeData(ThemeSetting setting) {
+    ThemeSetting key;
+
+    if (setting == ThemeSetting.system) {
+      if (_platformBrightness == Brightness.dark) {
+        key = ThemeSetting.dark;
+      } else {
+        key = ThemeSetting.light;
+      }
+    } else {
+      key = setting;
+    }
+
+    return _themeData[key];
   }
 }

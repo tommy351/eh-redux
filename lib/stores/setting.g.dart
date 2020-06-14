@@ -30,11 +30,40 @@ final BuiltSet<OrientationSetting> _$orientationSettingValues =
   _$portrait,
 ]);
 
+const ThemeSetting _$system = const ThemeSetting._('system');
+const ThemeSetting _$light = const ThemeSetting._('light');
+const ThemeSetting _$dark = const ThemeSetting._('dark');
+const ThemeSetting _$black = const ThemeSetting._('black');
+
+ThemeSetting _$themeSettingValueOf(String name) {
+  switch (name) {
+    case 'system':
+      return _$system;
+    case 'light':
+      return _$light;
+    case 'dark':
+      return _$dark;
+    case 'black':
+      return _$black;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<ThemeSetting> _$themeSettingValues =
+    new BuiltSet<ThemeSetting>(const <ThemeSetting>[
+  _$system,
+  _$light,
+  _$dark,
+  _$black,
+]);
+
 const SettingKey _$displayJapaneseTitle =
     const SettingKey._('displayJapaneseTitle');
 const SettingKey _$orientation = const SettingKey._('orientation');
 const SettingKey _$turnPagesWithVolumeKeys =
     const SettingKey._('turnPagesWithVolumeKeys');
+const SettingKey _$theme = const SettingKey._('theme');
 
 SettingKey _$valueOf(String name) {
   switch (name) {
@@ -44,6 +73,8 @@ SettingKey _$valueOf(String name) {
       return _$orientation;
     case 'turnPagesWithVolumeKeys':
       return _$turnPagesWithVolumeKeys;
+    case 'theme':
+      return _$theme;
     default:
       throw new ArgumentError(name);
   }
@@ -54,10 +85,13 @@ final BuiltSet<SettingKey> _$values =
   _$displayJapaneseTitle,
   _$orientation,
   _$turnPagesWithVolumeKeys,
+  _$theme,
 ]);
 
 Serializer<OrientationSetting> _$orientationSettingSerializer =
     new _$OrientationSettingSerializer();
+Serializer<ThemeSetting> _$themeSettingSerializer =
+    new _$ThemeSettingSerializer();
 Serializer<SettingKey> _$settingKeySerializer = new _$SettingKeySerializer();
 
 class _$OrientationSettingSerializer
@@ -76,6 +110,23 @@ class _$OrientationSettingSerializer
   OrientationSetting deserialize(Serializers serializers, Object serialized,
           {FullType specifiedType = FullType.unspecified}) =>
       OrientationSetting.valueOf(serialized as String);
+}
+
+class _$ThemeSettingSerializer implements PrimitiveSerializer<ThemeSetting> {
+  @override
+  final Iterable<Type> types = const <Type>[ThemeSetting];
+  @override
+  final String wireName = 'ThemeSetting';
+
+  @override
+  Object serialize(Serializers serializers, ThemeSetting object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  ThemeSetting deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      ThemeSetting.valueOf(serialized as String);
 }
 
 class _$SettingKeySerializer implements PrimitiveSerializer<SettingKey> {
@@ -153,6 +204,21 @@ mixin _$SettingStore on _SettingStoreBase, Store {
     });
   }
 
+  final _$themeAtom = Atom(name: '_SettingStoreBase.theme');
+
+  @override
+  ObservableFuture<ThemeSetting> get theme {
+    _$themeAtom.reportRead();
+    return super.theme;
+  }
+
+  @override
+  set theme(ObservableFuture<ThemeSetting> value) {
+    _$themeAtom.reportWrite(value, super.theme, () {
+      super.theme = value;
+    });
+  }
+
   final _$setDisplayJapaneseTitleAsyncAction =
       AsyncAction('_SettingStoreBase.setDisplayJapaneseTitle');
 
@@ -179,12 +245,20 @@ mixin _$SettingStore on _SettingStoreBase, Store {
         .run(() => super.setTurnPagesWithVolumeKeys(value));
   }
 
+  final _$setThemeAsyncAction = AsyncAction('_SettingStoreBase.setTheme');
+
+  @override
+  Future<void> setTheme(ThemeSetting value) {
+    return _$setThemeAsyncAction.run(() => super.setTheme(value));
+  }
+
   @override
   String toString() {
     return '''
 displayJapaneseTitle: ${displayJapaneseTitle},
 orientation: ${orientation},
-turnPagesWithVolumeKeys: ${turnPagesWithVolumeKeys}
+turnPagesWithVolumeKeys: ${turnPagesWithVolumeKeys},
+theme: ${theme}
     ''';
   }
 }

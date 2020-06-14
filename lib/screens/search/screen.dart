@@ -46,6 +46,10 @@ class __SearchScreenContentState extends State<_SearchScreenContent> {
   @override
   Widget build(BuildContext context) {
     final searchStore = Provider.of<SearchStore>(context);
+    final theme = Theme.of(context);
+    final isDark = theme.brightness == Brightness.dark;
+    final iconTheme =
+        isDark ? theme.iconTheme : const IconThemeData(color: Colors.black);
 
     return GestureDetector(
       onTap: () {
@@ -57,10 +61,8 @@ class __SearchScreenContentState extends State<_SearchScreenContent> {
       },
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
-          iconTheme: const IconThemeData(
-            color: Colors.black,
-          ),
+          backgroundColor: isDark ? theme.appBarTheme.color : Colors.white,
+          iconTheme: iconTheme,
           title: const SearchTextField(),
           actions: <Widget>[
             const _SearchFilterButton(),
