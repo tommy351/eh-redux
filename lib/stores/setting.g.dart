@@ -6,13 +6,44 @@ part of 'setting.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const OrientationSetting _$auto = const OrientationSetting._('auto');
+const OrientationSetting _$landscape = const OrientationSetting._('landscape');
+const OrientationSetting _$portrait = const OrientationSetting._('portrait');
+
+OrientationSetting _$orientationSettingValueOf(String name) {
+  switch (name) {
+    case 'auto':
+      return _$auto;
+    case 'landscape':
+      return _$landscape;
+    case 'portrait':
+      return _$portrait;
+    default:
+      throw new ArgumentError(name);
+  }
+}
+
+final BuiltSet<OrientationSetting> _$orientationSettingValues =
+    new BuiltSet<OrientationSetting>(const <OrientationSetting>[
+  _$auto,
+  _$landscape,
+  _$portrait,
+]);
+
 const SettingKey _$displayJapaneseTitle =
     const SettingKey._('displayJapaneseTitle');
+const SettingKey _$orientation = const SettingKey._('orientation');
+const SettingKey _$turnPagesWithVolumeKeys =
+    const SettingKey._('turnPagesWithVolumeKeys');
 
 SettingKey _$valueOf(String name) {
   switch (name) {
     case 'displayJapaneseTitle':
       return _$displayJapaneseTitle;
+    case 'orientation':
+      return _$orientation;
+    case 'turnPagesWithVolumeKeys':
+      return _$turnPagesWithVolumeKeys;
     default:
       throw new ArgumentError(name);
   }
@@ -21,9 +52,31 @@ SettingKey _$valueOf(String name) {
 final BuiltSet<SettingKey> _$values =
     new BuiltSet<SettingKey>(const <SettingKey>[
   _$displayJapaneseTitle,
+  _$orientation,
+  _$turnPagesWithVolumeKeys,
 ]);
 
+Serializer<OrientationSetting> _$orientationSettingSerializer =
+    new _$OrientationSettingSerializer();
 Serializer<SettingKey> _$settingKeySerializer = new _$SettingKeySerializer();
+
+class _$OrientationSettingSerializer
+    implements PrimitiveSerializer<OrientationSetting> {
+  @override
+  final Iterable<Type> types = const <Type>[OrientationSetting];
+  @override
+  final String wireName = 'OrientationSetting';
+
+  @override
+  Object serialize(Serializers serializers, OrientationSetting object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      object.name;
+
+  @override
+  OrientationSetting deserialize(Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      OrientationSetting.valueOf(serialized as String);
+}
 
 class _$SettingKeySerializer implements PrimitiveSerializer<SettingKey> {
   @override
@@ -68,6 +121,38 @@ mixin _$SettingStore on _SettingStoreBase, Store {
     });
   }
 
+  final _$orientationAtom = Atom(name: '_SettingStoreBase.orientation');
+
+  @override
+  ObservableFuture<OrientationSetting> get orientation {
+    _$orientationAtom.reportRead();
+    return super.orientation;
+  }
+
+  @override
+  set orientation(ObservableFuture<OrientationSetting> value) {
+    _$orientationAtom.reportWrite(value, super.orientation, () {
+      super.orientation = value;
+    });
+  }
+
+  final _$turnPagesWithVolumeKeysAtom =
+      Atom(name: '_SettingStoreBase.turnPagesWithVolumeKeys');
+
+  @override
+  ObservableFuture<bool> get turnPagesWithVolumeKeys {
+    _$turnPagesWithVolumeKeysAtom.reportRead();
+    return super.turnPagesWithVolumeKeys;
+  }
+
+  @override
+  set turnPagesWithVolumeKeys(ObservableFuture<bool> value) {
+    _$turnPagesWithVolumeKeysAtom
+        .reportWrite(value, super.turnPagesWithVolumeKeys, () {
+      super.turnPagesWithVolumeKeys = value;
+    });
+  }
+
   final _$setDisplayJapaneseTitleAsyncAction =
       AsyncAction('_SettingStoreBase.setDisplayJapaneseTitle');
 
@@ -77,10 +162,29 @@ mixin _$SettingStore on _SettingStoreBase, Store {
         .run(() => super.setDisplayJapaneseTitle(value));
   }
 
+  final _$setOrientationAsyncAction =
+      AsyncAction('_SettingStoreBase.setOrientation');
+
+  @override
+  Future<void> setOrientation(OrientationSetting value) {
+    return _$setOrientationAsyncAction.run(() => super.setOrientation(value));
+  }
+
+  final _$setTurnPagesWithVolumeKeysAsyncAction =
+      AsyncAction('_SettingStoreBase.setTurnPagesWithVolumeKeys');
+
+  @override
+  Future<void> setTurnPagesWithVolumeKeys(bool value) {
+    return _$setTurnPagesWithVolumeKeysAsyncAction
+        .run(() => super.setTurnPagesWithVolumeKeys(value));
+  }
+
   @override
   String toString() {
     return '''
-displayJapaneseTitle: ${displayJapaneseTitle}
+displayJapaneseTitle: ${displayJapaneseTitle},
+orientation: ${orientation},
+turnPagesWithVolumeKeys: ${turnPagesWithVolumeKeys}
     ''';
   }
 }
