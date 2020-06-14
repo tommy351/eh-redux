@@ -127,8 +127,7 @@ class EHentaiClient {
 
     return GalleryDetails((b) => b
       ..favoritesCount = _getFavoritesCount(document) ?? 0
-      ..ratingCount =
-          int.tryParse(document.getElementById('rating_count')?.text) ?? 0
+      ..ratingCount = _getRatingCount(document) ?? 0
       ..currentFavorite = _getCurrentFavorite(document));
   }
 
@@ -136,6 +135,12 @@ class EHentaiClient {
     final element = document.getElementById('favcount');
     if (element == null) return null;
     return int.tryParse(trimSuffix(element.text, 'times'));
+  }
+
+  int _getRatingCount(Document document) {
+    final element = document.getElementById('rating_count');
+    if (element == null) return null;
+    return int.tryParse(element.text);
   }
 
   int _getCurrentFavorite(Document document) {
