@@ -4,6 +4,7 @@ import 'package:eh_redux/screens/search/screen.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class GalleryInfo extends StatelessWidget {
@@ -32,6 +33,12 @@ class GalleryInfo extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             children: <Widget>[
+              _buildTile(
+                context: context,
+                title: const Text('Posted'),
+                trailing:
+                    Text(DateFormat.yMMMd().add_Hm().format(gallery.posted)),
+              ),
               InkWell(
                 onTap: () {
                   Navigator.pushNamed(
@@ -72,7 +79,7 @@ class GalleryInfo extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: <Widget>[
           Expanded(
