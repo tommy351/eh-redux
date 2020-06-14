@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:eh_redux/models/category_colors.dart';
 import 'package:eh_redux/screens/search/store.dart';
 import 'package:flutter/material.dart';
@@ -35,17 +37,11 @@ class _SearchFilterState extends State<SearchFilter> {
     'f_sdt2': 'Search Downvoted Tags',
     'f_sh': 'Show Expunged Galleries',
   };
-  static const _ratingOptions = <int, String>{
-    0: 'No Filter',
-    2: '2 stars',
-    3: '3 stars',
-    4: '4 stars',
-    5: '5 stars',
-  };
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final searchStore = Provider.of<SearchStore>(context);
 
     return Drawer(
       child: Container(
@@ -56,7 +52,7 @@ class _SearchFilterState extends State<SearchFilter> {
               title: Text('Filter', style: theme.textTheme.headline6),
             ),
             const Divider(),
-            _buildSectionTile('Categories'),
+            _buildSectionTile(title: 'Categories'),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -69,7 +65,7 @@ class _SearchFilterState extends State<SearchFilter> {
               itemCount: _categories.length,
             ),
             const Divider(),
-            _buildSectionTile('Advanced Options'),
+            _buildSectionTile(title: 'Advanced Options'),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -82,32 +78,37 @@ class _SearchFilterState extends State<SearchFilter> {
               itemCount: _advancedOptions.length,
             ),
             const Divider(),
-            _buildSectionTile('Minimum Rating'),
-            ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (_, index) {
-                return _buildRatingTile(
-                  value: _ratingOptions.keys.elementAt(index),
-                  label: _ratingOptions.values.elementAt(index),
+            Observer(
+              builder: (context) {
+                return _buildSectionTile(
+                  title: 'Minimum Rating',
+                  trailing: searchStore.minimumRating > 0
+                      ? '${searchStore.minimumRating} stars'
+                      : null,
                 );
               },
-              itemCount: _ratingOptions.length,
             ),
+            _buildRatingSlider(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildSectionTile(String title) {
+  Widget _buildSectionTile({
+    @required String title,
+    String trailing,
+  }) {
     final theme = Theme.of(context);
 
     return ListTile(
-      title: Text(title,
-          style: theme.textTheme.bodyText1.copyWith(
-            color: theme.textTheme.caption.color,
-          )),
+      title: Text(
+        title,
+        style: theme.textTheme.bodyText1.copyWith(
+          color: theme.textTheme.caption.color,
+        ),
+      ),
+      trailing: trailing != null && trailing.isNotEmpty ? Text(trailing) : null,
     );
   }
 
@@ -168,16 +169,26 @@ class _SearchFilterState extends State<SearchFilter> {
     );
   }
 
-  Widget _buildRatingTile({@required int value, @required String label}) {
+  Widget _buildRatingSlider() {
     final searchStore = Provider.of<SearchStore>(context);
 
     return Observer(
       builder: (context) {
-        return RadioListTile<int>(
-          title: Text(label),
-          value: value,
-          groupValue: searchStore.minimumRating,
-          onChanged: searchStore.setMinimumRating,
+        return Slider(
+          value: max(searchStore.minimumRating.toDouble(), 1),
+          min: 1,
+          max: 5,
+          divisions: 4,
+          label: searchStore.minimumRating > 0
+              ? '${searchStore.minimumRating} stars'
+              : 'No Filter',
+          onChanged: (value) {
+            if (value < 2) {
+              searchStore.setMinimumRating(0);
+            } else {
+              searchStore.setMinimumRating(value.floor());
+            }
+          },
         );
       },
     );
