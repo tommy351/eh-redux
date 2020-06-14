@@ -1,11 +1,16 @@
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/stores/image.dart';
+import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:provider/provider.dart';
 
-import 'image.dart';
+import 'gallery.dart';
+import 'image_provider.dart';
 import 'store.dart';
 
 class ViewBody extends StatefulWidget {
@@ -34,6 +39,7 @@ class _ViewBodyState extends State<ViewBody> {
   Widget build(BuildContext context) {
     final gallery = Provider.of<Gallery>(context);
     final viewStore = Provider.of<ViewStore>(context);
+    final imageStore = Provider.of<ImageStore>(context);
     final width = MediaQuery.of(context).size.width;
 
     return StatefulWrapper(
@@ -43,30 +49,45 @@ class _ViewBodyState extends State<ViewBody> {
         });
       },
       builder: (context) {
-        return GestureDetector(
-          onTapUp: (details) {
-            final dx = details.localPosition.dx;
-            const duration = Duration(milliseconds: 500);
-            const curve = Curves.easeOutCubic;
-
-            if (dx < width / 3) {
-              _pageController.previousPage(duration: duration, curve: curve);
-            } else if (dx > width / 3 * 2) {
-              _pageController.nextPage(duration: duration, curve: curve);
-            } else {
-              viewStore.toggleNav();
+        return PreloadPhotoViewGallery(
+          controller: _pageController,
+          onPageChanged: viewStore.setPage,
+          itemCount: gallery.fileCount,
+          loadingBuilder: (context, event) {
+            if (event == null) {
+              return const CenterProgressIndicator();
             }
+
+            return CenterProgressIndicator(
+              value: event.cumulativeBytesLoaded / event.expectedTotalBytes,
+            );
           },
-          child: PreloadPageView.builder(
-            controller: _pageController,
-            itemCount: gallery.fileCount,
-            itemBuilder: (context, i) {
-              return ViewImage(
-                imagePage: i + 1,
-              );
-            },
-            onPageChanged: viewStore.setPage,
-          ),
+          itemBuilder: (context, index) {
+            return PhotoViewGalleryPageOptions(
+              minScale: PhotoViewComputedScale.contained,
+              maxScale: PhotoViewComputedScale.covered * 3,
+              onTapUp: (context, details, controllerValue) {
+                final dx = details.localPosition.dx;
+                const duration = Duration(milliseconds: 500);
+                const curve = Curves.easeOutCubic;
+
+                if (dx < width / 3) {
+                  _pageController.previousPage(
+                      duration: duration, curve: curve);
+                } else if (dx > width / 3 * 2) {
+                  _pageController.nextPage(duration: duration, curve: curve);
+                } else {
+                  viewStore.toggleNav();
+                }
+              },
+              imageProvider: ViewImage(
+                imageStore: imageStore,
+                page: GalleryIdWithPage((b) => b
+                  ..galleryId = gallery.id.toBuilder()
+                  ..page = index + 1),
+              ),
+            );
+          },
         );
       },
     );

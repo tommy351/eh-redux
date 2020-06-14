@@ -29,12 +29,14 @@ class SearchScreen extends StatelessWidget {
 
         return searchStore;
       },
-      child: _SearchScreenContent(),
+      child: const _SearchScreenContent(),
     );
   }
 }
 
 class _SearchScreenContent extends StatelessWidget {
+  const _SearchScreenContent({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final searchStore = Provider.of<SearchStore>(context);

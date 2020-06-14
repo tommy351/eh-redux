@@ -41,7 +41,7 @@ class EHentaiClient {
       headers: await _getRequestHeaders(),
     );
 
-    if (res.statusCode != 200) {
+    if (res.statusCode != HttpStatus.ok) {
       throw HttpException.fromResponse(
         message: 'Failed to get gallery ids',
         response: res,
@@ -88,7 +88,7 @@ class EHentaiClient {
       },
     );
 
-    if (res.statusCode != 200) {
+    if (res.statusCode != HttpStatus.ok) {
       throw HttpException.fromResponse(
         message: 'Failed to fetch galleries data',
         response: res,
@@ -116,7 +116,7 @@ class EHentaiClient {
       headers: await _getRequestHeaders(),
     );
 
-    if (res.statusCode != 200) {
+    if (res.statusCode != HttpStatus.ok) {
       throw HttpException.fromResponse(
         message: 'Failed to get gallery details',
         response: res,
@@ -151,7 +151,7 @@ class EHentaiClient {
       headers: await _getRequestHeaders(),
     );
 
-    if (res.statusCode != 200) {
+    if (res.statusCode != HttpStatus.ok) {
       throw HttpException.fromResponse(
         message: 'Failed to get favorite status',
         response: res,
@@ -189,7 +189,7 @@ class EHentaiClient {
       },
     );
 
-    if (res.statusCode != 200) {
+    if (res.statusCode != HttpStatus.ok) {
       throw HttpException.fromResponse(
         message: 'Failed to add gallery to favorite',
         response: res,
@@ -209,7 +209,7 @@ class EHentaiClient {
       },
     );
 
-    if (res.statusCode != 200) {
+    if (res.statusCode != HttpStatus.ok) {
       throw HttpException.fromResponse(
         message: 'Failed to delete gallery from favorites',
         response: res,
@@ -236,7 +236,7 @@ class EHentaiClient {
       headers: await _getRequestHeaders(),
     );
 
-    if (res.statusCode != 200) {
+    if (res.statusCode != HttpStatus.ok) {
       throw HttpException.fromResponse(
         message: 'Failed to fetch image ids',
         response: res,
@@ -281,7 +281,7 @@ class EHentaiClient {
       headers: await _getRequestHeaders(),
     );
 
-    if (res.statusCode != 200) {
+    if (res.statusCode != HttpStatus.ok) {
       throw HttpException.fromResponse(
         message: 'Failed to fetch image meta',
         response: res,
