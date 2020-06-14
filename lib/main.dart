@@ -60,7 +60,10 @@ class _MainAppState extends State<MainApp> {
     _galleryStore = GalleryStore(client: _eHentaiClient);
     _imageStore = ImageStore(client: _eHentaiClient);
     _settingStore = SettingStore();
-    _favoriteStore = FavoriteStore(client: _eHentaiClient);
+    _favoriteStore = FavoriteStore(
+      client: _eHentaiClient,
+      galleryStore: _galleryStore,
+    );
   }
 
   @override

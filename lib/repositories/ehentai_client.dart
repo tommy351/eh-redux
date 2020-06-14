@@ -147,7 +147,7 @@ class EHentaiClient {
   Future<FavoriteStatus> getFavoriteStatus(GalleryId id) async {
     developer.log('Get favorite status (id: $id)');
     final res = await httpClient.get(
-      '$baseUrl/gallerypopups.php?gid=${id.id}&t=${id.token}&act=addfav',
+      _getFavPopupUrl(id),
       headers: await _getRequestHeaders(),
     );
 
@@ -177,12 +177,56 @@ class EHentaiClient {
     return -1;
   }
 
+  Future<void> addToFavorite(GalleryId id, FavoriteStatus status) async {
+    developer.log('Add gallery to favorite (id: $id)');
+    final res = await httpClient.post(
+      _getFavPopupUrl(id),
+      headers: await _getRequestHeaders(),
+      body: {
+        'update': '1',
+        'favcat': status.favorite.toString(),
+        'favnote': status.note,
+      },
+    );
+
+    if (res.statusCode != 200) {
+      throw HttpException.fromResponse(
+        message: 'Failed to add gallery to favorite',
+        response: res,
+      );
+    }
+  }
+
+  Future<void> deleteFromFavorite(GalleryId id) async {
+    developer.log('Delete gallery from favorites (id: $id)');
+    final res = await httpClient.post(
+      _getFavPopupUrl(id),
+      headers: await _getRequestHeaders(),
+      body: {
+        'update': '1',
+        'favcat': 'favdel',
+        'favnote': '',
+      },
+    );
+
+    if (res.statusCode != 200) {
+      throw HttpException.fromResponse(
+        message: 'Failed to delete gallery from favorites',
+        response: res,
+      );
+    }
+  }
+
   String getGalleryUrl(GalleryId id) {
     return '$baseUrl/g/${id.id}/${id.token}';
   }
 
   String getImageUrl(ImageId id) {
     return '$baseUrl/s/${id.key}/${id.galleryId.id}-${id.page}';
+  }
+
+  String _getFavPopupUrl(GalleryId id) {
+    return '$baseUrl/gallerypopups.php?gid=${id.id}&t=${id.token}&act=addfav';
   }
 
   Future<List<ImageId>> getImageIds(GalleryId galleryId, int page) async {

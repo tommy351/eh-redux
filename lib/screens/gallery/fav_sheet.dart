@@ -1,13 +1,16 @@
 import 'package:eh_redux/models/favorite.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/screens/gallery/fav_sheet_store.dart';
 import 'package:eh_redux/stores/favorite.dart';
+import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
-class GalleryFavSheet extends StatefulWidget {
+class GalleryFavSheet extends StatelessWidget {
   final GalleryId galleryId;
 
   const GalleryFavSheet({
@@ -17,16 +20,32 @@ class GalleryFavSheet extends StatefulWidget {
         super(key: key);
 
   @override
-  _GalleryFavSheetState createState() => _GalleryFavSheetState();
+  Widget build(BuildContext context) {
+    final favoriteStore = Provider.of<FavoriteStore>(context);
+
+    return Provider(
+      create: (_) => FavSheetStore(
+        galleryId: galleryId,
+        favoriteStore: favoriteStore,
+      ),
+      child: _FavSheetContent(galleryId: galleryId),
+    );
+  }
 }
 
-class _GalleryFavSheetState extends State<GalleryFavSheet> {
-  int _selectedFavorite;
+class _FavSheetContent extends StatelessWidget {
+  final GalleryId galleryId;
+
+  const _FavSheetContent({
+    Key key,
+    @required this.galleryId,
+  })  : assert(galleryId != null),
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final favoriteStore = Provider.of<FavoriteStore>(context);
+    final store = Provider.of<FavSheetStore>(context);
 
     return DraggableScrollableSheet(
       minChildSize: 0.1,
@@ -36,12 +55,8 @@ class _GalleryFavSheetState extends State<GalleryFavSheet> {
       builder: (context, controller) {
         return StatefulWrapper(
           onInit: (context) {
-            favoriteStore.loadFavoriteStatus(widget.galleryId);
-            _updateSelectedFavorite(favoriteStore.status[widget.galleryId]);
-
-            return reaction<FavoriteStatus>(
-                (_) => favoriteStore.status[widget.galleryId],
-                _updateSelectedFavorite);
+            store.initialize();
+            return () {};
           },
           builder: (context) {
             return ListView(
@@ -54,8 +69,8 @@ class _GalleryFavSheetState extends State<GalleryFavSheet> {
                         .copyWith(color: theme.textTheme.caption.color),
                   ),
                 ),
-                _buildDropdown(),
-                _buildButtonBar(),
+                _buildDropdown(context),
+                _buildButtonBar(context),
               ],
             );
           },
@@ -64,66 +79,73 @@ class _GalleryFavSheetState extends State<GalleryFavSheet> {
     );
   }
 
-  void _updateSelectedFavorite(FavoriteStatus status) {
-    if (status != null && _selectedFavorite == null) {
-      setState(() {
-        _selectedFavorite = status.favorite;
-      });
-    }
-  }
+  Widget _buildDropdown(BuildContext context) {
+    final store = Provider.of<FavSheetStore>(context);
 
-  Widget _buildDropdown() {
-    return Padding(
-      padding: MediaQuery.of(context).padding +
-          const EdgeInsets.symmetric(horizontal: 16),
-      child: DropdownButton<int>(
-        isExpanded: true,
-        value: _selectedFavorite,
-        onChanged: (value) {
-          setState(() {
-            _selectedFavorite = value;
-          });
-        },
-        items: favoriteColors
-            .asMap()
-            .entries
-            .map(
-              (e) => DropdownMenuItem<int>(
-                value: e.key,
-                child: Text('Favorites ${e.key}'),
-              ),
-            )
-            .toList(),
-      ),
+    return Observer(
+      builder: (context) {
+        return Padding(
+          padding: MediaQuery.of(context).padding +
+              const EdgeInsets.symmetric(horizontal: 16),
+          child: DropdownButton<int>(
+            isExpanded: true,
+            value: store.favorite,
+            onChanged: (value) {
+              store.setFavorite(value);
+            },
+            items: favoriteColors
+                .asMap()
+                .entries
+                .map(
+                  (e) => DropdownMenuItem<int>(
+                    value: e.key,
+                    child: Text('Favorites ${e.key}'),
+                  ),
+                )
+                .toList(),
+          ),
+        );
+      },
     );
   }
 
-  Widget _buildButtonBar() {
+  Widget _buildButtonBar(BuildContext context) {
     final theme = Theme.of(context);
+    final store = Provider.of<FavSheetStore>(context);
 
-    return Padding(
-      padding: MediaQuery.of(context).padding,
-      child: Row(
-        children: <Widget>[
-          FlatButton.icon(
-            onPressed: () {
-              //
-            },
-            textColor: Colors.red,
-            icon: Icon(Icons.delete),
-            label: const Text('Delete from Favorites'),
+    return Observer(
+      builder: (context) {
+        if (store.future?.status == FutureStatus.pending) {
+          return const CenterProgressIndicator();
+        }
+
+        return Padding(
+          padding: MediaQuery.of(context).padding,
+          child: Row(
+            children: <Widget>[
+              FlatButton.icon(
+                onPressed: () {
+                  store
+                      .deleteFromFavorite()
+                      .then((_) => Navigator.pop(context));
+                },
+                textColor: Colors.red,
+                icon: Icon(Icons.delete),
+                label: const Text('Delete'),
+              ),
+              const Spacer(),
+              FlatButton.icon(
+                onPressed: () {
+                  store.addToFavorite().then((_) => Navigator.pop(context));
+                },
+                icon: Icon(Icons.add),
+                textColor: theme.primaryColor,
+                label: const Text('Add'),
+              ),
+            ],
           ),
-          const Spacer(),
-          FlatButton.icon(
-            onPressed: () {
-              //
-            },
-            icon: Icon(Icons.add),
-            textColor: theme.primaryColor,
-            label: const Text('Add to Favorites'),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

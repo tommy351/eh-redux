@@ -82,6 +82,13 @@ abstract class _GalleryStoreBase with Store {
     }
   }
 
+  @action
+  void setCurrentFavorite(GalleryId id, int value) {
+    if (details[id] != null) {
+      details[id] = details[id].rebuild((b) => b..currentFavorite = value);
+    }
+  }
+
   Future<void> _loadPage({
     @required GalleryPaginationKey key,
     @required int page,

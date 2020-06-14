@@ -113,6 +113,17 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
   }
 
   @override
+  void setCurrentFavorite(GalleryId id, int value) {
+    final _$actionInfo = _$_GalleryStoreBaseActionController.startAction(
+        name: '_GalleryStoreBase.setCurrentFavorite');
+    try {
+      return super.setCurrentFavorite(id, value);
+    } finally {
+      _$_GalleryStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 data: ${data},

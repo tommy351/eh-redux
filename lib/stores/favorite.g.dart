@@ -33,6 +33,23 @@ mixin _$FavoriteStore on _FavoriteStoreBase, Store {
         .run(() => super.loadFavoriteStatus(id));
   }
 
+  final _$addToFavoriteAsyncAction =
+      AsyncAction('_FavoriteStoreBase.addToFavorite');
+
+  @override
+  Future<void> addToFavorite(GalleryId id, FavoriteStatus data) {
+    return _$addToFavoriteAsyncAction.run(() => super.addToFavorite(id, data));
+  }
+
+  final _$deleteFromFavoritesAsyncAction =
+      AsyncAction('_FavoriteStoreBase.deleteFromFavorites');
+
+  @override
+  Future<void> deleteFromFavorites(GalleryId id) {
+    return _$deleteFromFavoritesAsyncAction
+        .run(() => super.deleteFromFavorites(id));
+  }
+
   @override
   String toString() {
     return '''
