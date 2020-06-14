@@ -21,12 +21,27 @@ class OrientationSetting extends EnumClass {
       _$orientationSettingValueOf(name);
 }
 
+class ThemeSetting extends EnumClass {
+  static Serializer<ThemeSetting> get serializer => _$themeSettingSerializer;
+
+  static const ThemeSetting system = _$system;
+  static const ThemeSetting light = _$light;
+  static const ThemeSetting dark = _$dark;
+  static const ThemeSetting black = _$black;
+
+  const ThemeSetting._(String name) : super(name);
+
+  static BuiltSet<ThemeSetting> get values => _$themeSettingValues;
+  static ThemeSetting valueOf(String name) => _$themeSettingValueOf(name);
+}
+
 class SettingKey extends EnumClass {
   static Serializer<SettingKey> get serializer => _$settingKeySerializer;
 
   static const SettingKey displayJapaneseTitle = _$displayJapaneseTitle;
   static const SettingKey orientation = _$orientation;
   static const SettingKey turnPagesWithVolumeKeys = _$turnPagesWithVolumeKeys;
+  static const SettingKey theme = _$theme;
 
   const SettingKey._(String name) : super(name);
 
@@ -46,6 +61,9 @@ abstract class _SettingStoreBase with Store {
   @observable
   ObservableFuture<bool> turnPagesWithVolumeKeys;
 
+  @observable
+  ObservableFuture<ThemeSetting> theme;
+
   Future<SharedPreferences> _prefs;
 
   _SettingStoreBase() {
@@ -57,6 +75,8 @@ abstract class _SettingStoreBase with Store {
         .then((value) => OrientationSetting.valueOf(value));
     turnPagesWithVolumeKeys =
         _getValue<bool>(SettingKey.turnPagesWithVolumeKeys, false);
+    theme = _getValue<String>(SettingKey.theme, ThemeSetting.system.toString())
+        .then((value) => ThemeSetting.valueOf(value));
   }
 
   @action
@@ -77,6 +97,12 @@ abstract class _SettingStoreBase with Store {
   Future<void> setTurnPagesWithVolumeKeys(bool value) async {
     await _setBool(SettingKey.turnPagesWithVolumeKeys, value);
     turnPagesWithVolumeKeys = ObservableFuture.value(value);
+  }
+
+  @action
+  Future<void> setTheme(ThemeSetting value) async {
+    await _setString(SettingKey.theme, value.toString());
+    theme = ObservableFuture.value(value);
   }
 
   ObservableFuture<T> _getValue<T>(SettingKey key, [T defaultValue]) {

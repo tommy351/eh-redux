@@ -21,6 +21,31 @@ class SettingScreen extends StatelessWidget {
         builder: (context) {
           return ListView(
             children: <Widget>[
+              _buildTitle(context, 'Appearance'),
+              SelectListTile<ThemeSetting>(
+                title: const Text('Theme'),
+                items: const [
+                  DropdownMenuItem(
+                    value: ThemeSetting.system,
+                    child: Text('System default'),
+                  ),
+                  DropdownMenuItem(
+                    value: ThemeSetting.light,
+                    child: Text('Light'),
+                  ),
+                  DropdownMenuItem(
+                    value: ThemeSetting.dark,
+                    child: Text('Dark'),
+                  ),
+                  DropdownMenuItem(
+                    value: ThemeSetting.black,
+                    child: Text('Black'),
+                  ),
+                ],
+                onChanged: settingStore.setTheme,
+                value: settingStore.theme.value,
+              ),
+              const Divider(),
               _buildTitle(context, 'Gallery List'),
               CheckboxListTile(
                 title: const Text('Display Japanese title if available'),
