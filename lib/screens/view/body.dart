@@ -54,50 +54,51 @@ class _ViewBodyState extends State<ViewBody> {
         return Stack(
           children: <Widget>[
             Positioned.fill(
-              child: PreloadPhotoViewGallery(
-                controller: _pageController,
-                onPageChanged: (value) {
-                  viewStore.setPage(value);
-                  analytics.logEvent(name: 'update_view_page');
-                },
-                itemCount: gallery.fileCount,
-                loadingBuilder: (context, event) {
-                  if (event == null) {
-                    return const CenterProgressIndicator();
+              child: GestureDetector(
+                onTapUp: (details) {
+                  final dx = details.localPosition.dx;
+                  const duration = Duration(milliseconds: 500);
+                  const curve = Curves.easeOutCubic;
+
+                  if (dx < width / 3) {
+                    _pageController.previousPage(
+                        duration: duration, curve: curve);
+                  } else if (dx > width / 3 * 2) {
+                    _pageController.nextPage(duration: duration, curve: curve);
+                  } else {
+                    viewStore.toggleNav();
                   }
-
-                  return CenterProgressIndicator(
-                    value:
-                        event.cumulativeBytesLoaded / event.expectedTotalBytes,
-                  );
                 },
-                itemBuilder: (context, index) {
-                  return PhotoViewGalleryPageOptions(
-                    minScale: PhotoViewComputedScale.contained,
-                    maxScale: PhotoViewComputedScale.covered * 3,
-                    onTapUp: (context, details, controllerValue) {
-                      final dx = details.localPosition.dx;
-                      const duration = Duration(milliseconds: 500);
-                      const curve = Curves.easeOutCubic;
+                child: PreloadPhotoViewGallery(
+                  controller: _pageController,
+                  onPageChanged: (value) {
+                    viewStore.setPage(value);
+                    analytics.logEvent(name: 'update_view_page');
+                  },
+                  itemCount: gallery.fileCount,
+                  loadingBuilder: (context, event) {
+                    if (event == null) {
+                      return const CenterProgressIndicator();
+                    }
 
-                      if (dx < width / 3) {
-                        _pageController.previousPage(
-                            duration: duration, curve: curve);
-                      } else if (dx > width / 3 * 2) {
-                        _pageController.nextPage(
-                            duration: duration, curve: curve);
-                      } else {
-                        viewStore.toggleNav();
-                      }
-                    },
-                    imageProvider: ViewImage(
-                      imageStore: imageStore,
-                      page: GalleryIdWithPage((b) => b
-                        ..galleryId = gallery.id.toBuilder()
-                        ..page = index + 1),
-                    ),
-                  );
-                },
+                    return CenterProgressIndicator(
+                      value: event.cumulativeBytesLoaded /
+                          event.expectedTotalBytes,
+                    );
+                  },
+                  itemBuilder: (context, index) {
+                    return PhotoViewGalleryPageOptions(
+                      minScale: PhotoViewComputedScale.contained,
+                      maxScale: PhotoViewComputedScale.covered * 3,
+                      imageProvider: ViewImage(
+                        imageStore: imageStore,
+                        page: GalleryIdWithPage((b) => b
+                          ..galleryId = gallery.id.toBuilder()
+                          ..page = index + 1),
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
             Positioned(
