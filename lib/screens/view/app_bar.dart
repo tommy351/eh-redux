@@ -1,5 +1,6 @@
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
+import 'package:eh_redux/screens/setting/screen.dart';
 import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,10 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
 import 'store.dart';
+
+enum _ViewAppBarAction {
+  setting,
+}
 
 class ViewAppBar extends StatefulWidget implements PreferredSizeWidget {
   final EdgeInsets padding;
@@ -106,6 +111,22 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
                           );
                         }
                       },
+                    ),
+                    PopupMenuButton<_ViewAppBarAction>(
+                      onSelected: (action) {
+                        switch (action) {
+                          case _ViewAppBarAction.setting:
+                            Navigator.pushNamed(
+                                context, SettingScreen.routeName);
+                            break;
+                        }
+                      },
+                      itemBuilder: (context) => [
+                        const PopupMenuItem(
+                          value: _ViewAppBarAction.setting,
+                          child: Text('Settings'),
+                        ),
+                      ],
                     ),
                   ],
                 ),

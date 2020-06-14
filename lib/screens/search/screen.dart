@@ -52,7 +52,7 @@ class _SearchScreenContent extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          iconTheme: IconThemeData(
+          iconTheme: const IconThemeData(
             color: Colors.black,
           ),
           title: const SearchTextField(),
