@@ -1,9 +1,14 @@
 import 'package:eh_redux/screens/check_update/store.dart';
 import 'package:eh_redux/utils/launch.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
+import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+
+enum _CheckUpdateAction {
+  openInBrowser,
+}
 
 class CheckUpdateScreen extends StatefulWidget {
   const CheckUpdateScreen({Key key}) : super(key: key);
@@ -25,11 +30,36 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Check Updates'),
-      ),
-      body: _buildBody(),
+    return Observer(
+      builder: (context) {
+        final actions = <Widget>[];
+
+        if (_store.releaseFuture.value != null) {
+          actions.add(PopupMenuButton<_CheckUpdateAction>(
+            onSelected: (action) {
+              switch (action) {
+                case _CheckUpdateAction.openInBrowser:
+                  tryLaunch(_store.releaseFuture.value.htmlUrl);
+                  break;
+              }
+            },
+            itemBuilder: (context) => const [
+              PopupMenuItem(
+                value: _CheckUpdateAction.openInBrowser,
+                child: Text('Open in browser'),
+              ),
+            ],
+          ));
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Check Updates'),
+            actions: actions,
+          ),
+          body: _buildBody(),
+        );
+      },
     );
   }
 
@@ -56,12 +86,7 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
             return _buildCenterText('Failed to check updates.');
           }
 
-          if (_store.status == UpdateStatus.noUpdate) {
-            return _buildCenterText('You are up to date');
-          }
-
           final release = _store.releaseFuture.value;
-          final asset = release.assets.first;
 
           return ListView(
             padding: const EdgeInsets.all(16),
@@ -69,28 +94,12 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          release.name,
-                          style: theme.textTheme.headline6,
-                        ),
-                      ],
+                    child: Text(
+                      release.name,
+                      style: theme.textTheme.headline6,
                     ),
                   ),
-                  FlatButton(
-                    onPressed: () {
-                      tryLaunch(release.htmlUrl);
-                    },
-                    child: const Text('Open in browser'),
-                  ),
-                  RaisedButton(
-                    onPressed: () {
-                      tryLaunch(asset.browserDownloadUrl);
-                    },
-                    child: const Text('Download'),
-                  ),
+                  _buildDownloadButton(release),
                 ],
               ),
               Html(data: release.body),
@@ -98,6 +107,28 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildDownloadButton(GitHubRelease release) {
+    final asset = release.assets.firstWhere((asset) =>
+        asset.contentType == 'application/vnd.android.package-archive' &&
+        asset.state == 'uploaded' &&
+        asset.name.contains('arm64-v8a'));
+
+    if (asset == null || _store.status != UpdateStatus.canUpdate) {
+      return const FlatButton(
+        onPressed: null,
+        child: Text('Up to date'),
+      );
+    }
+
+    return RaisedButton.icon(
+      onPressed: () {
+        tryLaunch(asset.browserDownloadUrl);
+      },
+      icon: Icon(Icons.file_download),
+      label: Text('Download (${filesize(asset.size)})'),
     );
   }
 }
