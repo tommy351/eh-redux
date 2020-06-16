@@ -12,29 +12,25 @@ class GalleryTagList extends StatelessWidget {
   Widget build(BuildContext context) {
     final gallery = Provider.of<Gallery>(context);
     final theme = Theme.of(context);
-    final padding = MediaQuery.of(context).padding.copyWith(top: 0) +
-        const EdgeInsets.all(16);
 
-    return Padding(
-      padding: padding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(16) +
+              MediaQuery.of(context).padding.copyWith(top: 0, bottom: 0),
+          child: Text(
             'Tags',
             style: theme.textTheme.headline6
                 .copyWith(fontWeight: FontWeight.normal),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 16),
-            child: _buildGroups(gallery.tags),
-          ),
-        ],
-      ),
+        ),
+        _buildGroups(context, gallery.tags),
+      ],
     );
   }
 
-  Widget _buildGroups(Iterable<GalleryTag> tags) {
+  Widget _buildGroups(BuildContext context, Iterable<GalleryTag> tags) {
     if (tags.isEmpty) {
       return const Text('No tags');
     }
@@ -43,18 +39,25 @@ class GalleryTagList extends StatelessWidget {
         tags, (tag) => tag.namespace.isEmpty ? 'misc' : tag.namespace);
 
     return ListView.builder(
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.only(bottom: 16),
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         return Row(
           children: <Widget>[
-            Text(groups.keys.elementAt(index)),
-            const SizedBox(width: 8),
+            Padding(
+              padding: const EdgeInsets.only(left: 16) +
+                  MediaQuery.of(context).padding.copyWith(
+                        top: 0,
+                        bottom: 0,
+                        right: 8,
+                      ),
+              child: Text(groups.keys.elementAt(index)),
+            ),
             Expanded(
               child: Container(
                 height: 44,
-                child: _buildTags(groups.values.elementAt(index)),
+                child: _buildTags(context, groups.values.elementAt(index)),
               ),
             ),
           ],
@@ -64,9 +67,14 @@ class GalleryTagList extends StatelessWidget {
     );
   }
 
-  Widget _buildTags(Iterable<GalleryTag> tags) {
+  Widget _buildTags(BuildContext context, Iterable<GalleryTag> tags) {
     return ListView.separated(
-      padding: EdgeInsets.zero,
+      padding: const EdgeInsets.only(right: 16) +
+          MediaQuery.of(context).padding.copyWith(
+                top: 0,
+                left: 0,
+                bottom: 0,
+              ),
       shrinkWrap: true,
       scrollDirection: Axis.horizontal,
       itemBuilder: (context, index) {
