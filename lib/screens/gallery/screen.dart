@@ -1,4 +1,5 @@
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/screens/gallery/actions.dart';
 import 'package:eh_redux/screens/gallery/rating.dart';
 import 'package:eh_redux/screens/gallery/tag_list.dart';
 import 'package:eh_redux/stores/gallery.dart';
@@ -61,6 +62,7 @@ class _GalleryScreenContent extends StatelessWidget {
         slivers: [
           const GalleryAppBar(),
           const GalleryHeader(),
+          const GalleryActions(),
           _buildDivider(),
           const GalleryRating(),
           _buildDivider(),

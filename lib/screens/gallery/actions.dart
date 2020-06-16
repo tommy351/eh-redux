@@ -13,13 +13,19 @@ class GalleryActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: ButtonBar(
-        children: <Widget>[
-          _buildFavButton(context),
-          _buildReadButton(context),
-        ],
+    return SliverSafeArea(
+      top: false,
+      bottom: false,
+      sliver: SliverPadding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        sliver: SliverToBoxAdapter(
+          child: ButtonBar(
+            children: <Widget>[
+              _buildFavButton(context),
+              _buildReadButton(context),
+            ],
+          ),
+        ),
       ),
     );
   }
