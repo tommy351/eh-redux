@@ -9,28 +9,32 @@ class GalleryRating extends StatelessWidget {
   Widget build(BuildContext context) {
     final gallery = Provider.of<Gallery>(context);
     final details = Provider.of<GalleryDetails>(context);
-    final padding = MediaQuery.of(context).padding.copyWith(top: 0) +
-        const EdgeInsets.all(16);
 
-    return Padding(
-      padding: padding,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          _buildTile(
-            context: context,
-            icon: Icon(Icons.star),
-            title: Text('${gallery.rating}'),
-            caption:
-                Text('Rating (${details?.ratingCount?.toString() ?? '...'})'),
+    return SliverSafeArea(
+      top: false,
+      bottom: false,
+      sliver: SliverPadding(
+        padding: const EdgeInsets.all(16),
+        sliver: SliverToBoxAdapter(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              _buildTile(
+                context: context,
+                icon: Icon(Icons.star),
+                title: Text('${gallery.rating}'),
+                caption: Text(
+                    'Rating (${details?.ratingCount?.toString() ?? '...'})'),
+              ),
+              _buildTile(
+                context: context,
+                icon: Icon(Icons.favorite),
+                title: Text(details?.favoritesCount?.toString() ?? '...'),
+                caption: const Text('Favorited'),
+              ),
+            ],
           ),
-          _buildTile(
-            context: context,
-            icon: Icon(Icons.favorite),
-            title: Text(details?.favoritesCount?.toString() ?? '...'),
-            caption: const Text('Favorited'),
-          ),
-        ],
+        ),
       ),
     );
   }

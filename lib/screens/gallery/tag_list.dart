@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/screens/gallery/title.dart';
 import 'package:eh_redux/screens/search/args.dart';
 import 'package:eh_redux/screens/search/screen.dart';
 import 'package:flutter/material.dart';
@@ -10,60 +11,54 @@ class GalleryTagList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gallery = Provider.of<Gallery>(context);
-    final theme = Theme.of(context);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16) +
-              MediaQuery.of(context).padding.copyWith(top: 0, bottom: 0),
-          child: Text(
-            'Tags',
-            style: theme.textTheme.headline6
-                .copyWith(fontWeight: FontWeight.normal),
-          ),
-        ),
-        _buildGroups(context, gallery.tags),
-      ],
+    return SliverSafeArea(
+      top: false,
+      bottom: false,
+      sliver: SliverPadding(
+        padding: const EdgeInsets.only(bottom: 16),
+        sliver: _buildSliverList(context),
+      ),
     );
   }
 
-  Widget _buildGroups(BuildContext context, Iterable<GalleryTag> tags) {
-    if (tags.isEmpty) {
-      return const Text('No tags');
+  Widget _buildSliverList(BuildContext context) {
+    final gallery = Provider.of<Gallery>(context);
+    final groups = groupBy<GalleryTag, String>(
+        gallery.tags, (tag) => tag.namespace.isEmpty ? 'misc' : tag.namespace);
+    const title = GallerySectionTitle(title: Text('Tags'));
+
+    if (groups.isEmpty) {
+      return const SliverList(
+        delegate: SliverChildListDelegate.fixed([
+          title,
+          Text('No tags'),
+        ]),
+      );
     }
 
-    final groups = groupBy<GalleryTag, String>(
-        tags, (tag) => tag.namespace.isEmpty ? 'misc' : tag.namespace);
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((context, index) {
+        if (index == 0) {
+          return title;
+        }
 
-    return ListView.builder(
-      padding: const EdgeInsets.only(bottom: 16),
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
+        final entry = groups.entries.elementAt(index - 1);
+
         return Row(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 16) +
-                  MediaQuery.of(context).padding.copyWith(
-                        top: 0,
-                        bottom: 0,
-                        right: 8,
-                      ),
-              child: Text(groups.keys.elementAt(index)),
+              padding: const EdgeInsets.only(left: 16, right: 8),
+              child: Text(entry.key),
             ),
             Expanded(
               child: Container(
                 height: 44,
-                child: _buildTags(context, groups.values.elementAt(index)),
+                child: _buildTags(context, entry.value),
               ),
             ),
           ],
         );
-      },
-      itemCount: groups.length,
+      }, childCount: groups.length + 1),
     );
   }
 

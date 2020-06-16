@@ -11,18 +11,19 @@ class GalleryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gallery = Provider.of<Gallery>(context);
-    final padding = MediaQuery.of(context).padding.copyWith(top: 0) +
-        const EdgeInsets.all(16);
 
-    return Padding(
-      padding: padding,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          _buildCategory(context, gallery.category),
-          _buildTitle(context, gallery.title),
-          _buildSubtitle(context, gallery.titleJpn),
-        ],
+    return SliverSafeArea(
+      top: false,
+      bottom: false,
+      sliver: SliverPadding(
+        padding: const EdgeInsets.all(16),
+        sliver: SliverList(
+          delegate: SliverChildListDelegate.fixed([
+            _buildCategory(context, gallery.category),
+            _buildTitle(context, gallery.title),
+            _buildSubtitle(context, gallery.titleJpn),
+          ]),
+        ),
       ),
     );
   }

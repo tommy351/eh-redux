@@ -1,4 +1,6 @@
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/screens/gallery/rating.dart';
+import 'package:eh_redux/screens/gallery/tag_list.dart';
 import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
@@ -7,13 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'actions.dart';
 import 'app_bar.dart';
 import 'args.dart';
 import 'header.dart';
 import 'info.dart';
-import 'rating.dart';
-import 'tag_list.dart';
 
 class GalleryScreen extends StatelessWidget {
   const GalleryScreen({Key key}) : super(key: key);
@@ -59,22 +58,23 @@ class _GalleryScreenContent extends StatelessWidget {
 
     return Scaffold(
       body: CustomScrollView(
-        slivers: <Widget>[
+        slivers: [
           const GalleryAppBar(),
-          SliverList(
-            delegate: SliverChildListDelegate([
-              const GalleryHeader(),
-              const GalleryActions(),
-              const Divider(),
-              const GalleryRating(),
-              const Divider(),
-              const GalleryInfo(),
-              const Divider(),
-              const GalleryTagList(),
-            ]),
-          ),
+          const GalleryHeader(),
+          _buildDivider(),
+          const GalleryRating(),
+          _buildDivider(),
+          const GalleryInfo(),
+          _buildDivider(),
+          const GalleryTagList(),
         ],
       ),
+    );
+  }
+
+  Widget _buildDivider() {
+    return const SliverToBoxAdapter(
+      child: Divider(),
     );
   }
 }

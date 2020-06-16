@@ -1,4 +1,5 @@
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/screens/gallery/title.dart';
 import 'package:eh_redux/screens/search/args.dart';
 import 'package:eh_redux/screens/search/screen.dart';
 import 'package:filesize/filesize.dart';
@@ -13,60 +14,46 @@ class GalleryInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gallery = Provider.of<Gallery>(context);
-    final theme = Theme.of(context);
 
-    return Padding(
-      padding: MediaQuery.of(context).padding.copyWith(top: 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              'Info',
-              style: theme.textTheme.headline6
-                  .copyWith(fontWeight: FontWeight.normal),
+    return SliverSafeArea(
+      top: false,
+      bottom: false,
+      sliver: SliverList(
+        delegate: SliverChildListDelegate.fixed([
+          const GallerySectionTitle(
+            title: Text('Info'),
+          ),
+          _buildTile(
+            context: context,
+            title: const Text('Posted'),
+            trailing: Text(DateFormat.yMMMd().add_Hm().format(gallery.posted)),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                SearchScreen.routeName,
+                arguments: SearchScreenArguments(
+                    (b) => b.query = 'uploader:${gallery.uploader}'),
+              );
+            },
+            child: _buildTile(
+              context: context,
+              title: const Text('Uploader'),
+              trailing: Text(gallery.uploader),
             ),
           ),
-          ListView(
-            padding: EdgeInsets.zero,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              _buildTile(
-                context: context,
-                title: const Text('Posted'),
-                trailing:
-                    Text(DateFormat.yMMMd().add_Hm().format(gallery.posted)),
-              ),
-              InkWell(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    SearchScreen.routeName,
-                    arguments: SearchScreenArguments(
-                        (b) => b.query = 'uploader:${gallery.uploader}'),
-                  );
-                },
-                child: _buildTile(
-                  context: context,
-                  title: const Text('Uploader'),
-                  trailing: Text(gallery.uploader),
-                ),
-              ),
-              _buildTile(
-                context: context,
-                title: const Text('Length'),
-                trailing: Text('${gallery.fileCount} pages'),
-              ),
-              _buildTile(
-                context: context,
-                title: const Text('File Size'),
-                trailing: Text(filesize(gallery.fileSize)),
-              ),
-            ],
+          _buildTile(
+            context: context,
+            title: const Text('Length'),
+            trailing: Text('${gallery.fileCount} pages'),
           ),
-        ],
+          _buildTile(
+            context: context,
+            title: const Text('File Size'),
+            trailing: Text(filesize(gallery.fileSize)),
+          ),
+        ]),
       ),
     );
   }
