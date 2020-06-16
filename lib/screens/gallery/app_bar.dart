@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
+import 'package:eh_redux/utils/launch.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 enum _GalleryAppBarAction {
   openInBrowser,
@@ -37,10 +37,7 @@ class GalleryAppBar extends StatelessWidget {
           onSelected: (value) {
             switch (value) {
               case _GalleryAppBarAction.openInBrowser:
-                final url = client.getGalleryUrl(gallery.id);
-                canLaunch(url).then((value) {
-                  if (value) launch(url);
-                });
+                tryLaunch(client.getGalleryUrl(gallery.id));
                 break;
             }
           },
