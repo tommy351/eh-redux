@@ -1,5 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/screens/search/args.dart';
+import 'package:eh_redux/screens/search/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -70,7 +72,10 @@ class GalleryTagList extends StatelessWidget {
       itemBuilder: (context, index) {
         return ActionChip(
           onPressed: () {
-            //
+            Navigator.pushNamed(context, SearchScreen.routeName,
+                arguments: SearchScreenArguments(
+                  (b) => b..query = tags.elementAt(index).fullTag(),
+                ));
           },
           label: Text(tags.elementAt(index).tag),
         );
