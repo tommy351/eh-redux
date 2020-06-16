@@ -9,13 +9,13 @@ part 'image.g.dart';
 class ImageStore = _ImageStoreBase with _$ImageStore;
 
 abstract class _ImageStoreBase with Store {
-  static const _imagePerPage = 40;
-
-  final EHentaiClient client;
-
   _ImageStoreBase({
     @required this.client,
   }) : assert(client != null);
+
+  static const _imagePerPage = 40;
+
+  final EHentaiClient client;
 
   @observable
   ObservableMap<ImageId, Image> data = ObservableMap.of({});

@@ -13,6 +13,11 @@ enum LoginStatus {
 class SessionStore = _SessionStoreBase with _$SessionStore;
 
 abstract class _SessionStoreBase with Store {
+  _SessionStoreBase({
+    @required this.secureStorage,
+  })  : assert(secureStorage != null),
+        session = ObservableFuture(secureStorage.read(key: _sessionKey));
+
   static const _sessionKey = 'session';
   static final _emptySession = ObservableFuture.value('');
 
@@ -31,11 +36,6 @@ abstract class _SessionStoreBase with Store {
         ? LoginStatus.pending
         : LoginStatus.notLoggedIn;
   }
-
-  _SessionStoreBase({
-    @required this.secureStorage,
-  })  : assert(secureStorage != null),
-        session = ObservableFuture(secureStorage.read(key: _sessionKey));
 
   @action
   Future<void> setSession(String value) async {

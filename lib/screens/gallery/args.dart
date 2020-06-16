@@ -6,13 +6,13 @@ part 'args.g.dart';
 
 abstract class GalleryScreenArguments
     implements Built<GalleryScreenArguments, GalleryScreenArgumentsBuilder> {
-  static Serializer<GalleryScreenArguments> get serializer =>
-      _$galleryScreenArgumentsSerializer;
-
-  GalleryId get id;
-
   factory GalleryScreenArguments(
           [Function(GalleryScreenArgumentsBuilder) updates]) =
       _$GalleryScreenArguments;
   GalleryScreenArguments._();
+
+  static Serializer<GalleryScreenArguments> get serializer =>
+      _$galleryScreenArgumentsSerializer;
+
+  GalleryId get id;
 }

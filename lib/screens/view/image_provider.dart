@@ -8,18 +8,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ViewImage extends ImageProvider<ViewImage> {
-  static final _httpClient = HttpClient()..autoUncompress = false;
-
-  final GalleryIdWithPage page;
-  final double scale;
-  final ImageStore imageStore;
-
   ViewImage({
     @required this.page,
     @required this.imageStore,
     this.scale = 1.0,
   })  : assert(page != null),
         assert(imageStore != null);
+
+  static final _httpClient = HttpClient()..autoUncompress = false;
+
+  final GalleryIdWithPage page;
+  final double scale;
+  final ImageStore imageStore;
 
   @override
   Future<ViewImage> obtainKey(ImageConfiguration configuration) {

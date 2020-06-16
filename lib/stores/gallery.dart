@@ -10,13 +10,13 @@ part 'gallery.g.dart';
 class GalleryStore = _GalleryStoreBase with _$GalleryStore;
 
 abstract class _GalleryStoreBase with Store {
-  static const _galleryPerPage = 25;
-
-  final EHentaiClient client;
-
   _GalleryStoreBase({
     @required this.client,
   }) : assert(client != null);
+
+  static const _galleryPerPage = 25;
+
+  final EHentaiClient client;
 
   @observable
   ObservableMap<GalleryId, Gallery> data = ObservableMap.of({});

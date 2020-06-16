@@ -7,12 +7,12 @@ import 'package:provider/provider.dart';
 import 'store.dart';
 
 class ViewBottomNavigation extends StatefulWidget {
-  final EdgeInsets padding;
-
   const ViewBottomNavigation({
     Key key,
     this.padding = EdgeInsets.zero,
   }) : super(key: key);
+
+  final EdgeInsets padding;
 
   @override
   _ViewBottomNavigationState createState() => _ViewBottomNavigationState();

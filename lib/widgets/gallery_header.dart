@@ -4,13 +4,13 @@ import 'package:eh_redux/widgets/rating_bar.dart';
 import 'package:flutter/material.dart';
 
 class GalleryHeader extends StatelessWidget {
-  final Gallery gallery;
-
   const GalleryHeader(
     this.gallery, {
     Key key,
   })  : assert(gallery != null),
         super(key: key);
+
+  final Gallery gallery;
 
   @override
   Widget build(BuildContext context) {

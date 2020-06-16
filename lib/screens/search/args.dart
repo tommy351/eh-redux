@@ -5,21 +5,21 @@ part 'args.g.dart';
 
 abstract class SearchScreenArguments
     implements Built<SearchScreenArguments, SearchScreenArgumentsBuilder> {
-  static Serializer<SearchScreenArguments> get serializer =>
-      _$searchScreenArgumentsSerializer;
-
-  String get query;
-
   factory SearchScreenArguments(
           [Function(SearchScreenArgumentsBuilder) updates]) =
       _$SearchScreenArguments;
   SearchScreenArguments._();
+
+  static Serializer<SearchScreenArguments> get serializer =>
+      _$searchScreenArgumentsSerializer;
+
+  String get query;
 }
 
 abstract class SearchScreenArgumentsBuilder
     implements Builder<SearchScreenArguments, SearchScreenArgumentsBuilder> {
-  String query = '';
-
   factory SearchScreenArgumentsBuilder() = _$SearchScreenArgumentsBuilder;
   SearchScreenArgumentsBuilder._();
+
+  String query = '';
 }

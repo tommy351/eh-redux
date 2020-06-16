@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GalleryHeader extends StatelessWidget {
-  static const _categoryIndicatorSize = 16.0;
-
   const GalleryHeader({Key key}) : super(key: key);
+
+  static const _categoryIndicatorSize = 16.0;
 
   @override
   Widget build(BuildContext context) {

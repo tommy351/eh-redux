@@ -16,17 +16,17 @@ import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
 class EHentaiClient {
-  static const baseUrl = 'https://e-hentai.org';
-  static const apiUrl = 'https://api.e-hentai.org/api.php';
-
-  final http.Client httpClient;
-  final SessionStore sessionStore;
-
   EHentaiClient({
     @required this.httpClient,
     @required this.sessionStore,
   })  : assert(httpClient != null),
         assert(sessionStore != null);
+
+  static const baseUrl = 'https://e-hentai.org';
+  static const apiUrl = 'https://api.e-hentai.org/api.php';
+
+  final http.Client httpClient;
+  final SessionStore sessionStore;
 
   Future<Map<String, String>> _getRequestHeaders() async {
     return {

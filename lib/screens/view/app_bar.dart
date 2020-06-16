@@ -18,16 +18,16 @@ enum _ViewAppBarAction {
 }
 
 class ViewAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final EdgeInsets padding;
-
-  @override
-  final Size preferredSize;
-
   ViewAppBar({
     Key key,
     this.padding = EdgeInsets.zero,
   })  : preferredSize = Size.fromHeight(56 + padding.top),
         super(key: key);
+
+  final EdgeInsets padding;
+
+  @override
+  final Size preferredSize;
 
   @override
   _ViewAppBarState createState() => _ViewAppBarState();

@@ -7,21 +7,6 @@ import 'package:meta/meta.dart';
 part 'gallery.g.dart';
 
 abstract class Gallery implements Built<Gallery, GalleryBuilder> {
-  static Serializer<Gallery> get serializer => _$gallerySerializer;
-
-  GalleryId get id;
-  String get title;
-  String get titleJpn;
-  String get category;
-  String get thumbnail;
-  String get uploader;
-  int get fileCount;
-  int get fileSize;
-  bool get expunged;
-  double get rating;
-  BuiltList<GalleryTag> get tags;
-  DateTime get posted;
-
   factory Gallery([Function(GalleryBuilder) updates]) = _$Gallery;
   Gallery._();
 
@@ -46,26 +31,34 @@ abstract class Gallery implements Built<Gallery, GalleryBuilder> {
       ..tags = BuiltList<GalleryTag>.from(tags).toBuilder()
       ..posted = tryParseSecondsSinceEpoch(json['posted'].toString()));
   }
+
+  static Serializer<Gallery> get serializer => _$gallerySerializer;
+
+  GalleryId get id;
+  String get title;
+  String get titleJpn;
+  String get category;
+  String get thumbnail;
+  String get uploader;
+  int get fileCount;
+  int get fileSize;
+  bool get expunged;
+  double get rating;
+  BuiltList<GalleryTag> get tags;
+  DateTime get posted;
 }
 
 abstract class GalleryId implements Built<GalleryId, GalleryIdBuilder> {
+  factory GalleryId([Function(GalleryIdBuilder) updates]) = _$GalleryId;
+  GalleryId._();
+
   static Serializer<GalleryId> get serializer => _$galleryIdSerializer;
 
   int get id;
   String get token;
-
-  factory GalleryId([Function(GalleryIdBuilder) updates]) = _$GalleryId;
-  GalleryId._();
 }
 
 abstract class GalleryTag implements Built<GalleryTag, GalleryTagBuilder> {
-  static const delimiter = ':';
-
-  static Serializer<GalleryTag> get serializer => _$galleryTagSerializer;
-
-  String get namespace;
-  String get tag;
-
   factory GalleryTag([Function(GalleryTagBuilder) updates]) = _$GalleryTag;
   GalleryTag._();
 
@@ -82,6 +75,13 @@ abstract class GalleryTag implements Built<GalleryTag, GalleryTagBuilder> {
       ..namespace = parts[0]
       ..tag = parts.sublist(1).join(delimiter));
   }
+
+  static const delimiter = ':';
+
+  static Serializer<GalleryTag> get serializer => _$galleryTagSerializer;
+
+  String get namespace;
+  String get tag;
 
   String fullTag() => namespace.isEmpty ? tag : '$namespace$delimiter$tag';
 
@@ -103,11 +103,11 @@ class GalleryPaginationKeyFavorite extends GalleryPaginationKey {
 }
 
 class GalleryPaginationKeySearch extends GalleryPaginationKey {
-  final GallerySearchOptions options;
-
   GalleryPaginationKeySearch({
     @required this.options,
   }) : assert(options != null);
+
+  final GallerySearchOptions options;
 
   @override
   bool operator ==(Object other) =>
@@ -127,6 +127,10 @@ class GalleryPaginationKeySearch extends GalleryPaginationKey {
 
 abstract class GallerySearchOptions
     implements Built<GallerySearchOptions, GallerySearchOptionsBuilder> {
+  factory GallerySearchOptions(
+      [Function(GallerySearchOptionsBuilder) updates]) = _$GallerySearchOptions;
+  GallerySearchOptions._();
+
   static Serializer<GallerySearchOptions> get serializer =>
       _$gallerySearchOptionsSerializer;
 
@@ -134,35 +138,31 @@ abstract class GallerySearchOptions
   int get categoryFilter;
   BuiltMap<String, bool> get advancedOptions;
   int get minimumRating;
-
-  factory GallerySearchOptions(
-      [Function(GallerySearchOptionsBuilder) updates]) = _$GallerySearchOptions;
-  GallerySearchOptions._();
 }
 
 abstract class GalleryIdWithPage
     implements Built<GalleryIdWithPage, GalleryIdWithPageBuilder> {
+  factory GalleryIdWithPage([Function(GalleryIdWithPageBuilder) updates]) =
+      _$GalleryIdWithPage;
+  GalleryIdWithPage._();
+
   static Serializer<GalleryIdWithPage> get serializer =>
       _$galleryIdWithPageSerializer;
 
   GalleryId get galleryId;
   int get page;
-
-  factory GalleryIdWithPage([Function(GalleryIdWithPageBuilder) updates]) =
-      _$GalleryIdWithPage;
-  GalleryIdWithPage._();
 }
 
 abstract class GalleryDetails
     implements Built<GalleryDetails, GalleryDetailsBuilder> {
+  factory GalleryDetails([void Function(GalleryDetailsBuilder) updates]) =
+      _$GalleryDetails;
+  GalleryDetails._();
+
   static Serializer<GalleryDetails> get serializer =>
       _$galleryDetailsSerializer;
 
   int get favoritesCount;
   int get ratingCount;
   int get currentFavorite;
-
-  factory GalleryDetails([void Function(GalleryDetailsBuilder) updates]) =
-      _$GalleryDetails;
-  GalleryDetails._();
 }

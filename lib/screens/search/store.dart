@@ -9,11 +9,11 @@ part 'store.g.dart';
 class SearchStore = _SearchStoreBase with _$SearchStore;
 
 abstract class _SearchStoreBase with Store {
-  final GalleryStore galleryStore;
-
   _SearchStoreBase({
     @required this.galleryStore,
   }) : assert(galleryStore != null);
+
+  final GalleryStore galleryStore;
 
   @observable
   String query = '';

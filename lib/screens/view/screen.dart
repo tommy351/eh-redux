@@ -15,9 +15,9 @@ import 'bottom_nav.dart';
 import 'store.dart';
 
 class ViewScreen extends StatelessWidget {
-  static String routeName = '/view';
-
   const ViewScreen({Key key}) : super(key: key);
+
+  static String routeName = '/view';
 
   @override
   Widget build(BuildContext context) {

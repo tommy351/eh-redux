@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatelessWidget {
-  static String routeName = '/search';
-
   const SearchScreen({Key key}) : super(key: key);
+
+  static String routeName = '/search';
 
   @override
   Widget build(BuildContext context) {

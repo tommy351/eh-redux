@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class RatingBar extends StatelessWidget {
-  final double rating;
-  final double size;
-  final Color color;
-  final MainAxisAlignment mainAxisAlignment;
-
   const RatingBar(
     this.rating, {
     Key key,
@@ -14,6 +9,11 @@ class RatingBar extends StatelessWidget {
     this.mainAxisAlignment = MainAxisAlignment.center,
   })  : assert(rating != null),
         super(key: key);
+
+  final double rating;
+  final double size;
+  final Color color;
+  final MainAxisAlignment mainAxisAlignment;
 
   @override
   Widget build(BuildContext context) {

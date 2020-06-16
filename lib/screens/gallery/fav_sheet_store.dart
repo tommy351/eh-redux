@@ -9,14 +9,14 @@ part 'fav_sheet_store.g.dart';
 class FavSheetStore = _FavSheetStoreBase with _$FavSheetStore;
 
 abstract class _FavSheetStoreBase with Store {
-  final FavoriteStore favoriteStore;
-  final GalleryId galleryId;
-
   _FavSheetStoreBase({
     @required this.favoriteStore,
     @required this.galleryId,
   })  : assert(favoriteStore != null),
         assert(galleryId != null);
+
+  final FavoriteStore favoriteStore;
+  final GalleryId galleryId;
 
   @observable
   int favorite = 0;

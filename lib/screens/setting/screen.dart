@@ -5,9 +5,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class SettingScreen extends StatelessWidget {
-  static const routeName = '/setting';
-
   const SettingScreen({Key key}) : super(key: key);
+
+  static const routeName = '/setting';
 
   @override
   Widget build(BuildContext context) {

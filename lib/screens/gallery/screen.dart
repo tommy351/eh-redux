@@ -16,9 +16,9 @@ import 'rating.dart';
 import 'tag_list.dart';
 
 class GalleryScreen extends StatelessWidget {
-  static String routeName = '/gallery';
-
   const GalleryScreen({Key key}) : super(key: key);
+
+  static String routeName = '/gallery';
 
   @override
   Widget build(BuildContext context) {

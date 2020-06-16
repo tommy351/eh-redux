@@ -6,12 +6,6 @@ part 'http_exception.g.dart';
 
 abstract class HttpException
     implements Built<HttpException, HttpExceptionBuilder>, Exception {
-  static Serializer<HttpException> get serializer => _$httpExceptionSerializer;
-
-  String get message;
-  int get statusCode;
-  String get body;
-
   factory HttpException([Function(HttpExceptionBuilder) updates]) =
       _$HttpException;
   HttpException._();
@@ -22,14 +16,20 @@ abstract class HttpException
       ..statusCode = response.statusCode
       ..body = response.body);
   }
+
+  static Serializer<HttpException> get serializer => _$httpExceptionSerializer;
+
+  String get message;
+  int get statusCode;
+  String get body;
 }
 
 abstract class HttpExceptionBuilder
     implements Builder<HttpException, HttpExceptionBuilder> {
+  factory HttpExceptionBuilder() = _$HttpExceptionBuilder;
+  HttpExceptionBuilder._();
+
   String message = '';
   int statusCode = -1;
   String body = '';
-
-  factory HttpExceptionBuilder() = _$HttpExceptionBuilder;
-  HttpExceptionBuilder._();
 }

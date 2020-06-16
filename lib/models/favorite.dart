@@ -19,13 +19,13 @@ const favoriteColors = <Color>[
 
 abstract class FavoriteStatus
     implements Built<FavoriteStatus, FavoriteStatusBuilder> {
+  factory FavoriteStatus([void Function(FavoriteStatusBuilder) updates]) =
+      _$FavoriteStatus;
+  FavoriteStatus._();
+
   static Serializer<FavoriteStatus> get serializer =>
       _$favoriteStatusSerializer;
 
   int get favorite;
   String get note;
-
-  factory FavoriteStatus([void Function(FavoriteStatusBuilder) updates]) =
-      _$FavoriteStatus;
-  FavoriteStatus._();
 }

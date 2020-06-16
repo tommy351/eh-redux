@@ -1,5 +1,10 @@
 include: package:lint/analysis_options_package.yaml
 
+linter:
+  rules:
+    prefer_single_quotes: true
+    sort_constructors_first: true
+
 analyzer:
   exclude:
     - "**/*.g.dart"

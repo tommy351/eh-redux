@@ -12,13 +12,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class GalleryList extends StatefulWidget {
-  final GalleryPaginationKey paginationKey;
-
   const GalleryList({
     Key key,
     @required this.paginationKey,
   })  : assert(paginationKey != null),
         super(key: key);
+
+  final GalleryPaginationKey paginationKey;
 
   @override
   _GalleryListState createState() => _GalleryListState();

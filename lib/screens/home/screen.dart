@@ -6,9 +6,9 @@ import 'gallery_tab.dart';
 import 'setting_tab.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String routeName = '/';
-
   const HomeScreen({Key key}) : super(key: key);
+
+  static String routeName = '/';
 
   @override
   _HomeScreenState createState() => _HomeScreenState();

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class CenterProgressIndicator extends StatelessWidget {
-  final double value;
-
   const CenterProgressIndicator({
     Key key,
     this.value,
   }) : super(key: key);
+
+  final double value;
 
   @override
   Widget build(BuildContext context) {

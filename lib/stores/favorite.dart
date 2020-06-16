@@ -10,14 +10,14 @@ part 'favorite.g.dart';
 class FavoriteStore = _FavoriteStoreBase with _$FavoriteStore;
 
 abstract class _FavoriteStoreBase with Store {
-  final EHentaiClient client;
-  final GalleryStore galleryStore;
-
   _FavoriteStoreBase({
     @required this.client,
     @required this.galleryStore,
   })  : assert(client != null),
         assert(galleryStore != null);
+
+  final EHentaiClient client;
+  final GalleryStore galleryStore;
 
   @observable
   ObservableMap<GalleryId, FavoriteStatus> status = ObservableMap.of({});

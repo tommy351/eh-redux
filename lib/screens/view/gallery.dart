@@ -5,15 +5,6 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
 class PreloadPhotoViewGallery extends StatelessWidget {
-  final bool reverse;
-  final PreloadPageController controller;
-  final Function(int) onPageChanged;
-  final PhotoViewGalleryPageOptions Function(BuildContext, int) itemBuilder;
-  final int itemCount;
-  final Axis scrollDirection;
-  final Widget Function(BuildContext, ImageChunkEvent) loadingBuilder;
-  final ScrollPhysics scrollPhysics;
-
   const PreloadPhotoViewGallery({
     Key key,
     this.reverse = false,
@@ -28,6 +19,15 @@ class PreloadPhotoViewGallery extends StatelessWidget {
         assert(itemCount != null),
         assert(itemCount >= 0),
         super(key: key);
+
+  final bool reverse;
+  final PreloadPageController controller;
+  final Function(int) onPageChanged;
+  final PhotoViewGalleryPageOptions Function(BuildContext, int) itemBuilder;
+  final int itemCount;
+  final Axis scrollDirection;
+  final Widget Function(BuildContext, ImageChunkEvent) loadingBuilder;
+  final ScrollPhysics scrollPhysics;
 
   @override
   Widget build(BuildContext context) {

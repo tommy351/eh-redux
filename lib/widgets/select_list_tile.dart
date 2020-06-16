@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SelectListTile<T> extends StatefulWidget {
-  final Widget title;
-  final Function(T) onChanged;
-  final List<DropdownMenuItem<T>> items;
-  final T value;
-
   const SelectListTile({
     Key key,
     @required this.title,
@@ -16,6 +11,11 @@ class SelectListTile<T> extends StatefulWidget {
         assert(items != null),
         assert(value != null),
         super(key: key);
+
+  final Widget title;
+  final Function(T) onChanged;
+  final List<DropdownMenuItem<T>> items;
+  final T value;
 
   @override
   _SelectListTileState<T> createState() => _SelectListTileState<T>();

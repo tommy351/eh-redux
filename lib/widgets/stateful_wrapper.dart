@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 
 class StatefulWrapper extends StatefulWidget {
-  final Widget Function(BuildContext) builder;
-  final Function Function(BuildContext) onInit;
-  final Function() onDispose;
-
   const StatefulWrapper({
     Key key,
     @required this.builder,
@@ -12,6 +8,10 @@ class StatefulWrapper extends StatefulWidget {
     this.onDispose,
   })  : assert(builder != null),
         super(key: key);
+
+  final Widget Function(BuildContext) builder;
+  final Function Function(BuildContext) onInit;
+  final Function() onDispose;
 
   @override
   _StatefulWrapperState createState() => _StatefulWrapperState();

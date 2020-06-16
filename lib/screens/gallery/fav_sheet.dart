@@ -12,13 +12,13 @@ import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 class GalleryFavSheet extends StatefulWidget {
-  final GalleryId galleryId;
-
   const GalleryFavSheet({
     Key key,
     @required this.galleryId,
   })  : assert(galleryId != null),
         super(key: key);
+
+  final GalleryId galleryId;
 
   @override
   _GalleryFavSheetState createState() => _GalleryFavSheetState();
@@ -52,13 +52,13 @@ class _GalleryFavSheetState extends State<GalleryFavSheet> {
 }
 
 class _FavSheetContent extends StatelessWidget {
-  final GalleryId galleryId;
-
   const _FavSheetContent({
     Key key,
     @required this.galleryId,
   })  : assert(galleryId != null),
         super(key: key);
+
+  final GalleryId galleryId;
 
   @override
   Widget build(BuildContext context) {

@@ -10,9 +10,9 @@ import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
-  static String routeName = '/login';
-
   const LoginScreen({Key key}) : super(key: key);
+
+  static String routeName = '/login';
 
   @override
   _LoginScreenState createState() => _LoginScreenState();

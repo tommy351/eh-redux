@@ -7,6 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 part 'setting.g.dart';
 
 class OrientationSetting extends EnumClass {
+  const OrientationSetting._(String name) : super(name);
+
   static Serializer<OrientationSetting> get serializer =>
       _$orientationSettingSerializer;
 
@@ -14,14 +16,14 @@ class OrientationSetting extends EnumClass {
   static const OrientationSetting landscape = _$landscape;
   static const OrientationSetting portrait = _$portrait;
 
-  const OrientationSetting._(String name) : super(name);
-
   static BuiltSet<OrientationSetting> get values => _$orientationSettingValues;
   static OrientationSetting valueOf(String name) =>
       _$orientationSettingValueOf(name);
 }
 
 class ThemeSetting extends EnumClass {
+  const ThemeSetting._(String name) : super(name);
+
   static Serializer<ThemeSetting> get serializer => _$themeSettingSerializer;
 
   static const ThemeSetting system = _$system;
@@ -29,21 +31,19 @@ class ThemeSetting extends EnumClass {
   static const ThemeSetting dark = _$dark;
   static const ThemeSetting black = _$black;
 
-  const ThemeSetting._(String name) : super(name);
-
   static BuiltSet<ThemeSetting> get values => _$themeSettingValues;
   static ThemeSetting valueOf(String name) => _$themeSettingValueOf(name);
 }
 
 class SettingKey extends EnumClass {
+  const SettingKey._(String name) : super(name);
+
   static Serializer<SettingKey> get serializer => _$settingKeySerializer;
 
   static const SettingKey displayJapaneseTitle = _$displayJapaneseTitle;
   static const SettingKey orientation = _$orientation;
   static const SettingKey turnPagesWithVolumeKeys = _$turnPagesWithVolumeKeys;
   static const SettingKey theme = _$theme;
-
-  const SettingKey._(String name) : super(name);
 
   static BuiltSet<SettingKey> get values => _$values;
   static SettingKey valueOf(String name) => _$valueOf(name);
@@ -52,6 +52,19 @@ class SettingKey extends EnumClass {
 class SettingStore = _SettingStoreBase with _$SettingStore;
 
 abstract class _SettingStoreBase with Store {
+  _SettingStoreBase() {
+    _prefs = SharedPreferences.getInstance();
+    displayJapaneseTitle =
+        _getValue<bool>(SettingKey.displayJapaneseTitle, false);
+    orientation = _getValue<String>(
+            SettingKey.orientation, OrientationSetting.auto.toString())
+        .then((value) => OrientationSetting.valueOf(value));
+    turnPagesWithVolumeKeys =
+        _getValue<bool>(SettingKey.turnPagesWithVolumeKeys, false);
+    theme = _getValue<String>(SettingKey.theme, ThemeSetting.system.toString())
+        .then((value) => ThemeSetting.valueOf(value));
+  }
+
   @observable
   ObservableFuture<bool> displayJapaneseTitle;
 
@@ -65,19 +78,6 @@ abstract class _SettingStoreBase with Store {
   ObservableFuture<ThemeSetting> theme;
 
   Future<SharedPreferences> _prefs;
-
-  _SettingStoreBase() {
-    _prefs = SharedPreferences.getInstance();
-    displayJapaneseTitle =
-        _getValue<bool>(SettingKey.displayJapaneseTitle, false);
-    orientation = _getValue<String>(
-            SettingKey.orientation, OrientationSetting.auto.toString())
-        .then((value) => OrientationSetting.valueOf(value));
-    turnPagesWithVolumeKeys =
-        _getValue<bool>(SettingKey.turnPagesWithVolumeKeys, false);
-    theme = _getValue<String>(SettingKey.theme, ThemeSetting.system.toString())
-        .then((value) => ThemeSetting.valueOf(value));
-  }
 
   @action
   // ignore: avoid_positional_boolean_parameters
