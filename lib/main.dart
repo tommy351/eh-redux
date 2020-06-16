@@ -39,16 +39,24 @@ class MainApp extends StatefulWidget {
 
 class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   static const _accentColor = Colors.deepOrangeAccent;
+  static final _sliderTheme = SliderThemeData.fromPrimaryColors(
+    primaryColor: _accentColor,
+    primaryColorDark: _accentColor,
+    primaryColorLight: _accentColor,
+    valueIndicatorTextStyle: const TextStyle(),
+  );
   static final _themeData = <ThemeSetting, ThemeData>{
     ThemeSetting.light: ThemeData(
       primarySwatch: Colors.brown,
       accentColor: _accentColor,
       brightness: Brightness.light,
+      sliderTheme: _sliderTheme,
     ),
     ThemeSetting.dark: ThemeData(
       accentColor: _accentColor,
       toggleableActiveColor: _accentColor,
       brightness: Brightness.dark,
+      sliderTheme: _sliderTheme,
     ),
     ThemeSetting.black: ThemeData(
       accentColor: _accentColor,
@@ -56,6 +64,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       brightness: Brightness.dark,
       scaffoldBackgroundColor: Colors.black,
       dividerColor: Colors.grey[800],
+      sliderTheme: _sliderTheme,
     ),
   };
 
