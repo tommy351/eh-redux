@@ -3,6 +3,7 @@ import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:eh_redux/screens/setting/screen.dart';
 import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/utils/firebase.dart';
+import 'package:eh_redux/utils/launch.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'store.dart';
 
@@ -126,10 +126,7 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
                             break;
 
                           case _ViewAppBarAction.openInBrowser:
-                            final url = client.getImageUrl(image.id);
-                            canLaunch(url).then((value) {
-                              if (value) launch(url);
-                            });
+                            tryLaunch(client.getImageUrl(image.id));
                             break;
                         }
                       },

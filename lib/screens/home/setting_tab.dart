@@ -1,12 +1,13 @@
+import 'package:eh_redux/screens/check_update/screen.dart';
 import 'package:eh_redux/screens/login/screen.dart';
 import 'package:eh_redux/screens/setting/screen.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/utils/firebase.dart';
+import 'package:eh_redux/utils/launch.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class SettingTab extends StatefulWidget {
   const SettingTab({Key key}) : super(key: key);
@@ -52,9 +53,7 @@ class _SettingTabState extends State<SettingTab> {
             title: const Text('Project Page'),
             leading: const Icon(Icons.home),
             onTap: () {
-              canLaunch(_projectUrl).then((value) {
-                if (value) launch(_projectUrl);
-              });
+              tryLaunch(_projectUrl);
             },
           ),
           ListTile(
@@ -62,6 +61,13 @@ class _SettingTabState extends State<SettingTab> {
             leading: const Icon(Icons.account_balance),
             onTap: () {
               showLicensePage(context: context);
+            },
+          ),
+          ListTile(
+            title: const Text('Check Updates'),
+            leading: const Icon(Icons.system_update),
+            onTap: () {
+              Navigator.pushNamed(context, CheckUpdateScreen.routeName);
             },
           ),
           _buildVersionTile(),

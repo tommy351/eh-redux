@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:eh_redux/repositories/ehentai_client.dart';
+import 'package:eh_redux/screens/check_update/screen.dart';
 import 'package:eh_redux/screens/gallery/screen.dart';
 import 'package:eh_redux/screens/home/screen.dart';
 import 'package:eh_redux/screens/login/screen.dart';
@@ -165,6 +166,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
             SearchScreen.routeName: (_) => const SearchScreen(),
             LoginScreen.routeName: (_) => const LoginScreen(),
             SettingScreen.routeName: (_) => const SettingScreen(),
+            CheckUpdateScreen.routeName: (_) => const CheckUpdateScreen(),
           },
         );
       },
