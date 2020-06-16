@@ -10,6 +10,7 @@ import 'package:eh_redux/models/image.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/utils/css.dart';
 import 'package:eh_redux/utils/string.dart';
+import 'package:flutter/foundation.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
@@ -48,7 +49,7 @@ class EHentaiClient {
       );
     }
 
-    final document = parse(res.body);
+    final document = await compute(parse, res.body);
     final ids = <GalleryId>[];
 
     for (final element in document.querySelectorAll('.glname > a')) {
@@ -123,7 +124,7 @@ class EHentaiClient {
       );
     }
 
-    final document = parse(res.body);
+    final document = await compute(parse, res.body);
 
     return GalleryDetails((b) => b
       ..favoritesCount = _getFavoritesCount(document) ?? 0
@@ -163,7 +164,7 @@ class EHentaiClient {
       );
     }
 
-    final document = parse(res.body);
+    final document = await compute(parse, res.body);
 
     return FavoriteStatus((b) => b
       ..favorite = _getFavorite(document)
@@ -248,7 +249,7 @@ class EHentaiClient {
       );
     }
 
-    final document = parse(res.body);
+    final document = await compute(parse, res.body);
     final ids = <ImageId>[];
 
     for (final element in document.querySelectorAll('.gdtm a')) {
@@ -293,7 +294,7 @@ class EHentaiClient {
       );
     }
 
-    final document = parse(res.body);
+    final document = await compute(parse, res.body);
     final img = document.querySelector('#img');
     final src = img.attributes['src'];
     final style = parseRules(img.attributes['style']);
