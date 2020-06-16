@@ -4,6 +4,11 @@ import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+enum _GalleryAppBarAction {
+  openInBrowser,
+}
 
 class GalleryAppBar extends StatelessWidget {
   const GalleryAppBar({Key key}) : super(key: key);
@@ -27,7 +32,25 @@ class GalleryAppBar extends StatelessWidget {
               subject: gallery.title,
             );
           },
-        )
+        ),
+        PopupMenuButton<_GalleryAppBarAction>(
+          onSelected: (value) {
+            switch (value) {
+              case _GalleryAppBarAction.openInBrowser:
+                final url = client.getGalleryUrl(gallery.id);
+                canLaunch(url).then((value) {
+                  if (value) launch(url);
+                });
+                break;
+            }
+          },
+          itemBuilder: (context) => const [
+            PopupMenuItem(
+              value: _GalleryAppBarAction.openInBrowser,
+              child: Text('Open in browser'),
+            ),
+          ],
+        ),
       ],
     );
   }
