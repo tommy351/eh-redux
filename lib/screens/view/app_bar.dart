@@ -10,11 +10,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'store.dart';
 
 enum _ViewAppBarAction {
   setting,
+  openInBrowser,
 }
 
 class ViewAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -122,12 +124,23 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
                             Navigator.pushNamed(
                                 context, SettingScreen.routeName);
                             break;
+
+                          case _ViewAppBarAction.openInBrowser:
+                            final url = client.getImageUrl(image.id);
+                            canLaunch(url).then((value) {
+                              if (value) launch(url);
+                            });
+                            break;
                         }
                       },
                       itemBuilder: (context) => [
                         const PopupMenuItem(
                           value: _ViewAppBarAction.setting,
                           child: Text('Settings'),
+                        ),
+                        const PopupMenuItem(
+                          value: _ViewAppBarAction.openInBrowser,
+                          child: Text('Open in browser'),
                         ),
                       ],
                     ),
