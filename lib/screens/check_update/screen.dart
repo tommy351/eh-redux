@@ -3,7 +3,7 @@ import 'package:eh_redux/utils/launch.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 enum _CheckUpdateAction {
@@ -57,7 +57,10 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
             title: const Text('Check Updates'),
             actions: actions,
           ),
-          body: _buildBody(),
+          body: Padding(
+            padding: const EdgeInsets.all(16),
+            child: _buildBody(),
+          ),
         );
       },
     );
@@ -88,8 +91,7 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
 
           final release = _store.releaseFuture.value;
 
-          return ListView(
-            padding: const EdgeInsets.all(16),
+          return Column(
             children: <Widget>[
               Row(
                 children: <Widget>[
@@ -102,7 +104,12 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
                   _buildDownloadButton(release),
                 ],
               ),
-              Html(data: release.body),
+              Expanded(
+                child: Markdown(
+                  data: release.body,
+                  padding: const EdgeInsets.only(top: 16),
+                ),
+              ),
             ],
           );
         },
