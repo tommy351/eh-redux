@@ -128,7 +128,6 @@ class _FavSheetContent extends StatelessWidget {
   }
 
   Widget _buildButtonBar(BuildContext context) {
-    final theme = Theme.of(context);
     final store = Provider.of<FavSheetStore>(context);
 
     return Observer(
@@ -157,7 +156,6 @@ class _FavSheetContent extends StatelessWidget {
                   store.addToFavorite().then((_) => Navigator.pop(context));
                 },
                 icon: Icon(Icons.add),
-                textColor: theme.primaryColor,
                 label: const Text('Add'),
               ),
             ],
