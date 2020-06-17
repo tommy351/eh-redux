@@ -17,22 +17,26 @@ class FavoriteTab extends StatelessWidget {
       headerSliverBuilder: (context, _) => [
         const SliverAppBar(
           title: Text('Favorites'),
-          forceElevated: true,
+          pinned: true,
         )
       ],
-      body: Observer(
-        builder: (context) {
-          if (sessionStore.loginStatus != LoginStatus.loggedIn) {
-            return Center(
-              child:
-                  Text('Please log in first', style: theme.textTheme.headline6),
-            );
-          }
+      body: SafeArea(
+        top: false,
+        bottom: false,
+        child: Observer(
+          builder: (context) {
+            if (sessionStore.loginStatus != LoginStatus.loggedIn) {
+              return Center(
+                child: Text('Please log in first',
+                    style: theme.textTheme.headline6),
+              );
+            }
 
-          return const GalleryList(
-            paginationKey: GalleryPaginationKeyFavorite(),
-          );
-        },
+            return const GalleryList(
+              paginationKey: GalleryPaginationKeyFavorite(),
+            );
+          },
+        ),
       ),
     );
   }

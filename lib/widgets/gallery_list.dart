@@ -7,6 +7,7 @@ import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/stores/setting.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:eh_redux/widgets/gallery_header.dart';
+import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -25,19 +26,10 @@ class GalleryList extends StatefulWidget {
 }
 
 class _GalleryListState extends State<GalleryList> {
-  ScrollController _scrollController;
-
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController()..addListener(_handleScroll);
     _loadInitialPage();
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -53,54 +45,70 @@ class _GalleryListState extends State<GalleryList> {
   Widget build(BuildContext context) {
     final galleryStore = Provider.of<GalleryStore>(context);
     final theme = Theme.of(context);
-    final padding = MediaQuery.of(context).padding.copyWith(top: 0);
+    final scrollController = PrimaryScrollController.of(context);
 
-    return Observer(
-      builder: (context) {
-        final pagination = galleryStore.paginations[widget.paginationKey];
+    return StatefulWrapper(
+      onInit: (context) {
+        void handleScroll() {
+          final position = scrollController.position;
 
-        if (pagination == null) {
-          return const CenterProgressIndicator();
+          if (position.maxScrollExtent - position.pixels <= 200) {
+            galleryStore.loadNextPage(widget.paginationKey);
+          }
         }
 
-        final index = pagination.index;
+        scrollController.addListener(handleScroll);
 
-        if (index.isEmpty) {
-          if (pagination.loading) {
+        return () {
+          scrollController.removeListener(handleScroll);
+        };
+      },
+      builder: (context) => Observer(
+        builder: (context) {
+          final pagination = galleryStore.paginations[widget.paginationKey];
+
+          if (pagination == null) {
             return const CenterProgressIndicator();
           }
 
-          return Center(
-            child: Text('No data', style: theme.textTheme.headline6),
-          );
-        }
+          final index = pagination.index;
 
-        final galleries = index
-            .map((id) => galleryStore.data[id])
-            .where((element) => element != null);
+          if (index.isEmpty) {
+            if (pagination.loading) {
+              return const CenterProgressIndicator();
+            }
 
-        return RefreshIndicator(
-          onRefresh: () async {
-            await galleryStore.refreshPage(widget.paginationKey);
-          },
-          child: ListView.builder(
-            padding: padding,
-            controller: _scrollController,
-            itemBuilder: (context, i) {
-              if (i >= galleries.length) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: CenterProgressIndicator(),
-                );
-              }
+            return Center(
+              child: Text('No data', style: theme.textTheme.headline6),
+            );
+          }
 
-              return _buildRow(galleries.elementAt(i));
+          final galleries = index
+              .map((id) => galleryStore.data[id])
+              .where((element) => element != null);
+
+          return RefreshIndicator(
+            onRefresh: () async {
+              await galleryStore.refreshPage(widget.paginationKey);
             },
-            itemCount:
-                pagination.noMore ? galleries.length : galleries.length + 1,
-          ),
-        );
-      },
+            child: ListView.builder(
+              padding: EdgeInsets.zero,
+              itemBuilder: (context, i) {
+                if (i >= galleries.length) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: CenterProgressIndicator(),
+                  );
+                }
+
+                return _buildRow(galleries.elementAt(i));
+              },
+              itemCount:
+                  pagination.noMore ? galleries.length : galleries.length + 1,
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -202,15 +210,5 @@ class _GalleryListState extends State<GalleryList> {
         itemCount: tags.length,
       ),
     );
-  }
-
-  void _handleScroll() {
-    final maxScroll = _scrollController.position.maxScrollExtent;
-    final currentScroll = _scrollController.position.pixels;
-
-    if (maxScroll - currentScroll <= 200) {
-      final galleryStore = Provider.of<GalleryStore>(context, listen: false);
-      galleryStore.loadNextPage(widget.paginationKey);
-    }
   }
 }

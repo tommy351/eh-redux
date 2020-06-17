@@ -14,7 +14,7 @@ class GalleryTab extends StatelessWidget {
       headerSliverBuilder: (context, _) => [
         SliverAppBar(
           title: const Text('Gallery'),
-          forceElevated: true,
+          pinned: true,
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.search),
@@ -27,8 +27,12 @@ class GalleryTab extends StatelessWidget {
           ],
         ),
       ],
-      body: const GalleryList(
-        paginationKey: GalleryPaginationKeyFrontPage(),
+      body: const SafeArea(
+        top: false,
+        bottom: false,
+        child: GalleryList(
+          paginationKey: GalleryPaginationKeyFrontPage(),
+        ),
       ),
     );
   }

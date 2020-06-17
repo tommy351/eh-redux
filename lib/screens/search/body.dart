@@ -11,14 +11,17 @@ class SearchBody extends StatelessWidget {
   Widget build(BuildContext context) {
     final searchStore = Provider.of<SearchStore>(context);
 
-    return Observer(
-      builder: (context) {
-        if (searchStore.paginationKey == null) {
-          return Container();
-        }
+    return SafeArea(
+      top: false,
+      child: Observer(
+        builder: (context) {
+          if (searchStore.paginationKey == null) {
+            return Container();
+          }
 
-        return GalleryList(paginationKey: searchStore.paginationKey);
-      },
+          return GalleryList(paginationKey: searchStore.paginationKey);
+        },
+      ),
     );
   }
 }
