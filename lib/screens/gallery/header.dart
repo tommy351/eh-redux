@@ -27,8 +27,6 @@ class GalleryHeader extends StatelessWidget {
   }
 
   Widget _buildCategory(BuildContext context, String category) {
-    final theme = Theme.of(context);
-
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: CategoryLabel(
