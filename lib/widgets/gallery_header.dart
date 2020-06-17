@@ -1,5 +1,5 @@
-import 'package:eh_redux/models/category_colors.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/widgets/category_label.dart';
 import 'package:eh_redux/widgets/rating_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -15,29 +15,18 @@ class GalleryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const categoryIndicatorSize = 14.0;
 
     return Row(
       children: <Widget>[
-        Expanded(
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: categoryIndicatorSize,
-                height: categoryIndicatorSize,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: categoryColors[gallery.category] ?? categoryColors[''],
-                ),
-              ),
-              const SizedBox(width: 6),
-              Text(
-                '${gallery.category} / ${gallery.fileCount}P',
-                style: theme.textTheme.caption,
-              ),
-            ],
+        DefaultTextStyle(
+          style: theme.textTheme.caption,
+          child: CategoryLabel(
+            category: gallery.category,
+            indicatorSize: 14,
+            labelBuilder: (label) => '$label / ${gallery.fileCount}P',
           ),
         ),
+        const Spacer(),
         Text(
           '${gallery.rating}',
           style: theme.textTheme.caption,

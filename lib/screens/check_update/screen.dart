@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/screens/check_update/store.dart';
 import 'package:eh_redux/utils/launch.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
@@ -43,10 +44,10 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
                   break;
               }
             },
-            itemBuilder: (context) => const [
+            itemBuilder: (context) => [
               PopupMenuItem(
                 value: _CheckUpdateAction.openInBrowser,
-                child: Text('Open in browser'),
+                child: Text(S.of(context).openInBrowser),
               ),
             ],
           ));
@@ -54,7 +55,7 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('Check Updates'),
+            title: Text(S.of(context).checkUpdates),
             actions: actions,
           ),
           body: Padding(
@@ -86,7 +87,7 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
           }
 
           if (_store.status == UpdateStatus.failed) {
-            return _buildCenterText('Failed to check updates.');
+            return _buildCenterText(S.of(context).checkUpdateError);
           }
 
           final release = _store.releaseFuture.value;
@@ -124,9 +125,9 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
         asset.name.contains('arm64-v8a'));
 
     if (asset == null || _store.status != UpdateStatus.canUpdate) {
-      return const FlatButton(
+      return FlatButton(
         onPressed: null,
-        child: Text('Up to date'),
+        child: Text(S.of(context).upToDate),
       );
     }
 
@@ -135,7 +136,7 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
         tryLaunch(asset.browserDownloadUrl);
       },
       icon: Icon(Icons.file_download),
-      label: Text('Download (${filesize(asset.size)})'),
+      label: Text(S.of(context).downloadButtonLabel(filesize(asset.size))),
     );
   }
 }

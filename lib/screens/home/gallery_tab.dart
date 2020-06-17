@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/search/args.dart';
 import 'package:eh_redux/screens/search/screen.dart';
@@ -13,12 +14,12 @@ class GalleryTab extends StatelessWidget {
     return NestedScrollView(
       headerSliverBuilder: (context, _) => [
         SliverAppBar(
-          title: const Text('Gallery'),
+          title: Text(S.of(context).gallery),
           pinned: true,
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.search),
-              tooltip: 'Search',
+              tooltip: S.of(context).search,
               onPressed: () {
                 Navigator.pushNamed(context, SearchScreen.routeName,
                     arguments: SearchScreenArguments());

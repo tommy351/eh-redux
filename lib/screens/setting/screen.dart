@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/stores/setting.dart';
 import 'package:eh_redux/widgets/select_list_tile.dart';
 import 'package:flutter/material.dart';
@@ -15,66 +16,66 @@ class SettingScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text(S.of(context).settings),
       ),
       body: Observer(
         builder: (context) {
           return ListView(
             children: <Widget>[
-              _buildTitle(context, 'Appearance'),
+              _buildTitle(context, S.of(context).appearance),
               SelectListTile<ThemeSetting>(
-                title: const Text('Theme'),
-                items: const [
+                title: Text(S.of(context).theme),
+                items: [
                   DropdownMenuItem(
                     value: ThemeSetting.system,
-                    child: Text('System default'),
+                    child: Text(S.of(context).themeSystem),
                   ),
                   DropdownMenuItem(
                     value: ThemeSetting.light,
-                    child: Text('Light'),
+                    child: Text(S.of(context).themeLight),
                   ),
                   DropdownMenuItem(
                     value: ThemeSetting.dark,
-                    child: Text('Dark'),
+                    child: Text(S.of(context).themeDark),
                   ),
                   DropdownMenuItem(
                     value: ThemeSetting.black,
-                    child: Text('Black'),
+                    child: Text(S.of(context).themeBlack),
                   ),
                 ],
                 onChanged: settingStore.setTheme,
                 value: settingStore.theme.value,
               ),
               const Divider(),
-              _buildTitle(context, 'Gallery List'),
+              _buildTitle(context, S.of(context).galleryList),
               CheckboxListTile(
-                title: const Text('Display Japanese title if available'),
+                title: Text(S.of(context).displayJapaneseTitle),
                 value: settingStore.displayJapaneseTitle.value,
                 onChanged: settingStore.setDisplayJapaneseTitle,
               ),
               const Divider(),
-              _buildTitle(context, 'Image View'),
+              _buildTitle(context, S.of(context).imageView),
               SelectListTile<OrientationSetting>(
-                title: const Text('Screen orientation'),
-                items: const [
+                title: Text(S.of(context).screenOrientation),
+                items: [
                   DropdownMenuItem(
                     value: OrientationSetting.auto,
-                    child: Text('Auto'),
+                    child: Text(S.of(context).orientationAuto),
                   ),
                   DropdownMenuItem(
                     value: OrientationSetting.portrait,
-                    child: Text('Portrait'),
+                    child: Text(S.of(context).orientationPortrait),
                   ),
                   DropdownMenuItem(
                     value: OrientationSetting.landscape,
-                    child: Text('Landscape'),
+                    child: Text(S.of(context).orientationLandscape),
                   ),
                 ],
                 onChanged: settingStore.setOrientation,
                 value: settingStore.orientation.value,
               ),
               CheckboxListTile(
-                title: const Text('Turn pages using volume buttons'),
+                title: Text(S.of(context).turnPagesWithVolumeKeys),
                 value: settingStore.turnPagesWithVolumeKeys.value,
                 onChanged: settingStore.setTurnPagesWithVolumeKeys,
               ),

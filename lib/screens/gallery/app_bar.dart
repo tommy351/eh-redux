@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:eh_redux/utils/launch.dart';
@@ -25,7 +26,7 @@ class GalleryAppBar extends StatelessWidget {
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.share),
-          tooltip: 'Share',
+          tooltip: S.of(context).share,
           onPressed: () {
             Share.share(
               client.getGalleryUrl(gallery.id),
@@ -41,10 +42,10 @@ class GalleryAppBar extends StatelessWidget {
                 break;
             }
           },
-          itemBuilder: (context) => const [
+          itemBuilder: (context) => [
             PopupMenuItem(
               value: _GalleryAppBarAction.openInBrowser,
-              child: Text('Open in browser'),
+              child: Text(S.of(context).openInBrowser),
             ),
           ],
         ),

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:eh_redux/screens/check_update/screen.dart';
 import 'package:eh_redux/screens/gallery/screen.dart';
@@ -17,6 +18,7 @@ import 'package:eh_redux/utils/firebase.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -158,6 +160,12 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
           navigatorObservers: [
             firebaseAnalyticsObserver,
           ],
+          localizationsDelegates: [
+            S.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: S.delegate.supportedLocales,
           initialRoute: HomeScreen.routeName,
           routes: {
             HomeScreen.routeName: (_) => const HomeScreen(),

@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/material.dart';
 
@@ -23,21 +24,6 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
     SettingTab(),
   ];
 
-  static const _tabs = <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      icon: Icon(Icons.photo_library),
-      title: Text('Gallery'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.favorite),
-      title: Text('Favorites'),
-    ),
-    BottomNavigationBarItem(
-      icon: Icon(Icons.settings),
-      title: Text('Settings'),
-    ),
-  ];
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -54,6 +40,20 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final tabs = <BottomNavigationBarItem>[
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.photo_library),
+        title: Text(S.of(context).gallery),
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.favorite),
+        title: Text(S.of(context).favorites),
+      ),
+      BottomNavigationBarItem(
+        icon: const Icon(Icons.settings),
+        title: Text(S.of(context).settings),
+      ),
+    ];
 
     return Scaffold(
       body: _widgets[_currentTab],
@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
           padding: mediaQuery.padding + mediaQuery.viewInsets,
         ),
         child: BottomNavigationBar(
-          items: _tabs,
+          items: tabs,
           onTap: _handleTabTapped,
           currentIndex: _currentTab,
         ),

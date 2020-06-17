@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/screens/search/store.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
           controller: _controller,
           focusNode: _focusNode,
           decoration: InputDecoration(
-            hintText: 'Search',
+            hintText: S.of(context).search,
             border: InputBorder.none,
           ),
           style: theme.textTheme.headline6,

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as developer;
 
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/utils/cookie.dart';
 import 'package:eh_redux/utils/firebase.dart';
@@ -30,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Log in'),
+        title: Text(S.of(context).logIn),
       ),
       body: WebView(
         initialUrl: _loginUrl,

@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/screens/search/args.dart';
 import 'package:eh_redux/screens/search/body.dart';
 import 'package:eh_redux/screens/search/filter.dart';
@@ -68,7 +69,7 @@ class __SearchScreenContentState extends State<_SearchScreenContent> {
             const _SearchFilterButton(),
             IconButton(
               icon: const Icon(Icons.search),
-              tooltip: 'Search',
+              tooltip: S.of(context).search,
               onPressed: () {
                 searchStore.updatePaginationKey();
                 FocusScope.of(context).unfocus();
@@ -97,7 +98,7 @@ class _SearchFilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.filter_list),
-      tooltip: 'Filter',
+      tooltip: S.of(context).filter,
       onPressed: () {
         Scaffold.of(context).openEndDrawer();
       },

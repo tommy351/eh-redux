@@ -7,4 +7,5 @@ linter:
 
 analyzer:
   exclude:
+    - "lib/generated/**/*.dart"
     - "**/*.g.dart"

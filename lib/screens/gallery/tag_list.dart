@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/gallery/title.dart';
 import 'package:eh_redux/screens/search/args.dart';
@@ -25,13 +26,13 @@ class GalleryTagList extends StatelessWidget {
     final gallery = Provider.of<Gallery>(context);
     final groups = groupBy<GalleryTag, String>(
         gallery.tags, (tag) => tag.namespace.isEmpty ? 'misc' : tag.namespace);
-    const title = GallerySectionTitle(title: Text('Tags'));
+    final title = GallerySectionTitle(title: Text(S.of(context).tags));
 
     if (groups.isEmpty) {
-      return const SliverList(
+      return SliverList(
         delegate: SliverChildListDelegate.fixed([
           title,
-          Text('No tags'),
+          Text(S.of(context).tagListEmpty),
         ]),
       );
     }

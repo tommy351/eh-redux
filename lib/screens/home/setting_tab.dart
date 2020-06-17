@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/screens/check_update/screen.dart';
 import 'package:eh_redux/screens/login/screen.dart';
 import 'package:eh_redux/screens/setting/screen.dart';
@@ -31,14 +32,14 @@ class _SettingTabState extends State<SettingTab> {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
-        const SliverAppBar(
-          title: Text('Settings'),
+        SliverAppBar(
+          title: Text(S.of(context).settings),
         ),
         SliverList(
           delegate: SliverChildListDelegate.fixed([
             _buildLoginTile(context),
             ListTile(
-              title: const Text('Settings'),
+              title: Text(S.of(context).settings),
               leading: const Icon(Icons.settings),
               onTap: () {
                 Navigator.pushNamed(context, SettingScreen.routeName);
@@ -46,21 +47,21 @@ class _SettingTabState extends State<SettingTab> {
             ),
             const Divider(),
             ListTile(
-              title: const Text('Project Page'),
+              title: Text(S.of(context).projectPage),
               leading: const Icon(Icons.home),
               onTap: () {
                 tryLaunch(_projectUrl);
               },
             ),
             ListTile(
-              title: const Text('Licenses'),
+              title: Text(S.of(context).licenses),
               leading: const Icon(Icons.account_balance),
               onTap: () {
                 showLicensePage(context: context);
               },
             ),
             ListTile(
-              title: const Text('Check Updates'),
+              title: Text(S.of(context).checkUpdates),
               leading: const Icon(Icons.system_update),
               onTap: () {
                 Navigator.pushNamed(context, CheckUpdateScreen.routeName);
@@ -80,22 +81,22 @@ class _SettingTabState extends State<SettingTab> {
       builder: (context) {
         if (sessionStore.loginStatus == LoginStatus.loggedIn) {
           return ListTile(
-            title: const Text('Log out'),
+            title: Text(S.of(context).logOut),
             leading: const Icon(Icons.exit_to_app),
             onTap: () {
               showDialog(
                 context: context,
                 builder: (context) {
                   return AlertDialog(
-                    title: const Text('Log out?'),
-                    content: const Text(
-                        'This will delete the session stored on this device.'),
+                    title: Text(S.of(context).logOutDialogTitle),
+                    content: Text(S.of(context).logOutDialogContent),
                     actions: <Widget>[
                       FlatButton(
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text('Cancel'),
+                        child: Text(MaterialLocalizations.of(context)
+                            .cancelButtonLabel),
                       ),
                       FlatButton(
                         onPressed: () {
@@ -103,7 +104,7 @@ class _SettingTabState extends State<SettingTab> {
                           analytics.logEvent(name: 'logout');
                           Navigator.pop(context);
                         },
-                        child: const Text('Log out'),
+                        child: Text(S.of(context).logOut),
                       ),
                     ],
                   );

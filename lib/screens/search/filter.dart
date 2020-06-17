@@ -1,8 +1,9 @@
 import 'dart:math';
 
-import 'package:eh_redux/models/category_colors.dart';
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/screens/search/store.dart';
 import 'package:eh_redux/utils/firebase.dart';
+import 'package:eh_redux/widgets/category_label.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -15,7 +16,6 @@ class SearchFilter extends StatefulWidget {
 }
 
 class _SearchFilterState extends State<SearchFilter> {
-  static const _categoryIndicatorSize = 20.0;
   static const _categories = <String, int>{
     'Doujinshi': 1 << 1,
     'Manga': 1 << 2,
@@ -27,16 +27,6 @@ class _SearchFilterState extends State<SearchFilter> {
     'Cosplay': 1 << 6,
     'Asian Porn': 1 << 7,
     'Misc': 1 << 0
-  };
-  static const _advancedOptions = <String, String>{
-    'f_sname': 'Search Gallery Name',
-    'f_stags': 'Search Gallery Tags',
-    'f_sdesc': 'Search Gallery Description',
-    'f_storr': 'Search Torrent Filenames',
-    'f_sto': 'Only Show Galleries With Torrents',
-    'f_sdt1': 'Search Low-Power Tags',
-    'f_sdt2': 'Search Downvoted Tags',
-    'f_sh': 'Show Expunged Galleries',
   };
 
   @override
@@ -55,6 +45,16 @@ class _SearchFilterState extends State<SearchFilter> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final searchStore = Provider.of<SearchStore>(context);
+    final advancedOptions = <String, String>{
+      'f_sname': S.of(context).searchGalleryName,
+      'f_stags': S.of(context).searchGalleryTags,
+      'f_sdesc': S.of(context).searchGalleryDescription,
+      'f_storr': S.of(context).searchTorrentFilenames,
+      'f_sto': S.of(context).onlyShowGalleriesWithTorrents,
+      'f_sdt1': S.of(context).searchLowPowerTags,
+      'f_sdt2': S.of(context).searchDownvotedTags,
+      'f_sh': S.of(context).showExpungedGalleries,
+    };
 
     return Drawer(
       child: Container(
@@ -62,10 +62,11 @@ class _SearchFilterState extends State<SearchFilter> {
         child: ListView(
           children: <Widget>[
             ListTile(
-              title: Text('Filter', style: theme.textTheme.headline6),
+              title:
+                  Text(S.of(context).filter, style: theme.textTheme.headline6),
             ),
             const Divider(),
-            _buildSectionTile(title: 'Categories'),
+            _buildSectionTile(title: S.of(context).categories),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
@@ -78,25 +79,27 @@ class _SearchFilterState extends State<SearchFilter> {
               itemCount: _categories.length,
             ),
             const Divider(),
-            _buildSectionTile(title: 'Advanced Options'),
+            _buildSectionTile(title: S.of(context).advancedOptions),
             ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (_, index) {
                 return _buildAdvancedOptionTile(
-                  label: _advancedOptions.values.elementAt(index),
-                  key: _advancedOptions.keys.elementAt(index),
+                  label: advancedOptions.values.elementAt(index),
+                  key: advancedOptions.keys.elementAt(index),
                 );
               },
-              itemCount: _advancedOptions.length,
+              itemCount: advancedOptions.length,
             ),
             const Divider(),
             Observer(
               builder: (context) {
                 return _buildSectionTile(
-                  title: 'Minimum Rating',
+                  title: S.of(context).minimumRating,
                   trailing: searchStore.minimumRating > 0
-                      ? '${searchStore.minimumRating} stars'
+                      ? S
+                          .of(context)
+                          .ratingFilterLabel(searchStore.minimumRating)
                       : null,
                 );
               },
@@ -134,21 +137,9 @@ class _SearchFilterState extends State<SearchFilter> {
     return Observer(
       builder: (context) {
         return CheckboxListTile(
-          title: Row(
-            children: <Widget>[
-              Container(
-                width: _categoryIndicatorSize,
-                height: _categoryIndicatorSize,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: categoryColors[label] ?? categoryColors[''],
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(label),
-              ),
-            ],
+          title: CategoryLabel(
+            category: label,
+            indicatorSize: 20,
           ),
           value: searchStore.categoryFilter & value == 0,
           onChanged: (bool checked) {
@@ -193,8 +184,8 @@ class _SearchFilterState extends State<SearchFilter> {
           max: 5,
           divisions: 4,
           label: searchStore.minimumRating > 0
-              ? '${searchStore.minimumRating} stars'
-              : 'No Filter',
+              ? S.of(context).ratingFilterLabel(searchStore.minimumRating)
+              : S.of(context).ratingFilterDisabled,
           onChanged: (value) {
             if (value < 2) {
               searchStore.setMinimumRating(0);

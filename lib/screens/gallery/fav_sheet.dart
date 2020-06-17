@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/favorite.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/gallery/fav_sheet_store.dart';
@@ -82,7 +83,7 @@ class _FavSheetContent extends StatelessWidget {
               children: <Widget>[
                 ListTile(
                   title: Text(
-                    'Add to Favorites',
+                    S.of(context).addToFavorites,
                     style: theme.textTheme.subtitle1
                         .copyWith(color: theme.textTheme.caption.color),
                   ),
@@ -148,7 +149,8 @@ class _FavSheetContent extends StatelessWidget {
                 },
                 textColor: Colors.red,
                 icon: Icon(Icons.delete),
-                label: const Text('Delete'),
+                label:
+                    Text(MaterialLocalizations.of(context).deleteButtonTooltip),
               ),
               const Spacer(),
               FlatButton.icon(
@@ -156,7 +158,7 @@ class _FavSheetContent extends StatelessWidget {
                   store.addToFavorite().then((_) => Navigator.pop(context));
                 },
                 icon: Icon(Icons.add),
-                label: const Text('Add'),
+                label: Text(S.of(context).add),
               ),
             ],
           ),

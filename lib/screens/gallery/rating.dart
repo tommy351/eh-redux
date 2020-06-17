@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,14 +24,15 @@ class GalleryRating extends StatelessWidget {
                 context: context,
                 icon: Icon(Icons.star),
                 title: Text('${gallery.rating}'),
-                caption: Text(
-                    'Rating (${details?.ratingCount?.toString() ?? '...'})'),
+                caption: Text(S
+                    .of(context)
+                    .ratingCaption(details?.ratingCount?.toString() ?? '...')),
               ),
               _buildTile(
                 context: context,
                 icon: Icon(Icons.favorite),
                 title: Text(details?.favoritesCount?.toString() ?? '...'),
-                caption: const Text('Favorited'),
+                caption: Text(S.of(context).favoritedCaption),
               ),
             ],
           ),

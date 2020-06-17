@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/favorite.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/view/args.dart';
@@ -36,7 +37,7 @@ class GalleryActions extends StatelessWidget {
 
     return RaisedButton.icon(
       icon: const Icon(Icons.play_arrow),
-      label: const Text('Read'),
+      label: Text(S.of(context).readButtonLabel),
       color: theme.accentColor,
       onPressed: () {
         Navigator.pushNamed(
@@ -68,7 +69,9 @@ class GalleryActions extends StatelessWidget {
             ? favoriteColors[currentFavorite] ?? theme.primaryColor
             : null,
       ),
-      label: favorited ? Text('Fav $currentFavorite') : const Text('Fav'),
+      label: favorited
+          ? Text('Fav $currentFavorite')
+          : Text(S.of(context).favoriteButtonLabel),
       onPressed: () {
         showModalBottomSheet(
           context: context,

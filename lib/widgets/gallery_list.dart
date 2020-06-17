@@ -1,5 +1,6 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/gallery/args.dart';
 import 'package:eh_redux/screens/gallery/screen.dart';
@@ -79,7 +80,8 @@ class _GalleryListState extends State<GalleryList> {
             }
 
             return Center(
-              child: Text('No data', style: theme.textTheme.headline6),
+              child: Text(S.of(context).galleryListEmpty,
+                  style: theme.textTheme.headline6),
             );
           }
 

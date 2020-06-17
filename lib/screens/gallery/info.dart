@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/gallery/title.dart';
 import 'package:eh_redux/screens/search/args.dart';
@@ -20,12 +21,12 @@ class GalleryInfo extends StatelessWidget {
       bottom: false,
       sliver: SliverList(
         delegate: SliverChildListDelegate.fixed([
-          const GallerySectionTitle(
-            title: Text('Info'),
+          GallerySectionTitle(
+            title: Text(S.of(context).info),
           ),
           _buildTile(
             context: context,
-            title: const Text('Posted'),
+            title: Text(S.of(context).postedTime),
             trailing: Text(DateFormat.yMMMd().add_Hm().format(gallery.posted)),
           ),
           InkWell(
@@ -39,18 +40,18 @@ class GalleryInfo extends StatelessWidget {
             },
             child: _buildTile(
               context: context,
-              title: const Text('Uploader'),
+              title: Text(S.of(context).uploader),
               trailing: Text(gallery.uploader),
             ),
           ),
           _buildTile(
             context: context,
-            title: const Text('Length'),
-            trailing: Text('${gallery.fileCount} pages'),
+            title: Text(S.of(context).galleryLength),
+            trailing: Text(S.of(context).galleryPageCount(gallery.fileCount)),
           ),
           _buildTile(
             context: context,
-            title: const Text('File Size'),
+            title: Text(S.of(context).fileSize),
             trailing: Text(filesize(gallery.fileSize)),
           ),
         ]),

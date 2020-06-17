@@ -1,12 +1,10 @@
-import 'package:eh_redux/models/category_colors.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/widgets/category_label.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class GalleryHeader extends StatelessWidget {
   const GalleryHeader({Key key}) : super(key: key);
-
-  static const _categoryIndicatorSize = 16.0;
 
   @override
   Widget build(BuildContext context) {
@@ -33,24 +31,9 @@ class GalleryHeader extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        children: <Widget>[
-          Container(
-            width: _categoryIndicatorSize,
-            height: _categoryIndicatorSize,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: categoryColors[category] ?? categoryColors[''],
-            ),
-          ),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              category,
-              style: theme.textTheme.bodyText2,
-            ),
-          ),
-        ],
+      child: CategoryLabel(
+        category: category,
+        indicatorSize: 16,
       ),
     );
   }

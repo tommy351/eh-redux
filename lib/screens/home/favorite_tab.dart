@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/widgets/gallery_list.dart';
@@ -15,8 +16,8 @@ class FavoriteTab extends StatelessWidget {
 
     return NestedScrollView(
       headerSliverBuilder: (context, _) => [
-        const SliverAppBar(
-          title: Text('Favorites'),
+        SliverAppBar(
+          title: Text(S.of(context).favorites),
           pinned: true,
         )
       ],
@@ -27,7 +28,7 @@ class FavoriteTab extends StatelessWidget {
           builder: (context) {
             if (sessionStore.loginStatus != LoginStatus.loggedIn) {
               return Center(
-                child: Text('Please log in first',
+                child: Text(S.of(context).logInRequired,
                     style: theme.textTheme.headline6),
               );
             }
