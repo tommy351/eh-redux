@@ -5,7 +5,7 @@ import 'package:meta/meta.dart';
 class RequestMatcher {
   const RequestMatcher({
     @required this.path,
-    this.method,
+    this.method = 'GET',
     this.query,
   }) : assert(path != null);
 
@@ -15,7 +15,7 @@ class RequestMatcher {
 
   bool match(Request request) {
     if (request.url.path != path) return false;
-    if (method != null && request.method != method) return false;
+    if (request.method != method) return false;
 
     if (query != null) {
       for (final entry in query.entries) {

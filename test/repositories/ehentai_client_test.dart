@@ -26,16 +26,13 @@ void main() {
   group('getGalleryIds', () {
     setUp(() async {
       httpClient.handle(
-          matcher: const RequestMatcher(
-            method: 'GET',
-            path: '/',
-          ),
-          status: 200,
-          body: await readProjectFileAsString(
-              'test/repositories/fixtures/index.html'),
-          headers: {
-            HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
-          });
+        matcher: const RequestMatcher(path: '/'),
+        body: await readProjectFileAsString(
+            'test/repositories/fixtures/index.html'),
+        headers: {
+          HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+        },
+      );
     });
 
     test('should return gallery ids', () async {
