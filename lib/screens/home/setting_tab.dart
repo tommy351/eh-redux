@@ -29,50 +29,47 @@ class _SettingTabState extends State<SettingTab> {
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      headerSliverBuilder: (context, _) => [
+    return CustomScrollView(
+      slivers: <Widget>[
         const SliverAppBar(
           title: Text('Settings'),
-          pinned: true,
-          forceElevated: true,
-        )
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate.fixed([
+            _buildLoginTile(context),
+            ListTile(
+              title: const Text('Settings'),
+              leading: const Icon(Icons.settings),
+              onTap: () {
+                Navigator.pushNamed(context, SettingScreen.routeName);
+              },
+            ),
+            const Divider(),
+            ListTile(
+              title: const Text('Project Page'),
+              leading: const Icon(Icons.home),
+              onTap: () {
+                tryLaunch(_projectUrl);
+              },
+            ),
+            ListTile(
+              title: const Text('Licenses'),
+              leading: const Icon(Icons.account_balance),
+              onTap: () {
+                showLicensePage(context: context);
+              },
+            ),
+            ListTile(
+              title: const Text('Check Updates'),
+              leading: const Icon(Icons.system_update),
+              onTap: () {
+                Navigator.pushNamed(context, CheckUpdateScreen.routeName);
+              },
+            ),
+            _buildVersionTile(),
+          ]),
+        ),
       ],
-      body: ListView(
-        padding: EdgeInsets.zero,
-        children: <Widget>[
-          _buildLoginTile(context),
-          ListTile(
-            title: const Text('Settings'),
-            leading: const Icon(Icons.settings),
-            onTap: () {
-              Navigator.pushNamed(context, SettingScreen.routeName);
-            },
-          ),
-          const Divider(),
-          ListTile(
-            title: const Text('Project Page'),
-            leading: const Icon(Icons.home),
-            onTap: () {
-              tryLaunch(_projectUrl);
-            },
-          ),
-          ListTile(
-            title: const Text('Licenses'),
-            leading: const Icon(Icons.account_balance),
-            onTap: () {
-              showLicensePage(context: context);
-            },
-          ),
-          ListTile(
-            title: const Text('Check Updates'),
-            leading: const Icon(Icons.system_update),
-            onTap: () {
-              Navigator.pushNamed(context, CheckUpdateScreen.routeName);
-            },
-          ),
-          _buildVersionTile(),
-        ],
-      ),
     );
   }
 
