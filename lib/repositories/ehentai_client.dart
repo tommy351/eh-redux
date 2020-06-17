@@ -25,6 +25,8 @@ class EHentaiClient {
 
   static const baseUrl = 'https://e-hentai.org';
   static const apiUrl = 'https://api.e-hentai.org/api.php';
+  static const _userAgent =
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36';
 
   final http.Client httpClient;
   final SessionStore sessionStore;
@@ -32,6 +34,7 @@ class EHentaiClient {
   Future<Map<String, String>> _getRequestHeaders() async {
     return {
       HttpHeaders.cookieHeader: await sessionStore.session,
+      HttpHeaders.userAgentHeader: _userAgent,
     };
   }
 
