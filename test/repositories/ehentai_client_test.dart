@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:built_collection/built_collection.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart';
 import 'package:mockito/mockito.dart';
 
 import '../test_utils/http.dart';
@@ -16,7 +19,7 @@ void main() {
   EHentaiClient client;
 
   setUp(() {
-    httpClient = MockHttpClient(EHentaiClient.baseUrl);
+    httpClient = MockHttpClient();
     client = EHentaiClient(
       httpClient: httpClient.client,
       sessionStore: MockSessionStore(),
@@ -27,12 +30,15 @@ void main() {
     group('when server respond 200', () {
       setUp(() async {
         httpClient.handle(
-          matcher: const RequestMatcher(path: '/'),
-          body: await readProjectFileAsString(
-              'test/repositories/fixtures/index.html'),
-          headers: {
-            HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
-          },
+          request: ExpectedRequest(url: Uri.parse('${EHentaiClient.baseUrl}/')),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/index.html'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
         );
       });
 
@@ -123,11 +129,8 @@ void main() {
     group('when server respond 404', () {
       setUp(() {
         httpClient.handle(
-          matcher: const RequestMatcher(path: '/'),
-          status: HttpStatus.notFound,
-          headers: {
-            HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
-          },
+          request: ExpectedRequest(url: Uri.parse('${EHentaiClient.baseUrl}/')),
+          response: Response('', HttpStatus.notFound),
         );
       });
 
@@ -139,12 +142,15 @@ void main() {
     group('when search no hit', () {
       setUp(() async {
         httpClient.handle(
-          matcher: const RequestMatcher(path: '/'),
-          body: await readProjectFileAsString(
-              'test/repositories/fixtures/search_no_hit.html'),
-          headers: {
-            HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
-          },
+          request: ExpectedRequest(url: Uri.parse('${EHentaiClient.baseUrl}/')),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/search_no_hit.html'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
         );
       });
 
@@ -154,7 +160,147 @@ void main() {
     });
   });
 
-  group('getGalleriesData', () {});
+  group('getGalleriesData', () {
+    group('when server respond 200', () {
+      setUp(() async {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(EHentaiClient.apiUrl),
+            method: 'POST',
+            body: jsonEncode({
+              'method': 'gdata',
+              'gidlist': [
+                [1663099, 'd76bb5e89a'],
+                [1663615, 'acf3f209ac'],
+              ],
+              'namespace': '1',
+            }),
+          ),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/gallery_list.json'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.jsonContentType,
+            },
+          ),
+        );
+      });
+
+      test('should return galleries', () async {
+        final galleries = await client.getGalleriesData([
+          GalleryId((b) => b
+            ..id = 1663099
+            ..token = 'd76bb5e89a'),
+          GalleryId((b) => b
+            ..id = 1663615
+            ..token = 'acf3f209ac')
+        ]);
+        expect(
+            galleries,
+            equals(<Gallery>[
+              Gallery((b) => b
+                ..id = GalleryId((b) => b
+                  ..id = 1663099
+                  ..token = 'd76bb5e89a').toBuilder()
+                ..title =
+                    '[PigPanPan (Ikura Nagisa)] 12 Seiza yandere kokuhaku [Chinese] [绅士仓库汉化] [Digital]'
+                ..titleJpn = '[PigPanPan (伊倉ナギサ)] 12星座ヤンデレ コクハク [中国翻訳] [DL版]'
+                ..category = 'Non-H'
+                ..thumbnail =
+                    'https://ehgt.org/f5/b6/f5b64c9c924fb032ce1e21c383c9db5edbaedc62-3865428-2508-3541-jpg_l.jpg'
+                ..uploader = 'BlossomPlus'
+                ..fileCount = 26
+                ..fileSize = 79698072
+                ..expunged = false
+                ..rating = 4.65
+                ..tags = BuiltList<GalleryTag>.of([
+                  GalleryTag((b) => b
+                    ..namespace = 'language'
+                    ..tag = 'chinese'),
+                  GalleryTag((b) => b
+                    ..namespace = 'language'
+                    ..tag = 'translated'),
+                  GalleryTag((b) => b
+                    ..namespace = 'group'
+                    ..tag = 'pigpanpan'),
+                  GalleryTag((b) => b
+                    ..namespace = 'artist'
+                    ..tag = 'ikura nagisa'),
+                  GalleryTag((b) => b
+                    ..namespace = ''
+                    ..tag = 'full color'),
+                ]).toBuilder()
+                ..posted = DateTime.parse('2020-06-17 13:45:15.000Z')),
+              Gallery((b) => b
+                ..id = GalleryId((b) => b
+                  ..id = 1663615
+                  ..token = 'acf3f209ac').toBuilder()
+                ..title =
+                    '[Sagamani. (Sagami Inumaru)] MY TRUE FEELINGS ARE A SECRET (Kill Me Baby) [Chinese] [后悔的神官个人汉化] [Digital]'
+                ..titleJpn =
+                    '[サガマニ。 (佐上犬丸)] MY TRUE FEELINGS ARE A SECRET (キルミーベイベー) [中国翻訳] [DL版]'
+                ..category = 'Non-H'
+                ..thumbnail =
+                    'https://ehgt.org/b1/9c/b19cf368b5863145308c1c04bcb1d3e4829f1b70-243924-740-1035-jpg_l.jpg'
+                ..uploader = '乐·黑'
+                ..fileCount = 16
+                ..fileSize = 5450803
+                ..expunged = false
+                ..rating = 4.5
+                ..tags = BuiltList<GalleryTag>.of([
+                  GalleryTag((b) => b
+                    ..namespace = 'language'
+                    ..tag = 'chinese'),
+                  GalleryTag((b) => b
+                    ..namespace = 'language'
+                    ..tag = 'translated'),
+                  GalleryTag((b) => b
+                    ..namespace = 'parody'
+                    ..tag = 'kill me baby'),
+                  GalleryTag((b) => b
+                    ..namespace = 'character'
+                    ..tag = 'sonya'),
+                  GalleryTag((b) => b
+                    ..namespace = 'character'
+                    ..tag = 'yasuna oribe'),
+                  GalleryTag((b) => b
+                    ..namespace = 'group'
+                    ..tag = 'sagamani'),
+                  GalleryTag((b) => b
+                    ..namespace = 'artist'
+                    ..tag = 'sagami inumaru'),
+                  GalleryTag((b) => b
+                    ..namespace = 'female'
+                    ..tag = 'females only'),
+                  GalleryTag((b) => b
+                    ..namespace = 'female'
+                    ..tag = 'schoolgirl uniform'),
+                  GalleryTag((b) => b
+                    ..namespace = 'female'
+                    ..tag = 'twintails'),
+                ]).toBuilder()
+                ..posted = DateTime.parse('2020-06-18 08:37:04.000Z'))
+            ]));
+      });
+    });
+
+    group('when server respond 404', () {
+      setUp(() {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(EHentaiClient.apiUrl),
+            method: 'POST',
+          ),
+          response: Response('', HttpStatus.notFound),
+        );
+      });
+
+      test('should throw an exception', () async {
+        expect(client.getGalleryIds('/'), throwsException);
+      });
+    });
+  });
 
   group('getGalleryDetails', () {});
 

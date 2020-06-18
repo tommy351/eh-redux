@@ -1,74 +1,46 @@
-import 'dart:io';
-
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
 import 'package:meta/meta.dart';
 
-class RequestMatcher {
-  const RequestMatcher({
-    @required this.path,
-    this.method = 'GET',
-    this.query,
-  }) : assert(path != null);
+class _RequestHandler {
+  _RequestHandler({@required this.request, @required this.response})
+      : assert(request != null),
+        assert(response != null);
 
-  final String path;
-  final String method;
-  final Map<String, String> query;
-
-  bool match(Request request) {
-    if (request.url.path != path) return false;
-    if (request.method != method) return false;
-
-    if (query != null) {
-      for (final entry in query.entries) {
-        if (request.url.queryParameters[entry.key] != entry.value) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
+  final ExpectedRequest request;
+  final Response response;
 }
 
-class _RequestHandler {
-  _RequestHandler({
-    @required this.matcher,
-    @required this.status,
-    @required this.body,
-    @required this.headers,
-  })  : assert(matcher != null),
-        assert(status != null),
-        assert(body != null);
+class ExpectedRequest {
+  const ExpectedRequest({
+    this.method = 'GET',
+    @required this.url,
+    this.body,
+  }) : assert(url != null);
 
-  final RequestMatcher matcher;
-  final int status;
+  final String method;
+  final Uri url;
   final String body;
-  final Map<String, String> headers;
 }
 
 class MockHttpClient {
-  MockHttpClient(this.baseUrl) {
+  MockHttpClient() {
     client = MockClient(_handleRequest);
   }
 
   static const htmlContentType = 'text/html; charset=UTF-8';
+  static const jsonContentType = 'application/json; charset=UTF-8';
 
-  final String baseUrl;
   MockClient client;
   final List<_RequestHandler> _handlers = [];
 
   void handle({
-    @required RequestMatcher matcher,
-    int status = HttpStatus.ok,
-    String body = '',
-    Map<String, String> headers,
+    @required ExpectedRequest request,
+    @required Response response,
   }) {
     _handlers.add(_RequestHandler(
-      matcher: matcher,
-      status: status,
-      body: body,
-      headers: headers,
+      request: request,
+      response: response,
     ));
   }
 
@@ -77,19 +49,18 @@ class MockHttpClient {
   }
 
   Future<Response> _handleRequest(Request request) async {
-    final handler = _handlers.firstWhere(
-        (element) => element.matcher.match(request),
-        orElse: () => null);
+    final handler = _handlers.firstWhere((element) {
+      final req = element.request;
+      if (req.method != request.method) return false;
+      if (req.url != request.url) return false;
+      if (req.body != null && req.body != request.body) return false;
+      return true;
+    }, orElse: () => null);
 
     if (handler == null) {
-      throw Exception(
-          'Request "${request.method} ${request.url}" is not handled');
+      throw Exception('Request "$request" is not handled');
     }
 
-    return Response(
-      handler.body,
-      handler.status,
-      headers: handler.headers,
-    );
+    return handler.response;
   }
 }
