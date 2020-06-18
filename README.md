@@ -1,6 +1,6 @@
 # EH Redux
 
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tommy351/eh-redux)](https://github.com/tommy351/eh-redux/releases) ![Test](https://github.com/tommy351/eh-redux/workflows/Test/badge.svg) ![Build](https://github.com/tommy351/eh-redux/workflows/Build/badge.svg) ![Release](https://github.com/tommy351/eh-redux/workflows/Release/badge.svg)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/tommy351/eh-redux)](https://github.com/tommy351/eh-redux/releases) ![Test](https://github.com/tommy351/eh-redux/workflows/Test/badge.svg) ![Build](https://github.com/tommy351/eh-redux/workflows/Build/badge.svg) ![Release](https://github.com/tommy351/eh-redux/workflows/Release/badge.svg) [![codecov](https://codecov.io/gh/tommy351/eh-redux/branch/master/graph/badge.svg)](https://codecov.io/gh/tommy351/eh-redux)
 
 A E-Hentai reader written in Flutter. This project is still under development. Some features are not implemented yet.
 
