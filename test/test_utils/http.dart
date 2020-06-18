@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
 import 'package:meta/meta.dart';
@@ -58,7 +60,7 @@ class MockHttpClient {
 
   void handle({
     @required RequestMatcher matcher,
-    int status = 200,
+    int status = HttpStatus.ok,
     String body = '',
     Map<String, String> headers,
   }) {
