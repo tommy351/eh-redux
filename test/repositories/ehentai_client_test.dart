@@ -188,7 +188,7 @@ void main() {
       });
 
       test('should return galleries', () async {
-        final galleries = await client.getGalleriesData([
+        final actual = await client.getGalleriesData([
           GalleryId((b) => b
             ..id = 1663099
             ..token = 'd76bb5e89a'),
@@ -197,7 +197,7 @@ void main() {
             ..token = 'acf3f209ac')
         ]);
         expect(
-            galleries,
+            actual,
             equals(<Gallery>[
               Gallery((b) => b
                 ..id = GalleryId((b) => b
@@ -298,6 +298,62 @@ void main() {
 
       test('should throw an exception', () async {
         expect(client.getGalleryIds('/'), throwsException);
+      });
+    });
+
+    group('when gallery token is incorrect', () {
+      setUp(() async {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(EHentaiClient.apiUrl),
+            method: 'POST',
+          ),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/gallery_list_incorrect_token.json'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.jsonContentType,
+            },
+          ),
+        );
+      });
+
+      test('should return an empty array', () async {
+        final actual = await client.getGalleriesData([
+          GalleryId((b) => b
+            ..id = 1663099
+            ..token = 'd76bb5e89a'),
+        ]);
+        expect(actual, isEmpty);
+      });
+    });
+
+    group('when gallery not found', () {
+      setUp(() async {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(EHentaiClient.apiUrl),
+            method: 'POST',
+          ),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/gallery_list_not_found.json'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.jsonContentType,
+            },
+          ),
+        );
+      });
+
+      test('should return an empty array', () async {
+        final actual = await client.getGalleriesData([
+          GalleryId((b) => b
+            ..id = 1663099
+            ..token = 'd76bb5e89a'),
+        ]);
+        expect(actual, isEmpty);
       });
     });
   });
