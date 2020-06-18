@@ -81,7 +81,6 @@ class _ViewBottomNavigationState extends State<ViewBottomNavigation>
               child: SliderTheme(
                 data: SliderTheme.of(context),
                 child: Slider(
-                  min: 0,
                   max: gallery.fileCount.toDouble() - 1,
                   value: _value,
                   divisions: gallery.fileCount,

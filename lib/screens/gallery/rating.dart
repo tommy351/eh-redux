@@ -22,7 +22,7 @@ class GalleryRating extends StatelessWidget {
             children: <Widget>[
               _buildTile(
                 context: context,
-                icon: Icon(Icons.star),
+                icon: const Icon(Icons.star),
                 title: Text('${gallery.rating}'),
                 caption: Text(S
                     .of(context)
@@ -30,7 +30,7 @@ class GalleryRating extends StatelessWidget {
               ),
               _buildTile(
                 context: context,
-                icon: Icon(Icons.favorite),
+                icon: const Icon(Icons.favorite),
                 title: Text(details?.favoritesCount?.toString() ?? '...'),
                 caption: Text(S.of(context).favoritedCaption),
               ),
