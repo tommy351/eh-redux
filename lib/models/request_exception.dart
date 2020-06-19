@@ -14,11 +14,16 @@ abstract class RequestException
     return RequestException((b) => b
       ..message = message
       ..statusCode = response.statusCode
-      ..body = response.body);
+      ..body = response.body
+      ..method = response.request.method
+      ..url = response.request.url);
   }
 
-  static Serializer<RequestException> get serializer => _$requestExceptionSerializer;
+  static Serializer<RequestException> get serializer =>
+      _$requestExceptionSerializer;
 
+  String get method;
+  Uri get url;
   String get message;
   int get statusCode;
   String get body;
@@ -29,6 +34,8 @@ abstract class RequestExceptionBuilder
   factory RequestExceptionBuilder() = _$RequestExceptionBuilder;
   RequestExceptionBuilder._();
 
+  String method = 'GET';
+  Uri url;
   String message = '';
   int statusCode = -1;
   String body = '';

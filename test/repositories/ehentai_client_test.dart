@@ -445,7 +445,10 @@ void main() {
             throwsA(equals(RequestException((b) => b
               ..message = 'Gallery not found'
               ..statusCode = HttpStatus.ok
-              ..body = 'Key missing, or incorrect key provided.'))));
+              ..body = 'Key missing, or incorrect key provided.'
+              ..url = Uri.parse(
+                  '${EHentaiClient.baseUrl}/g/${galleryId.id}/${galleryId.token}')
+              ..method = 'GET'))));
       });
     });
 
@@ -590,7 +593,10 @@ void main() {
             throwsA(equals(RequestException((b) => b
               ..message = 'Gallery not found'
               ..statusCode = HttpStatus.ok
-              ..body = 'Key missing, or incorrect key provided.'))));
+              ..body = 'Key missing, or incorrect key provided.'
+              ..url = Uri.parse(
+                  '${EHentaiClient.baseUrl}/g/${galleryId.id}/${galleryId.token}/?p=0')
+              ..method = 'GET'))));
       });
     });
 
@@ -705,7 +711,10 @@ void main() {
             throwsA(equals(RequestException((b) => b
               ..message = 'Image not found'
               ..statusCode = 200
-              ..body = 'Invalid page.'))));
+              ..body = 'Invalid page.'
+              ..url = Uri.parse(
+                  '${EHentaiClient.baseUrl}/s/${imageId.key}/${imageId.galleryId.id}-${imageId.page}')
+              ..method = 'GET'))));
       });
     });
   });

@@ -20,6 +20,11 @@ class _$RequestExceptionSerializer
   Iterable<Object> serialize(Serializers serializers, RequestException object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
+      'method',
+      serializers.serialize(object.method,
+          specifiedType: const FullType(String)),
+      'url',
+      serializers.serialize(object.url, specifiedType: const FullType(Uri)),
       'message',
       serializers.serialize(object.message,
           specifiedType: const FullType(String)),
@@ -45,6 +50,14 @@ class _$RequestExceptionSerializer
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
+        case 'method':
+          result.method = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
+        case 'url':
+          result.url = serializers.deserialize(value,
+              specifiedType: const FullType(Uri)) as Uri;
+          break;
         case 'message':
           result.message = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
@@ -66,6 +79,10 @@ class _$RequestExceptionSerializer
 
 class _$RequestException extends RequestException {
   @override
+  final String method;
+  @override
+  final Uri url;
+  @override
   final String message;
   @override
   final int statusCode;
@@ -77,7 +94,15 @@ class _$RequestException extends RequestException {
       (new RequestExceptionBuilder()..update(updates)).build()
           as _$RequestException;
 
-  _$RequestException._({this.message, this.statusCode, this.body}) : super._() {
+  _$RequestException._(
+      {this.method, this.url, this.message, this.statusCode, this.body})
+      : super._() {
+    if (method == null) {
+      throw new BuiltValueNullFieldError('RequestException', 'method');
+    }
+    if (url == null) {
+      throw new BuiltValueNullFieldError('RequestException', 'url');
+    }
     if (message == null) {
       throw new BuiltValueNullFieldError('RequestException', 'message');
     }
@@ -101,6 +126,8 @@ class _$RequestException extends RequestException {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is RequestException &&
+        method == other.method &&
+        url == other.url &&
         message == other.message &&
         statusCode == other.statusCode &&
         body == other.body;
@@ -108,13 +135,17 @@ class _$RequestException extends RequestException {
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, message.hashCode), statusCode.hashCode), body.hashCode));
+    return $jf($jc(
+        $jc($jc($jc($jc(0, method.hashCode), url.hashCode), message.hashCode),
+            statusCode.hashCode),
+        body.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('RequestException')
+          ..add('method', method)
+          ..add('url', url)
           ..add('message', message)
           ..add('statusCode', statusCode)
           ..add('body', body))
@@ -124,6 +155,30 @@ class _$RequestException extends RequestException {
 
 class _$RequestExceptionBuilder extends RequestExceptionBuilder {
   _$RequestException _$v;
+
+  @override
+  String get method {
+    _$this;
+    return super.method;
+  }
+
+  @override
+  set method(String method) {
+    _$this;
+    super.method = method;
+  }
+
+  @override
+  Uri get url {
+    _$this;
+    return super.url;
+  }
+
+  @override
+  set url(Uri url) {
+    _$this;
+    super.url = url;
+  }
 
   @override
   String get message {
@@ -165,6 +220,8 @@ class _$RequestExceptionBuilder extends RequestExceptionBuilder {
 
   RequestExceptionBuilder get _$this {
     if (_$v != null) {
+      super.method = _$v.method;
+      super.url = _$v.url;
       super.message = _$v.message;
       super.statusCode = _$v.statusCode;
       super.body = _$v.body;
@@ -190,7 +247,11 @@ class _$RequestExceptionBuilder extends RequestExceptionBuilder {
   _$RequestException build() {
     final _$result = _$v ??
         new _$RequestException._(
-            message: message, statusCode: statusCode, body: body);
+            method: method,
+            url: url,
+            message: message,
+            statusCode: statusCode,
+            body: body);
     replace(_$result);
     return _$result;
   }
