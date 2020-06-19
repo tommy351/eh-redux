@@ -130,11 +130,24 @@ class EHentaiClient {
 
     final document = await compute(parse, res.body);
 
+    _validateGalleryDocument(document: document, response: res, id: id);
+
+    return GalleryDetails((b) => b
+      ..favoritesCount = _getFavoritesCount(document) ?? 0
+      ..ratingCount = _getRatingCount(document) ?? 0
+      ..currentFavorite = _getCurrentFavorite(document));
+  }
+
+  void _validateGalleryDocument({
+    @required Document document,
+    @required http.Response response,
+    @required GalleryId id,
+  }) {
     // Try to get the header
     if (document.getElementById('nb') == null) {
       throw RequestException.fromResponse(
         message: 'Gallery not found',
-        response: res,
+        response: response,
       );
     }
 
@@ -151,11 +164,6 @@ class EHentaiClient {
                 ?.innerHtml ??
             contentWarning.innerHtml);
     }
-
-    return GalleryDetails((b) => b
-      ..favoritesCount = _getFavoritesCount(document) ?? 0
-      ..ratingCount = _getRatingCount(document) ?? 0
-      ..currentFavorite = _getCurrentFavorite(document));
   }
 
   int _getFavoritesCount(Document document) {
@@ -276,6 +284,9 @@ class EHentaiClient {
     }
 
     final document = await compute(parse, res.body);
+
+    _validateGalleryDocument(document: document, response: res, id: galleryId);
+
     final ids = <ImageId>[];
 
     for (final element in document.querySelectorAll('.gdtm a')) {

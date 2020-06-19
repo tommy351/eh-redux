@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:built_collection/built_collection.dart';
 import 'package:eh_redux/models/content_warning_exception.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/models/image.dart';
 import 'package:eh_redux/models/request_exception.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:eh_redux/stores/session.dart';
@@ -448,7 +449,7 @@ void main() {
       });
     });
 
-    group('when gallery has content warning', () {
+    group('when gallery is flagged', () {
       setUp(() async {
         httpClient.handle(
           request: ExpectedRequest(
@@ -482,11 +483,144 @@ void main() {
 
   group('deleteFromFavorite', () {});
 
-  group('getGalleryUrl', () {});
+  group('getGalleryUrl', () {
+    test('should return a string', () {
+      final id = GalleryId((b) => b
+        ..id = 1234567
+        ..token = 'abcdefgh');
+      expect(client.getGalleryUrl(id),
+          equals('${EHentaiClient.baseUrl}/g/${id.id}/${id.token}'));
+    });
+  });
 
-  group('getImageUrl', () {});
+  group('getImageUrl', () {
+    test('should return a string', () {
+      final id = ImageId((b) => b
+        ..galleryId = GalleryId((b) => b
+          ..id = 1234567
+          ..token = 'abcdefgh').toBuilder()
+        ..page = 46
+        ..key = 'qwerwetw');
+      expect(
+          client.getImageUrl(id),
+          equals(
+              '${EHentaiClient.baseUrl}/s/${id.key}/${id.galleryId.id}-${id.page}'));
+    });
+  });
 
-  group('getImageIds', () {});
+  group('getImageIds', () {
+    final galleryId = GalleryId((b) => b
+      ..id = 1663321
+      ..token = '4af85ee87d');
+
+    group('when respond 200', () {
+      setUp(() async {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/g/${galleryId.id}/${galleryId.token}/?p=0'),
+          ),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/gallery_image_list.html'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
+        );
+      });
+
+      test('should return image ids', () async {
+        final ids = await client.getImageIds(galleryId, 0);
+        expect(
+            ids,
+            equals(<ImageId>[
+              ImageId((b) => b
+                ..galleryId = galleryId.toBuilder()
+                ..page = 1
+                ..key = '331c1f2ce7'),
+              ImageId((b) => b
+                ..galleryId = galleryId.toBuilder()
+                ..page = 2
+                ..key = '23ba74f3b8'),
+            ]));
+      });
+    });
+
+    group('when respond 404', () {
+      setUp(() {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/g/${galleryId.id}/${galleryId.token}/?p=0'),
+          ),
+          response: Response(
+            '',
+            HttpStatus.notFound,
+          ),
+        );
+      });
+
+      test('should throw an exception', () async {
+        expect(client.getImageIds(galleryId, 0), throwsRequestException);
+      });
+    });
+
+    group('when token is incorrect', () {
+      setUp(() {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/g/${galleryId.id}/${galleryId.token}/?p=0'),
+          ),
+          response: Response(
+            'Key missing, or incorrect key provided.',
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
+        );
+      });
+
+      test('should throw an exception', () async {
+        expect(
+            client.getImageIds(galleryId, 0),
+            throwsA(equals(RequestException((b) => b
+              ..message = 'Gallery not found'
+              ..statusCode = HttpStatus.ok
+              ..body = 'Key missing, or incorrect key provided.'))));
+      });
+    });
+
+    group('when gallery is flagged', () {
+      setUp(() async {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/g/${galleryId.id}/${galleryId.token}/?p=0'),
+          ),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/gallery_content_warning.html'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
+        );
+      });
+
+      test('should throw an exception', () async {
+        expect(
+            client.getImageIds(galleryId, 0),
+            throwsA(equals(ContentWarningException((b) => b
+              ..galleryId = galleryId.toBuilder()
+              ..reason = 'Offensive For Everyone'))));
+      });
+    });
+  });
 
   group('getImageData', () {});
 }
