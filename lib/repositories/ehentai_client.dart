@@ -332,7 +332,15 @@ class EHentaiClient {
     }
 
     final document = await compute(parse, res.body);
-    final img = document.querySelector('#img');
+    final img = document.getElementById('img');
+
+    if (img == null) {
+      throw RequestException.fromResponse(
+        message: 'Image not found',
+        response: res,
+      );
+    }
+
     final src = img.attributes['src'];
     final style = parseRules(img.attributes['style']);
 

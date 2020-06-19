@@ -622,5 +622,91 @@ void main() {
     });
   });
 
-  group('getImageData', () {});
+  group('getImageData', () {
+    final imageId = ImageId((b) => b
+      ..galleryId = GalleryId((b) => b
+        ..id = 1662914
+        ..token = '').toBuilder()
+      ..page = 1
+      ..key = '8ad5ea61cf');
+
+    group('when respond 200', () {
+      setUp(() async {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/s/${imageId.key}/${imageId.galleryId.id}-${imageId.page}'),
+          ),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/image.html'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
+        );
+      });
+
+      test('should return image data', () async {
+        expect(
+            await client.getImageData(imageId),
+            equals(Image((b) => b
+              ..id = imageId.toBuilder()
+              ..url =
+                  'https://funavbn.bvopscljbepc.hath.network/h/db2eba6e239a86d1db5b4bcf62d2726846a68ee5-522532-1280-1816-jpg/keystamp=1592409300-395fc82bf2;fileindex=81435369;xres=1280/65_gb_231764_65.jpg'
+              ..width = 1280
+              ..height = 1816)));
+      });
+    });
+
+    group('when respond 404', () {
+      setUp(() {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/s/${imageId.key}/${imageId.galleryId.id}-${imageId.page}'),
+          ),
+          response: Response(
+            '',
+            HttpStatus.notFound,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
+        );
+      });
+
+      test('should throw an exception', () async {
+        expect(client.getImageData(imageId), throwsRequestException);
+      });
+    });
+
+    group('when key is incorrect', () {
+      setUp(() {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/s/${imageId.key}/${imageId.galleryId.id}-${imageId.page}'),
+          ),
+          response: Response(
+            'Invalid page.',
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
+        );
+      });
+
+      test('should throw an exception', () async {
+        expect(
+            client.getImageData(imageId),
+            throwsA(equals(RequestException((b) => b
+              ..message = 'Image not found'
+              ..statusCode = 200
+              ..body = 'Invalid page.'))));
+      });
+    });
+  });
 }
