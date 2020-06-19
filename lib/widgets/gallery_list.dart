@@ -6,8 +6,9 @@ import 'package:eh_redux/screens/gallery/args.dart';
 import 'package:eh_redux/screens/gallery/screen.dart';
 import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/stores/setting.dart';
+import 'package:eh_redux/widgets/category_label.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
-import 'package:eh_redux/widgets/gallery_header.dart';
+import 'package:eh_redux/widgets/rating_bar.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -159,7 +160,7 @@ class _GalleryListState extends State<GalleryList> {
                           ),
                           _buildTagList(gallery.tags),
                           const SizedBox(height: 8),
-                          GalleryHeader(gallery),
+                          _buildHeader(gallery),
                         ],
                       ),
                     ),
@@ -171,6 +172,33 @@ class _GalleryListState extends State<GalleryList> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildHeader(Gallery gallery) {
+    final theme = Theme.of(context);
+
+    return Row(
+      children: <Widget>[
+        DefaultTextStyle(
+          style: theme.textTheme.caption,
+          child: CategoryLabel(
+            category: gallery.category,
+            indicatorSize: 14,
+            labelBuilder: (label) => '$label / ${gallery.fileCount}P',
+          ),
+        ),
+        const Spacer(),
+        Text(
+          '${gallery.rating}',
+          style: theme.textTheme.caption,
+        ),
+        RatingBar(
+          gallery.rating,
+          size: 16,
+          color: theme.accentColor,
+        ),
+      ],
     );
   }
 
