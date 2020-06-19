@@ -1,22 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'http_exception.dart';
+part of 'request_exception.dart';
 
 // **************************************************************************
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<HttpException> _$httpExceptionSerializer =
-    new _$HttpExceptionSerializer();
+Serializer<RequestException> _$requestExceptionSerializer =
+    new _$RequestExceptionSerializer();
 
-class _$HttpExceptionSerializer implements StructuredSerializer<HttpException> {
+class _$RequestExceptionSerializer
+    implements StructuredSerializer<RequestException> {
   @override
-  final Iterable<Type> types = const [HttpException, _$HttpException];
+  final Iterable<Type> types = const [RequestException, _$RequestException];
   @override
-  final String wireName = 'HttpException';
+  final String wireName = 'RequestException';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, HttpException object,
+  Iterable<Object> serialize(Serializers serializers, RequestException object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'message',
@@ -33,10 +34,10 @@ class _$HttpExceptionSerializer implements StructuredSerializer<HttpException> {
   }
 
   @override
-  HttpException deserialize(
+  RequestException deserialize(
       Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = new HttpExceptionBuilder();
+    final result = new RequestExceptionBuilder();
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
@@ -63,7 +64,7 @@ class _$HttpExceptionSerializer implements StructuredSerializer<HttpException> {
   }
 }
 
-class _$HttpException extends HttpException {
+class _$RequestException extends RequestException {
   @override
   final String message;
   @override
@@ -71,33 +72,35 @@ class _$HttpException extends HttpException {
   @override
   final String body;
 
-  factory _$HttpException([void Function(HttpExceptionBuilder) updates]) =>
-      (new HttpExceptionBuilder()..update(updates)).build() as _$HttpException;
+  factory _$RequestException(
+          [void Function(RequestExceptionBuilder) updates]) =>
+      (new RequestExceptionBuilder()..update(updates)).build()
+          as _$RequestException;
 
-  _$HttpException._({this.message, this.statusCode, this.body}) : super._() {
+  _$RequestException._({this.message, this.statusCode, this.body}) : super._() {
     if (message == null) {
-      throw new BuiltValueNullFieldError('HttpException', 'message');
+      throw new BuiltValueNullFieldError('RequestException', 'message');
     }
     if (statusCode == null) {
-      throw new BuiltValueNullFieldError('HttpException', 'statusCode');
+      throw new BuiltValueNullFieldError('RequestException', 'statusCode');
     }
     if (body == null) {
-      throw new BuiltValueNullFieldError('HttpException', 'body');
+      throw new BuiltValueNullFieldError('RequestException', 'body');
     }
   }
 
   @override
-  HttpException rebuild(void Function(HttpExceptionBuilder) updates) =>
+  RequestException rebuild(void Function(RequestExceptionBuilder) updates) =>
       (toBuilder()..update(updates)).build();
 
   @override
-  _$HttpExceptionBuilder toBuilder() =>
-      new _$HttpExceptionBuilder()..replace(this);
+  _$RequestExceptionBuilder toBuilder() =>
+      new _$RequestExceptionBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is HttpException &&
+    return other is RequestException &&
         message == other.message &&
         statusCode == other.statusCode &&
         body == other.body;
@@ -111,7 +114,7 @@ class _$HttpException extends HttpException {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('HttpException')
+    return (newBuiltValueToStringHelper('RequestException')
           ..add('message', message)
           ..add('statusCode', statusCode)
           ..add('body', body))
@@ -119,8 +122,8 @@ class _$HttpException extends HttpException {
   }
 }
 
-class _$HttpExceptionBuilder extends HttpExceptionBuilder {
-  _$HttpException _$v;
+class _$RequestExceptionBuilder extends RequestExceptionBuilder {
+  _$RequestException _$v;
 
   @override
   String get message {
@@ -158,9 +161,9 @@ class _$HttpExceptionBuilder extends HttpExceptionBuilder {
     super.body = body;
   }
 
-  _$HttpExceptionBuilder() : super._();
+  _$RequestExceptionBuilder() : super._();
 
-  HttpExceptionBuilder get _$this {
+  RequestExceptionBuilder get _$this {
     if (_$v != null) {
       super.message = _$v.message;
       super.statusCode = _$v.statusCode;
@@ -171,22 +174,22 @@ class _$HttpExceptionBuilder extends HttpExceptionBuilder {
   }
 
   @override
-  void replace(HttpException other) {
+  void replace(RequestException other) {
     if (other == null) {
       throw new ArgumentError.notNull('other');
     }
-    _$v = other as _$HttpException;
+    _$v = other as _$RequestException;
   }
 
   @override
-  void update(void Function(HttpExceptionBuilder) updates) {
+  void update(void Function(RequestExceptionBuilder) updates) {
     if (updates != null) updates(this);
   }
 
   @override
-  _$HttpException build() {
+  _$RequestException build() {
     final _$result = _$v ??
-        new _$HttpException._(
+        new _$RequestException._(
             message: message, statusCode: statusCode, body: body);
     replace(_$result);
     return _$result;

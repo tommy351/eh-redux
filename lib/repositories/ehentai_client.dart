@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
+import 'package:eh_redux/models/content_warning_exception.dart';
 import 'package:eh_redux/models/favorite.dart';
 import 'package:eh_redux/models/gallery.dart';
-import 'package:eh_redux/models/http_exception.dart';
 import 'package:eh_redux/models/image.dart';
+import 'package:eh_redux/models/request_exception.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/utils/css.dart';
 import 'package:eh_redux/utils/string.dart';
@@ -46,7 +47,7 @@ class EHentaiClient {
     );
 
     if (res.statusCode != HttpStatus.ok) {
-      throw HttpException.fromResponse(
+      throw RequestException.fromResponse(
         message: 'Failed to get gallery ids',
         response: res,
       );
@@ -93,7 +94,7 @@ class EHentaiClient {
     );
 
     if (res.statusCode != HttpStatus.ok) {
-      throw HttpException.fromResponse(
+      throw RequestException.fromResponse(
         message: 'Failed to fetch galleries data',
         response: res,
       );
@@ -121,13 +122,35 @@ class EHentaiClient {
     );
 
     if (res.statusCode != HttpStatus.ok) {
-      throw HttpException.fromResponse(
+      throw RequestException.fromResponse(
         message: 'Failed to get gallery details',
         response: res,
       );
     }
 
     final document = await compute(parse, res.body);
+
+    // Try to get the header
+    if (document.getElementById('nb') == null) {
+      throw RequestException.fromResponse(
+        message: 'Gallery not found',
+        response: res,
+      );
+    }
+
+    // Test if the content is flagged
+    final contentWarning = document.querySelectorAll('h1').firstWhere(
+        (element) => element.innerHtml == 'Content Warning',
+        orElse: () => null);
+
+    if (contentWarning != null) {
+      throw ContentWarningException((b) => b
+        ..galleryId = id.toBuilder()
+        ..reason = contentWarning.nextElementSibling
+                ?.querySelector('strong')
+                ?.innerHtml ??
+            contentWarning.innerHtml);
+    }
 
     return GalleryDetails((b) => b
       ..favoritesCount = _getFavoritesCount(document) ?? 0
@@ -161,7 +184,7 @@ class EHentaiClient {
     );
 
     if (res.statusCode != HttpStatus.ok) {
-      throw HttpException.fromResponse(
+      throw RequestException.fromResponse(
         message: 'Failed to get favorite status',
         response: res,
       );
@@ -199,7 +222,7 @@ class EHentaiClient {
     );
 
     if (res.statusCode != HttpStatus.ok) {
-      throw HttpException.fromResponse(
+      throw RequestException.fromResponse(
         message: 'Failed to add gallery to favorite',
         response: res,
       );
@@ -219,7 +242,7 @@ class EHentaiClient {
     );
 
     if (res.statusCode != HttpStatus.ok) {
-      throw HttpException.fromResponse(
+      throw RequestException.fromResponse(
         message: 'Failed to delete gallery from favorites',
         response: res,
       );
@@ -246,7 +269,7 @@ class EHentaiClient {
     );
 
     if (res.statusCode != HttpStatus.ok) {
-      throw HttpException.fromResponse(
+      throw RequestException.fromResponse(
         message: 'Failed to fetch image ids',
         response: res,
       );
@@ -291,7 +314,7 @@ class EHentaiClient {
     );
 
     if (res.statusCode != HttpStatus.ok) {
-      throw HttpException.fromResponse(
+      throw RequestException.fromResponse(
         message: 'Failed to fetch image meta',
         response: res,
       );

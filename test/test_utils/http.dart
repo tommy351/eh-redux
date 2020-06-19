@@ -1,6 +1,12 @@
+import 'package:eh_redux/models/request_exception.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:http/testing.dart';
+import 'package:matcher/matcher.dart';
 import 'package:meta/meta.dart';
+
+const isRequestException = TypeMatcher<RequestException>();
+final Matcher throwsRequestException = throwsA(isRequestException);
 
 class _RequestHandler {
   _RequestHandler({@required this.request, @required this.response})

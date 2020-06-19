@@ -47,6 +47,7 @@ dev_dependencies:
   lint: ^1.0.0
   mockito: ^4.1.1
   path: ^1.6.4
+  matcher: ^0.12.6
 
 flutter:
   uses-material-design: true

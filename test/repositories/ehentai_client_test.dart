@@ -2,11 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:built_collection/built_collection.dart';
+import 'package:eh_redux/models/content_warning_exception.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/models/request_exception.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
+import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
 
 import '../test_utils/http.dart';
@@ -135,7 +138,7 @@ void main() {
       });
 
       test('should throw an exception', () async {
-        expect(client.getGalleryIds('/'), throwsException);
+        expect(client.getGalleryIds('/'), throwsRequestException);
       });
     });
 
@@ -297,7 +300,13 @@ void main() {
       });
 
       test('should throw an exception', () async {
-        expect(client.getGalleryIds('/'), throwsException);
+        expect(
+            client.getGalleriesData([
+              GalleryId((b) => b
+                ..id = 1663099
+                ..token = 'd76bb5e89a'),
+            ]),
+            throwsRequestException);
       });
     });
 
@@ -358,7 +367,114 @@ void main() {
     });
   });
 
-  group('getGalleryDetails', () {});
+  group('getGalleryDetails', () {
+    final galleryId = GalleryId((b) => b
+      ..id = 1664213
+      ..token = '283b2421c3');
+
+    group('when server respond 200', () {
+      setUp(() async {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/g/${galleryId.id}/${galleryId.token}'),
+          ),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/gallery.html'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
+        );
+      });
+
+      test('should return gallery details', () async {
+        final details = await client.getGalleryDetails(galleryId);
+
+        expect(
+            details,
+            equals(GalleryDetails((b) => b
+              ..ratingCount = 135
+              ..favoritesCount = 670
+              ..currentFavorite = -1)));
+      });
+    });
+
+    group('when server respond 404', () {
+      setUp(() {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/g/${galleryId.id}/${galleryId.token}'),
+          ),
+          response: Response(
+            '',
+            HttpStatus.notFound,
+          ),
+        );
+      });
+
+      test('should throw an exception', () async {
+        expect(client.getGalleryDetails(galleryId), throwsRequestException);
+      });
+    });
+
+    group('when token is incorrect', () {
+      setUp(() {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/g/${galleryId.id}/${galleryId.token}'),
+          ),
+          response: Response(
+            'Key missing, or incorrect key provided.',
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
+        );
+      });
+
+      test('should throw an exception', () async {
+        expect(
+            client.getGalleryDetails(galleryId),
+            throwsA(equals(RequestException((b) => b
+              ..message = 'Gallery not found'
+              ..statusCode = HttpStatus.ok
+              ..body = 'Key missing, or incorrect key provided.'))));
+      });
+    });
+
+    group('when gallery has content warning', () {
+      setUp(() async {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/g/${galleryId.id}/${galleryId.token}'),
+          ),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/gallery_content_warning.html'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
+        );
+      });
+
+      test('should throw an exception', () async {
+        expect(
+            client.getGalleryDetails(galleryId),
+            throwsA(equals(ContentWarningException((b) => b
+              ..galleryId = galleryId.toBuilder()
+              ..reason = 'Offensive For Everyone'))));
+      });
+    });
+  });
 
   group('getFavoriteStatus', () {});
 
