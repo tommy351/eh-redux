@@ -278,8 +278,10 @@ class EHentaiClient {
     return '$baseUrl/g/${id.id}/${id.token}';
   }
 
-  String getImageUrl(ImageId id) {
-    return '$baseUrl/s/${id.key}/${id.galleryId.id}-${id.page}';
+  String getImageUrl(ImageId id, {String reloadKey}) {
+    final url = '$baseUrl/s/${id.key}/${id.galleryId.id}-${id.page}';
+    if (reloadKey == null || reloadKey.isEmpty) return url;
+    return '$url?nl=${Uri.encodeQueryComponent(reloadKey)}';
   }
 
   String _getFavPopupUrl(GalleryId id) {
@@ -337,10 +339,10 @@ class EHentaiClient {
     return ids;
   }
 
-  Future<Image> getImageData(ImageId id) async {
-    developer.log('Fetch image data (id: $id)');
+  Future<Image> getImageData(ImageId id, {String reloadKey}) async {
+    developer.log('Fetch image data (id: $id, reloadKey: $reloadKey)');
     final res = await httpClient.get(
-      getImageUrl(id),
+      getImageUrl(id, reloadKey: reloadKey),
       headers: await _getRequestHeaders(
         disableContentWarning: true,
       ),
@@ -371,8 +373,13 @@ class EHentaiClient {
       url: src,
       width: int.tryParse(trimSuffix(style['width'], 'px')),
       height: int.tryParse(trimSuffix(style['height'], 'px')),
-      reloadKey:
-          _reloadKeyRegExp.firstMatch(img.attributes['onerror']).group(1),
+      reloadKey: _getReloadKey(img),
     );
+  }
+
+  String _getReloadKey(Element img) {
+    final attr = img.attributes['onerror'];
+    if (attr == null || attr.isEmpty) return null;
+    return _reloadKeyRegExp.firstMatch(attr).group(1);
   }
 }

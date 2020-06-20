@@ -42,9 +42,8 @@ mixin _$ImageStore on _ImageStoreBase, Store {
   final _$loadImageAsyncAction = AsyncAction('_ImageStoreBase.loadImage');
 
   @override
-  Future<void> loadImage(GalleryId galleryId, int imagePage) {
-    return _$loadImageAsyncAction
-        .run(() => super.loadImage(galleryId, imagePage));
+  Future<void> loadImage(ImageLoadOptions options) {
+    return _$loadImageAsyncAction.run(() => super.loadImage(options));
   }
 
   final _$_ImageStoreBaseActionController =

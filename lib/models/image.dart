@@ -20,6 +20,22 @@ abstract class Image with _$Image {
     @required int width,
     @required int height,
     @required String url,
-    @required String reloadKey,
+    String reloadKey,
   }) = _Image;
+}
+
+@freezed
+abstract class ImageLoadOptions implements _$ImageLoadOptions {
+  const factory ImageLoadOptions({
+    @required GalleryId galleryId,
+    @required int page,
+    String reloadKey,
+  }) = _ImageLoadOptions;
+
+  const ImageLoadOptions._();
+
+  GalleryIdWithPage get galleryIdWithPage => GalleryIdWithPage(
+        galleryId: galleryId,
+        page: page,
+      );
 }

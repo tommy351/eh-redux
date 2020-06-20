@@ -39,6 +39,21 @@ mixin _$ViewStore on _ViewStoreBase, Store {
     });
   }
 
+  final _$loadOptionsAtom = Atom(name: '_ViewStoreBase.loadOptions');
+
+  @override
+  ObservableMap<GalleryIdWithPage, ImageLoadOptions> get loadOptions {
+    _$loadOptionsAtom.reportRead();
+    return super.loadOptions;
+  }
+
+  @override
+  set loadOptions(ObservableMap<GalleryIdWithPage, ImageLoadOptions> value) {
+    _$loadOptionsAtom.reportWrite(value, super.loadOptions, () {
+      super.loadOptions = value;
+    });
+  }
+
   final _$_ViewStoreBaseActionController =
       ActionController(name: '_ViewStoreBase');
 
@@ -65,10 +80,22 @@ mixin _$ViewStore on _ViewStoreBase, Store {
   }
 
   @override
+  void updateLoadOption(ImageLoadOptions options) {
+    final _$actionInfo = _$_ViewStoreBaseActionController.startAction(
+        name: '_ViewStoreBase.updateLoadOption');
+    try {
+      return super.updateLoadOption(options);
+    } finally {
+      _$_ViewStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 currentPage: ${currentPage},
-navVisible: ${navVisible}
+navVisible: ${navVisible},
+loadOptions: ${loadOptions}
     ''';
   }
 }

@@ -1,6 +1,9 @@
+import 'dart:collection';
+
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/models/image.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 
@@ -23,51 +26,52 @@ abstract class _ImageStoreBase with Store {
   @observable
   ObservableMap<GalleryIdWithPage, ImageId> index = ObservableMap.of({});
 
-  final Map<GalleryIdWithPage, bool> _imageLoading = {};
-  final Map<GalleryIdWithPage, Future<List<ImageId>>> _imageIdsFutures = {};
+  final _imageLoading = HashSet<ImageLoadOptions>();
+  final _imageIdsFutures = HashMap<GalleryIdWithPage, Future<List<ImageId>>>();
+
+  Image getImageByPage(GalleryIdWithPage page) {
+    return data[index[page]];
+  }
 
   @action
   void add(Image image) {
-    data[image.id] = image;
+    _addImage(image);
   }
 
   @action
   void addAll(Iterable<Image> images) {
-    data.addEntries(images.map((e) => MapEntry(e.id, e)));
+    for (final img in images) {
+      _addImage(img);
+    }
+  }
+
+  void _addImage(Image image) {
+    data[image.id] = image.copyWith(
+      reloadKey: image.reloadKey ?? data[image.id]?.reloadKey,
+    );
   }
 
   @action
-  Future<void> loadImage(GalleryId galleryId, int imagePage) async {
-    final page = GalleryIdWithPage(
-      galleryId: galleryId,
-      page: imagePage,
-    );
+  Future<void> loadImage(ImageLoadOptions options) async {
+    if (_imageLoading.contains(options)) return;
 
-    if (index.containsKey(page) || _imageLoading.containsKey(page)) return;
-
-    _imageLoading[page] = true;
+    _imageLoading.add(options);
 
     try {
-      final imageId = await _getImageId(galleryId, imagePage);
-      final image = await client.getImageData(imageId);
+      final imageId = await _getImageId(options.galleryId, options.page);
+      final image =
+          await client.getImageData(imageId, reloadKey: options.reloadKey);
 
       add(image);
-      index[page] = image.id;
+      index[options.galleryIdWithPage] = image.id;
     } finally {
-      _imageLoading.remove(page);
+      _imageLoading.remove(options);
     }
   }
 
   Future<List<ImageId>> _getImageIds(GalleryIdWithPage page) async {
-    final future = _imageIdsFutures[page];
-
-    if (future != null) {
-      try {
-        return await future;
-      } catch (_) {}
-    }
-
-    return client.getImageIds(page.galleryId, page.page);
+    return _imageIdsFutures[page] ??=
+        client.getImageIds(page.galleryId, page.page);
   }
 
   Future<ImageId> _getImageId(GalleryId galleryId, int imagePage) async {

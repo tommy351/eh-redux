@@ -2,22 +2,23 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/models/image.dart';
 import 'package:eh_redux/stores/image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ViewImage extends ImageProvider<ViewImage> {
   ViewImage({
-    @required this.page,
+    @required this.options,
     @required this.imageStore,
     this.scale = 1.0,
-  })  : assert(page != null),
+  })  : assert(options != null),
         assert(imageStore != null);
 
   static final _httpClient = HttpClient()..autoUncompress = false;
+  static const _imageLoadTimeout = Duration(seconds: 10);
 
-  final GalleryIdWithPage page;
+  final ImageLoadOptions options;
   final double scale;
   final ImageStore imageStore;
 
@@ -52,12 +53,12 @@ class ViewImage extends ImageProvider<ViewImage> {
     try {
       assert(key == this);
 
-      await imageStore.loadImage(page.galleryId, page.page);
+      await imageStore.loadImage(options);
 
-      final image = imageStore.data[imageStore.index[page]];
+      final image = imageStore.getImageByPage(options.galleryIdWithPage);
       final url = Uri.base.resolve(image.url);
-      final request = await _httpClient.getUrl(url);
-      final response = await request.close();
+      final request = await _httpClient.getUrl(url).timeout(_imageLoadTimeout);
+      final response = await request.close().timeout(_imageLoadTimeout);
 
       if (response.statusCode != HttpStatus.ok) {
         PaintingBinding.instance.imageCache.evict(key);
@@ -90,15 +91,10 @@ class ViewImage extends ImageProvider<ViewImage> {
       identical(this, other) ||
       other is ViewImage &&
           runtimeType == other.runtimeType &&
-          page == other.page &&
+          options == other.options &&
           scale == other.scale &&
           imageStore == other.imageStore;
 
   @override
-  int get hashCode => page.hashCode ^ scale.hashCode ^ imageStore.hashCode;
-
-  @override
-  String toString() {
-    return 'ViewImage{page: $page, scale: $scale}';
-  }
+  int get hashCode => options.hashCode ^ scale.hashCode ^ imageStore.hashCode;
 }

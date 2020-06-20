@@ -176,7 +176,7 @@ class _$ImageTearOff {
       @required int width,
       @required int height,
       @required String url,
-      @required String reloadKey}) {
+      String reloadKey}) {
     return _Image(
       id: id,
       width: width,
@@ -285,12 +285,11 @@ class _$_Image implements _Image {
       @required this.width,
       @required this.height,
       @required this.url,
-      @required this.reloadKey})
+      this.reloadKey})
       : assert(id != null),
         assert(width != null),
         assert(height != null),
-        assert(url != null),
-        assert(reloadKey != null);
+        assert(url != null);
 
   @override
   final ImageId id;
@@ -345,7 +344,7 @@ abstract class _Image implements Image {
       @required int width,
       @required int height,
       @required String url,
-      @required String reloadKey}) = _$_Image;
+      String reloadKey}) = _$_Image;
 
   @override
   ImageId get id;
@@ -359,4 +358,169 @@ abstract class _Image implements Image {
   String get reloadKey;
   @override
   _$ImageCopyWith<_Image> get copyWith;
+}
+
+class _$ImageLoadOptionsTearOff {
+  const _$ImageLoadOptionsTearOff();
+
+  _ImageLoadOptions call(
+      {@required GalleryId galleryId, @required int page, String reloadKey}) {
+    return _ImageLoadOptions(
+      galleryId: galleryId,
+      page: page,
+      reloadKey: reloadKey,
+    );
+  }
+}
+
+// ignore: unused_element
+const $ImageLoadOptions = _$ImageLoadOptionsTearOff();
+
+mixin _$ImageLoadOptions {
+  GalleryId get galleryId;
+  int get page;
+  String get reloadKey;
+
+  $ImageLoadOptionsCopyWith<ImageLoadOptions> get copyWith;
+}
+
+abstract class $ImageLoadOptionsCopyWith<$Res> {
+  factory $ImageLoadOptionsCopyWith(
+          ImageLoadOptions value, $Res Function(ImageLoadOptions) then) =
+      _$ImageLoadOptionsCopyWithImpl<$Res>;
+  $Res call({GalleryId galleryId, int page, String reloadKey});
+
+  $GalleryIdCopyWith<$Res> get galleryId;
+}
+
+class _$ImageLoadOptionsCopyWithImpl<$Res>
+    implements $ImageLoadOptionsCopyWith<$Res> {
+  _$ImageLoadOptionsCopyWithImpl(this._value, this._then);
+
+  final ImageLoadOptions _value;
+  // ignore: unused_field
+  final $Res Function(ImageLoadOptions) _then;
+
+  @override
+  $Res call({
+    Object galleryId = freezed,
+    Object page = freezed,
+    Object reloadKey = freezed,
+  }) {
+    return _then(_value.copyWith(
+      galleryId:
+          galleryId == freezed ? _value.galleryId : galleryId as GalleryId,
+      page: page == freezed ? _value.page : page as int,
+      reloadKey: reloadKey == freezed ? _value.reloadKey : reloadKey as String,
+    ));
+  }
+
+  @override
+  $GalleryIdCopyWith<$Res> get galleryId {
+    if (_value.galleryId == null) {
+      return null;
+    }
+    return $GalleryIdCopyWith<$Res>(_value.galleryId, (value) {
+      return _then(_value.copyWith(galleryId: value));
+    });
+  }
+}
+
+abstract class _$ImageLoadOptionsCopyWith<$Res>
+    implements $ImageLoadOptionsCopyWith<$Res> {
+  factory _$ImageLoadOptionsCopyWith(
+          _ImageLoadOptions value, $Res Function(_ImageLoadOptions) then) =
+      __$ImageLoadOptionsCopyWithImpl<$Res>;
+  @override
+  $Res call({GalleryId galleryId, int page, String reloadKey});
+
+  @override
+  $GalleryIdCopyWith<$Res> get galleryId;
+}
+
+class __$ImageLoadOptionsCopyWithImpl<$Res>
+    extends _$ImageLoadOptionsCopyWithImpl<$Res>
+    implements _$ImageLoadOptionsCopyWith<$Res> {
+  __$ImageLoadOptionsCopyWithImpl(
+      _ImageLoadOptions _value, $Res Function(_ImageLoadOptions) _then)
+      : super(_value, (v) => _then(v as _ImageLoadOptions));
+
+  @override
+  _ImageLoadOptions get _value => super._value as _ImageLoadOptions;
+
+  @override
+  $Res call({
+    Object galleryId = freezed,
+    Object page = freezed,
+    Object reloadKey = freezed,
+  }) {
+    return _then(_ImageLoadOptions(
+      galleryId:
+          galleryId == freezed ? _value.galleryId : galleryId as GalleryId,
+      page: page == freezed ? _value.page : page as int,
+      reloadKey: reloadKey == freezed ? _value.reloadKey : reloadKey as String,
+    ));
+  }
+}
+
+class _$_ImageLoadOptions extends _ImageLoadOptions {
+  const _$_ImageLoadOptions(
+      {@required this.galleryId, @required this.page, this.reloadKey})
+      : assert(galleryId != null),
+        assert(page != null),
+        super._();
+
+  @override
+  final GalleryId galleryId;
+  @override
+  final int page;
+  @override
+  final String reloadKey;
+
+  @override
+  String toString() {
+    return 'ImageLoadOptions(galleryId: $galleryId, page: $page, reloadKey: $reloadKey)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _ImageLoadOptions &&
+            (identical(other.galleryId, galleryId) ||
+                const DeepCollectionEquality()
+                    .equals(other.galleryId, galleryId)) &&
+            (identical(other.page, page) ||
+                const DeepCollectionEquality().equals(other.page, page)) &&
+            (identical(other.reloadKey, reloadKey) ||
+                const DeepCollectionEquality()
+                    .equals(other.reloadKey, reloadKey)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(galleryId) ^
+      const DeepCollectionEquality().hash(page) ^
+      const DeepCollectionEquality().hash(reloadKey);
+
+  @override
+  _$ImageLoadOptionsCopyWith<_ImageLoadOptions> get copyWith =>
+      __$ImageLoadOptionsCopyWithImpl<_ImageLoadOptions>(this, _$identity);
+}
+
+abstract class _ImageLoadOptions extends ImageLoadOptions {
+  const _ImageLoadOptions._() : super._();
+  const factory _ImageLoadOptions(
+      {@required GalleryId galleryId,
+      @required int page,
+      String reloadKey}) = _$_ImageLoadOptions;
+
+  @override
+  GalleryId get galleryId;
+  @override
+  int get page;
+  @override
+  String get reloadKey;
+  @override
+  _$ImageLoadOptionsCopyWith<_ImageLoadOptions> get copyWith;
 }
