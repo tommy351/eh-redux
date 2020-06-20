@@ -73,5 +73,7 @@
   "galleryContentWarningTitle": "Content Warning",
   "galleryContentWarningMessage": "This gallery has been flagged as {reason}. Due to its content, it should not be viewed by anyone.",
   "galleryHideContentWarning": "Hide warning",
-  "retry": "Retry"
+  "retry": "Retry",
+  "clearSearchHistory": "Clear search history",
+  "searchHistoryClearSuccess": "Search history cleared successfully."
 }

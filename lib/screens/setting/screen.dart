@@ -1,5 +1,6 @@
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/stores/setting.dart';
+import 'package:eh_redux/tables/database.dart';
 import 'package:eh_redux/widgets/select_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,6 +14,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingStore = Provider.of<SettingStore>(context);
+    final database = Provider.of<Database>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -78,6 +80,18 @@ class SettingScreen extends StatelessWidget {
                 title: Text(S.of(context).turnPagesWithVolumeKeys),
                 value: settingStore.turnPagesWithVolumeKeys.value,
                 onChanged: settingStore.setTurnPagesWithVolumeKeys,
+              ),
+              const Divider(),
+              _buildTitle(context, S.of(context).search),
+              ListTile(
+                title: Text(S.of(context).clearSearchHistory),
+                onTap: () {
+                  database.searchHistoriesDao.deleteAllEntries().then((_) {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(S.of(context).searchHistoryClearSuccess),
+                    ));
+                  });
+                },
               ),
             ],
           );

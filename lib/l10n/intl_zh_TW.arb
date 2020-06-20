@@ -73,5 +73,7 @@
   "galleryContentWarningTitle": "內容警告",
   "galleryContentWarningMessage": "此相簿被標為 {reason}，因為其內容不應該被任何人瀏覽。",
   "galleryHideContentWarning": "隱藏警告",
-  "retry": "重試"
+  "retry": "重試",
+  "clearSearchHistory": "清除搜尋紀錄",
+  "searchHistoryClearSuccess": "搜尋記錄清除成功。"
 }

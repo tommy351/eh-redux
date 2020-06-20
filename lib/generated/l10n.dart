@@ -786,6 +786,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Clear search history`
+  String get clearSearchHistory {
+    return Intl.message(
+      'Clear search history',
+      name: 'clearSearchHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search history cleared successfully.`
+  String get searchHistoryClearSuccess {
+    return Intl.message(
+      'Search history cleared successfully.',
+      name: 'searchHistoryClearSuccess',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -32,4 +32,8 @@ class SearchHistoriesDao extends DatabaseAccessor<Database>
 
     return query.get();
   }
+
+  Future<void> deleteAllEntries() async {
+    await delete(searchHistories).go();
+  }
 }
