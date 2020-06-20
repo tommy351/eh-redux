@@ -623,5 +623,36 @@ void main() {
             ))));
       });
     });
+
+    group('when onerror attribute is not set on the image element', () {
+      setUp(() async {
+        httpClient.handle(
+          request: ExpectedRequest(
+            url: Uri.parse(
+                '${EHentaiClient.baseUrl}/s/${imageId.key}/${imageId.galleryId.id}-${imageId.page}'),
+          ),
+          response: Response(
+            await readProjectFileAsString(
+                'test/repositories/fixtures/image_without_onerror.html'),
+            HttpStatus.ok,
+            headers: {
+              HttpHeaders.contentTypeHeader: MockHttpClient.htmlContentType,
+            },
+          ),
+        );
+      });
+
+      test('should return image data', () async {
+        expect(
+            await client.getImageData(imageId),
+            equals(const Image(
+              id: imageId,
+              url:
+                  'https://lwujxhaydlqtdzxawoti.hath.network/om/81435369/8ad5ea61cf05856ef29d2121c4be18d0a09fd3c9-4020849-1748-2480-png/db2eba6e239a86d1db5b4bcf62d2726846a68ee5-522532-1280-1816-jpg/1280/8tjfd9qdbygcce4ikr/65_gb_231764_65.jpg',
+              width: 1280,
+              height: 1816,
+            )));
+      });
+    });
   });
 }
