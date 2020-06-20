@@ -20,5 +20,6 @@ abstract class Image with _$Image {
     @required int width,
     @required int height,
     @required String url,
+    @required String reloadKey,
   }) = _Image;
 }

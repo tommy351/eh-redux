@@ -30,6 +30,8 @@ class EHentaiClient {
   static const _userAgent =
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36';
 
+  static final _reloadKeyRegExp = RegExp(r"nl\('([^']+)'\)");
+
   final http.Client httpClient;
   final SessionStore sessionStore;
 
@@ -369,6 +371,8 @@ class EHentaiClient {
       url: src,
       width: int.tryParse(trimSuffix(style['width'], 'px')),
       height: int.tryParse(trimSuffix(style['height'], 'px')),
+      reloadKey:
+          _reloadKeyRegExp.firstMatch(img.attributes['onerror']).group(1),
     );
   }
 }

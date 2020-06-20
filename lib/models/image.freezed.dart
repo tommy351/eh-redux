@@ -175,12 +175,14 @@ class _$ImageTearOff {
       {@required ImageId id,
       @required int width,
       @required int height,
-      @required String url}) {
+      @required String url,
+      @required String reloadKey}) {
     return _Image(
       id: id,
       width: width,
       height: height,
       url: url,
+      reloadKey: reloadKey,
     );
   }
 }
@@ -193,6 +195,7 @@ mixin _$Image {
   int get width;
   int get height;
   String get url;
+  String get reloadKey;
 
   $ImageCopyWith<Image> get copyWith;
 }
@@ -200,7 +203,7 @@ mixin _$Image {
 abstract class $ImageCopyWith<$Res> {
   factory $ImageCopyWith(Image value, $Res Function(Image) then) =
       _$ImageCopyWithImpl<$Res>;
-  $Res call({ImageId id, int width, int height, String url});
+  $Res call({ImageId id, int width, int height, String url, String reloadKey});
 
   $ImageIdCopyWith<$Res> get id;
 }
@@ -218,12 +221,14 @@ class _$ImageCopyWithImpl<$Res> implements $ImageCopyWith<$Res> {
     Object width = freezed,
     Object height = freezed,
     Object url = freezed,
+    Object reloadKey = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as ImageId,
       width: width == freezed ? _value.width : width as int,
       height: height == freezed ? _value.height : height as int,
       url: url == freezed ? _value.url : url as String,
+      reloadKey: reloadKey == freezed ? _value.reloadKey : reloadKey as String,
     ));
   }
 
@@ -242,7 +247,7 @@ abstract class _$ImageCopyWith<$Res> implements $ImageCopyWith<$Res> {
   factory _$ImageCopyWith(_Image value, $Res Function(_Image) then) =
       __$ImageCopyWithImpl<$Res>;
   @override
-  $Res call({ImageId id, int width, int height, String url});
+  $Res call({ImageId id, int width, int height, String url, String reloadKey});
 
   @override
   $ImageIdCopyWith<$Res> get id;
@@ -262,12 +267,14 @@ class __$ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res>
     Object width = freezed,
     Object height = freezed,
     Object url = freezed,
+    Object reloadKey = freezed,
   }) {
     return _then(_Image(
       id: id == freezed ? _value.id : id as ImageId,
       width: width == freezed ? _value.width : width as int,
       height: height == freezed ? _value.height : height as int,
       url: url == freezed ? _value.url : url as String,
+      reloadKey: reloadKey == freezed ? _value.reloadKey : reloadKey as String,
     ));
   }
 }
@@ -277,11 +284,13 @@ class _$_Image implements _Image {
       {@required this.id,
       @required this.width,
       @required this.height,
-      @required this.url})
+      @required this.url,
+      @required this.reloadKey})
       : assert(id != null),
         assert(width != null),
         assert(height != null),
-        assert(url != null);
+        assert(url != null),
+        assert(reloadKey != null);
 
   @override
   final ImageId id;
@@ -291,10 +300,12 @@ class _$_Image implements _Image {
   final int height;
   @override
   final String url;
+  @override
+  final String reloadKey;
 
   @override
   String toString() {
-    return 'Image(id: $id, width: $width, height: $height, url: $url)';
+    return 'Image(id: $id, width: $width, height: $height, url: $url, reloadKey: $reloadKey)';
   }
 
   @override
@@ -308,7 +319,10 @@ class _$_Image implements _Image {
             (identical(other.height, height) ||
                 const DeepCollectionEquality().equals(other.height, height)) &&
             (identical(other.url, url) ||
-                const DeepCollectionEquality().equals(other.url, url)));
+                const DeepCollectionEquality().equals(other.url, url)) &&
+            (identical(other.reloadKey, reloadKey) ||
+                const DeepCollectionEquality()
+                    .equals(other.reloadKey, reloadKey)));
   }
 
   @override
@@ -317,7 +331,8 @@ class _$_Image implements _Image {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(width) ^
       const DeepCollectionEquality().hash(height) ^
-      const DeepCollectionEquality().hash(url);
+      const DeepCollectionEquality().hash(url) ^
+      const DeepCollectionEquality().hash(reloadKey);
 
   @override
   _$ImageCopyWith<_Image> get copyWith =>
@@ -329,7 +344,8 @@ abstract class _Image implements Image {
       {@required ImageId id,
       @required int width,
       @required int height,
-      @required String url}) = _$_Image;
+      @required String url,
+      @required String reloadKey}) = _$_Image;
 
   @override
   ImageId get id;
@@ -339,6 +355,8 @@ abstract class _Image implements Image {
   int get height;
   @override
   String get url;
+  @override
+  String get reloadKey;
   @override
   _$ImageCopyWith<_Image> get copyWith;
 }
