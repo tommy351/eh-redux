@@ -29,7 +29,8 @@ abstract class _GalleryStoreBase with Store {
       ObservableMap.of({});
 
   Pagination<GalleryId> _getPaginationByKey(GalleryPaginationKey key) {
-    return paginations[key] ?? Pagination<GalleryId>();
+    return paginations[key] ??
+        Pagination<GalleryId>(index: newEmptyPaginationIndex());
   }
 
   @action
@@ -85,7 +86,7 @@ abstract class _GalleryStoreBase with Store {
   @action
   void setCurrentFavorite(GalleryId id, int value) {
     if (details[id] != null) {
-      details[id] = details[id].rebuild((b) => b..currentFavorite = value);
+      details[id] = details[id].copyWith(currentFavorite: value);
     }
   }
 
@@ -99,8 +100,7 @@ abstract class _GalleryStoreBase with Store {
   }) async {
     if (_getPaginationByKey(key).loading) return;
 
-    paginations[key] =
-        _getPaginationByKey(key).rebuild((b) => b.loading = true);
+    paginations[key] = _getPaginationByKey(key).copyWith(loading: true);
 
     try {
       final ids = await client.getGalleryIds(_getListPath(key, page));
@@ -108,13 +108,13 @@ abstract class _GalleryStoreBase with Store {
 
       addAll(galleries);
 
-      paginations[key] = _getPaginationByKey(key).rebuild((b) => b
-        ..index = updateIndex(b.index, ids)
-        ..currentPage = page
-        ..noMore = galleries.length < _galleryPerPage);
+      paginations[key] = _getPaginationByKey(key).copyWith(
+        index: updateIndex(_getPaginationByKey(key).index, ids),
+        currentPage: page,
+        noMore: galleries.length < _galleryPerPage,
+      );
     } finally {
-      paginations[key] =
-          _getPaginationByKey(key).rebuild((b) => b..loading = false);
+      paginations[key] = _getPaginationByKey(key).copyWith(loading: false);
     }
   }
 

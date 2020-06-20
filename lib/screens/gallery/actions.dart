@@ -1,5 +1,5 @@
 import 'package:eh_redux/generated/l10n.dart';
-import 'package:eh_redux/models/favorite.dart';
+import 'package:eh_redux/models/favorite_colors.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/view/args.dart';
 import 'package:eh_redux/screens/view/screen.dart';
@@ -43,7 +43,7 @@ class GalleryActions extends StatelessWidget {
         Navigator.pushNamed(
           context,
           ViewScreen.routeName,
-          arguments: ViewScreenArguments((b) => b..id = gallery.id.toBuilder()),
+          arguments: ViewScreenArguments(id: gallery.id),
         );
       },
     );

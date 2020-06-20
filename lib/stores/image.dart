@@ -38,9 +38,10 @@ abstract class _ImageStoreBase with Store {
 
   @action
   Future<void> loadImage(GalleryId galleryId, int imagePage) async {
-    final page = GalleryIdWithPage((b) => b
-      ..galleryId = galleryId.toBuilder()
-      ..page = imagePage);
+    final page = GalleryIdWithPage(
+      galleryId: galleryId,
+      page: imagePage,
+    );
 
     if (index.containsKey(page) || _imageLoading.containsKey(page)) return;
 
@@ -70,9 +71,10 @@ abstract class _ImageStoreBase with Store {
   }
 
   Future<ImageId> _getImageId(GalleryId galleryId, int imagePage) async {
-    final page = GalleryIdWithPage((b) => b
-      ..galleryId = galleryId.toBuilder()
-      ..page = imagePage ~/ _imagePerPage);
+    final page = GalleryIdWithPage(
+      galleryId: galleryId,
+      page: imagePage ~/ _imagePerPage,
+    );
     final ids = await _getImageIds(page);
 
     return ids.firstWhere((element) => element.page == imagePage);

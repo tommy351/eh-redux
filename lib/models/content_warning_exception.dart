@@ -1,15 +1,12 @@
-import 'package:built_value/built_value.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'content_warning_exception.g.dart';
+part 'content_warning_exception.freezed.dart';
 
-abstract class ContentWarningException
-    implements Built<ContentWarningException, ContentWarningExceptionBuilder> {
-  factory ContentWarningException(
-          [void Function(ContentWarningExceptionBuilder) updates]) =
-      _$ContentWarningException;
-  ContentWarningException._();
-
-  GalleryId get galleryId;
-  String get reason;
+@freezed
+abstract class ContentWarningException with _$ContentWarningException {
+  const factory ContentWarningException({
+    @required GalleryId galleryId,
+    @Default('') String reason,
+  }) = _ContentWarningException;
 }

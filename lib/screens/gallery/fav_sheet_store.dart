@@ -56,9 +56,10 @@ abstract class _FavSheetStoreBase with Store {
   Future<void> addToFavorite() {
     return future = ObservableFuture(favoriteStore.addToFavorite(
       galleryId,
-      FavoriteStatus((b) => b
-        ..favorite = favorite
-        ..note = note),
+      FavoriteStatus(
+        favorite: favorite,
+        note: note,
+      ),
     ));
   }
 

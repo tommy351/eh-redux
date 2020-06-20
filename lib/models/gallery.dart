@@ -1,91 +1,103 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
 import 'package:eh_redux/utils/datetime.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
 
+part 'gallery.freezed.dart';
 part 'gallery.g.dart';
 
-abstract class Gallery implements Built<Gallery, GalleryBuilder> {
-  factory Gallery([Function(GalleryBuilder) updates]) = _$Gallery;
-  Gallery._();
+@freezed
+abstract class Gallery with _$Gallery {
+  const factory Gallery({
+    @required GalleryId id,
+    @required String title,
+    @required String titleJpn,
+    @required String category,
+    @required String thumbnail,
+    @required String uploader,
+    @required int fileCount,
+    @required int fileSize,
+    @required bool expunged,
+    @required double rating,
+    @required BuiltList<GalleryTag> tags,
+    @required DateTime posted,
+  }) = _Gallery;
 
-  factory Gallery.fromJson(Map<String, dynamic> json) {
-    final id = GalleryIdBuilder()
-      ..id = json['gid'] as int
-      ..token = json['token'].toString();
-    final tags =
-        (json['tags'] as List).map((e) => GalleryTag.fromString(e as String));
-
-    return Gallery((b) => b
-      ..id = id
-      ..title = json['title'].toString()
-      ..titleJpn = json['title_jpn'].toString()
-      ..category = json['category'].toString()
-      ..thumbnail = json['thumb'].toString()
-      ..uploader = json['uploader'].toString()
-      ..fileCount = int.tryParse(json['filecount'].toString())
-      ..fileSize = json['filesize'] as int
-      ..expunged = json['expunged'] as bool
-      ..rating = double.tryParse(json['rating'].toString())
-      ..tags = BuiltList<GalleryTag>.from(tags).toBuilder()
-      ..posted = tryParseSecondsSinceEpoch(json['posted'].toString()));
+  factory Gallery.fromResponse(GalleryResponse res) {
+    return Gallery(
+      id: GalleryId(id: res.id, token: res.token),
+      title: res.title,
+      titleJpn: res.titleJpn,
+      category: res.category,
+      thumbnail: res.thumbnail,
+      uploader: res.uploader,
+      fileCount: res.fileCount,
+      fileSize: res.fileSize,
+      expunged: res.expunged,
+      rating: res.rating,
+      tags: BuiltList.from(res.tags.map((e) => GalleryTag.fromString(e))),
+      posted: res.posted,
+    );
   }
-
-  static Serializer<Gallery> get serializer => _$gallerySerializer;
-
-  GalleryId get id;
-  String get title;
-  String get titleJpn;
-  String get category;
-  String get thumbnail;
-  String get uploader;
-  int get fileCount;
-  int get fileSize;
-  bool get expunged;
-  double get rating;
-  BuiltList<GalleryTag> get tags;
-  DateTime get posted;
 }
 
-abstract class GalleryId implements Built<GalleryId, GalleryIdBuilder> {
-  factory GalleryId([Function(GalleryIdBuilder) updates]) = _$GalleryId;
-  GalleryId._();
+@freezed
+abstract class GalleryResponse with _$GalleryResponse {
+  const factory GalleryResponse({
+    @JsonKey(name: 'gid') int id,
+    String token,
+    String title,
+    @JsonKey(name: 'title_jpn') String titleJpn,
+    String category,
+    @JsonKey(name: 'thumb') String thumbnail,
+    String uploader,
+    @JsonKey(name: 'filecount', fromJson: int.tryParse) int fileCount,
+    @JsonKey(name: 'filesize') int fileSize,
+    bool expunged,
+    @JsonKey(fromJson: double.tryParse) double rating,
+    List<String> tags,
+    @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime posted,
+  }) = _GalleryResponse;
 
-  static Serializer<GalleryId> get serializer => _$galleryIdSerializer;
-
-  int get id;
-  String get token;
+  factory GalleryResponse.fromJson(Map<String, dynamic> json) =>
+      _$GalleryResponseFromJson(json);
 }
 
-abstract class GalleryTag implements Built<GalleryTag, GalleryTagBuilder> {
-  factory GalleryTag([Function(GalleryTagBuilder) updates]) = _$GalleryTag;
-  GalleryTag._();
+@freezed
+abstract class GalleryId with _$GalleryId {
+  const factory GalleryId({
+    @required int id,
+    @required String token,
+  }) = _GalleryId;
+}
+
+@freezed
+abstract class GalleryTag implements _$GalleryTag {
+  const factory GalleryTag({
+    @Default('') String namespace,
+    @required String tag,
+  }) = _GalleryTag;
 
   factory GalleryTag.fromString(String s) {
-    final parts = s.split(delimiter);
+    final index = s.indexOf(delimiter);
 
-    if (parts.length < 2) {
-      return GalleryTag((b) => b
-        ..namespace = ''
-        ..tag = parts[0]);
+    if (index == -1) {
+      return GalleryTag(tag: s);
     }
 
-    return GalleryTag((b) => b
-      ..namespace = parts[0]
-      ..tag = parts.sublist(1).join(delimiter));
+    return GalleryTag(
+      namespace: s.substring(0, index),
+      tag: s.substring(index + 1),
+    );
   }
+
+  const GalleryTag._();
 
   static const delimiter = ':';
 
-  static Serializer<GalleryTag> get serializer => _$galleryTagSerializer;
+  String get fullTag => namespace.isEmpty ? tag : '$namespace$delimiter$tag';
 
-  String get namespace;
-  String get tag;
-
-  String fullTag() => namespace.isEmpty ? tag : '$namespace$delimiter$tag';
-
-  String shortTag() => namespace.isEmpty || namespace == 'language'
+  String get shortTag => namespace.isEmpty || namespace == 'language'
       ? tag
       : '${namespace.substring(0, 1)}$delimiter$tag';
 }
@@ -125,44 +137,29 @@ class GalleryPaginationKeySearch extends GalleryPaginationKey {
   }
 }
 
-abstract class GallerySearchOptions
-    implements Built<GallerySearchOptions, GallerySearchOptionsBuilder> {
-  factory GallerySearchOptions(
-      [Function(GallerySearchOptionsBuilder) updates]) = _$GallerySearchOptions;
-  GallerySearchOptions._();
-
-  static Serializer<GallerySearchOptions> get serializer =>
-      _$gallerySearchOptionsSerializer;
-
-  String get query;
-  int get categoryFilter;
-  BuiltMap<String, bool> get advancedOptions;
-  int get minimumRating;
+@freezed
+abstract class GallerySearchOptions with _$GallerySearchOptions {
+  const factory GallerySearchOptions({
+    @required String query,
+    @Default(0) int categoryFilter,
+    @required BuiltMap<String, bool> advancedOptions,
+    @Default(0) int minimumRating,
+  }) = _GallerySearchOptions;
 }
 
-abstract class GalleryIdWithPage
-    implements Built<GalleryIdWithPage, GalleryIdWithPageBuilder> {
-  factory GalleryIdWithPage([Function(GalleryIdWithPageBuilder) updates]) =
-      _$GalleryIdWithPage;
-  GalleryIdWithPage._();
-
-  static Serializer<GalleryIdWithPage> get serializer =>
-      _$galleryIdWithPageSerializer;
-
-  GalleryId get galleryId;
-  int get page;
+@freezed
+abstract class GalleryIdWithPage with _$GalleryIdWithPage {
+  const factory GalleryIdWithPage({
+    @required GalleryId galleryId,
+    @required int page,
+  }) = _GalleryIdWithPage;
 }
 
-abstract class GalleryDetails
-    implements Built<GalleryDetails, GalleryDetailsBuilder> {
-  factory GalleryDetails([void Function(GalleryDetailsBuilder) updates]) =
-      _$GalleryDetails;
-  GalleryDetails._();
-
-  static Serializer<GalleryDetails> get serializer =>
-      _$galleryDetailsSerializer;
-
-  int get favoritesCount;
-  int get ratingCount;
-  int get currentFavorite;
+@freezed
+abstract class GalleryDetails with _$GalleryDetails {
+  const factory GalleryDetails({
+    @required int favoritesCount,
+    @required int ratingCount,
+    @required int currentFavorite,
+  }) = _GalleryDetails;
 }

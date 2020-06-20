@@ -301,6 +301,20 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed:
+    dependency: "direct dev"
+    description:
+      name: freezed
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.11.2"
+  freezed_annotation:
+    dependency: "direct main"
+    description:
+      name: freezed_annotation
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.11.0"
   glob:
     dependency: transitive
     description:
@@ -372,12 +386,33 @@ packages:
     source: hosted
     version: "0.6.1+1"
   json_annotation:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  json_serializable:
+    dependency: "direct dev"
+    description:
+      name: json_serializable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.3.0"
+  json_serializable_immutable_collections:
+    dependency: "direct dev"
+    description:
+      name: json_serializable_immutable_collections
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0+1"
+  kt_dart:
+    dependency: transitive
+    description:
+      name: kt_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.7.0+1"
   lint:
     dependency: "direct dev"
     description:

@@ -1,25 +1,10 @@
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'args.g.dart';
+part 'args.freezed.dart';
 
-abstract class SearchScreenArguments
-    implements Built<SearchScreenArguments, SearchScreenArgumentsBuilder> {
-  factory SearchScreenArguments(
-          [Function(SearchScreenArgumentsBuilder) updates]) =
-      _$SearchScreenArguments;
-  SearchScreenArguments._();
-
-  static Serializer<SearchScreenArguments> get serializer =>
-      _$searchScreenArgumentsSerializer;
-
-  String get query;
-}
-
-abstract class SearchScreenArgumentsBuilder
-    implements Builder<SearchScreenArguments, SearchScreenArgumentsBuilder> {
-  factory SearchScreenArgumentsBuilder() = _$SearchScreenArgumentsBuilder;
-  SearchScreenArgumentsBuilder._();
-
-  String query = '';
+@freezed
+abstract class SearchScreenArguments with _$SearchScreenArguments {
+  const factory SearchScreenArguments({
+    @Default('') String query,
+  }) = _SearchScreenArguments;
 }

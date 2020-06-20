@@ -1,5 +1,5 @@
 import 'package:eh_redux/generated/l10n.dart';
-import 'package:eh_redux/models/favorite.dart';
+import 'package:eh_redux/models/favorite_colors.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/gallery/fav_sheet_store.dart';
 import 'package:eh_redux/stores/favorite.dart';

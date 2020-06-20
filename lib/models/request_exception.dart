@@ -1,42 +1,28 @@
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:http/http.dart';
 
-part 'request_exception.g.dart';
+part 'request_exception.freezed.dart';
 
-abstract class RequestException
-    implements Built<RequestException, RequestExceptionBuilder>, Exception {
-  factory RequestException([Function(RequestExceptionBuilder) updates]) =
-      _$RequestException;
-  RequestException._();
+@freezed
+abstract class RequestException with _$RequestException {
+  const factory RequestException({
+    @Default('GET') String method,
+    @required Uri url,
+    @required String message,
+    @Default(-1) int statusCode,
+    @Default('') String body,
+  }) = _RequestException;
 
-  factory RequestException.fromResponse({String message, Response response}) {
-    return RequestException((b) => b
-      ..message = message
-      ..statusCode = response.statusCode
-      ..body = response.body
-      ..method = response.request.method
-      ..url = response.request.url);
+  factory RequestException.fromResponse({
+    @required String message,
+    @required Response response,
+  }) {
+    return RequestException(
+      message: message,
+      statusCode: response.statusCode,
+      body: response.body,
+      method: response.request.method,
+      url: response.request.url,
+    );
   }
-
-  static Serializer<RequestException> get serializer =>
-      _$requestExceptionSerializer;
-
-  String get method;
-  Uri get url;
-  String get message;
-  int get statusCode;
-  String get body;
-}
-
-abstract class RequestExceptionBuilder
-    implements Builder<RequestException, RequestExceptionBuilder> {
-  factory RequestExceptionBuilder() = _$RequestExceptionBuilder;
-  RequestExceptionBuilder._();
-
-  String method = 'GET';
-  Uri url;
-  String message = '';
-  int statusCode = -1;
-  String body = '';
 }

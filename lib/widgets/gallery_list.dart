@@ -129,8 +129,7 @@ class _GalleryListState extends State<GalleryList> {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, GalleryScreen.routeName,
-            arguments:
-                GalleryScreenArguments((b) => b..id = gallery.id.toBuilder()));
+            arguments: GalleryScreenArguments(id: gallery.id));
       },
       child: Row(
         key: Key('${gallery.id.id}'),
@@ -235,7 +234,7 @@ class _GalleryListState extends State<GalleryList> {
         shrinkWrap: true,
         separatorBuilder: (context, i) => Text(', ', style: textStyle),
         itemBuilder: (context, i) {
-          return Text(tags.elementAt(i).shortTag(), style: textStyle);
+          return Text(tags.elementAt(i).shortTag, style: textStyle);
         },
         itemCount: tags.length,
       ),

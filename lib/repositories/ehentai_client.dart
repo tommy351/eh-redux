@@ -12,6 +12,7 @@ import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/utils/css.dart';
 import 'package:eh_redux/utils/string.dart';
 import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' show parse;
 import 'package:http/http.dart' as http;
@@ -70,9 +71,7 @@ class EHentaiClient {
       final token = segments[2];
       if (id == null || token == null) continue;
 
-      ids.add(GalleryId((b) => b
-        ..id = id
-        ..token = token));
+      ids.add(GalleryId(id: id, token: token));
     }
 
     return ids;
@@ -107,7 +106,8 @@ class EHentaiClient {
       final value = json as Map<String, dynamic>;
 
       if (!value.containsKey('error')) {
-        galleries.add(Gallery.fromJson(value));
+        final galleryRes = GalleryResponse.fromJson(value);
+        galleries.add(Gallery.fromResponse(galleryRes));
       }
     }
 
@@ -132,10 +132,11 @@ class EHentaiClient {
 
     _validateGalleryDocument(document: document, response: res, id: id);
 
-    return GalleryDetails((b) => b
-      ..favoritesCount = _getFavoritesCount(document) ?? 0
-      ..ratingCount = _getRatingCount(document) ?? 0
-      ..currentFavorite = _getCurrentFavorite(document));
+    return GalleryDetails(
+      favoritesCount: _getFavoritesCount(document) ?? 0,
+      ratingCount: _getRatingCount(document) ?? 0,
+      currentFavorite: _getCurrentFavorite(document),
+    );
   }
 
   void _validateGalleryDocument({
@@ -157,12 +158,12 @@ class EHentaiClient {
         orElse: () => null);
 
     if (contentWarning != null) {
-      throw ContentWarningException((b) => b
-        ..galleryId = id.toBuilder()
-        ..reason = contentWarning.nextElementSibling
-                ?.querySelector('strong')
-                ?.innerHtml ??
-            contentWarning.innerHtml);
+      throw ContentWarningException(
+          galleryId: id,
+          reason: contentWarning.nextElementSibling
+                  ?.querySelector('strong')
+                  ?.innerHtml ??
+              contentWarning.innerHtml);
     }
   }
 
@@ -200,9 +201,10 @@ class EHentaiClient {
 
     final document = await compute(parse, res.body);
 
-    return FavoriteStatus((b) => b
-      ..favorite = _getFavorite(document)
-      ..note = document.querySelector('textarea[name="favnote"]').innerHtml);
+    return FavoriteStatus(
+      favorite: _getFavorite(document),
+      note: document.querySelector('textarea[name="favnote"]').innerHtml,
+    );
   }
 
   int _getFavorite(Document document) {
@@ -308,10 +310,11 @@ class EHentaiClient {
       final page = int.tryParse(parts[1]);
       if (gid == null || page == null || gid != galleryId.id) continue;
 
-      ids.add(ImageId((b) => b
-        ..galleryId = galleryId.toBuilder()
-        ..page = page
-        ..key = key));
+      ids.add(ImageId(
+        galleryId: galleryId,
+        page: page,
+        key: key,
+      ));
     }
 
     return ids;
@@ -344,10 +347,11 @@ class EHentaiClient {
     final src = img.attributes['src'];
     final style = parseRules(img.attributes['style']);
 
-    return Image((b) => b
-      ..id = id.toBuilder()
-      ..url = src
-      ..width = int.tryParse(trimSuffix(style['width'], 'px'))
-      ..height = int.tryParse(trimSuffix(style['height'], 'px')));
+    return Image(
+      id: id,
+      url: src,
+      width: int.tryParse(trimSuffix(style['width'], 'px')),
+      height: int.tryParse(trimSuffix(style['height'], 'px')),
+    );
   }
 }

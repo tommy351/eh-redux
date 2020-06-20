@@ -35,7 +35,7 @@ class GalleryInfo extends StatelessWidget {
                 context,
                 SearchScreen.routeName,
                 arguments: SearchScreenArguments(
-                    (b) => b.query = 'uploader:${gallery.uploader}'),
+                    query: 'uploader:${gallery.uploader}'),
               );
             },
             child: _buildTile(

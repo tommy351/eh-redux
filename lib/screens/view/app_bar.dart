@@ -91,9 +91,10 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
           opacity: _animation,
           child: Observer(
             builder: (context) {
-              final page = GalleryIdWithPage((b) => b
-                ..galleryId = gallery.id.toBuilder()
-                ..page = viewStore.currentPage + 1);
+              final page = GalleryIdWithPage(
+                galleryId: gallery.id,
+                page: viewStore.currentPage + 1,
+              );
               final image = imageStore.data[imageStore.index[page]];
 
               return Container(

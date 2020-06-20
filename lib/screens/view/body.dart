@@ -92,9 +92,10 @@ class _ViewBodyState extends State<ViewBody> {
                       maxScale: PhotoViewComputedScale.covered * 3,
                       imageProvider: ViewImage(
                         imageStore: imageStore,
-                        page: GalleryIdWithPage((b) => b
-                          ..galleryId = gallery.id.toBuilder()
-                          ..page = index + 1),
+                        page: GalleryIdWithPage(
+                          galleryId: gallery.id,
+                          page: index + 1,
+                        ),
                       ),
                     );
                   },

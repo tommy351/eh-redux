@@ -1,0 +1,20 @@
+targets:
+  $default:
+    builders:
+      json_serializable_immutable_collections:
+        options:
+          explicit_to_json: true
+        generate_for:
+          include:
+            - lib/**
+            - test/**
+            - example/**
+      json_serializable:json_serializable:
+        options:
+          explicit_to_json: true
+        generate_for:
+          include:
+          exclude:
+            - test/**
+            - lib/**
+            - example/**

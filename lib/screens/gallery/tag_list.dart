@@ -76,10 +76,12 @@ class GalleryTagList extends StatelessWidget {
       itemBuilder: (context, index) {
         return ActionChip(
           onPressed: () {
-            Navigator.pushNamed(context, SearchScreen.routeName,
-                arguments: SearchScreenArguments(
-                  (b) => b..query = tags.elementAt(index).fullTag(),
-                ));
+            Navigator.pushNamed(
+              context,
+              SearchScreen.routeName,
+              arguments:
+                  SearchScreenArguments(query: tags.elementAt(index).fullTag),
+            );
           },
           label: Text(tags.elementAt(index).tag),
         );

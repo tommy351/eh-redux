@@ -1,28 +1,24 @@
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 
-part 'image.g.dart';
+part 'image.freezed.dart';
 
-abstract class ImageId implements Built<ImageId, ImageIdBuilder> {
-  factory ImageId([Function(ImageIdBuilder) updates]) = _$ImageId;
-  ImageId._();
-
-  static Serializer<ImageId> get serializer => _$imageIdSerializer;
-
-  GalleryId get galleryId;
-  int get page;
-  String get key;
+@freezed
+abstract class ImageId with _$ImageId {
+  const factory ImageId({
+    @required GalleryId galleryId,
+    @required int page,
+    @required String key,
+  }) = _ImageId;
 }
 
-abstract class Image implements Built<Image, ImageBuilder> {
-  factory Image([Function(ImageBuilder) updates]) = _$Image;
-  Image._();
-
-  static Serializer<Image> get serializer => _$imageSerializer;
-
-  ImageId get id;
-  int get width;
-  int get height;
-  String get url;
+@freezed
+abstract class Image with _$Image {
+  const factory Image({
+    @required ImageId id,
+    @required int width,
+    @required int height,
+    @required String url,
+  }) = _Image;
 }

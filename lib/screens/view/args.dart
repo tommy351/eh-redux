@@ -1,17 +1,12 @@
-import 'package:built_value/built_value.dart';
-import 'package:built_value/serializer.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:meta/meta.dart';
 
-part 'args.g.dart';
+part 'args.freezed.dart';
 
-abstract class ViewScreenArguments
-    implements Built<ViewScreenArguments, ViewScreenArgumentsBuilder> {
-  factory ViewScreenArguments([Function(ViewScreenArgumentsBuilder) updates]) =
-      _$ViewScreenArguments;
-  ViewScreenArguments._();
-
-  static Serializer<ViewScreenArguments> get serializer =>
-      _$viewScreenArgumentsSerializer;
-
-  GalleryId get id;
+@freezed
+abstract class ViewScreenArguments with _$ViewScreenArguments {
+  const factory ViewScreenArguments({
+    @required GalleryId id,
+  }) = _ViewScreenArguments;
 }

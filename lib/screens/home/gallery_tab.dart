@@ -21,8 +21,11 @@ class GalleryTab extends StatelessWidget {
               icon: const Icon(Icons.search),
               tooltip: S.of(context).search,
               onPressed: () {
-                Navigator.pushNamed(context, SearchScreen.routeName,
-                    arguments: SearchScreenArguments());
+                Navigator.pushNamed(
+                  context,
+                  SearchScreen.routeName,
+                  arguments: const SearchScreenArguments(),
+                );
               },
             )
           ],
