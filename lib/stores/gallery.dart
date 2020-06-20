@@ -119,30 +119,36 @@ abstract class _GalleryStoreBase with Store {
   }
 
   String _getListPath(GalleryPaginationKey key, int page) {
-    String path = '/';
-    final params = <String, String>{'page': '$page'};
+    final path = key.maybeMap<String>(
+      favorite: (_) => '/favorites.php',
+      orElse: () => '/',
+    );
+    final params = key.maybeMap<Map<String, String>>(
+      search: (value) {
+        final result = <String, String>{
+          'f_search': value.query,
+          'advsearch': '1',
+        };
 
-    if (key is GalleryPaginationKeyFavorite) {
-      path = '/favorites.php';
-    } else if (key is GalleryPaginationKeySearch) {
-      params['f_search'] = key.options.query;
-      params['advsearch'] = '1';
-
-      if (key.options.categoryFilter > 0) {
-        params['f_cats'] = key.options.categoryFilter.toString();
-      }
-
-      if (key.options.minimumRating > 0) {
-        params['f_sr'] = 'on';
-        params['f_srdd'] = key.options.minimumRating.toString();
-      }
-
-      for (final entry in key.options.advancedOptions.entries) {
-        if (entry.value) {
-          params[entry.key] = 'on';
+        if (value.categoryFilter > 0) {
+          result['f_cats'] = value.categoryFilter.toString();
         }
-      }
-    }
+
+        for (final entry in value.advancedOptions.entries) {
+          if (entry.value) {
+            result[entry.key] = 'on';
+          }
+        }
+
+        if (value.minimumRating > 0) {
+          result['f_sr'] = 'on';
+          result['f_srdd'] = value.minimumRating.toString();
+        }
+
+        return result;
+      },
+      orElse: () => {},
+    );
 
     final query = params.entries
         .map((e) =>

@@ -64,12 +64,10 @@ abstract class _SearchStoreBase with Store {
     if (query.isEmpty) return;
 
     paginationKey = GalleryPaginationKeySearch(
-      options: GallerySearchOptions(
-        query: query,
-        categoryFilter: categoryFilter,
-        advancedOptions: BuiltMap<String, bool>(advancedOptions),
-        minimumRating: minimumRating,
-      ),
+      query: query,
+      categoryFilter: categoryFilter,
+      advancedOptions: BuiltMap<String, bool>(advancedOptions),
+      minimumRating: minimumRating,
     );
   }
 }

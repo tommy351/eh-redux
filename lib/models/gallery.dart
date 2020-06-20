@@ -102,49 +102,19 @@ abstract class GalleryTag implements _$GalleryTag {
       : '${namespace.substring(0, 1)}$delimiter$tag';
 }
 
-class GalleryPaginationKey {
-  const GalleryPaginationKey();
-}
-
-class GalleryPaginationKeyFrontPage extends GalleryPaginationKey {
-  const GalleryPaginationKeyFrontPage();
-}
-
-class GalleryPaginationKeyFavorite extends GalleryPaginationKey {
-  const GalleryPaginationKeyFavorite();
-}
-
-class GalleryPaginationKeySearch extends GalleryPaginationKey {
-  GalleryPaginationKeySearch({
-    @required this.options,
-  }) : assert(options != null);
-
-  final GallerySearchOptions options;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is GalleryPaginationKeySearch &&
-          runtimeType == other.runtimeType &&
-          options == other.options;
-
-  @override
-  int get hashCode => options.hashCode;
-
-  @override
-  String toString() {
-    return 'GalleryPaginationKeySearch{options: $options}';
-  }
-}
-
 @freezed
-abstract class GallerySearchOptions with _$GallerySearchOptions {
-  const factory GallerySearchOptions({
+abstract class GalleryPaginationKey with _$GalleryPaginationKey {
+  const factory GalleryPaginationKey.frontPage() =
+      GalleryPaginationKeyFrontPage;
+
+  const factory GalleryPaginationKey.favorite() = GalleryPaginationKeyFavorite;
+
+  const factory GalleryPaginationKey.search({
     @required String query,
     @Default(0) int categoryFilter,
     @required BuiltMap<String, bool> advancedOptions,
     @Default(0) int minimumRating,
-  }) = _GallerySearchOptions;
+  }) = GalleryPaginationKeySearch;
 }
 
 @freezed

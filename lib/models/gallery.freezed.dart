@@ -979,15 +979,23 @@ abstract class _GalleryTag extends GalleryTag {
   _$GalleryTagCopyWith<_GalleryTag> get copyWith;
 }
 
-class _$GallerySearchOptionsTearOff {
-  const _$GallerySearchOptionsTearOff();
+class _$GalleryPaginationKeyTearOff {
+  const _$GalleryPaginationKeyTearOff();
 
-  _GallerySearchOptions call(
+  GalleryPaginationKeyFrontPage frontPage() {
+    return const GalleryPaginationKeyFrontPage();
+  }
+
+  GalleryPaginationKeyFavorite favorite() {
+    return const GalleryPaginationKeyFavorite();
+  }
+
+  GalleryPaginationKeySearch search(
       {@required String query,
       int categoryFilter = 0,
       @required BuiltMap<String, bool> advancedOptions,
       int minimumRating = 0}) {
-    return _GallerySearchOptions(
+    return GalleryPaginationKeySearch(
       query: query,
       categoryFilter: categoryFilter,
       advancedOptions: advancedOptions,
@@ -997,64 +1005,260 @@ class _$GallerySearchOptionsTearOff {
 }
 
 // ignore: unused_element
-const $GallerySearchOptions = _$GallerySearchOptionsTearOff();
+const $GalleryPaginationKey = _$GalleryPaginationKeyTearOff();
 
-mixin _$GallerySearchOptions {
-  String get query;
-  int get categoryFilter;
-  BuiltMap<String, bool> get advancedOptions;
-  int get minimumRating;
-
-  $GallerySearchOptionsCopyWith<GallerySearchOptions> get copyWith;
+mixin _$GalleryPaginationKey {
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result frontPage(),
+    @required Result favorite(),
+    @required
+        Result search(String query, int categoryFilter,
+            BuiltMap<String, bool> advancedOptions, int minimumRating),
+  });
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result frontPage(),
+    Result favorite(),
+    Result search(String query, int categoryFilter,
+        BuiltMap<String, bool> advancedOptions, int minimumRating),
+    @required Result orElse(),
+  });
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result frontPage(GalleryPaginationKeyFrontPage value),
+    @required Result favorite(GalleryPaginationKeyFavorite value),
+    @required Result search(GalleryPaginationKeySearch value),
+  });
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result frontPage(GalleryPaginationKeyFrontPage value),
+    Result favorite(GalleryPaginationKeyFavorite value),
+    Result search(GalleryPaginationKeySearch value),
+    @required Result orElse(),
+  });
 }
 
-abstract class $GallerySearchOptionsCopyWith<$Res> {
-  factory $GallerySearchOptionsCopyWith(GallerySearchOptions value,
-          $Res Function(GallerySearchOptions) then) =
-      _$GallerySearchOptionsCopyWithImpl<$Res>;
-  $Res call(
-      {String query,
-      int categoryFilter,
-      BuiltMap<String, bool> advancedOptions,
-      int minimumRating});
+abstract class $GalleryPaginationKeyCopyWith<$Res> {
+  factory $GalleryPaginationKeyCopyWith(GalleryPaginationKey value,
+          $Res Function(GalleryPaginationKey) then) =
+      _$GalleryPaginationKeyCopyWithImpl<$Res>;
 }
 
-class _$GallerySearchOptionsCopyWithImpl<$Res>
-    implements $GallerySearchOptionsCopyWith<$Res> {
-  _$GallerySearchOptionsCopyWithImpl(this._value, this._then);
+class _$GalleryPaginationKeyCopyWithImpl<$Res>
+    implements $GalleryPaginationKeyCopyWith<$Res> {
+  _$GalleryPaginationKeyCopyWithImpl(this._value, this._then);
 
-  final GallerySearchOptions _value;
+  final GalleryPaginationKey _value;
   // ignore: unused_field
-  final $Res Function(GallerySearchOptions) _then;
+  final $Res Function(GalleryPaginationKey) _then;
+}
+
+abstract class $GalleryPaginationKeyFrontPageCopyWith<$Res> {
+  factory $GalleryPaginationKeyFrontPageCopyWith(
+          GalleryPaginationKeyFrontPage value,
+          $Res Function(GalleryPaginationKeyFrontPage) then) =
+      _$GalleryPaginationKeyFrontPageCopyWithImpl<$Res>;
+}
+
+class _$GalleryPaginationKeyFrontPageCopyWithImpl<$Res>
+    extends _$GalleryPaginationKeyCopyWithImpl<$Res>
+    implements $GalleryPaginationKeyFrontPageCopyWith<$Res> {
+  _$GalleryPaginationKeyFrontPageCopyWithImpl(
+      GalleryPaginationKeyFrontPage _value,
+      $Res Function(GalleryPaginationKeyFrontPage) _then)
+      : super(_value, (v) => _then(v as GalleryPaginationKeyFrontPage));
 
   @override
-  $Res call({
-    Object query = freezed,
-    Object categoryFilter = freezed,
-    Object advancedOptions = freezed,
-    Object minimumRating = freezed,
+  GalleryPaginationKeyFrontPage get _value =>
+      super._value as GalleryPaginationKeyFrontPage;
+}
+
+class _$GalleryPaginationKeyFrontPage implements GalleryPaginationKeyFrontPage {
+  const _$GalleryPaginationKeyFrontPage();
+
+  @override
+  String toString() {
+    return 'GalleryPaginationKey.frontPage()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is GalleryPaginationKeyFrontPage);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result frontPage(),
+    @required Result favorite(),
+    @required
+        Result search(String query, int categoryFilter,
+            BuiltMap<String, bool> advancedOptions, int minimumRating),
   }) {
-    return _then(_value.copyWith(
-      query: query == freezed ? _value.query : query as String,
-      categoryFilter: categoryFilter == freezed
-          ? _value.categoryFilter
-          : categoryFilter as int,
-      advancedOptions: advancedOptions == freezed
-          ? _value.advancedOptions
-          : advancedOptions as BuiltMap<String, bool>,
-      minimumRating: minimumRating == freezed
-          ? _value.minimumRating
-          : minimumRating as int,
-    ));
+    assert(frontPage != null);
+    assert(favorite != null);
+    assert(search != null);
+    return frontPage();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result frontPage(),
+    Result favorite(),
+    Result search(String query, int categoryFilter,
+        BuiltMap<String, bool> advancedOptions, int minimumRating),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (frontPage != null) {
+      return frontPage();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result frontPage(GalleryPaginationKeyFrontPage value),
+    @required Result favorite(GalleryPaginationKeyFavorite value),
+    @required Result search(GalleryPaginationKeySearch value),
+  }) {
+    assert(frontPage != null);
+    assert(favorite != null);
+    assert(search != null);
+    return frontPage(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result frontPage(GalleryPaginationKeyFrontPage value),
+    Result favorite(GalleryPaginationKeyFavorite value),
+    Result search(GalleryPaginationKeySearch value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (frontPage != null) {
+      return frontPage(this);
+    }
+    return orElse();
   }
 }
 
-abstract class _$GallerySearchOptionsCopyWith<$Res>
-    implements $GallerySearchOptionsCopyWith<$Res> {
-  factory _$GallerySearchOptionsCopyWith(_GallerySearchOptions value,
-          $Res Function(_GallerySearchOptions) then) =
-      __$GallerySearchOptionsCopyWithImpl<$Res>;
+abstract class GalleryPaginationKeyFrontPage implements GalleryPaginationKey {
+  const factory GalleryPaginationKeyFrontPage() =
+      _$GalleryPaginationKeyFrontPage;
+}
+
+abstract class $GalleryPaginationKeyFavoriteCopyWith<$Res> {
+  factory $GalleryPaginationKeyFavoriteCopyWith(
+          GalleryPaginationKeyFavorite value,
+          $Res Function(GalleryPaginationKeyFavorite) then) =
+      _$GalleryPaginationKeyFavoriteCopyWithImpl<$Res>;
+}
+
+class _$GalleryPaginationKeyFavoriteCopyWithImpl<$Res>
+    extends _$GalleryPaginationKeyCopyWithImpl<$Res>
+    implements $GalleryPaginationKeyFavoriteCopyWith<$Res> {
+  _$GalleryPaginationKeyFavoriteCopyWithImpl(
+      GalleryPaginationKeyFavorite _value,
+      $Res Function(GalleryPaginationKeyFavorite) _then)
+      : super(_value, (v) => _then(v as GalleryPaginationKeyFavorite));
+
   @override
+  GalleryPaginationKeyFavorite get _value =>
+      super._value as GalleryPaginationKeyFavorite;
+}
+
+class _$GalleryPaginationKeyFavorite implements GalleryPaginationKeyFavorite {
+  const _$GalleryPaginationKeyFavorite();
+
+  @override
+  String toString() {
+    return 'GalleryPaginationKey.favorite()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is GalleryPaginationKeyFavorite);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result frontPage(),
+    @required Result favorite(),
+    @required
+        Result search(String query, int categoryFilter,
+            BuiltMap<String, bool> advancedOptions, int minimumRating),
+  }) {
+    assert(frontPage != null);
+    assert(favorite != null);
+    assert(search != null);
+    return favorite();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result frontPage(),
+    Result favorite(),
+    Result search(String query, int categoryFilter,
+        BuiltMap<String, bool> advancedOptions, int minimumRating),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (favorite != null) {
+      return favorite();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result frontPage(GalleryPaginationKeyFrontPage value),
+    @required Result favorite(GalleryPaginationKeyFavorite value),
+    @required Result search(GalleryPaginationKeySearch value),
+  }) {
+    assert(frontPage != null);
+    assert(favorite != null);
+    assert(search != null);
+    return favorite(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result frontPage(GalleryPaginationKeyFrontPage value),
+    Result favorite(GalleryPaginationKeyFavorite value),
+    Result search(GalleryPaginationKeySearch value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (favorite != null) {
+      return favorite(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GalleryPaginationKeyFavorite implements GalleryPaginationKey {
+  const factory GalleryPaginationKeyFavorite() = _$GalleryPaginationKeyFavorite;
+}
+
+abstract class $GalleryPaginationKeySearchCopyWith<$Res> {
+  factory $GalleryPaginationKeySearchCopyWith(GalleryPaginationKeySearch value,
+          $Res Function(GalleryPaginationKeySearch) then) =
+      _$GalleryPaginationKeySearchCopyWithImpl<$Res>;
   $Res call(
       {String query,
       int categoryFilter,
@@ -1062,15 +1266,16 @@ abstract class _$GallerySearchOptionsCopyWith<$Res>
       int minimumRating});
 }
 
-class __$GallerySearchOptionsCopyWithImpl<$Res>
-    extends _$GallerySearchOptionsCopyWithImpl<$Res>
-    implements _$GallerySearchOptionsCopyWith<$Res> {
-  __$GallerySearchOptionsCopyWithImpl(
-      _GallerySearchOptions _value, $Res Function(_GallerySearchOptions) _then)
-      : super(_value, (v) => _then(v as _GallerySearchOptions));
+class _$GalleryPaginationKeySearchCopyWithImpl<$Res>
+    extends _$GalleryPaginationKeyCopyWithImpl<$Res>
+    implements $GalleryPaginationKeySearchCopyWith<$Res> {
+  _$GalleryPaginationKeySearchCopyWithImpl(GalleryPaginationKeySearch _value,
+      $Res Function(GalleryPaginationKeySearch) _then)
+      : super(_value, (v) => _then(v as GalleryPaginationKeySearch));
 
   @override
-  _GallerySearchOptions get _value => super._value as _GallerySearchOptions;
+  GalleryPaginationKeySearch get _value =>
+      super._value as GalleryPaginationKeySearch;
 
   @override
   $Res call({
@@ -1079,7 +1284,7 @@ class __$GallerySearchOptionsCopyWithImpl<$Res>
     Object advancedOptions = freezed,
     Object minimumRating = freezed,
   }) {
-    return _then(_GallerySearchOptions(
+    return _then(GalleryPaginationKeySearch(
       query: query == freezed ? _value.query : query as String,
       categoryFilter: categoryFilter == freezed
           ? _value.categoryFilter
@@ -1094,8 +1299,8 @@ class __$GallerySearchOptionsCopyWithImpl<$Res>
   }
 }
 
-class _$_GallerySearchOptions implements _GallerySearchOptions {
-  const _$_GallerySearchOptions(
+class _$GalleryPaginationKeySearch implements GalleryPaginationKeySearch {
+  const _$GalleryPaginationKeySearch(
       {@required this.query,
       this.categoryFilter = 0,
       @required this.advancedOptions,
@@ -1118,13 +1323,13 @@ class _$_GallerySearchOptions implements _GallerySearchOptions {
 
   @override
   String toString() {
-    return 'GallerySearchOptions(query: $query, categoryFilter: $categoryFilter, advancedOptions: $advancedOptions, minimumRating: $minimumRating)';
+    return 'GalleryPaginationKey.search(query: $query, categoryFilter: $categoryFilter, advancedOptions: $advancedOptions, minimumRating: $minimumRating)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _GallerySearchOptions &&
+        (other is GalleryPaginationKeySearch &&
             (identical(other.query, query) ||
                 const DeepCollectionEquality().equals(other.query, query)) &&
             (identical(other.categoryFilter, categoryFilter) ||
@@ -1147,28 +1352,83 @@ class _$_GallerySearchOptions implements _GallerySearchOptions {
       const DeepCollectionEquality().hash(minimumRating);
 
   @override
-  _$GallerySearchOptionsCopyWith<_GallerySearchOptions> get copyWith =>
-      __$GallerySearchOptionsCopyWithImpl<_GallerySearchOptions>(
-          this, _$identity);
+  $GalleryPaginationKeySearchCopyWith<GalleryPaginationKeySearch>
+      get copyWith =>
+          _$GalleryPaginationKeySearchCopyWithImpl<GalleryPaginationKeySearch>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result frontPage(),
+    @required Result favorite(),
+    @required
+        Result search(String query, int categoryFilter,
+            BuiltMap<String, bool> advancedOptions, int minimumRating),
+  }) {
+    assert(frontPage != null);
+    assert(favorite != null);
+    assert(search != null);
+    return search(query, categoryFilter, advancedOptions, minimumRating);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result frontPage(),
+    Result favorite(),
+    Result search(String query, int categoryFilter,
+        BuiltMap<String, bool> advancedOptions, int minimumRating),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (search != null) {
+      return search(query, categoryFilter, advancedOptions, minimumRating);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result frontPage(GalleryPaginationKeyFrontPage value),
+    @required Result favorite(GalleryPaginationKeyFavorite value),
+    @required Result search(GalleryPaginationKeySearch value),
+  }) {
+    assert(frontPage != null);
+    assert(favorite != null);
+    assert(search != null);
+    return search(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result frontPage(GalleryPaginationKeyFrontPage value),
+    Result favorite(GalleryPaginationKeyFavorite value),
+    Result search(GalleryPaginationKeySearch value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (search != null) {
+      return search(this);
+    }
+    return orElse();
+  }
 }
 
-abstract class _GallerySearchOptions implements GallerySearchOptions {
-  const factory _GallerySearchOptions(
+abstract class GalleryPaginationKeySearch implements GalleryPaginationKey {
+  const factory GalleryPaginationKeySearch(
       {@required String query,
       int categoryFilter,
       @required BuiltMap<String, bool> advancedOptions,
-      int minimumRating}) = _$_GallerySearchOptions;
+      int minimumRating}) = _$GalleryPaginationKeySearch;
 
-  @override
   String get query;
-  @override
   int get categoryFilter;
-  @override
   BuiltMap<String, bool> get advancedOptions;
-  @override
   int get minimumRating;
-  @override
-  _$GallerySearchOptionsCopyWith<_GallerySearchOptions> get copyWith;
+  $GalleryPaginationKeySearchCopyWith<GalleryPaginationKeySearch> get copyWith;
 }
 
 class _$GalleryIdWithPageTearOff {
