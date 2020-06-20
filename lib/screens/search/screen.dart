@@ -3,6 +3,7 @@ import 'package:eh_redux/screens/search/body.dart';
 import 'package:eh_redux/screens/search/filter.dart';
 import 'package:eh_redux/screens/search/store.dart';
 import 'package:eh_redux/stores/gallery.dart';
+import 'package:eh_redux/tables/database.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,10 +18,14 @@ class SearchScreen extends StatelessWidget {
     final args =
         ModalRoute.of(context).settings.arguments as SearchScreenArguments;
     final galleryStore = Provider.of<GalleryStore>(context);
+    final database = Provider.of<Database>(context);
 
     return Provider(
       create: (_) {
-        final searchStore = SearchStore(galleryStore: galleryStore);
+        final searchStore = SearchStore(
+          galleryStore: galleryStore,
+          searchHistoriesDao: database.searchHistoriesDao,
+        );
 
         if (args.query != null && args.query.isNotEmpty) {
           searchStore.setQuery(args.query);

@@ -993,7 +993,7 @@ class _$GalleryPaginationKeyTearOff {
   GalleryPaginationKeySearch search(
       {@required String query,
       int categoryFilter = 0,
-      @required BuiltMap<String, bool> advancedOptions,
+      BuiltMap<String, bool> advancedOptions,
       int minimumRating = 0}) {
     return GalleryPaginationKeySearch(
       query: query,
@@ -1303,11 +1303,10 @@ class _$GalleryPaginationKeySearch implements GalleryPaginationKeySearch {
   const _$GalleryPaginationKeySearch(
       {@required this.query,
       this.categoryFilter = 0,
-      @required this.advancedOptions,
+      this.advancedOptions,
       this.minimumRating = 0})
       : assert(query != null),
         assert(categoryFilter != null),
-        assert(advancedOptions != null),
         assert(minimumRating != null);
 
   @override
@@ -1421,7 +1420,7 @@ abstract class GalleryPaginationKeySearch implements GalleryPaginationKey {
   const factory GalleryPaginationKeySearch(
       {@required String query,
       int categoryFilter,
-      @required BuiltMap<String, bool> advancedOptions,
+      BuiltMap<String, bool> advancedOptions,
       int minimumRating}) = _$GalleryPaginationKeySearch;
 
   String get query;

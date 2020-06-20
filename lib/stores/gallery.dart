@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:collection/collection.dart';
 import 'package:eh_redux/models/content_warning_exception.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/models/pagination.dart';
@@ -9,6 +10,10 @@ import 'package:mobx/mobx.dart';
 
 part 'gallery.g.dart';
 
+const baseAdvancedSearchOptions = <String, bool>{
+  'f_sname': true,
+  'f_stags': true,
+};
 class GalleryStore = _GalleryStoreBase with _$GalleryStore;
 
 abstract class _GalleryStoreBase with Store {
@@ -16,6 +21,7 @@ abstract class _GalleryStoreBase with Store {
     @required this.client,
   }) : assert(client != null);
 
+  static const _mapEquality = MapEquality();
   static const _galleryPerPage = 25;
 
   final EHentaiClient client;
@@ -153,17 +159,19 @@ abstract class _GalleryStoreBase with Store {
       search: (value) {
         final result = <String, String>{
           'f_search': value.query,
-          'advsearch': '1',
         };
 
         if (value.categoryFilter > 0) {
           result['f_cats'] = value.categoryFilter.toString();
         }
 
-        for (final entry in value.advancedOptions.entries) {
-          if (entry.value) {
-            result[entry.key] = 'on';
-          }
+        if (_isAdvancedSearchEnabled(value)) {
+          result['advsearch'] = '1';
+          _addBoolEntriesToStringMap(result, baseAdvancedSearchOptions);
+        }
+
+        if (value.advancedOptions != null) {
+          _addBoolEntriesToStringMap(result, value.advancedOptions.asMap());
         }
 
         if (value.minimumRating > 0) {
@@ -184,5 +192,31 @@ abstract class _GalleryStoreBase with Store {
         .join('&');
 
     return '$path?$query';
+  }
+
+  bool _isAdvancedSearchEnabled(GalleryPaginationKeySearch key) {
+    if (key.minimumRating > 0) return true;
+
+    final enabldAdvancedOptions =
+        Map.fromEntries(key.advancedOptions.entries.where((e) => e.value));
+
+    if (key.advancedOptions != null &&
+        !_mapEquality.equals(
+            enabldAdvancedOptions, baseAdvancedSearchOptions)) {
+      return true;
+    }
+
+    return false;
+  }
+
+  void _addBoolEntriesToStringMap(
+      Map<String, String> target, Map<String, bool> source) {
+    for (final entry in source.entries) {
+      if (entry.value) {
+        target[entry.key] = 'on';
+      } else {
+        target.remove(entry.key);
+      }
+    }
   }
 }

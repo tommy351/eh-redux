@@ -14,6 +14,7 @@ import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/stores/setting.dart';
+import 'package:eh_redux/tables/database.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -71,6 +72,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     ),
   };
 
+  Database _database;
   Brightness _platformBrightness;
   SessionStore _sessionStore;
   EHentaiClient _eHentaiClient;
@@ -84,6 +86,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _updatePlatformBrightness();
+    _database = Database();
     _sessionStore = SessionStore(
       secureStorage: const FlutterSecureStorage(),
     );
@@ -119,6 +122,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        Provider(
+          create: (_) => _database,
+        ),
         Provider(
           create: (_) => _sessionStore,
         ),

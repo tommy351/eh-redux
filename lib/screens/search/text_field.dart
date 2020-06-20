@@ -1,7 +1,9 @@
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/screens/search/store.dart';
+import 'package:eh_redux/tables/database.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 
 class SearchTextField extends StatefulWidget {
@@ -45,20 +47,42 @@ class _SearchTextFieldState extends State<SearchTextField> {
         return () {};
       },
       builder: (context) {
-        return TextField(
-          controller: _controller,
-          focusNode: _focusNode,
-          decoration: InputDecoration(
-            hintText: S.of(context).search,
-            border: InputBorder.none,
+        return TypeAheadField<SearchHistoryEntry>(
+          hideOnEmpty: true,
+          hideOnError: true,
+          hideOnLoading: true,
+          textFieldConfiguration: TextFieldConfiguration(
+            controller: _controller,
+            focusNode: _focusNode,
+            onChanged: (value) {
+              searchStore.setQuery(value as String);
+            },
+            onSubmitted: (value) {
+              searchStore.setQuery(value as String);
+              searchStore.updatePaginationKey();
+            },
+            decoration: InputDecoration(
+              hintText: S.of(context).search,
+              border: InputBorder.none,
+            ),
+            style: theme.textTheme.headline6,
           ),
-          style: theme.textTheme.headline6,
-          onChanged: (String value) {
-            searchStore.setQuery(value);
+          transitionBuilder: (context, suggestionsBox, animationController) {
+            return suggestionsBox;
           },
-          onSubmitted: (String value) {
-            searchStore.setQuery(value);
+          onSuggestionSelected: (value) {
+            _controller.text = value.query;
+            searchStore.setQuery(value.query);
             searchStore.updatePaginationKey();
+          },
+          suggestionsCallback: (pattern) async {
+            return searchStore.searchHistoriesDao.listEntries(pattern);
+          },
+          itemBuilder: (context, value) {
+            return ListTile(
+              leading: Icon(Icons.history),
+              title: Text(value.query),
+            );
           },
         );
       },

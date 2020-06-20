@@ -84,6 +84,15 @@ mixin _$SearchStore on _SearchStoreBase, Store {
     });
   }
 
+  final _$updatePaginationKeyAsyncAction =
+      AsyncAction('_SearchStoreBase.updatePaginationKey');
+
+  @override
+  Future<void> updatePaginationKey() {
+    return _$updatePaginationKeyAsyncAction
+        .run(() => super.updatePaginationKey());
+  }
+
   final _$_SearchStoreBaseActionController =
       ActionController(name: '_SearchStoreBase');
 
@@ -126,17 +135,6 @@ mixin _$SearchStore on _SearchStoreBase, Store {
         name: '_SearchStoreBase.setMinimumRating');
     try {
       return super.setMinimumRating(value);
-    } finally {
-      _$_SearchStoreBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void updatePaginationKey() {
-    final _$actionInfo = _$_SearchStoreBaseActionController.startAction(
-        name: '_SearchStoreBase.updatePaginationKey');
-    try {
-      return super.updatePaginationKey();
     } finally {
       _$_SearchStoreBaseActionController.endAction(_$actionInfo);
     }

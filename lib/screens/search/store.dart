@@ -1,6 +1,9 @@
 import 'package:built_collection/built_collection.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/stores/gallery.dart';
+import 'package:eh_redux/tables/database.dart';
+import 'package:eh_redux/tables/search_history.dart';
+import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 
@@ -11,9 +14,11 @@ class SearchStore = _SearchStoreBase with _$SearchStore;
 abstract class _SearchStoreBase with Store {
   _SearchStoreBase({
     @required this.galleryStore,
+    @required this.searchHistoriesDao,
   }) : assert(galleryStore != null);
 
   final GalleryStore galleryStore;
+  final SearchHistoriesDao searchHistoriesDao;
 
   @observable
   String query = '';
@@ -25,10 +30,8 @@ abstract class _SearchStoreBase with Store {
   int categoryFilter = 0;
 
   @observable
-  ObservableMap<String, bool> advancedOptions = ObservableMap.of({
-    'f_sname': true,
-    'f_stags': true,
-  });
+  ObservableMap<String, bool> advancedOptions =
+      ObservableMap.of(baseAdvancedSearchOptions);
 
   @observable
   int minimumRating = 0;
@@ -60,7 +63,7 @@ abstract class _SearchStoreBase with Store {
   }
 
   @action
-  void updatePaginationKey() {
+  Future<void> updatePaginationKey() async {
     if (query.isEmpty) return;
 
     paginationKey = GalleryPaginationKeySearch(
@@ -69,5 +72,10 @@ abstract class _SearchStoreBase with Store {
       advancedOptions: BuiltMap<String, bool>(advancedOptions),
       minimumRating: minimumRating,
     );
+
+    await searchHistoriesDao.insertEntry(SearchHistoryEntry(
+      query: query,
+      lastQueriedAt: DateTime.now(),
+    ));
   }
 }

@@ -112,7 +112,7 @@ abstract class GalleryPaginationKey with _$GalleryPaginationKey {
   const factory GalleryPaginationKey.search({
     @required String query,
     @Default(0) int categoryFilter,
-    @required BuiltMap<String, bool> advancedOptions,
+    BuiltMap<String, bool> advancedOptions,
     @Default(0) int minimumRating,
   }) = GalleryPaginationKeySearch;
 }
