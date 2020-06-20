@@ -1,9 +1,7 @@
-import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/screens/search/args.dart';
 import 'package:eh_redux/screens/search/body.dart';
 import 'package:eh_redux/screens/search/filter.dart';
 import 'package:eh_redux/screens/search/store.dart';
-import 'package:eh_redux/screens/search/text_field.dart';
 import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +45,6 @@ class __SearchScreenContentState extends State<_SearchScreenContent> {
   @override
   Widget build(BuildContext context) {
     final searchStore = Provider.of<SearchStore>(context);
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-    final iconTheme =
-        isDark ? theme.iconTheme : const IconThemeData(color: Colors.black);
 
     return GestureDetector(
       onTap: () {
@@ -61,22 +55,6 @@ class __SearchScreenContentState extends State<_SearchScreenContent> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: isDark ? theme.appBarTheme.color : Colors.white,
-          iconTheme: iconTheme,
-          title: const SearchTextField(),
-          actions: <Widget>[
-            const _SearchFilterButton(),
-            IconButton(
-              icon: const Icon(Icons.search),
-              tooltip: S.of(context).search,
-              onPressed: () {
-                searchStore.updatePaginationKey();
-                FocusScope.of(context).unfocus();
-              },
-            )
-          ],
-        ),
         body: const SearchBody(),
         endDrawer: StatefulWrapper(
           onDispose: () {
@@ -87,21 +65,6 @@ class __SearchScreenContentState extends State<_SearchScreenContent> {
           builder: (_) => const SearchFilter(),
         ),
       ),
-    );
-  }
-}
-
-class _SearchFilterButton extends StatelessWidget {
-  const _SearchFilterButton({Key key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.filter_list),
-      tooltip: S.of(context).filter,
-      onPressed: () {
-        Scaffold.of(context).openEndDrawer();
-      },
     );
   }
 }
