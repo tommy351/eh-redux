@@ -71,5 +71,7 @@
   "turnPagesWithVolumeKeys": "使用音量鍵翻頁",
   "galleryGenericErrorTitle": "錯誤",
   "galleryContentWarningTitle": "內容警告",
-  "galleryContentWarningMessage": "此相簿被標為 {reason}，因為其內容不應該被任何人瀏覽。"
+  "galleryContentWarningMessage": "此相簿被標為 {reason}，因為其內容不應該被任何人瀏覽。",
+  "galleryHideContentWarning": "隱藏警告",
+  "retry": "重試"
 }

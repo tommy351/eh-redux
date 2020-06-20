@@ -33,9 +33,17 @@ class EHentaiClient {
   final http.Client httpClient;
   final SessionStore sessionStore;
 
-  Future<Map<String, String>> _getRequestHeaders() async {
+  Future<Map<String, String>> _getRequestHeaders({
+    bool disableContentWarning = false,
+  }) async {
+    final cookies = [await sessionStore.session];
+
+    if (disableContentWarning) {
+      cookies.add('nw=1');
+    }
+
     return {
-      HttpHeaders.cookieHeader: await sessionStore.session,
+      HttpHeaders.cookieHeader: cookies.join(';'),
       HttpHeaders.userAgentHeader: _userAgent,
     };
   }
@@ -114,11 +122,16 @@ class EHentaiClient {
     return galleries;
   }
 
-  Future<GalleryDetails> getGalleryDetails(GalleryId id) async {
+  Future<GalleryDetails> getGalleryDetails(
+    GalleryId id, {
+    bool disableContentWarning = false,
+  }) async {
     developer.log('Get gallery details (id: $id)');
     final res = await httpClient.get(
       getGalleryUrl(id),
-      headers: await _getRequestHeaders(),
+      headers: await _getRequestHeaders(
+        disableContentWarning: disableContentWarning,
+      ),
     );
 
     if (res.statusCode != HttpStatus.ok) {
@@ -275,7 +288,9 @@ class EHentaiClient {
     developer.log('Get image ids (id: $galleryId, page: $page)');
     final res = await httpClient.get(
       '${getGalleryUrl(galleryId)}/?p=$page',
-      headers: await _getRequestHeaders(),
+      headers: await _getRequestHeaders(
+        disableContentWarning: true,
+      ),
     );
 
     if (res.statusCode != HttpStatus.ok) {
@@ -324,7 +339,9 @@ class EHentaiClient {
     developer.log('Fetch image data (id: $id)');
     final res = await httpClient.get(
       getImageUrl(id),
-      headers: await _getRequestHeaders(),
+      headers: await _getRequestHeaders(
+        disableContentWarning: true,
+      ),
     );
 
     if (res.statusCode != HttpStatus.ok) {

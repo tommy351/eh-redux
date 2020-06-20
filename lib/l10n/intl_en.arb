@@ -71,5 +71,7 @@
   "turnPagesWithVolumeKeys": "Turn pages using volume buttons",
   "galleryGenericErrorTitle": "Error",
   "galleryContentWarningTitle": "Content Warning",
-  "galleryContentWarningMessage": "This gallery has been flagged as {reason}. Due to its content, it should not be viewed by anyone."
+  "galleryContentWarningMessage": "This gallery has been flagged as {reason}. Due to its content, it should not be viewed by anyone.",
+  "galleryHideContentWarning": "Hide warning",
+  "retry": "Retry"
 }

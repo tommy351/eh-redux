@@ -24,6 +24,7 @@ class SearchBody extends StatelessWidget {
           backgroundColor: isDark ? theme.appBarTheme.color : Colors.white,
           iconTheme: iconTheme,
           pinned: true,
+          forceElevated: true,
           title: const SearchTextField(),
           actions: <Widget>[
             IconButton(

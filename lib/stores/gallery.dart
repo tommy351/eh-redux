@@ -30,6 +30,9 @@ abstract class _GalleryStoreBase with Store {
   ObservableMap<GalleryId, GalleryError> errors = ObservableMap.of({});
 
   @observable
+  ObservableSet<GalleryId> contentWarningDisabled = ObservableSet.of([]);
+
+  @observable
   ObservableMap<GalleryPaginationKey, Pagination<GalleryId>> paginations =
       ObservableMap.of({});
 
@@ -84,8 +87,13 @@ abstract class _GalleryStoreBase with Store {
     }
 
     if (details[id] == null) {
+      errors.remove(id);
+
       try {
-        details[id] = await client.getGalleryDetails(id);
+        details[id] = await client.getGalleryDetails(
+          id,
+          disableContentWarning: contentWarningDisabled.contains(id),
+        );
       } on ContentWarningException catch (err) {
         errors[id] = GalleryError.contentWarning(reason: err.reason);
       } on RequestException catch (err) {
@@ -101,6 +109,11 @@ abstract class _GalleryStoreBase with Store {
     if (details[id] != null) {
       details[id] = details[id].copyWith(currentFavorite: value);
     }
+  }
+
+  @action
+  void disableContentWarning(GalleryId id) {
+    contentWarningDisabled.add(id);
   }
 
   Future<void> _loadPage({

@@ -54,6 +54,23 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
     });
   }
 
+  final _$contentWarningDisabledAtom =
+      Atom(name: '_GalleryStoreBase.contentWarningDisabled');
+
+  @override
+  ObservableSet<GalleryId> get contentWarningDisabled {
+    _$contentWarningDisabledAtom.reportRead();
+    return super.contentWarningDisabled;
+  }
+
+  @override
+  set contentWarningDisabled(ObservableSet<GalleryId> value) {
+    _$contentWarningDisabledAtom
+        .reportWrite(value, super.contentWarningDisabled, () {
+      super.contentWarningDisabled = value;
+    });
+  }
+
   final _$paginationsAtom = Atom(name: '_GalleryStoreBase.paginations');
 
   @override
@@ -139,11 +156,23 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
   }
 
   @override
+  void disableContentWarning(GalleryId id) {
+    final _$actionInfo = _$_GalleryStoreBaseActionController.startAction(
+        name: '_GalleryStoreBase.disableContentWarning');
+    try {
+      return super.disableContentWarning(id);
+    } finally {
+      _$_GalleryStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 data: ${data},
 details: ${details},
 errors: ${errors},
+contentWarningDisabled: ${contentWarningDisabled},
 paginations: ${paginations}
     ''';
   }

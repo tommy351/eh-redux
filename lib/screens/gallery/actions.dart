@@ -3,6 +3,7 @@ import 'package:eh_redux/models/favorite_colors.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/view/args.dart';
 import 'package:eh_redux/screens/view/screen.dart';
+import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,8 @@ class GalleryActions extends StatelessWidget {
 
   Widget _buildError(BuildContext context, GalleryError error) {
     final theme = Theme.of(context);
+    final galleryStore = Provider.of<GalleryStore>(context);
+    final gallery = Provider.of<Gallery>(context);
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -50,11 +53,30 @@ class GalleryActions extends StatelessWidget {
             context: context,
             title: S.of(context).galleryGenericErrorTitle,
             child: value.message,
+            actions: [
+              RaisedButton.icon(
+                icon: Icon(Icons.refresh),
+                label: Text(S.of(context).retry),
+                onPressed: () {
+                  galleryStore.loadGalleryDetails(gallery.id);
+                },
+              ),
+            ],
           ),
           contentWarning: (value) => _buildErrorContent(
             context: context,
             title: S.of(context).galleryContentWarningTitle,
             child: S.of(context).galleryContentWarningMessage(value.reason),
+            actions: [
+              RaisedButton.icon(
+                icon: Icon(Icons.close),
+                label: Text(S.of(context).galleryHideContentWarning),
+                onPressed: () {
+                  galleryStore.disableContentWarning(gallery.id);
+                  galleryStore.loadGalleryDetails(gallery.id);
+                },
+              ),
+            ],
           ),
         ),
       ),
@@ -65,6 +87,7 @@ class GalleryActions extends StatelessWidget {
     @required BuildContext context,
     @required String title,
     @required String child,
+    List<Widget> actions,
   }) {
     final theme = Theme.of(context);
 
@@ -84,10 +107,23 @@ class GalleryActions extends StatelessWidget {
               ),
               const SizedBox(height: 12),
               Text(child),
+              _buildErrorActions(context, actions),
             ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildErrorActions(BuildContext context, List<Widget> children) {
+    if (children == null || children.isEmpty) return Container();
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 12),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: children,
+      ),
     );
   }
 
