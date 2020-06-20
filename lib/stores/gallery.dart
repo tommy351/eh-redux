@@ -1,6 +1,8 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:eh_redux/models/content_warning_exception.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/models/pagination.dart';
+import 'package:eh_redux/models/request_exception.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
@@ -23,6 +25,9 @@ abstract class _GalleryStoreBase with Store {
 
   @observable
   ObservableMap<GalleryId, GalleryDetails> details = ObservableMap.of({});
+
+  @observable
+  ObservableMap<GalleryId, GalleryError> errors = ObservableMap.of({});
 
   @observable
   ObservableMap<GalleryPaginationKey, Pagination<GalleryId>> paginations =
@@ -79,7 +84,15 @@ abstract class _GalleryStoreBase with Store {
     }
 
     if (details[id] == null) {
-      details[id] = await client.getGalleryDetails(id);
+      try {
+        details[id] = await client.getGalleryDetails(id);
+      } on ContentWarningException catch (err) {
+        errors[id] = GalleryError.contentWarning(reason: err.reason);
+      } on RequestException catch (err) {
+        errors[id] = GalleryError(message: err.message);
+      } catch (err) {
+        errors[id] = GalleryError(message: err.toString());
+      }
     }
   }
 
@@ -149,6 +162,8 @@ abstract class _GalleryStoreBase with Store {
       },
       orElse: () => {},
     );
+
+    params['page'] = page.toString();
 
     final query = params.entries
         .map((e) =>

@@ -4,6 +4,7 @@ import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/view/args.dart';
 import 'package:eh_redux/screens/view/screen.dart';
 import 'package:eh_redux/stores/session.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,20 +15,88 @@ class GalleryActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final error = Provider.of<GalleryError>(context);
+
     return SliverSafeArea(
       top: false,
       bottom: false,
       sliver: SliverPadding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         sliver: SliverToBoxAdapter(
-          child: ButtonBar(
-            children: <Widget>[
-              _buildFavButton(context),
-              _buildReadButton(context),
-            ],
+          child: error != null
+              ? _buildError(context, error)
+              : _buildButtonBar(context),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildError(BuildContext context, GalleryError error) {
+    final theme = Theme.of(context);
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 16),
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: theme.errorColor,
+          width: 2,
+        ),
+        borderRadius: const BorderRadius.all(Radius.circular(4)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: error.map(
+          (value) => _buildErrorContent(
+            context: context,
+            title: S.of(context).galleryGenericErrorTitle,
+            child: value.message,
+          ),
+          contentWarning: (value) => _buildErrorContent(
+            context: context,
+            title: S.of(context).galleryContentWarningTitle,
+            child: S.of(context).galleryContentWarningMessage(value.reason),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildErrorContent({
+    @required BuildContext context,
+    @required String title,
+    @required String child,
+  }) {
+    final theme = Theme.of(context);
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Icon(Icons.warning, size: 24, color: theme.errorColor),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                title,
+                style: theme.textTheme.bodyText1
+                    .copyWith(fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 12),
+              Text(child),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildButtonBar(BuildContext context) {
+    return ButtonBar(
+      children: <Widget>[
+        _buildFavButton(context),
+        _buildReadButton(context),
+      ],
     );
   }
 

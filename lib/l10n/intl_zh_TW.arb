@@ -68,5 +68,8 @@
   "orientationAuto": "自動",
   "orientationPortrait": "直向",
   "orientationLandscape": "橫向",
-  "turnPagesWithVolumeKeys": "使用音量鍵翻頁"
+  "turnPagesWithVolumeKeys": "使用音量鍵翻頁",
+  "galleryGenericErrorTitle": "錯誤",
+  "galleryContentWarningTitle": "內容警告",
+  "galleryContentWarningMessage": "此相簿被標為 {reason}，因為其內容不應該被任何人瀏覽。"
 }

@@ -21,11 +21,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m0(size) => "下載 (${size})";
 
-  static m1(count) => "${count} 頁";
+  static m1(reason) => "此相簿被標為 ${reason}，因為其內容不應該被任何人瀏覽。";
 
-  static m2(rating) => "評分 (${rating})";
+  static m2(count) => "${count} 頁";
 
-  static m3(rating) => "${rating} 星";
+  static m3(rating) => "評分 (${rating})";
+
+  static m4(rating) => "${rating} 星";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -54,10 +56,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "fileSize" : MessageLookupByLibrary.simpleMessage("檔案大小"),
     "filter" : MessageLookupByLibrary.simpleMessage("過濾"),
     "gallery" : MessageLookupByLibrary.simpleMessage("相簿"),
+    "galleryContentWarningMessage" : m1,
+    "galleryContentWarningTitle" : MessageLookupByLibrary.simpleMessage("內容警告"),
+    "galleryGenericErrorTitle" : MessageLookupByLibrary.simpleMessage("錯誤"),
     "galleryLength" : MessageLookupByLibrary.simpleMessage("長度"),
     "galleryList" : MessageLookupByLibrary.simpleMessage("相簿列表"),
     "galleryListEmpty" : MessageLookupByLibrary.simpleMessage("沒有相簿資料"),
-    "galleryPageCount" : m1,
+    "galleryPageCount" : m2,
     "imageView" : MessageLookupByLibrary.simpleMessage("圖片瀏覽"),
     "info" : MessageLookupByLibrary.simpleMessage("資訊"),
     "licenses" : MessageLookupByLibrary.simpleMessage("授權"),
@@ -74,9 +79,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "orientationPortrait" : MessageLookupByLibrary.simpleMessage("直向"),
     "postedTime" : MessageLookupByLibrary.simpleMessage("上傳日期"),
     "projectPage" : MessageLookupByLibrary.simpleMessage("專案首頁"),
-    "ratingCaption" : m2,
+    "ratingCaption" : m3,
     "ratingFilterDisabled" : MessageLookupByLibrary.simpleMessage("關閉過濾"),
-    "ratingFilterLabel" : m3,
+    "ratingFilterLabel" : m4,
     "readButtonLabel" : MessageLookupByLibrary.simpleMessage("閱讀"),
     "screenOrientation" : MessageLookupByLibrary.simpleMessage("螢幕方向"),
     "search" : MessageLookupByLibrary.simpleMessage("搜尋"),

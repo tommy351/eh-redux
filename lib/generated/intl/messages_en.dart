@@ -21,11 +21,13 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m0(size) => "Download (${size})";
 
-  static m1(count) => "${Intl.plural(count, one: '1 page', other: '${count} pages')}";
+  static m1(reason) => "This gallery has been flagged as ${reason}. Due to its content, it should not be viewed by anyone.";
 
-  static m2(rating) => "Rating (${rating})";
+  static m2(count) => "${Intl.plural(count, one: '1 page', other: '${count} pages')}";
 
-  static m3(rating) => "${Intl.plural(rating, one: '1 star', other: '${rating} stars')}";
+  static m3(rating) => "Rating (${rating})";
+
+  static m4(rating) => "${Intl.plural(rating, one: '1 star', other: '${rating} stars')}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
@@ -54,10 +56,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "fileSize" : MessageLookupByLibrary.simpleMessage("File size"),
     "filter" : MessageLookupByLibrary.simpleMessage("Filter"),
     "gallery" : MessageLookupByLibrary.simpleMessage("Gallery"),
+    "galleryContentWarningMessage" : m1,
+    "galleryContentWarningTitle" : MessageLookupByLibrary.simpleMessage("Content Warning"),
+    "galleryGenericErrorTitle" : MessageLookupByLibrary.simpleMessage("Error"),
     "galleryLength" : MessageLookupByLibrary.simpleMessage("Length"),
     "galleryList" : MessageLookupByLibrary.simpleMessage("Gallery list"),
     "galleryListEmpty" : MessageLookupByLibrary.simpleMessage("No data"),
-    "galleryPageCount" : m1,
+    "galleryPageCount" : m2,
     "imageView" : MessageLookupByLibrary.simpleMessage("Image view"),
     "info" : MessageLookupByLibrary.simpleMessage("Info"),
     "licenses" : MessageLookupByLibrary.simpleMessage("Licenses"),
@@ -74,9 +79,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "orientationPortrait" : MessageLookupByLibrary.simpleMessage("Portrait"),
     "postedTime" : MessageLookupByLibrary.simpleMessage("Posted"),
     "projectPage" : MessageLookupByLibrary.simpleMessage("Project page"),
-    "ratingCaption" : m2,
+    "ratingCaption" : m3,
     "ratingFilterDisabled" : MessageLookupByLibrary.simpleMessage("No filter"),
-    "ratingFilterLabel" : m3,
+    "ratingFilterLabel" : m4,
     "readButtonLabel" : MessageLookupByLibrary.simpleMessage("Read"),
     "screenOrientation" : MessageLookupByLibrary.simpleMessage("Screen orientation"),
     "search" : MessageLookupByLibrary.simpleMessage("Search"),

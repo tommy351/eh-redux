@@ -23,6 +23,7 @@ class SearchBody extends StatelessWidget {
         SliverAppBar(
           backgroundColor: isDark ? theme.appBarTheme.color : Colors.white,
           iconTheme: iconTheme,
+          pinned: true,
           title: const SearchTextField(),
           actions: <Widget>[
             IconButton(

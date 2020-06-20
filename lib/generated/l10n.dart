@@ -736,6 +736,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Error`
+  String get galleryGenericErrorTitle {
+    return Intl.message(
+      'Error',
+      name: 'galleryGenericErrorTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Content Warning`
+  String get galleryContentWarningTitle {
+    return Intl.message(
+      'Content Warning',
+      name: 'galleryContentWarningTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This gallery has been flagged as {reason}. Due to its content, it should not be viewed by anyone.`
+  String galleryContentWarningMessage(Object reason) {
+    return Intl.message(
+      'This gallery has been flagged as $reason. Due to its content, it should not be viewed by anyone.',
+      name: 'galleryContentWarningMessage',
+      desc: '',
+      args: [reason],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

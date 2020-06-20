@@ -39,6 +39,21 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
     });
   }
 
+  final _$errorsAtom = Atom(name: '_GalleryStoreBase.errors');
+
+  @override
+  ObservableMap<GalleryId, GalleryError> get errors {
+    _$errorsAtom.reportRead();
+    return super.errors;
+  }
+
+  @override
+  set errors(ObservableMap<GalleryId, GalleryError> value) {
+    _$errorsAtom.reportWrite(value, super.errors, () {
+      super.errors = value;
+    });
+  }
+
   final _$paginationsAtom = Atom(name: '_GalleryStoreBase.paginations');
 
   @override
@@ -128,6 +143,7 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
     return '''
 data: ${data},
 details: ${details},
+errors: ${errors},
 paginations: ${paginations}
     ''';
   }

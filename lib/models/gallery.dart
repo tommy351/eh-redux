@@ -133,3 +133,14 @@ abstract class GalleryDetails with _$GalleryDetails {
     @required int currentFavorite,
   }) = _GalleryDetails;
 }
+
+@freezed
+abstract class GalleryError with _$GalleryError {
+  const factory GalleryError({
+    @required String message,
+  }) = _GalleryError;
+
+  const factory GalleryError.contentWarning({
+    @required String reason,
+  }) = GalleryErrorContentWarning;
+}

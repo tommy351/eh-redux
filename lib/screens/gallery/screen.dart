@@ -37,6 +37,7 @@ class GalleryScreen extends StatelessWidget {
             providers: [
               Provider.value(value: galleryStore.data[args.id]),
               Provider.value(value: galleryStore.details[args.id]),
+              Provider.value(value: galleryStore.errors[args.id]),
             ],
             child: const _GalleryScreenContent(),
           );
