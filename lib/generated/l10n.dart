@@ -787,11 +787,41 @@ class S {
     );
   }
 
+  /// `CLEAR`
+  String get clearButtonLabel {
+    return Intl.message(
+      'CLEAR',
+      name: 'clearButtonLabel',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Clear search history`
   String get clearSearchHistory {
     return Intl.message(
       'Clear search history',
       name: 'clearSearchHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear search history?`
+  String get clearSearchHistoryDialogTitle {
+    return Intl.message(
+      'Clear search history?',
+      name: 'clearSearchHistoryDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All search history stored on this device will be deleted.`
+  String get clearSearchHistoryDialogTitleContent {
+    return Intl.message(
+      'All search history stored on this device will be deleted.',
+      name: 'clearSearchHistoryDialogTitleContent',
       desc: '',
       args: [],
     );
@@ -812,6 +842,46 @@ class S {
     return Intl.message(
       'History',
       name: 'history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear reading history`
+  String get clearReadingHistory {
+    return Intl.message(
+      'Clear reading history',
+      name: 'clearReadingHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear reading history?`
+  String get clearReadingHistoryDialogTitle {
+    return Intl.message(
+      'Clear reading history?',
+      name: 'clearReadingHistoryDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All reading history stored on this device will be deleted.`
+  String get clearReadingHistoryDialogContent {
+    return Intl.message(
+      'All reading history stored on this device will be deleted.',
+      name: 'clearReadingHistoryDialogContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reading history cleared successfully.`
+  String get readingHistoryClearSuccess {
+    return Intl.message(
+      'Reading history cleared successfully.',
+      name: 'readingHistoryClearSuccess',
       desc: '',
       args: [],
     );

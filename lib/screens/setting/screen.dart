@@ -1,6 +1,7 @@
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/stores/setting.dart';
 import 'package:eh_redux/tables/database.dart';
+import 'package:eh_redux/widgets/confirm_tile.dart';
 import 'package:eh_redux/widgets/select_list_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -55,6 +56,20 @@ class SettingScreen extends StatelessWidget {
                 value: settingStore.displayJapaneseTitle.value,
                 onChanged: settingStore.setDisplayJapaneseTitle,
               ),
+              ConfirmTile(
+                title: Text(S.of(context).clearReadingHistory),
+                dialogTitle: Text(S.of(context).clearReadingHistoryDialogTitle),
+                dialogContent:
+                    Text(S.of(context).clearReadingHistoryDialogContent),
+                confirmActionChild: Text(S.of(context).clearButtonLabel),
+                onConfirm: () {
+                  database.galleriesDao.deleteAllEntries().then((_) {
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                      content: Text(S.of(context).readingHistoryClearSuccess),
+                    ));
+                  });
+                },
+              ),
               const Divider(),
               _buildTitle(context, S.of(context).imageView),
               SelectListTile<OrientationSetting>(
@@ -83,9 +98,13 @@ class SettingScreen extends StatelessWidget {
               ),
               const Divider(),
               _buildTitle(context, S.of(context).search),
-              ListTile(
+              ConfirmTile(
                 title: Text(S.of(context).clearSearchHistory),
-                onTap: () {
+                dialogTitle: Text(S.of(context).clearSearchHistoryDialogTitle),
+                dialogContent:
+                    Text(S.of(context).clearSearchHistoryDialogTitleContent),
+                confirmActionChild: Text(S.of(context).clearButtonLabel),
+                onConfirm: () {
                   database.searchHistoriesDao.deleteAllEntries().then((_) {
                     Scaffold.of(context).showSnackBar(SnackBar(
                       content: Text(S.of(context).searchHistoryClearSuccess),

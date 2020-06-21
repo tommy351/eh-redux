@@ -74,7 +74,14 @@
   "galleryContentWarningMessage": "This gallery has been flagged as {reason}. Due to its content, it should not be viewed by anyone.",
   "galleryHideContentWarning": "Hide warning",
   "retry": "Retry",
+  "clearButtonLabel": "CLEAR",
   "clearSearchHistory": "Clear search history",
+  "clearSearchHistoryDialogTitle": "Clear search history?",
+  "clearSearchHistoryDialogTitleContent": "All search history stored on this device will be deleted.",
   "searchHistoryClearSuccess": "Search history cleared successfully.",
-  "history": "History"
+  "history": "History",
+  "clearReadingHistory": "Clear reading history",
+  "clearReadingHistoryDialogTitle": "Clear reading history?",
+  "clearReadingHistoryDialogContent": "All reading history stored on this device will be deleted.",
+  "readingHistoryClearSuccess": "Reading history cleared successfully."
 }

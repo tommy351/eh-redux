@@ -74,7 +74,14 @@
   "galleryContentWarningMessage": "此相簿被標為 {reason}，因為其內容不應該被任何人瀏覽。",
   "galleryHideContentWarning": "隱藏警告",
   "retry": "重試",
+  "clearButtonLabel": "清除",
   "clearSearchHistory": "清除搜尋紀錄",
+  "clearSearchHistoryDialogTitle": "清除搜尋紀錄？",
+  "clearSearchHistoryDialogTitleContent": "儲存在此裝置上的所有搜尋紀錄都會被刪除。",
   "searchHistoryClearSuccess": "搜尋記錄清除成功。",
-  "history": "紀錄"
+  "history": "紀錄",
+  "clearReadingHistory": "清除閱讀紀錄",
+  "clearReadingHistoryDialogTitle": "清除閱讀紀錄？",
+  "clearReadingHistoryDialogContent": "儲存在此裝置上的所有閱讀紀錄都會被刪除。",
+  "readingHistoryClearSuccess": "閱讀紀錄清除成功。"
 }
