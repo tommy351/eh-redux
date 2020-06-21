@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 class GalleryTab extends StatelessWidget {
   const GalleryTab({Key key}) : super(key: key);
 
+  static const _paginationKey = GalleryPaginationKey.frontPage();
+
   @override
   Widget build(BuildContext context) {
     return NestedScrollView(
@@ -35,7 +37,7 @@ class GalleryTab extends StatelessWidget {
         top: false,
         bottom: false,
         child: GalleryList(
-          paginationKey: GalleryPaginationKey.frontPage(),
+          paginationKey: _paginationKey,
         ),
       ),
     );

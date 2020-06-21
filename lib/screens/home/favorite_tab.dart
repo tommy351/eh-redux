@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 class FavoriteTab extends StatelessWidget {
   const FavoriteTab({Key key}) : super(key: key);
 
+  static const _paginationKey = GalleryPaginationKey.favorite();
+
   @override
   Widget build(BuildContext context) {
     final sessionStore = Provider.of<SessionStore>(context);
@@ -34,7 +36,7 @@ class FavoriteTab extends StatelessWidget {
             }
 
             return const GalleryList(
-              paginationKey: GalleryPaginationKey.favorite(),
+              paginationKey: _paginationKey,
             );
           },
         ),
