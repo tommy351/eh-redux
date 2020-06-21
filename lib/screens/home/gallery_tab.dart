@@ -35,7 +35,7 @@ class GalleryTab extends StatelessWidget {
         top: false,
         bottom: false,
         child: GalleryList(
-          paginationKey: GalleryPaginationKeyFrontPage(),
+          paginationKey: GalleryPaginationKey.frontPage(),
         ),
       ),
     );

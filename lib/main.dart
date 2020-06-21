@@ -94,7 +94,10 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       httpClient: http.Client(),
       sessionStore: _sessionStore,
     );
-    _galleryStore = GalleryStore(client: _eHentaiClient);
+    _galleryStore = GalleryStore(
+      client: _eHentaiClient,
+      galleriesDao: _database.galleriesDao,
+    );
     _imageStore = ImageStore(client: _eHentaiClient);
     _settingStore = SettingStore();
     _favoriteStore = FavoriteStore(

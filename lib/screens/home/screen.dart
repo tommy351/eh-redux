@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'favorite_tab.dart';
 import 'gallery_tab.dart';
+import 'history_tab.dart';
 import 'setting_tab.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   static const _widgets = <Widget>[
     GalleryTab(),
     FavoriteTab(),
+    HistoryTab(),
     SettingTab(),
   ];
 
@@ -50,6 +52,10 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
         title: Text(S.of(context).favorites),
       ),
       BottomNavigationBarItem(
+        icon: const Icon(Icons.history),
+        title: Text(S.of(context).history),
+      ),
+      BottomNavigationBarItem(
         icon: const Icon(Icons.settings),
         title: Text(S.of(context).settings),
       ),
@@ -62,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
           padding: mediaQuery.padding + mediaQuery.viewInsets,
         ),
         child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           items: tabs,
           onTap: _handleTabTapped,
           currentIndex: _currentTab,

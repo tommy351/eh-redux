@@ -12,6 +12,6 @@ class ListConverter<T> extends TypeConverter<List<T>, String> {
   @override
   List<T> mapToDart(String fromDb) {
     if (fromDb == null) return null;
-    return jsonDecode(fromDb) as List<T>;
+    return (jsonDecode(fromDb) as List).map((e) => e as T).toList();
   }
 }

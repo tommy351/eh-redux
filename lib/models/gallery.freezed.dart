@@ -193,7 +193,7 @@ class __$GalleryCopyWithImpl<$Res> extends _$GalleryCopyWithImpl<$Res>
   }
 }
 
-class _$_Gallery implements _Gallery {
+class _$_Gallery extends _Gallery {
   const _$_Gallery(
       {@required this.id,
       @required this.title,
@@ -218,7 +218,8 @@ class _$_Gallery implements _Gallery {
         assert(expunged != null),
         assert(rating != null),
         assert(tags != null),
-        assert(posted != null);
+        assert(posted != null),
+        super._();
 
   @override
   final GalleryId id;
@@ -308,7 +309,8 @@ class _$_Gallery implements _Gallery {
       __$GalleryCopyWithImpl<_Gallery>(this, _$identity);
 }
 
-abstract class _Gallery implements Gallery {
+abstract class _Gallery extends Gallery {
+  const _Gallery._() : super._();
   const factory _Gallery(
       {@required GalleryId id,
       @required String title,
@@ -1002,6 +1004,10 @@ class _$GalleryPaginationKeyTearOff {
       minimumRating: minimumRating,
     );
   }
+
+  GalleryPaginationKeyHistory history() {
+    return const GalleryPaginationKeyHistory();
+  }
 }
 
 // ignore: unused_element
@@ -1015,6 +1021,7 @@ mixin _$GalleryPaginationKey {
     @required
         Result search(String query, int categoryFilter,
             BuiltMap<String, bool> advancedOptions, int minimumRating),
+    @required Result history(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -1022,6 +1029,7 @@ mixin _$GalleryPaginationKey {
     Result favorite(),
     Result search(String query, int categoryFilter,
         BuiltMap<String, bool> advancedOptions, int minimumRating),
+    Result history(),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -1029,12 +1037,14 @@ mixin _$GalleryPaginationKey {
     @required Result frontPage(GalleryPaginationKeyFrontPage value),
     @required Result favorite(GalleryPaginationKeyFavorite value),
     @required Result search(GalleryPaginationKeySearch value),
+    @required Result history(GalleryPaginationKeyHistory value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result frontPage(GalleryPaginationKeyFrontPage value),
     Result favorite(GalleryPaginationKeyFavorite value),
     Result search(GalleryPaginationKeySearch value),
+    Result history(GalleryPaginationKeyHistory value),
     @required Result orElse(),
   });
 }
@@ -1098,10 +1108,12 @@ class _$GalleryPaginationKeyFrontPage implements GalleryPaginationKeyFrontPage {
     @required
         Result search(String query, int categoryFilter,
             BuiltMap<String, bool> advancedOptions, int minimumRating),
+    @required Result history(),
   }) {
     assert(frontPage != null);
     assert(favorite != null);
     assert(search != null);
+    assert(history != null);
     return frontPage();
   }
 
@@ -1112,6 +1124,7 @@ class _$GalleryPaginationKeyFrontPage implements GalleryPaginationKeyFrontPage {
     Result favorite(),
     Result search(String query, int categoryFilter,
         BuiltMap<String, bool> advancedOptions, int minimumRating),
+    Result history(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1127,10 +1140,12 @@ class _$GalleryPaginationKeyFrontPage implements GalleryPaginationKeyFrontPage {
     @required Result frontPage(GalleryPaginationKeyFrontPage value),
     @required Result favorite(GalleryPaginationKeyFavorite value),
     @required Result search(GalleryPaginationKeySearch value),
+    @required Result history(GalleryPaginationKeyHistory value),
   }) {
     assert(frontPage != null);
     assert(favorite != null);
     assert(search != null);
+    assert(history != null);
     return frontPage(this);
   }
 
@@ -1140,6 +1155,7 @@ class _$GalleryPaginationKeyFrontPage implements GalleryPaginationKeyFrontPage {
     Result frontPage(GalleryPaginationKeyFrontPage value),
     Result favorite(GalleryPaginationKeyFavorite value),
     Result search(GalleryPaginationKeySearch value),
+    Result history(GalleryPaginationKeyHistory value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1199,10 +1215,12 @@ class _$GalleryPaginationKeyFavorite implements GalleryPaginationKeyFavorite {
     @required
         Result search(String query, int categoryFilter,
             BuiltMap<String, bool> advancedOptions, int minimumRating),
+    @required Result history(),
   }) {
     assert(frontPage != null);
     assert(favorite != null);
     assert(search != null);
+    assert(history != null);
     return favorite();
   }
 
@@ -1213,6 +1231,7 @@ class _$GalleryPaginationKeyFavorite implements GalleryPaginationKeyFavorite {
     Result favorite(),
     Result search(String query, int categoryFilter,
         BuiltMap<String, bool> advancedOptions, int minimumRating),
+    Result history(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1228,10 +1247,12 @@ class _$GalleryPaginationKeyFavorite implements GalleryPaginationKeyFavorite {
     @required Result frontPage(GalleryPaginationKeyFrontPage value),
     @required Result favorite(GalleryPaginationKeyFavorite value),
     @required Result search(GalleryPaginationKeySearch value),
+    @required Result history(GalleryPaginationKeyHistory value),
   }) {
     assert(frontPage != null);
     assert(favorite != null);
     assert(search != null);
+    assert(history != null);
     return favorite(this);
   }
 
@@ -1241,6 +1262,7 @@ class _$GalleryPaginationKeyFavorite implements GalleryPaginationKeyFavorite {
     Result frontPage(GalleryPaginationKeyFrontPage value),
     Result favorite(GalleryPaginationKeyFavorite value),
     Result search(GalleryPaginationKeySearch value),
+    Result history(GalleryPaginationKeyHistory value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1364,10 +1386,12 @@ class _$GalleryPaginationKeySearch implements GalleryPaginationKeySearch {
     @required
         Result search(String query, int categoryFilter,
             BuiltMap<String, bool> advancedOptions, int minimumRating),
+    @required Result history(),
   }) {
     assert(frontPage != null);
     assert(favorite != null);
     assert(search != null);
+    assert(history != null);
     return search(query, categoryFilter, advancedOptions, minimumRating);
   }
 
@@ -1378,6 +1402,7 @@ class _$GalleryPaginationKeySearch implements GalleryPaginationKeySearch {
     Result favorite(),
     Result search(String query, int categoryFilter,
         BuiltMap<String, bool> advancedOptions, int minimumRating),
+    Result history(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1393,10 +1418,12 @@ class _$GalleryPaginationKeySearch implements GalleryPaginationKeySearch {
     @required Result frontPage(GalleryPaginationKeyFrontPage value),
     @required Result favorite(GalleryPaginationKeyFavorite value),
     @required Result search(GalleryPaginationKeySearch value),
+    @required Result history(GalleryPaginationKeyHistory value),
   }) {
     assert(frontPage != null);
     assert(favorite != null);
     assert(search != null);
+    assert(history != null);
     return search(this);
   }
 
@@ -1406,6 +1433,7 @@ class _$GalleryPaginationKeySearch implements GalleryPaginationKeySearch {
     Result frontPage(GalleryPaginationKeyFrontPage value),
     Result favorite(GalleryPaginationKeyFavorite value),
     Result search(GalleryPaginationKeySearch value),
+    Result history(GalleryPaginationKeyHistory value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1428,6 +1456,111 @@ abstract class GalleryPaginationKeySearch implements GalleryPaginationKey {
   BuiltMap<String, bool> get advancedOptions;
   int get minimumRating;
   $GalleryPaginationKeySearchCopyWith<GalleryPaginationKeySearch> get copyWith;
+}
+
+abstract class $GalleryPaginationKeyHistoryCopyWith<$Res> {
+  factory $GalleryPaginationKeyHistoryCopyWith(
+          GalleryPaginationKeyHistory value,
+          $Res Function(GalleryPaginationKeyHistory) then) =
+      _$GalleryPaginationKeyHistoryCopyWithImpl<$Res>;
+}
+
+class _$GalleryPaginationKeyHistoryCopyWithImpl<$Res>
+    extends _$GalleryPaginationKeyCopyWithImpl<$Res>
+    implements $GalleryPaginationKeyHistoryCopyWith<$Res> {
+  _$GalleryPaginationKeyHistoryCopyWithImpl(GalleryPaginationKeyHistory _value,
+      $Res Function(GalleryPaginationKeyHistory) _then)
+      : super(_value, (v) => _then(v as GalleryPaginationKeyHistory));
+
+  @override
+  GalleryPaginationKeyHistory get _value =>
+      super._value as GalleryPaginationKeyHistory;
+}
+
+class _$GalleryPaginationKeyHistory implements GalleryPaginationKeyHistory {
+  const _$GalleryPaginationKeyHistory();
+
+  @override
+  String toString() {
+    return 'GalleryPaginationKey.history()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is GalleryPaginationKeyHistory);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result frontPage(),
+    @required Result favorite(),
+    @required
+        Result search(String query, int categoryFilter,
+            BuiltMap<String, bool> advancedOptions, int minimumRating),
+    @required Result history(),
+  }) {
+    assert(frontPage != null);
+    assert(favorite != null);
+    assert(search != null);
+    assert(history != null);
+    return history();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result frontPage(),
+    Result favorite(),
+    Result search(String query, int categoryFilter,
+        BuiltMap<String, bool> advancedOptions, int minimumRating),
+    Result history(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (history != null) {
+      return history();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result frontPage(GalleryPaginationKeyFrontPage value),
+    @required Result favorite(GalleryPaginationKeyFavorite value),
+    @required Result search(GalleryPaginationKeySearch value),
+    @required Result history(GalleryPaginationKeyHistory value),
+  }) {
+    assert(frontPage != null);
+    assert(favorite != null);
+    assert(search != null);
+    assert(history != null);
+    return history(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result frontPage(GalleryPaginationKeyFrontPage value),
+    Result favorite(GalleryPaginationKeyFavorite value),
+    Result search(GalleryPaginationKeySearch value),
+    Result history(GalleryPaginationKeyHistory value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (history != null) {
+      return history(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GalleryPaginationKeyHistory implements GalleryPaginationKey {
+  const factory GalleryPaginationKeyHistory() = _$GalleryPaginationKeyHistory;
 }
 
 class _$GalleryIdWithPageTearOff {
@@ -2022,4 +2155,131 @@ abstract class GalleryErrorContentWarning implements GalleryError {
 
   String get reason;
   $GalleryErrorContentWarningCopyWith<GalleryErrorContentWarning> get copyWith;
+}
+
+class _$GalleryReadPositionTearOff {
+  const _$GalleryReadPositionTearOff();
+
+  _GalleryReadPosition call({DateTime time, int page}) {
+    return _GalleryReadPosition(
+      time: time,
+      page: page,
+    );
+  }
+}
+
+// ignore: unused_element
+const $GalleryReadPosition = _$GalleryReadPositionTearOff();
+
+mixin _$GalleryReadPosition {
+  DateTime get time;
+  int get page;
+
+  $GalleryReadPositionCopyWith<GalleryReadPosition> get copyWith;
+}
+
+abstract class $GalleryReadPositionCopyWith<$Res> {
+  factory $GalleryReadPositionCopyWith(
+          GalleryReadPosition value, $Res Function(GalleryReadPosition) then) =
+      _$GalleryReadPositionCopyWithImpl<$Res>;
+  $Res call({DateTime time, int page});
+}
+
+class _$GalleryReadPositionCopyWithImpl<$Res>
+    implements $GalleryReadPositionCopyWith<$Res> {
+  _$GalleryReadPositionCopyWithImpl(this._value, this._then);
+
+  final GalleryReadPosition _value;
+  // ignore: unused_field
+  final $Res Function(GalleryReadPosition) _then;
+
+  @override
+  $Res call({
+    Object time = freezed,
+    Object page = freezed,
+  }) {
+    return _then(_value.copyWith(
+      time: time == freezed ? _value.time : time as DateTime,
+      page: page == freezed ? _value.page : page as int,
+    ));
+  }
+}
+
+abstract class _$GalleryReadPositionCopyWith<$Res>
+    implements $GalleryReadPositionCopyWith<$Res> {
+  factory _$GalleryReadPositionCopyWith(_GalleryReadPosition value,
+          $Res Function(_GalleryReadPosition) then) =
+      __$GalleryReadPositionCopyWithImpl<$Res>;
+  @override
+  $Res call({DateTime time, int page});
+}
+
+class __$GalleryReadPositionCopyWithImpl<$Res>
+    extends _$GalleryReadPositionCopyWithImpl<$Res>
+    implements _$GalleryReadPositionCopyWith<$Res> {
+  __$GalleryReadPositionCopyWithImpl(
+      _GalleryReadPosition _value, $Res Function(_GalleryReadPosition) _then)
+      : super(_value, (v) => _then(v as _GalleryReadPosition));
+
+  @override
+  _GalleryReadPosition get _value => super._value as _GalleryReadPosition;
+
+  @override
+  $Res call({
+    Object time = freezed,
+    Object page = freezed,
+  }) {
+    return _then(_GalleryReadPosition(
+      time: time == freezed ? _value.time : time as DateTime,
+      page: page == freezed ? _value.page : page as int,
+    ));
+  }
+}
+
+class _$_GalleryReadPosition extends _GalleryReadPosition {
+  const _$_GalleryReadPosition({this.time, this.page}) : super._();
+
+  @override
+  final DateTime time;
+  @override
+  final int page;
+
+  @override
+  String toString() {
+    return 'GalleryReadPosition(time: $time, page: $page)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _GalleryReadPosition &&
+            (identical(other.time, time) ||
+                const DeepCollectionEquality().equals(other.time, time)) &&
+            (identical(other.page, page) ||
+                const DeepCollectionEquality().equals(other.page, page)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(time) ^
+      const DeepCollectionEquality().hash(page);
+
+  @override
+  _$GalleryReadPositionCopyWith<_GalleryReadPosition> get copyWith =>
+      __$GalleryReadPositionCopyWithImpl<_GalleryReadPosition>(
+          this, _$identity);
+}
+
+abstract class _GalleryReadPosition extends GalleryReadPosition {
+  const _GalleryReadPosition._() : super._();
+  const factory _GalleryReadPosition({DateTime time, int page}) =
+      _$_GalleryReadPosition;
+
+  @override
+  DateTime get time;
+  @override
+  int get page;
+  @override
+  _$GalleryReadPositionCopyWith<_GalleryReadPosition> get copyWith;
 }

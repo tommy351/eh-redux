@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:moor/moor.dart';
 
 import 'database.dart';
@@ -19,10 +21,12 @@ class SearchHistoriesDao extends DatabaseAccessor<Database>
   SearchHistoriesDao(Database db) : super(db);
 
   Future<void> insertEntry(SearchHistoryEntry entry) async {
+    developer.log('Insert search history: $entry');
     await into(searchHistories).insertOnConflictUpdate(entry);
   }
 
   Future<List<SearchHistoryEntry>> listEntries(String pattern) async {
+    developer.log('List search history: $pattern');
     final query = select(searchHistories)
       ..where((t) => t.query.like('%$pattern%'))
       ..orderBy([
@@ -34,6 +38,7 @@ class SearchHistoriesDao extends DatabaseAccessor<Database>
   }
 
   Future<void> deleteAllEntries() async {
+    developer.log('Clear search history');
     await delete(searchHistories).go();
   }
 }

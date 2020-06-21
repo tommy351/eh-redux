@@ -119,6 +119,13 @@ mixin _$GalleryStore on _GalleryStoreBase, Store {
         .run(() => super.loadGalleryDetails(id));
   }
 
+  final _$saveGalleryAsyncAction = AsyncAction('_GalleryStoreBase.saveGallery');
+
+  @override
+  Future<void> saveGallery(GalleryId id) {
+    return _$saveGalleryAsyncAction.run(() => super.saveGallery(id));
+  }
+
   final _$_GalleryStoreBaseActionController =
       ActionController(name: '_GalleryStoreBase');
 

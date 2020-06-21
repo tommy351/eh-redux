@@ -34,7 +34,7 @@ class FavoriteTab extends StatelessWidget {
             }
 
             return const GalleryList(
-              paginationKey: GalleryPaginationKeyFavorite(),
+              paginationKey: GalleryPaginationKey.favorite(),
             );
           },
         ),

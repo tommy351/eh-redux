@@ -75,5 +75,6 @@
   "galleryHideContentWarning": "隱藏警告",
   "retry": "重試",
   "clearSearchHistory": "清除搜尋紀錄",
-  "searchHistoryClearSuccess": "搜尋記錄清除成功。"
+  "searchHistoryClearSuccess": "搜尋記錄清除成功。",
+  "history": "紀錄"
 }

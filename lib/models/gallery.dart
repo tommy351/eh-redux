@@ -1,4 +1,5 @@
 import 'package:built_collection/built_collection.dart';
+import 'package:eh_redux/tables/database.dart';
 import 'package:eh_redux/utils/datetime.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:meta/meta.dart';
@@ -7,7 +8,7 @@ part 'gallery.freezed.dart';
 part 'gallery.g.dart';
 
 @freezed
-abstract class Gallery with _$Gallery {
+abstract class Gallery implements _$Gallery {
   const factory Gallery({
     @required GalleryId id,
     @required String title,
@@ -37,6 +38,43 @@ abstract class Gallery with _$Gallery {
       rating: res.rating,
       tags: BuiltList.from(res.tags.map((e) => GalleryTag.fromString(e))),
       posted: res.posted,
+    );
+  }
+
+  factory Gallery.fromEntry(GalleryEntry entry) {
+    return Gallery(
+      id: GalleryId(id: entry.id, token: entry.token),
+      title: entry.title,
+      titleJpn: entry.titleJpn,
+      category: entry.category,
+      thumbnail: entry.thumbnail,
+      uploader: entry.uploader,
+      fileCount: entry.fileCount,
+      fileSize: entry.fileSize,
+      expunged: entry.expunged,
+      rating: entry.rating,
+      tags: BuiltList.from(entry.tags.map((e) => GalleryTag.fromString(e))),
+      posted: entry.posted,
+    );
+  }
+
+  const Gallery._();
+
+  GalleryEntry toEntry() {
+    return GalleryEntry(
+      id: id.id,
+      token: id.token,
+      title: title,
+      titleJpn: titleJpn,
+      category: category,
+      thumbnail: thumbnail,
+      uploader: uploader,
+      fileCount: fileCount,
+      fileSize: fileSize,
+      expunged: expunged,
+      rating: rating,
+      tags: tags.map((t) => t.fullTag).toList(),
+      posted: posted,
     );
   }
 }
@@ -115,6 +153,8 @@ abstract class GalleryPaginationKey with _$GalleryPaginationKey {
     BuiltMap<String, bool> advancedOptions,
     @Default(0) int minimumRating,
   }) = GalleryPaginationKeySearch;
+
+  const factory GalleryPaginationKey.history() = GalleryPaginationKeyHistory;
 }
 
 @freezed
@@ -143,4 +183,21 @@ abstract class GalleryError with _$GalleryError {
   const factory GalleryError.contentWarning({
     @required String reason,
   }) = GalleryErrorContentWarning;
+}
+
+@freezed
+abstract class GalleryReadPosition implements _$GalleryReadPosition {
+  const factory GalleryReadPosition({
+    DateTime time,
+    int page,
+  }) = _GalleryReadPosition;
+
+  const GalleryReadPosition._();
+
+  factory GalleryReadPosition.fromEntry(GalleryEntry entry) {
+    return GalleryReadPosition(
+      page: entry.lastReadPage,
+      time: entry.lastReadAt,
+    );
+  }
 }

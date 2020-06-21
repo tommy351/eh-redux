@@ -75,5 +75,6 @@
   "galleryHideContentWarning": "Hide warning",
   "retry": "Retry",
   "clearSearchHistory": "Clear search history",
-  "searchHistoryClearSuccess": "Search history cleared successfully."
+  "searchHistoryClearSuccess": "Search history cleared successfully.",
+  "history": "History"
 }

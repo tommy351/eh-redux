@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "galleryList" : MessageLookupByLibrary.simpleMessage("相簿列表"),
     "galleryListEmpty" : MessageLookupByLibrary.simpleMessage("沒有相簿資料"),
     "galleryPageCount" : m2,
+    "history" : MessageLookupByLibrary.simpleMessage("紀錄"),
     "imageView" : MessageLookupByLibrary.simpleMessage("圖片瀏覽"),
     "info" : MessageLookupByLibrary.simpleMessage("資訊"),
     "licenses" : MessageLookupByLibrary.simpleMessage("授權"),

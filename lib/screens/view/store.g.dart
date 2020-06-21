@@ -54,6 +54,22 @@ mixin _$ViewStore on _ViewStoreBase, Store {
     });
   }
 
+  final _$loadReadPositionAsyncAction =
+      AsyncAction('_ViewStoreBase.loadReadPosition');
+
+  @override
+  Future<GalleryReadPosition> loadReadPosition() {
+    return _$loadReadPositionAsyncAction.run(() => super.loadReadPosition());
+  }
+
+  final _$saveReadPositionAsyncAction =
+      AsyncAction('_ViewStoreBase.saveReadPosition');
+
+  @override
+  Future<void> saveReadPosition() {
+    return _$saveReadPositionAsyncAction.run(() => super.saveReadPosition());
+  }
+
   final _$_ViewStoreBaseActionController =
       ActionController(name: '_ViewStoreBase');
 

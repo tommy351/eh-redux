@@ -16,7 +16,12 @@ import 'image_provider.dart';
 import 'store.dart';
 
 class ViewBody extends StatefulWidget {
-  const ViewBody({Key key}) : super(key: key);
+  const ViewBody({
+    Key key,
+    this.initialPage = 0,
+  }) : super(key: key);
+
+  final int initialPage;
 
   @override
   _ViewBodyState createState() => _ViewBodyState();
@@ -28,7 +33,9 @@ class _ViewBodyState extends State<ViewBody> {
   @override
   void initState() {
     super.initState();
-    _pageController = PreloadPageController();
+    _pageController = PreloadPageController(
+      initialPage: widget.initialPage,
+    );
   }
 
   @override

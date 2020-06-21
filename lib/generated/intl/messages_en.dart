@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "galleryList" : MessageLookupByLibrary.simpleMessage("Gallery list"),
     "galleryListEmpty" : MessageLookupByLibrary.simpleMessage("No data"),
     "galleryPageCount" : m2,
+    "history" : MessageLookupByLibrary.simpleMessage("History"),
     "imageView" : MessageLookupByLibrary.simpleMessage("Image view"),
     "info" : MessageLookupByLibrary.simpleMessage("Info"),
     "licenses" : MessageLookupByLibrary.simpleMessage("Licenses"),

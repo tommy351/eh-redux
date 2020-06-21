@@ -139,12 +139,14 @@ class GalleryActions extends StatelessWidget {
   Widget _buildReadButton(BuildContext context) {
     final theme = Theme.of(context);
     final gallery = Provider.of<Gallery>(context);
+    final galleryStore = Provider.of<GalleryStore>(context);
 
     return RaisedButton.icon(
       icon: const Icon(Icons.play_arrow),
       label: Text(S.of(context).readButtonLabel),
       color: theme.accentColor,
       onPressed: () {
+        galleryStore.saveGallery(gallery.id);
         Navigator.pushNamed(
           context,
           ViewScreen.routeName,

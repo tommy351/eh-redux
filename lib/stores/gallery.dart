@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:built_collection/built_collection.dart';
 import 'package:collection/collection.dart';
 import 'package:eh_redux/models/content_warning_exception.dart';
@@ -5,10 +7,21 @@ import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/models/pagination.dart';
 import 'package:eh_redux/models/request_exception.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
+import 'package:eh_redux/tables/gallery.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 
 part 'gallery.g.dart';
+
+class _GalleryLoadResult {
+  const _GalleryLoadResult({
+    @required this.galleries,
+    this.noMore = false,
+  }) : assert(galleries != null);
+
+  final List<Gallery> galleries;
+  final bool noMore;
+}
 
 const baseAdvancedSearchOptions = <String, bool>{
   'f_sname': true,
@@ -19,12 +32,14 @@ class GalleryStore = _GalleryStoreBase with _$GalleryStore;
 abstract class _GalleryStoreBase with Store {
   _GalleryStoreBase({
     @required this.client,
+    @required this.galleriesDao,
   }) : assert(client != null);
 
   static const _mapEquality = MapEquality();
   static const _galleryPerPage = 25;
 
   final EHentaiClient client;
+  final GalleriesDao galleriesDao;
 
   @observable
   ObservableMap<GalleryId, Gallery> data = ObservableMap.of({});
@@ -122,12 +137,21 @@ abstract class _GalleryStoreBase with Store {
     contentWarningDisabled.add(id);
   }
 
+  @action
+  Future<void> saveGallery(GalleryId id) async {
+    final entry = data[id]?.toEntry();
+
+    if (entry != null) {
+      await galleriesDao.insertEntry(entry);
+    }
+  }
+
   Future<void> _loadPage({
     @required GalleryPaginationKey key,
     @required int page,
     @required
         BuiltSet<GalleryId> Function(
-                BuiltSet<GalleryId> currentIndex, List<GalleryId> newIndex)
+                BuiltSet<GalleryId> currentIndex, Iterable<GalleryId> newIndex)
             updateIndex,
   }) async {
     if (_getPaginationByKey(key).loading) return;
@@ -135,19 +159,44 @@ abstract class _GalleryStoreBase with Store {
     paginations[key] = _getPaginationByKey(key).copyWith(loading: true);
 
     try {
-      final ids = await client.getGalleryIds(_getListPath(key, page));
-      final galleries = await client.getGalleriesData(ids);
+      final result = await key.maybeMap<Future<_GalleryLoadResult>>(
+        history: (key) => _loadPageFromDatabase(),
+        orElse: () => _loadPageFromNetwork(key, page),
+      );
 
-      addAll(galleries);
+      addAll(result.galleries);
 
       paginations[key] = _getPaginationByKey(key).copyWith(
-        index: updateIndex(_getPaginationByKey(key).index, ids),
+        index: updateIndex(
+            _getPaginationByKey(key).index, result.galleries.map((e) => e.id)),
         currentPage: page,
-        noMore: galleries.length < _galleryPerPage,
+        noMore: result.noMore,
       );
     } finally {
       paginations[key] = _getPaginationByKey(key).copyWith(loading: false);
     }
+  }
+
+  Future<_GalleryLoadResult> _loadPageFromNetwork(
+    GalleryPaginationKey key,
+    int page,
+  ) async {
+    final ids = await client.getGalleryIds(_getListPath(key, page));
+    final galleries = await client.getGalleriesData(ids);
+
+    return _GalleryLoadResult(
+      galleries: galleries,
+      noMore: galleries.length < _galleryPerPage,
+    );
+  }
+
+  Future<_GalleryLoadResult> _loadPageFromDatabase() async {
+    final entries = await galleriesDao.listEntries();
+
+    return _GalleryLoadResult(
+      galleries: entries.map((e) => Gallery.fromEntry(e)).toList(),
+      noMore: true,
+    );
   }
 
   String _getListPath(GalleryPaginationKey key, int page) {

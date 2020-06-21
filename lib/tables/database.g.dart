@@ -13,6 +13,7 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
   final String title;
   final String titleJpn;
   final String category;
+  final String thumbnail;
   final String uploader;
   final int fileCount;
   final int fileSize;
@@ -28,6 +29,7 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
       @required this.title,
       @required this.titleJpn,
       @required this.category,
+      @required this.thumbnail,
       @required this.uploader,
       @required this.fileCount,
       @required this.fileSize,
@@ -55,6 +57,8 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
           .mapFromDatabaseResponse(data['${effectivePrefix}title_jpn']),
       category: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}category']),
+      thumbnail: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}thumbnail']),
       uploader: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}uploader']),
       fileCount:
@@ -92,6 +96,9 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
     }
     if (!nullToAbsent || category != null) {
       map['category'] = Variable<String>(category);
+    }
+    if (!nullToAbsent || thumbnail != null) {
+      map['thumbnail'] = Variable<String>(thumbnail);
     }
     if (!nullToAbsent || uploader != null) {
       map['uploader'] = Variable<String>(uploader);
@@ -137,6 +144,9 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
       category: category == null && nullToAbsent
           ? const Value.absent()
           : Value(category),
+      thumbnail: thumbnail == null && nullToAbsent
+          ? const Value.absent()
+          : Value(thumbnail),
       uploader: uploader == null && nullToAbsent
           ? const Value.absent()
           : Value(uploader),
@@ -172,6 +182,7 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
       title: serializer.fromJson<String>(json['title']),
       titleJpn: serializer.fromJson<String>(json['titleJpn']),
       category: serializer.fromJson<String>(json['category']),
+      thumbnail: serializer.fromJson<String>(json['thumbnail']),
       uploader: serializer.fromJson<String>(json['uploader']),
       fileCount: serializer.fromJson<int>(json['fileCount']),
       fileSize: serializer.fromJson<int>(json['fileSize']),
@@ -192,6 +203,7 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
       'title': serializer.toJson<String>(title),
       'titleJpn': serializer.toJson<String>(titleJpn),
       'category': serializer.toJson<String>(category),
+      'thumbnail': serializer.toJson<String>(thumbnail),
       'uploader': serializer.toJson<String>(uploader),
       'fileCount': serializer.toJson<int>(fileCount),
       'fileSize': serializer.toJson<int>(fileSize),
@@ -210,6 +222,7 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
           String title,
           String titleJpn,
           String category,
+          String thumbnail,
           String uploader,
           int fileCount,
           int fileSize,
@@ -225,6 +238,7 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
         title: title ?? this.title,
         titleJpn: titleJpn ?? this.titleJpn,
         category: category ?? this.category,
+        thumbnail: thumbnail ?? this.thumbnail,
         uploader: uploader ?? this.uploader,
         fileCount: fileCount ?? this.fileCount,
         fileSize: fileSize ?? this.fileSize,
@@ -243,6 +257,7 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
           ..write('title: $title, ')
           ..write('titleJpn: $titleJpn, ')
           ..write('category: $category, ')
+          ..write('thumbnail: $thumbnail, ')
           ..write('uploader: $uploader, ')
           ..write('fileCount: $fileCount, ')
           ..write('fileSize: $fileSize, ')
@@ -268,23 +283,25 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
                   $mrjc(
                       category.hashCode,
                       $mrjc(
-                          uploader.hashCode,
+                          thumbnail.hashCode,
                           $mrjc(
-                              fileCount.hashCode,
+                              uploader.hashCode,
                               $mrjc(
-                                  fileSize.hashCode,
+                                  fileCount.hashCode,
                                   $mrjc(
-                                      expunged.hashCode,
+                                      fileSize.hashCode,
                                       $mrjc(
-                                          rating.hashCode,
+                                          expunged.hashCode,
                                           $mrjc(
-                                              posted.hashCode,
+                                              rating.hashCode,
                                               $mrjc(
-                                                  tags.hashCode,
+                                                  posted.hashCode,
                                                   $mrjc(
-                                                      lastReadAt.hashCode,
-                                                      lastReadPage
-                                                          .hashCode))))))))))))));
+                                                      tags.hashCode,
+                                                      $mrjc(
+                                                          lastReadAt.hashCode,
+                                                          lastReadPage
+                                                              .hashCode)))))))))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -294,6 +311,7 @@ class GalleryEntry extends DataClass implements Insertable<GalleryEntry> {
           other.title == this.title &&
           other.titleJpn == this.titleJpn &&
           other.category == this.category &&
+          other.thumbnail == this.thumbnail &&
           other.uploader == this.uploader &&
           other.fileCount == this.fileCount &&
           other.fileSize == this.fileSize &&
@@ -311,6 +329,7 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
   final Value<String> title;
   final Value<String> titleJpn;
   final Value<String> category;
+  final Value<String> thumbnail;
   final Value<String> uploader;
   final Value<int> fileCount;
   final Value<int> fileSize;
@@ -326,6 +345,7 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
     this.title = const Value.absent(),
     this.titleJpn = const Value.absent(),
     this.category = const Value.absent(),
+    this.thumbnail = const Value.absent(),
     this.uploader = const Value.absent(),
     this.fileCount = const Value.absent(),
     this.fileSize = const Value.absent(),
@@ -342,6 +362,7 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
     @required String title,
     @required String titleJpn,
     @required String category,
+    @required String thumbnail,
     @required String uploader,
     @required int fileCount,
     @required int fileSize,
@@ -355,6 +376,7 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
         title = Value(title),
         titleJpn = Value(titleJpn),
         category = Value(category),
+        thumbnail = Value(thumbnail),
         uploader = Value(uploader),
         fileCount = Value(fileCount),
         fileSize = Value(fileSize),
@@ -368,6 +390,7 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
     Expression<String> title,
     Expression<String> titleJpn,
     Expression<String> category,
+    Expression<String> thumbnail,
     Expression<String> uploader,
     Expression<int> fileCount,
     Expression<int> fileSize,
@@ -384,6 +407,7 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
       if (title != null) 'title': title,
       if (titleJpn != null) 'title_jpn': titleJpn,
       if (category != null) 'category': category,
+      if (thumbnail != null) 'thumbnail': thumbnail,
       if (uploader != null) 'uploader': uploader,
       if (fileCount != null) 'file_count': fileCount,
       if (fileSize != null) 'file_size': fileSize,
@@ -402,6 +426,7 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
       Value<String> title,
       Value<String> titleJpn,
       Value<String> category,
+      Value<String> thumbnail,
       Value<String> uploader,
       Value<int> fileCount,
       Value<int> fileSize,
@@ -417,6 +442,7 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
       title: title ?? this.title,
       titleJpn: titleJpn ?? this.titleJpn,
       category: category ?? this.category,
+      thumbnail: thumbnail ?? this.thumbnail,
       uploader: uploader ?? this.uploader,
       fileCount: fileCount ?? this.fileCount,
       fileSize: fileSize ?? this.fileSize,
@@ -446,6 +472,9 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
     }
     if (category.present) {
       map['category'] = Variable<String>(category.value);
+    }
+    if (thumbnail.present) {
+      map['thumbnail'] = Variable<String>(thumbnail.value);
     }
     if (uploader.present) {
       map['uploader'] = Variable<String>(uploader.value);
@@ -539,6 +568,18 @@ class $GalleriesTable extends Galleries
   GeneratedTextColumn _constructCategory() {
     return GeneratedTextColumn(
       'category',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _thumbnailMeta = const VerificationMeta('thumbnail');
+  GeneratedTextColumn _thumbnail;
+  @override
+  GeneratedTextColumn get thumbnail => _thumbnail ??= _constructThumbnail();
+  GeneratedTextColumn _constructThumbnail() {
+    return GeneratedTextColumn(
+      'thumbnail',
       $tableName,
       false,
     );
@@ -662,6 +703,7 @@ class $GalleriesTable extends Galleries
         title,
         titleJpn,
         category,
+        thumbnail,
         uploader,
         fileCount,
         fileSize,
@@ -709,6 +751,12 @@ class $GalleriesTable extends Galleries
           category.isAcceptableOrUnknown(data['category'], _categoryMeta));
     } else if (isInserting) {
       context.missing(_categoryMeta);
+    }
+    if (data.containsKey('thumbnail')) {
+      context.handle(_thumbnailMeta,
+          thumbnail.isAcceptableOrUnknown(data['thumbnail'], _thumbnailMeta));
+    } else if (isInserting) {
+      context.missing(_thumbnailMeta);
     }
     if (data.containsKey('uploader')) {
       context.handle(_uploaderMeta,
