@@ -6,6 +6,8 @@ import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'scroll_view.dart';
+
 class HistoryTab extends StatelessWidget {
   const HistoryTab({Key key}) : super(key: key);
 
@@ -21,7 +23,7 @@ class HistoryTab extends StatelessWidget {
         return () {};
       },
       builder: (context) {
-        return NestedScrollView(
+        return HomeScrollView(
           headerSliverBuilder: (context, _) => [
             SliverAppBar(
               title: Text(S.of(context).history),

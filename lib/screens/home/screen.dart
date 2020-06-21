@@ -1,6 +1,9 @@
 import 'package:eh_redux/generated/l10n.dart';
+import 'package:eh_redux/screens/home/store.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 import 'favorite_tab.dart';
 import 'gallery_tab.dart';
@@ -10,14 +13,14 @@ import 'setting_tab.dart';
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
 
-  static String routeName = '/';
+  static String routeName = '/home';
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware {
-  int _currentTab = 0;
+  HomeStore _homeStore;
 
   static const _widgets = <Widget>[
     GalleryTab(),
@@ -25,6 +28,12 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
     HistoryTab(),
     SettingTab(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _homeStore = HomeStore();
+  }
 
   @override
   void didChangeDependencies() {
@@ -42,6 +51,36 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+
+    return Provider.value(
+      value: _homeStore,
+      child: Scaffold(
+        body: Observer(
+          builder: (context) {
+            return _widgets[_homeStore.currentTab];
+          },
+        ),
+        bottomNavigationBar: MediaQuery(
+          data: mediaQuery.copyWith(
+            padding: mediaQuery.padding + mediaQuery.viewInsets,
+          ),
+          child: _buildBottomNav(),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void didPush() {
+    _homeStore.sendCurrentTabToAnalytics();
+  }
+
+  @override
+  void didPopNext() {
+    _homeStore.sendCurrentTabToAnalytics();
+  }
+
+  Widget _buildBottomNav() {
     final tabs = <BottomNavigationBarItem>[
       BottomNavigationBarItem(
         icon: const Icon(Icons.photo_library),
@@ -61,42 +100,18 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
       ),
     ];
 
-    return Scaffold(
-      body: _widgets[_currentTab],
-      bottomNavigationBar: MediaQuery(
-        data: mediaQuery.copyWith(
-          padding: mediaQuery.padding + mediaQuery.viewInsets,
-        ),
-        child: BottomNavigationBar(
+    return Observer(
+      builder: (context) {
+        return BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           items: tabs,
-          onTap: _handleTabTapped,
-          currentIndex: _currentTab,
-        ),
-      ),
-    );
-  }
-
-  @override
-  void didPush() {
-    _sendCurrentTabToAnalytics(_currentTab);
-  }
-
-  @override
-  void didPopNext() {
-    _sendCurrentTabToAnalytics(_currentTab);
-  }
-
-  void _handleTabTapped(int index) {
-    setState(() {
-      _currentTab = index;
-    });
-    _sendCurrentTabToAnalytics(index);
-  }
-
-  void _sendCurrentTabToAnalytics(int index) {
-    analytics.setCurrentScreen(
-      screenName: '${HomeScreen.routeName}homeTab$index',
+          currentIndex: _homeStore.currentTab,
+          onTap: (index) {
+            _homeStore.setCurrentTab(index);
+            _homeStore.updateBottomNavClickedTime();
+          },
+        );
+      },
     );
   }
 }

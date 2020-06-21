@@ -6,6 +6,8 @@ import 'package:eh_redux/widgets/gallery_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'scroll_view.dart';
+
 class GalleryTab extends StatelessWidget {
   const GalleryTab({Key key}) : super(key: key);
 
@@ -13,7 +15,7 @@ class GalleryTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
+    return HomeScrollView(
       headerSliverBuilder: (context, _) => [
         SliverAppBar(
           title: Text(S.of(context).gallery),

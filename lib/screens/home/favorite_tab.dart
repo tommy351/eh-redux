@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'scroll_view.dart';
+
 class FavoriteTab extends StatelessWidget {
   const FavoriteTab({Key key}) : super(key: key);
 
@@ -16,7 +18,7 @@ class FavoriteTab extends StatelessWidget {
     final sessionStore = Provider.of<SessionStore>(context);
     final theme = Theme.of(context);
 
-    return NestedScrollView(
+    return HomeScrollView(
       headerSliverBuilder: (context, _) => [
         SliverAppBar(
           title: Text(S.of(context).favorites),
