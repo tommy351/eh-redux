@@ -173,8 +173,8 @@ class _$ImageTearOff {
 
   _Image call(
       {@required ImageId id,
-      @required int width,
-      @required int height,
+      int width,
+      int height,
       @required String url,
       String reloadKey}) {
     return _Image(
@@ -282,13 +282,11 @@ class __$ImageCopyWithImpl<$Res> extends _$ImageCopyWithImpl<$Res>
 class _$_Image implements _Image {
   const _$_Image(
       {@required this.id,
-      @required this.width,
-      @required this.height,
+      this.width,
+      this.height,
       @required this.url,
       this.reloadKey})
       : assert(id != null),
-        assert(width != null),
-        assert(height != null),
         assert(url != null);
 
   @override
@@ -341,8 +339,8 @@ class _$_Image implements _Image {
 abstract class _Image implements Image {
   const factory _Image(
       {@required ImageId id,
-      @required int width,
-      @required int height,
+      int width,
+      int height,
       @required String url,
       String reloadKey}) = _$_Image;
 

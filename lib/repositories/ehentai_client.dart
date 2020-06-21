@@ -371,10 +371,15 @@ class EHentaiClient {
     return Image(
       id: id,
       url: src,
-      width: int.tryParse(trimSuffix(style['width'], 'px')),
-      height: int.tryParse(trimSuffix(style['height'], 'px')),
+      width: _parseCssPixelSize(style['width']),
+      height: _parseCssPixelSize(style['height']),
       reloadKey: _getReloadKey(img),
     );
+  }
+
+  int _parseCssPixelSize(String s) {
+    if (s == null || s.isEmpty) return null;
+    return int.tryParse(trimSuffix(s, 'px'));
   }
 
   String _getReloadKey(Element img) {

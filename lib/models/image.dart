@@ -17,8 +17,8 @@ abstract class ImageId with _$ImageId {
 abstract class Image with _$Image {
   const factory Image({
     @required ImageId id,
-    @required int width,
-    @required int height,
+    int width,
+    int height,
     @required String url,
     String reloadKey,
   }) = _Image;
