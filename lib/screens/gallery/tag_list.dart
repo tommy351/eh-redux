@@ -32,7 +32,10 @@ class GalleryTagList extends StatelessWidget {
       return SliverList(
         delegate: SliverChildListDelegate.fixed([
           title,
-          Text(S.of(context).tagListEmpty),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Text(S.of(context).tagListEmpty),
+          ),
         ]),
       );
     }
