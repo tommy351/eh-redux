@@ -1,3 +1,4 @@
+import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:eh_redux/screens/setting/screen.dart';
@@ -108,7 +109,7 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
                   actions: <Widget>[
                     IconButton(
                       icon: const Icon(Icons.share),
-                      tooltip: 'Share',
+                      tooltip: S.of(context).share,
                       onPressed: () {
                         if (image != null) {
                           Share.share(
@@ -132,13 +133,13 @@ class _ViewAppBarState extends State<ViewAppBar> with TickerProviderStateMixin {
                         }
                       },
                       itemBuilder: (context) => [
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: _ViewAppBarAction.setting,
-                          child: Text('Settings'),
+                          child: Text(S.of(context).settings),
                         ),
-                        const PopupMenuItem(
+                        PopupMenuItem(
                           value: _ViewAppBarAction.openInBrowser,
-                          child: Text('Open in browser'),
+                          child: Text(S.of(context).openInBrowser),
                         ),
                       ],
                     ),

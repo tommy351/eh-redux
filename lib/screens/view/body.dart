@@ -2,7 +2,9 @@ import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/models/image.dart';
 import 'package:eh_redux/stores/image.dart';
+import 'package:eh_redux/stores/setting.dart';
 import 'package:eh_redux/utils/firebase.dart';
+import 'package:eh_redux/utils/key_event.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +30,12 @@ class ViewBody extends StatefulWidget {
 }
 
 class _ViewBodyState extends State<ViewBody> {
+  static const _pageAnimationDuration = Duration(milliseconds: 500);
+  static const _pageAnimationCurve = Curves.easeOutCubic;
+
   PreloadPageController _pageController;
+  KeyEventListener _keyEventListener;
+  Function _disposeKeyEventListener;
 
   @override
   void initState() {
@@ -36,10 +43,12 @@ class _ViewBodyState extends State<ViewBody> {
     _pageController = PreloadPageController(
       initialPage: widget.initialPage,
     );
+    _keyEventListener = KeyEventListener();
   }
 
   @override
   void dispose() {
+    _setupKeyEventListener(false);
     _pageController.dispose();
     super.dispose();
   }
@@ -47,12 +56,22 @@ class _ViewBodyState extends State<ViewBody> {
   @override
   Widget build(BuildContext context) {
     final viewStore = Provider.of<ViewStore>(context);
+    final settingStore = Provider.of<SettingStore>(context);
 
     return StatefulWrapper(
       onInit: (context) {
-        return reaction((_) => viewStore.currentPage, (int page) {
-          _pageController.jumpToPage(page);
-        });
+        final disposes = <Function>[
+          reaction<int>(
+              (_) => viewStore.currentPage, _pageController.jumpToPage),
+          autorun((_) => _setupKeyEventListener(
+              settingStore.turnPagesWithVolumeKeys.value)),
+        ];
+
+        return () {
+          for (final dispose in disposes) {
+            dispose();
+          }
+        };
       },
       builder: (context) {
         return Stack(
@@ -79,13 +98,11 @@ class _ViewBodyState extends State<ViewBody> {
     return GestureDetector(
       onTapUp: (details) {
         final dx = details.localPosition.dx;
-        const duration = Duration(milliseconds: 500);
-        const curve = Curves.easeOutCubic;
 
         if (dx < width / 3) {
-          _pageController.previousPage(duration: duration, curve: curve);
+          _previousPage();
         } else if (dx > width / 3 * 2) {
-          _pageController.nextPage(duration: duration, curve: curve);
+          _nextPage();
         } else {
           viewStore.toggleNav();
         }
@@ -197,5 +214,42 @@ class _ViewBodyState extends State<ViewBody> {
         );
       },
     );
+  }
+
+  void _previousPage() {
+    _pageController.previousPage(
+        duration: _pageAnimationDuration, curve: _pageAnimationCurve);
+  }
+
+  void _nextPage() {
+    _pageController.nextPage(
+        duration: _pageAnimationDuration, curve: _pageAnimationCurve);
+  }
+
+  void _setupKeyEventListener(bool enabled) {
+    if (enabled) {
+      if (_disposeKeyEventListener != null) return;
+
+      _disposeKeyEventListener = _keyEventListener.listen([
+        KeyCode.volumeDown,
+        KeyCode.volumeUp,
+      ], _handleKeyEvent);
+    } else {
+      if (_disposeKeyEventListener != null) {
+        _disposeKeyEventListener();
+        _disposeKeyEventListener = null;
+      }
+    }
+  }
+
+  void _handleKeyEvent(KeyCode code) {
+    switch (code) {
+      case KeyCode.volumeDown:
+        _nextPage();
+        break;
+      case KeyCode.volumeUp:
+        _previousPage();
+        break;
+    }
   }
 }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:developer' as developer;
 
 import 'package:built_collection/built_collection.dart';
@@ -24,33 +23,34 @@ class KeyEventListener {
   static const _methodChannel = MethodChannel('app.ehredux/method');
   static const _keyDownEventChannel = EventChannel('app.ehredux/event/keyDown');
 
-  final _interceptedKeys = HashSet<KeyCode>();
-  final _subscriptions = <StreamSubscription>[];
+  Function listen(List<KeyCode> keys, KeyEventCallback callback) {
+    _interceptKeyDown(keys);
 
-  Future<void> listenKeyDown(
-      List<KeyCode> keys, KeyEventCallback callback) async {
+    final sub = _keyDownEventChannel.receiveBroadcastStream().listen((event) {
+      final code = KeyCode.valueOf(event as String);
+
+      if (code != null && keys.contains(code)) {
+        callback(code);
+      }
+    });
+
+    return () {
+      _uninterceptKeyDown(keys);
+      sub.cancel();
+    };
+  }
+
+  Future<void> _interceptKeyDown(List<KeyCode> keys) async {
     for (final key in keys) {
       await _methodChannel.invokeMethod('interceptKeyDown', key.toString());
       developer.log('Intercept key down: $key');
-      _interceptedKeys.add(key);
     }
-
-    final subscription =
-        _keyDownEventChannel.receiveBroadcastStream().listen((event) {
-      callback(KeyCode.valueOf(event as String));
-    });
-
-    _subscriptions.add(subscription);
   }
 
-  Future<void> dispose() async {
-    for (final key in _interceptedKeys) {
+  Future<void> _uninterceptKeyDown(List<KeyCode> keys) async {
+    for (final key in keys) {
       await _methodChannel.invokeMethod('uninterceptKeyDown', key.toString());
       developer.log('Unintercept key down: $key');
-    }
-
-    for (final sub in _subscriptions) {
-      await sub.cancel();
     }
   }
 }

@@ -62,23 +62,25 @@ class MainActivity : FlutterActivity() {
 
             when (call.method) {
                 "interceptKeyDown" -> {
-                    val code = KEYCODE_MAP[call.arguments]
+                    val arg = call.arguments
+                    val code = KEYCODE_MAP[arg]
 
                     if (code != null) {
                         interceptedKeyDownEvents.add(code)
                         result.success(code)
                     } else {
-                        result.error("UNKNOWN_KEY", "Unknown key", null)
+                        result.error("UNKNOWN_KEY", "Unknown key: $arg", null)
                     }
                 }
                 "uninterceptKeyDown" -> {
-                    val code = KEYCODE_MAP[call.arguments]
+                    val arg = call.arguments
+                    val code = KEYCODE_MAP[arg]
 
                     if (code != null) {
                         interceptedKeyDownEvents.remove(code)
                         result.success(code)
                     } else {
-                        result.error("UNKNOWN_KEY", "Unknown key", null)
+                        result.error("UNKNOWN_KEY", "Unknown key: $arg", null)
                     }
                 }
                 else -> result.notImplemented()
