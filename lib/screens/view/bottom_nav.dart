@@ -50,9 +50,11 @@ class _ViewBottomNavigationState extends State<ViewBottomNavigation>
     return StatefulWrapper(
       onInit: (context) {
         final disposes = <Function>[
-          reaction((_) => viewStore.currentPage, (int page) {
+          autorun((_) {
+            final currentPage = viewStore.currentPage;
+
             setState(() {
-              _value = page.toDouble();
+              _value = currentPage.toDouble();
             });
           }),
           reaction((_) => viewStore.navVisible, (bool visible) {
