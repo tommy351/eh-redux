@@ -80,7 +80,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
           },
           itemBuilder: (context, value) {
             return ListTile(
-              leading: Icon(Icons.history),
+              leading: const Icon(Icons.history),
               title: Text(value.query),
             );
           },
