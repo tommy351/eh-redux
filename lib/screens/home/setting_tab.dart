@@ -115,7 +115,7 @@ class _SettingTabState extends State<SettingTab> {
         }
 
         return ListTile(
-          title: const Text('Log in'),
+          title: Text(S.of(context).logIn),
           leading: const Icon(Icons.person),
           enabled: sessionStore.loginStatus != LoginStatus.pending,
           onTap: () {
