@@ -2,6 +2,7 @@ import 'package:built_collection/built_collection.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/models/pagination.dart';
 import 'package:eh_redux/screens/gallery/args.dart';
 import 'package:eh_redux/screens/gallery/screen.dart';
 import 'package:eh_redux/stores/gallery.dart';
@@ -46,7 +47,6 @@ class _GalleryListState extends State<GalleryList> {
   @override
   Widget build(BuildContext context) {
     final galleryStore = Provider.of<GalleryStore>(context);
-    final theme = Theme.of(context);
     final scrollController = PrimaryScrollController.of(context);
 
     return StatefulWrapper(
@@ -75,15 +75,8 @@ class _GalleryListState extends State<GalleryList> {
 
           final index = pagination.index;
 
-          if (index.isEmpty) {
-            if (pagination.loading) {
-              return const CenterProgressIndicator();
-            }
-
-            return Center(
-              child: Text(S.of(context).galleryListEmpty,
-                  style: theme.textTheme.headline6),
-            );
+          if (index.isEmpty && pagination.loading) {
+            return const CenterProgressIndicator();
           }
 
           final galleries = index
@@ -94,21 +87,9 @@ class _GalleryListState extends State<GalleryList> {
             onRefresh: () async {
               await galleryStore.refreshPage(widget.paginationKey);
             },
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              itemBuilder: (context, i) {
-                if (i >= galleries.length) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: CenterProgressIndicator(),
-                  );
-                }
-
-                return _buildRow(galleries.elementAt(i));
-              },
-              itemCount:
-                  pagination.noMore ? galleries.length : galleries.length + 1,
-            ),
+            child: galleries.isEmpty
+                ? _buildEmptyHint()
+                : _buildList(pagination: pagination, galleries: galleries),
           );
         },
       ),
@@ -120,6 +101,48 @@ class _GalleryListState extends State<GalleryList> {
       final galleryStore = Provider.of<GalleryStore>(context, listen: false);
       galleryStore.loadInitialPage(widget.paginationKey);
     });
+  }
+
+  Widget _buildEmptyHint() {
+    final theme = Theme.of(context);
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constraints.maxHeight,
+            ),
+            child: Center(
+              child: Text(
+                S.of(context).galleryListEmpty,
+                style: theme.textTheme.headline6,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildList({
+    @required Pagination<GalleryId> pagination,
+    @required Iterable<Gallery> galleries,
+  }) {
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      itemBuilder: (context, i) {
+        if (i >= galleries.length) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: CenterProgressIndicator(),
+          );
+        }
+
+        return _buildRow(galleries.elementAt(i));
+      },
+      itemCount: pagination.noMore ? galleries.length : galleries.length + 1,
+    );
   }
 
   Widget _buildRow(Gallery gallery) {
