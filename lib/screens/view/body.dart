@@ -95,20 +95,22 @@ class _ViewBodyState extends State<ViewBody> {
     final viewStore = Provider.of<ViewStore>(context);
     final width = MediaQuery.of(context).size.width;
 
-    return GestureDetector(
-      onTapUp: (details) {
-        final dx = details.localPosition.dx;
+    return PhotoViewGestureDetectorScope(
+      axis: Axis.horizontal,
+      child: GestureDetector(
+        onTapUp: (details) {
+          final dx = details.localPosition.dx;
 
-        if (dx < width / 3) {
-          _previousPage();
-        } else if (dx > width / 3 * 2) {
-          _nextPage();
-        } else {
-          viewStore.toggleNav();
-        }
-      },
-      child: PhotoViewGestureDetectorScope(
+          if (dx < width / 3) {
+            _previousPage();
+          } else if (dx > width / 3 * 2) {
+            _nextPage();
+          } else {
+            viewStore.toggleNav();
+          }
+        },
         child: PreloadPageView.builder(
+          scrollDirection: Axis.horizontal,
           itemCount: gallery.fileCount,
           onPageChanged: (value) {
             viewStore.setPage(value);
@@ -138,7 +140,7 @@ class _ViewBodyState extends State<ViewBody> {
             );
 
         return PhotoView(
-          key: ValueKey(options),
+          key: ObjectKey(options),
           loadingBuilder: (_, event) => _buildLoading(event),
           imageProvider: ViewImage(
             imageStore: imageStore,
