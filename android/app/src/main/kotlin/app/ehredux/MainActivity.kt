@@ -58,8 +58,6 @@ class MainActivity : FlutterActivity() {
         })
 
         MethodChannel(flutterEngine.dartExecutor, METHOD_CHANNEL).setMethodCallHandler { call, result ->
-            print("method channel $call")
-
             when (call.method) {
                 "interceptKeyDown" -> {
                     val arg = call.arguments

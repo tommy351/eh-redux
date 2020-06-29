@@ -110,7 +110,6 @@ class _ViewBodyState extends State<ViewBody> {
           }
         },
         child: PreloadPageView.builder(
-          scrollDirection: Axis.horizontal,
           itemCount: gallery.fileCount,
           onPageChanged: (value) {
             viewStore.setPage(value);
