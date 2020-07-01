@@ -34,14 +34,6 @@ class SearchBody extends StatelessWidget {
                 Scaffold.of(context).openEndDrawer();
               },
             ),
-            IconButton(
-              icon: const Icon(Icons.search),
-              tooltip: S.of(context).search,
-              onPressed: () {
-                searchStore.updatePaginationKey();
-                FocusScope.of(context).unfocus();
-              },
-            )
           ],
         ),
       ],
