@@ -65,6 +65,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
+
         release {
             signingConfig signingConfigs.release
         }
