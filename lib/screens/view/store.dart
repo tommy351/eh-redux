@@ -1,6 +1,7 @@
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/models/image.dart';
 import 'package:eh_redux/tables/gallery.dart';
+import 'package:eh_redux/utils/firebase.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 
@@ -28,10 +29,10 @@ abstract class _ViewStoreBase with Store {
   ObservableMap<GalleryIdWithPage, ImageLoadOptions> loadOptions =
       ObservableMap.of({});
 
-  // ignore: use_setters_to_change_properties
   @action
   void setPage(int page) {
     currentPage = page;
+    analytics.logEvent(name: 'update_view_page');
   }
 
   @action

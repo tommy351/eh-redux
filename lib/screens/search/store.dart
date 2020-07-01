@@ -3,6 +3,7 @@ import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/tables/database.dart';
 import 'package:eh_redux/tables/search_history.dart';
+import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
@@ -72,6 +73,8 @@ abstract class _SearchStoreBase with Store {
       advancedOptions: BuiltMap<String, bool>(advancedOptions),
       minimumRating: minimumRating,
     );
+
+    analytics.logSearch(searchTerm: query);
 
     await searchHistoriesDao.insertEntry(SearchHistoryEntry(
       query: query,

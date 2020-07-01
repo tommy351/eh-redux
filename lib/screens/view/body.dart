@@ -113,7 +113,6 @@ class _ViewBodyState extends State<ViewBody> {
           itemCount: gallery.fileCount,
           onPageChanged: (value) {
             viewStore.setPage(value);
-            analytics.logEvent(name: 'update_view_page');
           },
           controller: _pageController,
           itemBuilder: (context, index) {
@@ -179,6 +178,8 @@ class _ViewBodyState extends State<ViewBody> {
         OutlineButton(
           onPressed: () {
             final image = imageStore.getImageByPage(page);
+
+            analytics.logEvent(name: 'retry_image');
 
             viewStore.updateLoadOption(ImageLoadOptions(
               galleryId: page.galleryId,
