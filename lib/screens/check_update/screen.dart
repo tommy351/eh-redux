@@ -119,24 +119,25 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
   }
 
   Widget _buildDownloadButton(GitHubRelease release) {
-    final asset = release.assets.firstWhere((asset) =>
-        asset.contentType == 'application/vnd.android.package-archive' &&
-        asset.state == 'uploaded' &&
-        asset.name.contains('arm64-v8a'));
+    return Observer(
+      builder: (context) {
+        final asset = _store.asset;
 
-    if (asset == null || _store.status != UpdateStatus.canUpdate) {
-      return FlatButton(
-        onPressed: null,
-        child: Text(S.of(context).upToDate),
-      );
-    }
+        if (asset == null || _store.status != UpdateStatus.canUpdate) {
+          return FlatButton(
+            onPressed: null,
+            child: Text(S.of(context).upToDate),
+          );
+        }
 
-    return RaisedButton.icon(
-      onPressed: () {
-        tryLaunch(asset.browserDownloadUrl);
+        return RaisedButton.icon(
+          onPressed: () {
+            tryLaunch(asset.browserDownloadUrl);
+          },
+          icon: Icon(Icons.file_download),
+          label: Text(S.of(context).downloadButtonLabel(filesize(asset.size))),
+        );
       },
-      icon: Icon(Icons.file_download),
-      label: Text(S.of(context).downloadButtonLabel(filesize(asset.size))),
     );
   }
 }

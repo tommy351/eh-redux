@@ -54,7 +54,7 @@ Map<String, dynamic> _$_$_GitHubReleaseToJson(_$_GitHubRelease instance) =>
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CheckUpdateStore on _CheckUpdateStoreBase, Store {
   Computed<UpdateStatus> _$statusComputed;
@@ -63,6 +63,13 @@ mixin _$CheckUpdateStore on _CheckUpdateStoreBase, Store {
   UpdateStatus get status =>
       (_$statusComputed ??= Computed<UpdateStatus>(() => super.status,
               name: '_CheckUpdateStoreBase.status'))
+          .value;
+  Computed<GitHubAsset> _$assetComputed;
+
+  @override
+  GitHubAsset get asset =>
+      (_$assetComputed ??= Computed<GitHubAsset>(() => super.asset,
+              name: '_CheckUpdateStoreBase.asset'))
           .value;
 
   final _$releaseFutureAtom = Atom(name: '_CheckUpdateStoreBase.releaseFuture');
@@ -96,6 +103,23 @@ mixin _$CheckUpdateStore on _CheckUpdateStoreBase, Store {
     });
   }
 
+  final _$androidDeviceInfoFutureAtom =
+      Atom(name: '_CheckUpdateStoreBase.androidDeviceInfoFuture');
+
+  @override
+  ObservableFuture<AndroidDeviceInfo> get androidDeviceInfoFuture {
+    _$androidDeviceInfoFutureAtom.reportRead();
+    return super.androidDeviceInfoFuture;
+  }
+
+  @override
+  set androidDeviceInfoFuture(ObservableFuture<AndroidDeviceInfo> value) {
+    _$androidDeviceInfoFutureAtom
+        .reportWrite(value, super.androidDeviceInfoFuture, () {
+      super.androidDeviceInfoFuture = value;
+    });
+  }
+
   final _$_CheckUpdateStoreBaseActionController =
       ActionController(name: '_CheckUpdateStoreBase');
 
@@ -115,7 +139,9 @@ mixin _$CheckUpdateStore on _CheckUpdateStoreBase, Store {
     return '''
 releaseFuture: ${releaseFuture},
 packageInfoFuture: ${packageInfoFuture},
-status: ${status}
+androidDeviceInfoFuture: ${androidDeviceInfoFuture},
+status: ${status},
+asset: ${asset}
     ''';
   }
 }

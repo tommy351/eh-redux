@@ -506,6 +506,28 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
     }
     return map;
   }
+
+  @override
+  String toString() {
+    return (StringBuffer('GalleriesCompanion(')
+          ..write('id: $id, ')
+          ..write('token: $token, ')
+          ..write('title: $title, ')
+          ..write('titleJpn: $titleJpn, ')
+          ..write('category: $category, ')
+          ..write('thumbnail: $thumbnail, ')
+          ..write('uploader: $uploader, ')
+          ..write('fileCount: $fileCount, ')
+          ..write('fileSize: $fileSize, ')
+          ..write('expunged: $expunged, ')
+          ..write('rating: $rating, ')
+          ..write('posted: $posted, ')
+          ..write('tags: $tags, ')
+          ..write('lastReadAt: $lastReadAt, ')
+          ..write('lastReadPage: $lastReadPage')
+          ..write(')'))
+        .toString();
+  }
 }
 
 class $GalleriesTable extends Galleries
@@ -948,6 +970,15 @@ class SearchHistoriesCompanion extends UpdateCompanion<SearchHistoryEntry> {
       map['last_queried_at'] = Variable<DateTime>(lastQueriedAt.value);
     }
     return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SearchHistoriesCompanion(')
+          ..write('query: $query, ')
+          ..write('lastQueriedAt: $lastQueriedAt')
+          ..write(')'))
+        .toString();
   }
 }
 
