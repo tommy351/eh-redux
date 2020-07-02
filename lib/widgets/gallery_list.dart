@@ -146,53 +146,63 @@ class _GalleryListState extends State<GalleryList> {
   }
 
   Widget _buildRow(Gallery gallery) {
-    const thumbWidth = 112.0;
-    const thumbHeight = 112.0;
+    const thumbWidth = 100.0;
+    const thumbHeight = 100.0;
+    const dividerHeight = 12.0;
 
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, GalleryScreen.routeName,
             arguments: GalleryScreenArguments(id: gallery.id));
       },
-      child: Row(
-        key: Key('${gallery.id.id}'),
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          CachedNetworkImage(
-            imageUrl: gallery.thumbnail,
-            width: thumbWidth,
-            height: thumbHeight,
-            fit: BoxFit.cover,
-          ),
-          Expanded(
-            child: Container(
-              height: thumbHeight,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 8, bottom: 8, left: 16, right: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Expanded(
-                            child: _buildTitle(gallery),
-                          ),
-                          _buildTagList(gallery.tags),
-                          const SizedBox(height: 8),
-                          _buildHeader(gallery),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(height: 1),
-                ],
+      child: Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          key: ValueKey(gallery),
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 8, right: 16),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: CachedNetworkImage(
+                  imageUrl: gallery.thumbnail,
+                  width: thumbWidth,
+                  height: thumbHeight,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Container(
+                height: thumbHeight + dividerHeight,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              child: _buildTitle(gallery),
+                            ),
+                            _buildTagList(gallery.tags),
+                            const SizedBox(height: 8),
+                            _buildHeader(gallery),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: dividerHeight - 1),
+                    const Divider(height: 1),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -212,9 +222,10 @@ class _GalleryListState extends State<GalleryList> {
         ),
         const Spacer(),
         Text(
-          '${gallery.rating}',
+          gallery.rating.toStringAsFixed(2),
           style: theme.textTheme.caption,
         ),
+        const SizedBox(width: 4),
         RatingBar(
           gallery.rating,
           size: 16,
@@ -237,7 +248,7 @@ class _GalleryListState extends State<GalleryList> {
           displayJapaneseTitle && gallery.titleJpn.isNotEmpty
               ? gallery.titleJpn
               : gallery.title,
-          style: theme.textTheme.subtitle1,
+          style: theme.textTheme.subtitle1.copyWith(height: 1.4),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         );
