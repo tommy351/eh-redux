@@ -134,6 +134,7 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
           onPressed: () {
             tryLaunch(asset.browserDownloadUrl);
           },
+          color: Theme.of(context).accentColor,
           icon: Icon(Icons.file_download),
           label: Text(S.of(context).downloadButtonLabel(filesize(asset.size))),
         );
