@@ -39,7 +39,7 @@ dependencies:
   flutter_markdown: ^0.4.2
   freezed_annotation: ^0.11.0
   json_annotation: ^3.0.1
-  moor: ^3.1.0
+  moor: 3.1.0
   moor_ffi: ^0.5.0
   path: ^1.6.4
   path_provider: ^1.6.11
@@ -58,7 +58,7 @@ dev_dependencies:
   freezed: ^0.11.2
   json_serializable: ^3.3.0
   json_serializable_immutable_collections: ^0.3.0
-  moor_generator: ^3.1.0
+  moor_generator: 3.1.0
 
 flutter:
   uses-material-design: true

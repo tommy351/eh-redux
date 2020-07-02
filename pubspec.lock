@@ -15,13 +15,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.39.11"
-  analyzer_plugin:
+  analyzer_plugin_fork:
     dependency: transitive
     description:
-      name: analyzer_plugin
+      name: analyzer_plugin_fork
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.4"
+    version: "0.2.2"
   archive:
     dependency: transitive
     description:
@@ -531,7 +531,7 @@ packages:
       name: moor
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.0"
+    version: "3.1.0"
   moor_ffi:
     dependency: "direct main"
     description:
@@ -545,7 +545,7 @@ packages:
       name: moor_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.0"
+    version: "3.1.0"
   nested:
     dependency: transitive
     description:
@@ -809,7 +809,7 @@ packages:
       name: sqlparser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.0"
+    version: "0.9.0"
   stack_trace:
     dependency: transitive
     description:
