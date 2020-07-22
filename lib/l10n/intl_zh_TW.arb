@@ -83,5 +83,17 @@
   "clearReadingHistory": "清除閱讀紀錄",
   "clearReadingHistoryDialogTitle": "清除閱讀紀錄？",
   "clearReadingHistoryDialogContent": "儲存在此裝置上的所有閱讀紀錄都會被刪除。",
-  "readingHistoryClearSuccess": "閱讀紀錄清除成功。"
+  "readingHistoryClearSuccess": "閱讀紀錄清除成功。",
+  "downloads": "下載",
+  "pause": "暫停",
+  "resume": "繼續",
+  "delete": "刪除",
+  "cancel": "取消",
+  "startAll": "全部開始",
+  "pauseAll": "全部暫停",
+  "downloadStateCreated": "等待下載",
+  "downloadStateStarted": "下載中",
+  "downloadStatePaused": "暫停",
+  "downloadStateFailed": "下載失敗",
+  "downloadStateSucceeded": "下載成功"
 }

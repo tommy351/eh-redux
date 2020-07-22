@@ -6,6 +6,8 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'converter.dart';
+import 'download_task.dart';
+import 'downloaded_image.dart';
 import 'gallery.dart';
 import 'search_history.dart';
 
@@ -23,8 +25,18 @@ LazyDatabase _openConnection() {
 }
 
 @UseMoor(
-  tables: [Galleries, SearchHistories],
-  daos: [GalleriesDao, SearchHistoriesDao],
+  tables: [
+    Galleries,
+    SearchHistories,
+    DownloadTasks,
+    DownloadedImages,
+  ],
+  daos: [
+    GalleriesDao,
+    SearchHistoriesDao,
+    DownloadTasksDao,
+    DownloadedImagesDao,
+  ],
 )
 class Database extends _$Database {
   // we tell the database where to store the data with this constructor
@@ -33,5 +45,18 @@ class Database extends _$Database {
   // you should bump this number whenever you change or add a table definition. Migrations
   // are covered later in this readme.
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (Migrator m) {
+          return m.createAll();
+        },
+        onUpgrade: (Migrator m, int from, int to) async {
+          if (from == 1) {
+            await m.createTable(downloadTasks);
+            await m.createTable(downloadedImages);
+          }
+        },
+      );
 }

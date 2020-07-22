@@ -1,12 +1,16 @@
 import 'package:eh_redux/generated/l10n.dart';
+import 'package:eh_redux/models/download.dart';
 import 'package:eh_redux/models/favorite_colors.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/screens/view/args.dart';
 import 'package:eh_redux/screens/view/screen.dart';
+import 'package:eh_redux/stores/download.dart';
 import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/stores/session.dart';
+import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'fav_sheet.dart';
@@ -131,6 +135,7 @@ class GalleryActions extends StatelessWidget {
     return ButtonBar(
       children: <Widget>[
         _buildFavButton(context),
+        _buildDownloadButton(context),
         _buildReadButton(context),
       ],
     );
@@ -185,6 +190,57 @@ class GalleryActions extends StatelessWidget {
           isScrollControlled: true,
           builder: (context) {
             return GalleryFavSheet(galleryId: gallery.id);
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildDownloadButton(BuildContext context) {
+    final gallery = Provider.of<Gallery>(context);
+    final galleryStore = Provider.of<GalleryStore>(context);
+    final downloadStore = Provider.of<DownloadStore>(context);
+    final galleryId = gallery.id.id;
+
+    return StatefulWrapper(
+      onInit: (context) {
+        final sub = downloadStore.watchOne(galleryId);
+        return () => sub.cancel();
+      },
+      builder: (context) {
+        return Observer(
+          builder: (context) {
+            final task = downloadStore.data[galleryId];
+
+            switch (task?.state) {
+              case DownloadTaskState.started:
+                // TODO: Show "Pause"
+                break;
+              case DownloadTaskState.paused:
+                // TODO: Show "Resume"
+                break;
+              case DownloadTaskState.failed:
+                // TODO: Show "Retry" if possible
+                break;
+              case DownloadTaskState.succeeded:
+                // TODO: Show context menu?
+                break;
+            }
+
+            return IconButton(
+              onPressed: () async {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return GalleryDownloadSheet();
+                  },
+                );
+                await galleryStore.saveGallery(gallery.id);
+                await downloadStore.start(DownloadTask.fromGallery(gallery));
+              },
+              icon: const Icon(Icons.file_download),
+              tooltip: S.of(context).downloads,
+            );
           },
         );
       },

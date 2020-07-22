@@ -11,11 +11,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'app_bar.dart';
 import 'args.dart';
-import 'body.dart';
-import 'bottom_nav.dart';
 import 'store.dart';
+import 'widgets/app_bar.dart';
+import 'widgets/body.dart';
+import 'widgets/bottom_nav.dart';
 
 class ViewScreen extends StatelessWidget {
   const ViewScreen({Key key}) : super(key: key);

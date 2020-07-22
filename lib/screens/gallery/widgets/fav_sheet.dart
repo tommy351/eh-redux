@@ -1,7 +1,6 @@
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/favorite_colors.dart';
 import 'package:eh_redux/models/gallery.dart';
-import 'package:eh_redux/screens/gallery/fav_sheet_store.dart';
 import 'package:eh_redux/stores/favorite.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
@@ -11,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
+
+import 'fav_sheet_store.dart';
 
 class GalleryFavSheet extends StatefulWidget {
   const GalleryFavSheet({
@@ -148,7 +149,7 @@ class _FavSheetContent extends StatelessWidget {
                       .then((_) => Navigator.pop(context));
                 },
                 textColor: Colors.red,
-                icon: Icon(Icons.delete),
+                icon: const Icon(Icons.delete),
                 label:
                     Text(MaterialLocalizations.of(context).deleteButtonTooltip),
               ),
@@ -157,7 +158,7 @@ class _FavSheetContent extends StatelessWidget {
                 onPressed: () {
                   store.addToFavorite().then((_) => Navigator.pop(context));
                 },
-                icon: Icon(Icons.add),
+                icon: const Icon(Icons.add),
                 label: Text(S.of(context).add),
               ),
             ],

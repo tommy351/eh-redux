@@ -17,6 +17,7 @@ abstract class _HomeStoreBase with Store {
   static const _tabName = <String>[
     'gallery',
     'favorite',
+    'download',
     'history',
     'setting',
   ];

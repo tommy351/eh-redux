@@ -1,6 +1,7 @@
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/models/image.dart';
+import 'package:eh_redux/screens/view/store.dart';
 import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/stores/setting.dart';
 import 'package:eh_redux/utils/firebase.dart';
@@ -15,7 +16,6 @@ import 'package:preload_page_view/preload_page_view.dart';
 import 'package:provider/provider.dart';
 
 import 'image_provider.dart';
-import 'store.dart';
 
 class ViewBody extends StatefulWidget {
   const ViewBody({

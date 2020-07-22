@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'favorite_tab.dart';
-import 'gallery_tab.dart';
-import 'history_tab.dart';
-import 'setting_tab.dart';
+import 'widgets/download_tab.dart';
+import 'widgets/favorite_tab.dart';
+import 'widgets/gallery_tab.dart';
+import 'widgets/history_tab.dart';
+import 'widgets/setting_tab.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -25,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   static const _widgets = <Widget>[
     GalleryTab(),
     FavoriteTab(),
+    DownloadTab(),
     HistoryTab(),
     SettingTab(),
   ];
@@ -91,6 +93,10 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
         title: Text(S.of(context).favorites),
       ),
       BottomNavigationBarItem(
+        icon: const Icon(Icons.file_download),
+        title: Text(S.of(context).downloads),
+      ),
+      BottomNavigationBarItem(
         icon: const Icon(Icons.history),
         title: Text(S.of(context).history),
       ),
@@ -103,7 +109,6 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
     return Observer(
       builder: (context) {
         return BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
           items: tabs,
           currentIndex: _homeStore.currentTab,
           onTap: (index) {

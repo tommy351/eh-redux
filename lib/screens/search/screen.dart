@@ -1,12 +1,13 @@
-import 'package:eh_redux/screens/search/args.dart';
-import 'package:eh_redux/screens/search/body.dart';
-import 'package:eh_redux/screens/search/filter.dart';
-import 'package:eh_redux/screens/search/store.dart';
 import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/tables/database.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'args.dart';
+import 'store.dart';
+import 'widgets/body.dart';
+import 'widgets/filter.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key key}) : super(key: key);

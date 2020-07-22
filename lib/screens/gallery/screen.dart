@@ -1,7 +1,4 @@
 import 'package:eh_redux/models/gallery.dart';
-import 'package:eh_redux/screens/gallery/actions.dart';
-import 'package:eh_redux/screens/gallery/rating.dart';
-import 'package:eh_redux/screens/gallery/tag_list.dart';
 import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/widgets/center_progress_indicator.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
@@ -10,10 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
-import 'app_bar.dart';
 import 'args.dart';
-import 'header.dart';
-import 'info.dart';
+import 'widgets/actions.dart';
+import 'widgets/app_bar.dart';
+import 'widgets/header.dart';
+import 'widgets/info.dart';
+import 'widgets/rating.dart';
+import 'widgets/tag_list.dart';
 
 class GalleryScreen extends StatelessWidget {
   const GalleryScreen({Key key}) : super(key: key);

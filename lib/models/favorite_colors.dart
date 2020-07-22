@@ -1,4 +1,6 @@
-import 'package:flutter/material.dart';
+import 'dart:ui' show Color;
+
+import 'package:flutter/material.dart' show Colors;
 
 const favoriteColors = <Color>[
   Colors.grey,

@@ -506,28 +506,6 @@ class GalleriesCompanion extends UpdateCompanion<GalleryEntry> {
     }
     return map;
   }
-
-  @override
-  String toString() {
-    return (StringBuffer('GalleriesCompanion(')
-          ..write('id: $id, ')
-          ..write('token: $token, ')
-          ..write('title: $title, ')
-          ..write('titleJpn: $titleJpn, ')
-          ..write('category: $category, ')
-          ..write('thumbnail: $thumbnail, ')
-          ..write('uploader: $uploader, ')
-          ..write('fileCount: $fileCount, ')
-          ..write('fileSize: $fileSize, ')
-          ..write('expunged: $expunged, ')
-          ..write('rating: $rating, ')
-          ..write('posted: $posted, ')
-          ..write('tags: $tags, ')
-          ..write('lastReadAt: $lastReadAt, ')
-          ..write('lastReadPage: $lastReadPage')
-          ..write(')'))
-        .toString();
-  }
 }
 
 class $GalleriesTable extends Galleries
@@ -971,15 +949,6 @@ class SearchHistoriesCompanion extends UpdateCompanion<SearchHistoryEntry> {
     }
     return map;
   }
-
-  @override
-  String toString() {
-    return (StringBuffer('SearchHistoriesCompanion(')
-          ..write('query: $query, ')
-          ..write('lastQueriedAt: $lastQueriedAt')
-          ..write(')'))
-        .toString();
-  }
 }
 
 class $SearchHistoriesTable extends SearchHistories
@@ -1057,6 +1026,773 @@ class $SearchHistoriesTable extends SearchHistories
   }
 }
 
+class DownloadTaskEntry extends DataClass
+    implements Insertable<DownloadTaskEntry> {
+  final int galleryId;
+  final String state;
+  final int current;
+  final int total;
+  final DateTime createdAt;
+  DownloadTaskEntry(
+      {@required this.galleryId,
+      @required this.state,
+      @required this.current,
+      @required this.total,
+      @required this.createdAt});
+  factory DownloadTaskEntry.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final stringType = db.typeSystem.forDartType<String>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    return DownloadTaskEntry(
+      galleryId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}gallery_id']),
+      state:
+          stringType.mapFromDatabaseResponse(data['${effectivePrefix}state']),
+      current:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}current']),
+      total: intType.mapFromDatabaseResponse(data['${effectivePrefix}total']),
+      createdAt: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}created_at']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || galleryId != null) {
+      map['gallery_id'] = Variable<int>(galleryId);
+    }
+    if (!nullToAbsent || state != null) {
+      map['state'] = Variable<String>(state);
+    }
+    if (!nullToAbsent || current != null) {
+      map['current'] = Variable<int>(current);
+    }
+    if (!nullToAbsent || total != null) {
+      map['total'] = Variable<int>(total);
+    }
+    if (!nullToAbsent || createdAt != null) {
+      map['created_at'] = Variable<DateTime>(createdAt);
+    }
+    return map;
+  }
+
+  DownloadTasksCompanion toCompanion(bool nullToAbsent) {
+    return DownloadTasksCompanion(
+      galleryId: galleryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(galleryId),
+      state:
+          state == null && nullToAbsent ? const Value.absent() : Value(state),
+      current: current == null && nullToAbsent
+          ? const Value.absent()
+          : Value(current),
+      total:
+          total == null && nullToAbsent ? const Value.absent() : Value(total),
+      createdAt: createdAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdAt),
+    );
+  }
+
+  factory DownloadTaskEntry.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return DownloadTaskEntry(
+      galleryId: serializer.fromJson<int>(json['galleryId']),
+      state: serializer.fromJson<String>(json['state']),
+      current: serializer.fromJson<int>(json['current']),
+      total: serializer.fromJson<int>(json['total']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'galleryId': serializer.toJson<int>(galleryId),
+      'state': serializer.toJson<String>(state),
+      'current': serializer.toJson<int>(current),
+      'total': serializer.toJson<int>(total),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  DownloadTaskEntry copyWith(
+          {int galleryId,
+          String state,
+          int current,
+          int total,
+          DateTime createdAt}) =>
+      DownloadTaskEntry(
+        galleryId: galleryId ?? this.galleryId,
+        state: state ?? this.state,
+        current: current ?? this.current,
+        total: total ?? this.total,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('DownloadTaskEntry(')
+          ..write('galleryId: $galleryId, ')
+          ..write('state: $state, ')
+          ..write('current: $current, ')
+          ..write('total: $total, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      galleryId.hashCode,
+      $mrjc(state.hashCode,
+          $mrjc(current.hashCode, $mrjc(total.hashCode, createdAt.hashCode)))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is DownloadTaskEntry &&
+          other.galleryId == this.galleryId &&
+          other.state == this.state &&
+          other.current == this.current &&
+          other.total == this.total &&
+          other.createdAt == this.createdAt);
+}
+
+class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
+  final Value<int> galleryId;
+  final Value<String> state;
+  final Value<int> current;
+  final Value<int> total;
+  final Value<DateTime> createdAt;
+  const DownloadTasksCompanion({
+    this.galleryId = const Value.absent(),
+    this.state = const Value.absent(),
+    this.current = const Value.absent(),
+    this.total = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  DownloadTasksCompanion.insert({
+    this.galleryId = const Value.absent(),
+    @required String state,
+    @required int current,
+    @required int total,
+    @required DateTime createdAt,
+  })  : state = Value(state),
+        current = Value(current),
+        total = Value(total),
+        createdAt = Value(createdAt);
+  static Insertable<DownloadTaskEntry> custom({
+    Expression<int> galleryId,
+    Expression<String> state,
+    Expression<int> current,
+    Expression<int> total,
+    Expression<DateTime> createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (galleryId != null) 'gallery_id': galleryId,
+      if (state != null) 'state': state,
+      if (current != null) 'current': current,
+      if (total != null) 'total': total,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  DownloadTasksCompanion copyWith(
+      {Value<int> galleryId,
+      Value<String> state,
+      Value<int> current,
+      Value<int> total,
+      Value<DateTime> createdAt}) {
+    return DownloadTasksCompanion(
+      galleryId: galleryId ?? this.galleryId,
+      state: state ?? this.state,
+      current: current ?? this.current,
+      total: total ?? this.total,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (galleryId.present) {
+      map['gallery_id'] = Variable<int>(galleryId.value);
+    }
+    if (state.present) {
+      map['state'] = Variable<String>(state.value);
+    }
+    if (current.present) {
+      map['current'] = Variable<int>(current.value);
+    }
+    if (total.present) {
+      map['total'] = Variable<int>(total.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+}
+
+class $DownloadTasksTable extends DownloadTasks
+    with TableInfo<$DownloadTasksTable, DownloadTaskEntry> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $DownloadTasksTable(this._db, [this._alias]);
+  final VerificationMeta _galleryIdMeta = const VerificationMeta('galleryId');
+  GeneratedIntColumn _galleryId;
+  @override
+  GeneratedIntColumn get galleryId => _galleryId ??= _constructGalleryId();
+  GeneratedIntColumn _constructGalleryId() {
+    return GeneratedIntColumn(
+      'gallery_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _stateMeta = const VerificationMeta('state');
+  GeneratedTextColumn _state;
+  @override
+  GeneratedTextColumn get state => _state ??= _constructState();
+  GeneratedTextColumn _constructState() {
+    return GeneratedTextColumn(
+      'state',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _currentMeta = const VerificationMeta('current');
+  GeneratedIntColumn _current;
+  @override
+  GeneratedIntColumn get current => _current ??= _constructCurrent();
+  GeneratedIntColumn _constructCurrent() {
+    return GeneratedIntColumn(
+      'current',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _totalMeta = const VerificationMeta('total');
+  GeneratedIntColumn _total;
+  @override
+  GeneratedIntColumn get total => _total ??= _constructTotal();
+  GeneratedIntColumn _constructTotal() {
+    return GeneratedIntColumn(
+      'total',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _createdAtMeta = const VerificationMeta('createdAt');
+  GeneratedDateTimeColumn _createdAt;
+  @override
+  GeneratedDateTimeColumn get createdAt => _createdAt ??= _constructCreatedAt();
+  GeneratedDateTimeColumn _constructCreatedAt() {
+    return GeneratedDateTimeColumn(
+      'created_at',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [galleryId, state, current, total, createdAt];
+  @override
+  $DownloadTasksTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'download_tasks';
+  @override
+  final String actualTableName = 'download_tasks';
+  @override
+  VerificationContext validateIntegrity(Insertable<DownloadTaskEntry> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('gallery_id')) {
+      context.handle(_galleryIdMeta,
+          galleryId.isAcceptableOrUnknown(data['gallery_id'], _galleryIdMeta));
+    }
+    if (data.containsKey('state')) {
+      context.handle(
+          _stateMeta, state.isAcceptableOrUnknown(data['state'], _stateMeta));
+    } else if (isInserting) {
+      context.missing(_stateMeta);
+    }
+    if (data.containsKey('current')) {
+      context.handle(_currentMeta,
+          current.isAcceptableOrUnknown(data['current'], _currentMeta));
+    } else if (isInserting) {
+      context.missing(_currentMeta);
+    }
+    if (data.containsKey('total')) {
+      context.handle(
+          _totalMeta, total.isAcceptableOrUnknown(data['total'], _totalMeta));
+    } else if (isInserting) {
+      context.missing(_totalMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at'], _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {galleryId};
+  @override
+  DownloadTaskEntry map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return DownloadTaskEntry.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $DownloadTasksTable createAlias(String alias) {
+    return $DownloadTasksTable(_db, alias);
+  }
+}
+
+class DownloadedImageEntry extends DataClass
+    implements Insertable<DownloadedImageEntry> {
+  final int galleryId;
+  final int imagePage;
+  final DateTime downloadedAt;
+  final int width;
+  final int height;
+  final int size;
+  final String path;
+  DownloadedImageEntry(
+      {@required this.galleryId,
+      @required this.imagePage,
+      @required this.downloadedAt,
+      @required this.width,
+      @required this.height,
+      @required this.size,
+      @required this.path});
+  factory DownloadedImageEntry.fromData(
+      Map<String, dynamic> data, GeneratedDatabase db,
+      {String prefix}) {
+    final effectivePrefix = prefix ?? '';
+    final intType = db.typeSystem.forDartType<int>();
+    final dateTimeType = db.typeSystem.forDartType<DateTime>();
+    final stringType = db.typeSystem.forDartType<String>();
+    return DownloadedImageEntry(
+      galleryId:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}gallery_id']),
+      imagePage:
+          intType.mapFromDatabaseResponse(data['${effectivePrefix}image_page']),
+      downloadedAt: dateTimeType
+          .mapFromDatabaseResponse(data['${effectivePrefix}downloaded_at']),
+      width: intType.mapFromDatabaseResponse(data['${effectivePrefix}width']),
+      height: intType.mapFromDatabaseResponse(data['${effectivePrefix}height']),
+      size: intType.mapFromDatabaseResponse(data['${effectivePrefix}size']),
+      path: stringType.mapFromDatabaseResponse(data['${effectivePrefix}path']),
+    );
+  }
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || galleryId != null) {
+      map['gallery_id'] = Variable<int>(galleryId);
+    }
+    if (!nullToAbsent || imagePage != null) {
+      map['image_page'] = Variable<int>(imagePage);
+    }
+    if (!nullToAbsent || downloadedAt != null) {
+      map['downloaded_at'] = Variable<DateTime>(downloadedAt);
+    }
+    if (!nullToAbsent || width != null) {
+      map['width'] = Variable<int>(width);
+    }
+    if (!nullToAbsent || height != null) {
+      map['height'] = Variable<int>(height);
+    }
+    if (!nullToAbsent || size != null) {
+      map['size'] = Variable<int>(size);
+    }
+    if (!nullToAbsent || path != null) {
+      map['path'] = Variable<String>(path);
+    }
+    return map;
+  }
+
+  DownloadedImagesCompanion toCompanion(bool nullToAbsent) {
+    return DownloadedImagesCompanion(
+      galleryId: galleryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(galleryId),
+      imagePage: imagePage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(imagePage),
+      downloadedAt: downloadedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(downloadedAt),
+      width:
+          width == null && nullToAbsent ? const Value.absent() : Value(width),
+      height:
+          height == null && nullToAbsent ? const Value.absent() : Value(height),
+      size: size == null && nullToAbsent ? const Value.absent() : Value(size),
+      path: path == null && nullToAbsent ? const Value.absent() : Value(path),
+    );
+  }
+
+  factory DownloadedImageEntry.fromJson(Map<String, dynamic> json,
+      {ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return DownloadedImageEntry(
+      galleryId: serializer.fromJson<int>(json['galleryId']),
+      imagePage: serializer.fromJson<int>(json['imagePage']),
+      downloadedAt: serializer.fromJson<DateTime>(json['downloadedAt']),
+      width: serializer.fromJson<int>(json['width']),
+      height: serializer.fromJson<int>(json['height']),
+      size: serializer.fromJson<int>(json['size']),
+      path: serializer.fromJson<String>(json['path']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer serializer}) {
+    serializer ??= moorRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'galleryId': serializer.toJson<int>(galleryId),
+      'imagePage': serializer.toJson<int>(imagePage),
+      'downloadedAt': serializer.toJson<DateTime>(downloadedAt),
+      'width': serializer.toJson<int>(width),
+      'height': serializer.toJson<int>(height),
+      'size': serializer.toJson<int>(size),
+      'path': serializer.toJson<String>(path),
+    };
+  }
+
+  DownloadedImageEntry copyWith(
+          {int galleryId,
+          int imagePage,
+          DateTime downloadedAt,
+          int width,
+          int height,
+          int size,
+          String path}) =>
+      DownloadedImageEntry(
+        galleryId: galleryId ?? this.galleryId,
+        imagePage: imagePage ?? this.imagePage,
+        downloadedAt: downloadedAt ?? this.downloadedAt,
+        width: width ?? this.width,
+        height: height ?? this.height,
+        size: size ?? this.size,
+        path: path ?? this.path,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('DownloadedImageEntry(')
+          ..write('galleryId: $galleryId, ')
+          ..write('imagePage: $imagePage, ')
+          ..write('downloadedAt: $downloadedAt, ')
+          ..write('width: $width, ')
+          ..write('height: $height, ')
+          ..write('size: $size, ')
+          ..write('path: $path')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => $mrjf($mrjc(
+      galleryId.hashCode,
+      $mrjc(
+          imagePage.hashCode,
+          $mrjc(
+              downloadedAt.hashCode,
+              $mrjc(
+                  width.hashCode,
+                  $mrjc(height.hashCode,
+                      $mrjc(size.hashCode, path.hashCode)))))));
+  @override
+  bool operator ==(dynamic other) =>
+      identical(this, other) ||
+      (other is DownloadedImageEntry &&
+          other.galleryId == this.galleryId &&
+          other.imagePage == this.imagePage &&
+          other.downloadedAt == this.downloadedAt &&
+          other.width == this.width &&
+          other.height == this.height &&
+          other.size == this.size &&
+          other.path == this.path);
+}
+
+class DownloadedImagesCompanion extends UpdateCompanion<DownloadedImageEntry> {
+  final Value<int> galleryId;
+  final Value<int> imagePage;
+  final Value<DateTime> downloadedAt;
+  final Value<int> width;
+  final Value<int> height;
+  final Value<int> size;
+  final Value<String> path;
+  const DownloadedImagesCompanion({
+    this.galleryId = const Value.absent(),
+    this.imagePage = const Value.absent(),
+    this.downloadedAt = const Value.absent(),
+    this.width = const Value.absent(),
+    this.height = const Value.absent(),
+    this.size = const Value.absent(),
+    this.path = const Value.absent(),
+  });
+  DownloadedImagesCompanion.insert({
+    @required int galleryId,
+    @required int imagePage,
+    @required DateTime downloadedAt,
+    @required int width,
+    @required int height,
+    @required int size,
+    @required String path,
+  })  : galleryId = Value(galleryId),
+        imagePage = Value(imagePage),
+        downloadedAt = Value(downloadedAt),
+        width = Value(width),
+        height = Value(height),
+        size = Value(size),
+        path = Value(path);
+  static Insertable<DownloadedImageEntry> custom({
+    Expression<int> galleryId,
+    Expression<int> imagePage,
+    Expression<DateTime> downloadedAt,
+    Expression<int> width,
+    Expression<int> height,
+    Expression<int> size,
+    Expression<String> path,
+  }) {
+    return RawValuesInsertable({
+      if (galleryId != null) 'gallery_id': galleryId,
+      if (imagePage != null) 'image_page': imagePage,
+      if (downloadedAt != null) 'downloaded_at': downloadedAt,
+      if (width != null) 'width': width,
+      if (height != null) 'height': height,
+      if (size != null) 'size': size,
+      if (path != null) 'path': path,
+    });
+  }
+
+  DownloadedImagesCompanion copyWith(
+      {Value<int> galleryId,
+      Value<int> imagePage,
+      Value<DateTime> downloadedAt,
+      Value<int> width,
+      Value<int> height,
+      Value<int> size,
+      Value<String> path}) {
+    return DownloadedImagesCompanion(
+      galleryId: galleryId ?? this.galleryId,
+      imagePage: imagePage ?? this.imagePage,
+      downloadedAt: downloadedAt ?? this.downloadedAt,
+      width: width ?? this.width,
+      height: height ?? this.height,
+      size: size ?? this.size,
+      path: path ?? this.path,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (galleryId.present) {
+      map['gallery_id'] = Variable<int>(galleryId.value);
+    }
+    if (imagePage.present) {
+      map['image_page'] = Variable<int>(imagePage.value);
+    }
+    if (downloadedAt.present) {
+      map['downloaded_at'] = Variable<DateTime>(downloadedAt.value);
+    }
+    if (width.present) {
+      map['width'] = Variable<int>(width.value);
+    }
+    if (height.present) {
+      map['height'] = Variable<int>(height.value);
+    }
+    if (size.present) {
+      map['size'] = Variable<int>(size.value);
+    }
+    if (path.present) {
+      map['path'] = Variable<String>(path.value);
+    }
+    return map;
+  }
+}
+
+class $DownloadedImagesTable extends DownloadedImages
+    with TableInfo<$DownloadedImagesTable, DownloadedImageEntry> {
+  final GeneratedDatabase _db;
+  final String _alias;
+  $DownloadedImagesTable(this._db, [this._alias]);
+  final VerificationMeta _galleryIdMeta = const VerificationMeta('galleryId');
+  GeneratedIntColumn _galleryId;
+  @override
+  GeneratedIntColumn get galleryId => _galleryId ??= _constructGalleryId();
+  GeneratedIntColumn _constructGalleryId() {
+    return GeneratedIntColumn(
+      'gallery_id',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _imagePageMeta = const VerificationMeta('imagePage');
+  GeneratedIntColumn _imagePage;
+  @override
+  GeneratedIntColumn get imagePage => _imagePage ??= _constructImagePage();
+  GeneratedIntColumn _constructImagePage() {
+    return GeneratedIntColumn(
+      'image_page',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _downloadedAtMeta =
+      const VerificationMeta('downloadedAt');
+  GeneratedDateTimeColumn _downloadedAt;
+  @override
+  GeneratedDateTimeColumn get downloadedAt =>
+      _downloadedAt ??= _constructDownloadedAt();
+  GeneratedDateTimeColumn _constructDownloadedAt() {
+    return GeneratedDateTimeColumn(
+      'downloaded_at',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _widthMeta = const VerificationMeta('width');
+  GeneratedIntColumn _width;
+  @override
+  GeneratedIntColumn get width => _width ??= _constructWidth();
+  GeneratedIntColumn _constructWidth() {
+    return GeneratedIntColumn(
+      'width',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _heightMeta = const VerificationMeta('height');
+  GeneratedIntColumn _height;
+  @override
+  GeneratedIntColumn get height => _height ??= _constructHeight();
+  GeneratedIntColumn _constructHeight() {
+    return GeneratedIntColumn(
+      'height',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _sizeMeta = const VerificationMeta('size');
+  GeneratedIntColumn _size;
+  @override
+  GeneratedIntColumn get size => _size ??= _constructSize();
+  GeneratedIntColumn _constructSize() {
+    return GeneratedIntColumn(
+      'size',
+      $tableName,
+      false,
+    );
+  }
+
+  final VerificationMeta _pathMeta = const VerificationMeta('path');
+  GeneratedTextColumn _path;
+  @override
+  GeneratedTextColumn get path => _path ??= _constructPath();
+  GeneratedTextColumn _constructPath() {
+    return GeneratedTextColumn(
+      'path',
+      $tableName,
+      false,
+    );
+  }
+
+  @override
+  List<GeneratedColumn> get $columns =>
+      [galleryId, imagePage, downloadedAt, width, height, size, path];
+  @override
+  $DownloadedImagesTable get asDslTable => this;
+  @override
+  String get $tableName => _alias ?? 'downloaded_images';
+  @override
+  final String actualTableName = 'downloaded_images';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<DownloadedImageEntry> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('gallery_id')) {
+      context.handle(_galleryIdMeta,
+          galleryId.isAcceptableOrUnknown(data['gallery_id'], _galleryIdMeta));
+    } else if (isInserting) {
+      context.missing(_galleryIdMeta);
+    }
+    if (data.containsKey('image_page')) {
+      context.handle(_imagePageMeta,
+          imagePage.isAcceptableOrUnknown(data['image_page'], _imagePageMeta));
+    } else if (isInserting) {
+      context.missing(_imagePageMeta);
+    }
+    if (data.containsKey('downloaded_at')) {
+      context.handle(
+          _downloadedAtMeta,
+          downloadedAt.isAcceptableOrUnknown(
+              data['downloaded_at'], _downloadedAtMeta));
+    } else if (isInserting) {
+      context.missing(_downloadedAtMeta);
+    }
+    if (data.containsKey('width')) {
+      context.handle(
+          _widthMeta, width.isAcceptableOrUnknown(data['width'], _widthMeta));
+    } else if (isInserting) {
+      context.missing(_widthMeta);
+    }
+    if (data.containsKey('height')) {
+      context.handle(_heightMeta,
+          height.isAcceptableOrUnknown(data['height'], _heightMeta));
+    } else if (isInserting) {
+      context.missing(_heightMeta);
+    }
+    if (data.containsKey('size')) {
+      context.handle(
+          _sizeMeta, size.isAcceptableOrUnknown(data['size'], _sizeMeta));
+    } else if (isInserting) {
+      context.missing(_sizeMeta);
+    }
+    if (data.containsKey('path')) {
+      context.handle(
+          _pathMeta, path.isAcceptableOrUnknown(data['path'], _pathMeta));
+    } else if (isInserting) {
+      context.missing(_pathMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {galleryId, imagePage};
+  @override
+  DownloadedImageEntry map(Map<String, dynamic> data, {String tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : null;
+    return DownloadedImageEntry.fromData(data, _db, prefix: effectivePrefix);
+  }
+
+  @override
+  $DownloadedImagesTable createAlias(String alias) {
+    return $DownloadedImagesTable(_db, alias);
+  }
+}
+
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   $GalleriesTable _galleries;
@@ -1064,15 +1800,27 @@ abstract class _$Database extends GeneratedDatabase {
   $SearchHistoriesTable _searchHistories;
   $SearchHistoriesTable get searchHistories =>
       _searchHistories ??= $SearchHistoriesTable(this);
+  $DownloadTasksTable _downloadTasks;
+  $DownloadTasksTable get downloadTasks =>
+      _downloadTasks ??= $DownloadTasksTable(this);
+  $DownloadedImagesTable _downloadedImages;
+  $DownloadedImagesTable get downloadedImages =>
+      _downloadedImages ??= $DownloadedImagesTable(this);
   GalleriesDao _galleriesDao;
   GalleriesDao get galleriesDao =>
       _galleriesDao ??= GalleriesDao(this as Database);
   SearchHistoriesDao _searchHistoriesDao;
   SearchHistoriesDao get searchHistoriesDao =>
       _searchHistoriesDao ??= SearchHistoriesDao(this as Database);
+  DownloadTasksDao _downloadTasksDao;
+  DownloadTasksDao get downloadTasksDao =>
+      _downloadTasksDao ??= DownloadTasksDao(this as Database);
+  DownloadedImagesDao _downloadedImagesDao;
+  DownloadedImagesDao get downloadedImagesDao =>
+      _downloadedImagesDao ??= DownloadedImagesDao(this as Database);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [galleries, searchHistories];
+      [galleries, searchHistories, downloadTasks, downloadedImages];
 }

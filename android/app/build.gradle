@@ -85,6 +85,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "io.reactivex.rxjava3:rxkotlin:3.0.0"
     implementation 'com.uchuhimo:kotlinx-bimap:1.2'
+    implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
 }
 
 apply plugin: 'io.fabric'

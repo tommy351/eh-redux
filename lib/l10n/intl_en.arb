@@ -83,5 +83,17 @@
   "clearReadingHistory": "Clear reading history",
   "clearReadingHistoryDialogTitle": "Clear reading history?",
   "clearReadingHistoryDialogContent": "All reading history stored on this device will be deleted.",
-  "readingHistoryClearSuccess": "Reading history cleared successfully."
+  "readingHistoryClearSuccess": "Reading history cleared successfully.",
+  "downloads": "Downloads",
+  "pause": "Pause",
+  "resume": "Resume",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "startAll": "Start all",
+  "pauseAll": "Pause all",
+  "downloadStateCreated": "Pending",
+  "downloadStateStarted": "Downloading",
+  "downloadStatePaused": "Paused",
+  "downloadStateFailed": "Failed",
+  "downloadStateSucceeded": "Succeeded"
 }

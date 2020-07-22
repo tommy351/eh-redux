@@ -2,6 +2,7 @@ import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
 import 'package:eh_redux/repositories/ehentai_client.dart';
 import 'package:eh_redux/screens/setting/screen.dart';
+import 'package:eh_redux/screens/view/store.dart';
 import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:eh_redux/utils/launch.dart';
@@ -12,8 +13,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
-
-import 'store.dart';
 
 enum _ViewAppBarAction {
   setting,

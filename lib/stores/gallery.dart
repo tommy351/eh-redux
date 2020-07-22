@@ -27,6 +27,7 @@ const baseAdvancedSearchOptions = <String, bool>{
   'f_sname': true,
   'f_stags': true,
 };
+
 class GalleryStore = _GalleryStoreBase with _$GalleryStore;
 
 abstract class _GalleryStoreBase with Store {

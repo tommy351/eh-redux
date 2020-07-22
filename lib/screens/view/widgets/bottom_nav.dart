@@ -1,10 +1,9 @@
 import 'package:eh_redux/models/gallery.dart';
+import 'package:eh_redux/screens/view/store.dart';
 import 'package:eh_redux/widgets/stateful_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
-
-import 'store.dart';
 
 class ViewBottomNavigation extends StatefulWidget {
   const ViewBottomNavigation({

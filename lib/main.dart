@@ -9,12 +9,14 @@ import 'package:eh_redux/screens/login/screen.dart';
 import 'package:eh_redux/screens/search/screen.dart';
 import 'package:eh_redux/screens/setting/screen.dart';
 import 'package:eh_redux/screens/view/screen.dart';
+import 'package:eh_redux/stores/download.dart';
 import 'package:eh_redux/stores/favorite.dart';
 import 'package:eh_redux/stores/gallery.dart';
 import 'package:eh_redux/stores/image.dart';
 import 'package:eh_redux/stores/session.dart';
 import 'package:eh_redux/stores/setting.dart';
 import 'package:eh_redux/tables/database.dart';
+import 'package:eh_redux/tasks/handler.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,9 +27,20 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
+
+void callbackDispatcher() {
+  Workmanager.executeTask((taskName, inputData) {
+    return backgroundTaskHandler(taskName, inputData);
+  });
+}
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   FlutterError.onError = Crashlytics.instance.recordFlutterError;
+
+  Workmanager.initialize(callbackDispatcher);
 
   runZonedGuarded(() {
     runApp(const MainApp());
@@ -80,6 +93,7 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   ImageStore _imageStore;
   SettingStore _settingStore;
   FavoriteStore _favoriteStore;
+  DownloadStore _downloadStore;
 
   @override
   void initState() {
@@ -104,6 +118,9 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
       client: _eHentaiClient,
       galleryStore: _galleryStore,
     );
+    _downloadStore = DownloadStore(
+      downloadTasksDao: _database.downloadTasksDao,
+    );
   }
 
   @override
@@ -125,27 +142,14 @@ class _MainAppState extends State<MainApp> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(
-          create: (_) => _database,
-        ),
-        Provider(
-          create: (_) => _sessionStore,
-        ),
-        Provider(
-          create: (_) => _eHentaiClient,
-        ),
-        Provider(
-          create: (_) => _settingStore,
-        ),
-        Provider(
-          create: (_) => _galleryStore,
-        ),
-        Provider(
-          create: (_) => _imageStore,
-        ),
-        Provider(
-          create: (_) => _favoriteStore,
-        ),
+        Provider.value(value: _database),
+        Provider.value(value: _sessionStore),
+        Provider.value(value: _eHentaiClient),
+        Provider.value(value: _settingStore),
+        Provider.value(value: _galleryStore),
+        Provider.value(value: _imageStore),
+        Provider.value(value: _favoriteStore),
+        Provider.value(value: _downloadStore),
       ],
       child: _buildApp(),
     );

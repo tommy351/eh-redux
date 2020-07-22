@@ -1,6 +1,5 @@
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
-import 'package:eh_redux/screens/gallery/title.dart';
 import 'package:eh_redux/screens/search/args.dart';
 import 'package:eh_redux/screens/search/screen.dart';
 import 'package:filesize/filesize.dart';
@@ -8,6 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import 'title.dart';
 
 class GalleryInfo extends StatelessWidget {
   const GalleryInfo({Key key}) : super(key: key);

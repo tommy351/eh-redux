@@ -1,11 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/models/gallery.dart';
-import 'package:eh_redux/screens/gallery/title.dart';
 import 'package:eh_redux/screens/search/args.dart';
 import 'package:eh_redux/screens/search/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'title.dart';
 
 class GalleryTagList extends StatelessWidget {
   const GalleryTagList({Key key}) : super(key: key);

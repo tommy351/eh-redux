@@ -886,6 +886,126 @@ class S {
       args: [],
     );
   }
+
+  /// `Downloads`
+  String get downloads {
+    return Intl.message(
+      'Downloads',
+      name: 'downloads',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pause`
+  String get pause {
+    return Intl.message(
+      'Pause',
+      name: 'pause',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resume`
+  String get resume {
+    return Intl.message(
+      'Resume',
+      name: 'resume',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message(
+      'Cancel',
+      name: 'cancel',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start all`
+  String get startAll {
+    return Intl.message(
+      'Start all',
+      name: 'startAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pause all`
+  String get pauseAll {
+    return Intl.message(
+      'Pause all',
+      name: 'pauseAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pending`
+  String get downloadStateCreated {
+    return Intl.message(
+      'Pending',
+      name: 'downloadStateCreated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Downloading`
+  String get downloadStateStarted {
+    return Intl.message(
+      'Downloading',
+      name: 'downloadStateStarted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paused`
+  String get downloadStatePaused {
+    return Intl.message(
+      'Paused',
+      name: 'downloadStatePaused',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed`
+  String get downloadStateFailed {
+    return Intl.message(
+      'Failed',
+      name: 'downloadStateFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Succeeded`
+  String get downloadStateSucceeded {
+    return Intl.message(
+      'Succeeded',
+      name: 'downloadStateSucceeded',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
