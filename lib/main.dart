@@ -1,23 +1,5 @@
 import 'dart:async';
 
-import 'package:eh_redux/generated/l10n.dart';
-import 'package:eh_redux/repositories/ehentai_client.dart';
-import 'package:eh_redux/screens/check_update/screen.dart';
-import 'package:eh_redux/screens/gallery/screen.dart';
-import 'package:eh_redux/screens/home/screen.dart';
-import 'package:eh_redux/screens/login/screen.dart';
-import 'package:eh_redux/screens/search/screen.dart';
-import 'package:eh_redux/screens/setting/screen.dart';
-import 'package:eh_redux/screens/view/screen.dart';
-import 'package:eh_redux/stores/download.dart';
-import 'package:eh_redux/stores/favorite.dart';
-import 'package:eh_redux/stores/gallery.dart';
-import 'package:eh_redux/stores/image.dart';
-import 'package:eh_redux/stores/session.dart';
-import 'package:eh_redux/stores/setting.dart';
-import 'package:eh_redux/tables/database.dart';
-import 'package:eh_redux/tasks/handler.dart';
-import 'package:eh_redux/utils/firebase.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +10,25 @@ import 'package:http/http.dart' as http;
 import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 import 'package:workmanager/workmanager.dart';
+
+import 'generated/l10n.dart';
+import 'repositories/ehentai_client.dart';
+import 'screens/check_update/screen.dart';
+import 'screens/gallery/screen.dart';
+import 'screens/home/screen.dart';
+import 'screens/login/screen.dart';
+import 'screens/search/screen.dart';
+import 'screens/setting/screen.dart';
+import 'screens/view/screen.dart';
+import 'stores/download.dart';
+import 'stores/favorite.dart';
+import 'stores/gallery.dart';
+import 'stores/image.dart';
+import 'stores/session.dart';
+import 'stores/setting.dart';
+import 'tables/database.dart';
+import 'tasks/handler.dart';
+import 'utils/firebase.dart';
 
 void callbackDispatcher() {
   Workmanager.executeTask((taskName, inputData) {

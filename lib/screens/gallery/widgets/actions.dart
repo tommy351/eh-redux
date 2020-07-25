@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'download_sheet.dart';
 import 'fav_sheet.dart';
 
 class GalleryActions extends StatelessWidget {
@@ -232,7 +233,7 @@ class GalleryActions extends StatelessWidget {
                 showModalBottomSheet(
                   context: context,
                   builder: (context) {
-                    return GalleryDownloadSheet();
+                    return const GalleryDownloadSheet();
                   },
                 );
                 await galleryStore.saveGallery(gallery.id);
