@@ -1,17 +1,28 @@
-import 'download.dart';
+import 'package:eh_redux/modules/download/tasks/delete.dart';
+import 'package:eh_redux/modules/download/tasks/download.dart';
+import 'package:enum_to_string/enum_to_string.dart';
+import 'package:logging/logging.dart';
 
-const downloadTaskKey = 'download';
+final _log = Logger('backgroundTaskHandler');
 
-const _taskTagPrefix = 'app.ehredux/';
-const downloadTaskTag = '$_taskTagPrefix$downloadTaskKey';
+enum TaskTag {
+  download,
+  deleteDownload,
+}
 
 Future<bool> backgroundTaskHandler(
   String taskName,
   Map<String, dynamic> inputData,
 ) async {
-  switch (taskName) {
-    case downloadTaskKey:
+  _log.finer('Received task: name=$taskName, data=$inputData');
+
+  switch (EnumToString.fromString(TaskTag.values, taskName)) {
+    case TaskTag.download:
       final handler = DownloadTaskHandler();
+      return handler.handle(inputData);
+
+    case TaskTag.deleteDownload:
+      final handler = DeleteDownloadTaskHandler();
       return handler.handle(inputData);
   }
 

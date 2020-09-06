@@ -24,10 +24,6 @@ class MainActivity : FlutterActivity() {
             "volumeDown" to KeyEvent.KEYCODE_VOLUME_DOWN,
             "volumeUp" to KeyEvent.KEYCODE_VOLUME_UP
         )
-
-        init {
-            System.loadLibrary("sqlite3")
-        }
     }
 
     private val interceptedKeyDownEvents = HashSet<Int>()
