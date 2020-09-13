@@ -18,8 +18,12 @@ class FavoriteTab extends StatefulWidget {
   _FavoriteTabState createState() => _FavoriteTabState();
 }
 
-class _FavoriteTabState extends State<FavoriteTab> {
+class _FavoriteTabState extends State<FavoriteTab>
+    with AutomaticKeepAliveClientMixin<FavoriteTab> {
   NetworkGalleryListStore _store;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -32,6 +36,8 @@ class _FavoriteTabState extends State<FavoriteTab> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     final sessionStore = Provider.of<SessionStore>(context);
 
     return Provider.value(

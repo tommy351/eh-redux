@@ -2,13 +2,10 @@ import 'package:eh_redux/modules/home/store.dart';
 import 'package:eh_redux/modules/home/tabs.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:mobx/mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'bottom_nav.dart';
-
-part 'screen.g.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -20,7 +17,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware {
-  final _homeStore = HomeStore();
+  PageController _pageController;
+  HomeStore _homeStore;
+  ReactionDisposer _dispose;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+    _homeStore = HomeStore();
+
+    _dispose = reaction<int>((_) => _homeStore.currentTab, (currentTab) {
+      _pageController.jumpToPage(currentTab);
+    });
+  }
 
   @override
   void didChangeDependencies() {
@@ -32,6 +42,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   @override
   void dispose() {
     firebaseAnalyticsObserver.unsubscribe(this);
+    _dispose();
     super.dispose();
   }
 
@@ -57,22 +68,14 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
         data: mediaQuery.copyWith(
           padding: mediaQuery.padding + mediaQuery.viewInsets,
         ),
-        child: const Scaffold(
-          body: _Body(),
-          bottomNavigationBar: HomeBottomNav(),
+        child: Scaffold(
+          body: PageView(
+            controller: _pageController,
+            children: tabs.map((e) => e.widget(context)).toList(),
+          ),
+          bottomNavigationBar: const HomeBottomNav(),
         ),
       ),
     );
   }
-}
-
-@swidget
-Widget _body(BuildContext context) {
-  final homeStore = Provider.of<HomeStore>(context);
-
-  return Observer(
-    builder: (context) {
-      return tabs[homeStore.currentTab].widget(context);
-    },
-  );
 }

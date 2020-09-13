@@ -15,8 +15,12 @@ class GalleryTab extends StatefulWidget {
   _GalleryTabState createState() => _GalleryTabState();
 }
 
-class _GalleryTabState extends State<GalleryTab> {
+class _GalleryTabState extends State<GalleryTab>
+    with AutomaticKeepAliveClientMixin<GalleryTab> {
   NetworkGalleryListStore _store;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -28,6 +32,8 @@ class _GalleryTabState extends State<GalleryTab> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Provider.value(
       value: _store,
       child: NestedScrollView(
