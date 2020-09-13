@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:eh_redux/database/database.dart';
+import 'package:eh_redux/modules/download/progress.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/download/utils.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
@@ -15,9 +16,10 @@ import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 class DownloadTaskHandler {
-  DownloadTaskHandler() {
+  DownloadTaskHandler({
+    @required this.database,
+  }) : assert(database != null) {
     final sessionStore = SessionStore();
-    _database = Database();
     _httpClient = http.Client();
     _client = EHentaiClient(
       httpClient: _httpClient,
@@ -27,37 +29,50 @@ class DownloadTaskHandler {
 
   static final _log = Logger('DownloadTaskHandler');
 
+  final Database database;
   http.Client _httpClient;
   EHentaiClient _client;
-  Database _database;
-
-  Future<void> dispose() async {
-    await _database?.close();
-  }
 
   Future<bool> handle(Map<String, dynamic> inputData) async {
     _log.finer('Handle: $inputData');
 
-    try {
-      DownloadTask task;
+    DownloadTask task;
 
-      while (
-          (task = await _database.downloadTasksDao.nextPendingTask()) != null) {
-        await _handleTask(task);
-      }
-
-      return true;
-    } finally {
-      await dispose();
+    while ((task = await database.downloadTasksDao.nextPendingTask()) != null) {
+      await _handleTask(task);
     }
+
+    return true;
+  }
+
+  Future<void> _updateTaskStatus({
+    @required int galleryId,
+    @required DownloadTaskState state,
+    int downloadedCount,
+    DateTime queuedAt,
+    String errorDetails,
+  }) async {
+    await database.downloadTasksDao.updateSingleStatus(
+      galleryId,
+      state: state,
+      downloadedCount: downloadedCount,
+      queuedAt: queuedAt,
+      errorDetails: errorDetails,
+    );
+
+    publishDownloadProgress(DownloadTaskProgress(
+      galleryId: galleryId,
+      state: state,
+      downloadedCount: downloadedCount,
+    ));
   }
 
   Future<void> _handleTask(DownloadTask task) async {
     _log.finer('Handle download task: $task');
 
     // Update the status as "downloading"
-    await _database.downloadTasksDao.updateSingleStatus(
-      task.galleryId,
+    await _updateTaskStatus(
+      galleryId: task.galleryId,
       state: DownloadTaskState.downloading,
     );
 
@@ -65,12 +80,12 @@ class DownloadTaskHandler {
     final directory = await getGalleryDownloadDirectory(task.galleryId);
     await directory.create(recursive: true);
 
-    final gallery = await _database.galleriesDao.getEntry(task.galleryId);
+    final gallery = await database.galleriesDao.getEntry(task.galleryId);
     final imageStore = ImageStore(
       client: _client,
       gallery: Gallery.fromEntry(gallery),
-      galleriesDao: _database.galleriesDao,
-      downloadedImagesDao: _database.downloadedImagesDao,
+      galleriesDao: database.galleriesDao,
+      downloadedImagesDao: database.downloadedImagesDao,
     );
 
     for (int page = task.downloadedCount + 1; page <= task.totalCount; page++) {
@@ -84,7 +99,7 @@ class DownloadTaskHandler {
 
         // Check the latest status of the task
         final currentTask =
-            await _database.downloadTasksDao.getSingle(task.galleryId);
+            await database.downloadTasksDao.getSingle(task.galleryId);
 
         if (currentTask == null) {
           _log.finer('Stop because the download task is deleted');
@@ -97,8 +112,8 @@ class DownloadTaskHandler {
         }
 
         // Update the downloaded count
-        await _database.downloadTasksDao.updateSingleStatus(
-          task.galleryId,
+        await _updateTaskStatus(
+          galleryId: task.galleryId,
           state: currentTask.state,
           downloadedCount: page,
         );
@@ -112,8 +127,8 @@ class DownloadTaskHandler {
         // TODO: Retry with the reload key
 
         // Update the status as "failed"
-        await _database.downloadTasksDao.updateSingleStatus(
-          task.galleryId,
+        await _updateTaskStatus(
+          galleryId: task.galleryId,
           state: DownloadTaskState.failed,
           errorDetails: err.toString(),
         );
@@ -126,8 +141,8 @@ class DownloadTaskHandler {
     }
 
     // Update the status as "succeeded"
-    await _database.downloadTasksDao.updateSingleStatus(
-      task.galleryId,
+    await _updateTaskStatus(
+      galleryId: task.galleryId,
       state: DownloadTaskState.succeeded,
     );
   }
@@ -195,7 +210,7 @@ class DownloadTaskHandler {
     _log.finer('File size: $fileSize');
 
     // Upsert the downloaded image to the database
-    await _database.downloadedImagesDao.upsertEntry(DownloadedImageEntry(
+    await database.downloadedImagesDao.upsertEntry(DownloadedImageEntry(
       galleryId: task.galleryId,
       key: image.id.key,
       page: page,

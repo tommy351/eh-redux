@@ -3,6 +3,7 @@ import 'package:collection/collection.dart';
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/modules/common/widgets/full_width.dart';
+import 'package:eh_redux/modules/download/progress.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/download/widgets/confirm_bottom_sheet.dart';
 import 'package:eh_redux/modules/download/widgets/menu_bottom_sheet.dart';
@@ -380,9 +381,11 @@ Widget _favButton(BuildContext context) {
 Widget _downloadButton(BuildContext context) {
   final store = Provider.of<GalleryScreenStore>(context);
   final database = Provider.of<Database>(context);
+  final listener = Provider.of<DownloadProgressListener>(context);
 
   return StreamProvider(
-    create: (_) => database.downloadTasksDao.watchSingle(store.gallery.id),
+    create: (_) => listener
+        .mergeSingle(database.downloadTasksDao.watchSingle(store.gallery.id)),
     child: const _DownloadButtonContent(),
   );
 }

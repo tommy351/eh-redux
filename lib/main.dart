@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 
+import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/modules/app/widgets/app.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -8,38 +9,50 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 import 'package:mobx/mobx.dart';
+import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'tasks/handler.dart';
 
 Future<void> callbackDispatcher() async {
-  setupLogger();
-  WidgetsFlutterBinding.ensureInitialized();
-  await initializeFirebase();
+  await _initializeMain();
+
+  final handler = BackgroundTaskHandler(
+    database: await Database.instance,
+  );
 
   Workmanager.executeTask((taskName, inputData) async {
     return runZonedGuarded(() async {
-      return backgroundTaskHandler(taskName, inputData);
+      return handler.handle(taskName, inputData);
     }, (error, stackTrace) {
       FirebaseCrashlytics.instance.recordError(error, stackTrace);
     });
   });
 }
 
-void main() {
-  setupLogger();
-  WidgetsFlutterBinding.ensureInitialized();
-  logMobxMainContext();
+Future<void> main() async {
+  await _initializeMain();
+
   Workmanager.initialize(callbackDispatcher, isInDebugMode: kDebugMode);
 
-  runZonedGuarded(() {
-    runApp(const App());
+  runZonedGuarded(() async {
+    runApp(App(
+      database: await Database.instance,
+      preferences: await StreamingSharedPreferences.instance,
+    ));
   }, (error, stackTrace) {
     FirebaseCrashlytics.instance.recordError(error, stackTrace);
   });
 }
 
-void setupLogger() {
+Future<void> _initializeMain() async {
+  _setupLogger();
+  WidgetsFlutterBinding.ensureInitialized();
+  _logMobxMainContext();
+  await initializeFirebase();
+}
+
+void _setupLogger() {
   if (kDebugMode) {
     Logger.root.level = Level.FINER;
   }
@@ -56,7 +69,7 @@ void setupLogger() {
   });
 }
 
-void logMobxMainContext() {
+void _logMobxMainContext() {
   final log = Logger('mobx');
 
   mainContext.spy((event) {

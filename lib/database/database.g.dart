@@ -2002,6 +2002,7 @@ class $DownloadedImagesTable extends DownloadedImages
 
 abstract class _$Database extends GeneratedDatabase {
   _$Database(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
+  _$Database.connect(DatabaseConnection c) : super.connect(c);
   $GalleriesTable _galleries;
   $GalleriesTable get galleries => _galleries ??= $GalleriesTable(this);
   $SearchHistoriesTable _searchHistories;

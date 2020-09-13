@@ -141,7 +141,7 @@ Widget _progressBar(
               child: Text(statusText[task.state]),
             ),
             Text(
-                '${task.downloadedCount}/${task.totalCount} (${task.downloadedCount ~/ task.totalCount * 100}%)'),
+                '${task.downloadedCount}/${task.totalCount} (${(task.downloadedCount / task.totalCount * 100).round()}%)'),
           ],
         ),
       ),

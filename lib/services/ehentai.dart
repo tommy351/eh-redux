@@ -67,10 +67,8 @@ class EHentaiClient {
   EHentaiClient({
     http.Client httpClient,
     SessionStore sessionStore,
-  }) {
-    _httpClient = httpClient ?? http.Client();
-    _sessionStore = sessionStore ?? SessionStore();
-  }
+  })  : _httpClient = httpClient ?? http.Client(),
+        _sessionStore = sessionStore ?? SessionStore();
 
   static const _domain = 'e-hentai.org';
   static const _apiUrl = 'https://api.e-hentai.org/api.php';
@@ -78,8 +76,8 @@ class EHentaiClient {
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36';
   static final _log = Logger('EHentaiClient');
 
-  http.Client _httpClient;
-  SessionStore _sessionStore;
+  final http.Client _httpClient;
+  final SessionStore _sessionStore;
 
   Future<Map<String, String>> _getRequestHeaders({
     bool disableContentWarning = false,
@@ -126,7 +124,7 @@ class EHentaiClient {
 
     return HtmlResponse(
       statusCode: res.statusCode,
-      document: await compute(parse, res.body),
+      document: parse(res.body),
     );
   }
 

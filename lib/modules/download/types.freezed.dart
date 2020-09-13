@@ -418,3 +418,157 @@ abstract class _DownloadTaskWithGallery implements DownloadTaskWithGallery {
   @override
   _$DownloadTaskWithGalleryCopyWith<_DownloadTaskWithGallery> get copyWith;
 }
+
+class _$DownloadTaskProgressTearOff {
+  const _$DownloadTaskProgressTearOff();
+
+// ignore: unused_element
+  _DownloaTaskProgress call(
+      {@required int galleryId,
+      @required DownloadTaskState state,
+      int downloadedCount}) {
+    return _DownloaTaskProgress(
+      galleryId: galleryId,
+      state: state,
+      downloadedCount: downloadedCount,
+    );
+  }
+}
+
+// ignore: unused_element
+const $DownloadTaskProgress = _$DownloadTaskProgressTearOff();
+
+mixin _$DownloadTaskProgress {
+  int get galleryId;
+  DownloadTaskState get state;
+  int get downloadedCount;
+
+  $DownloadTaskProgressCopyWith<DownloadTaskProgress> get copyWith;
+}
+
+abstract class $DownloadTaskProgressCopyWith<$Res> {
+  factory $DownloadTaskProgressCopyWith(DownloadTaskProgress value,
+          $Res Function(DownloadTaskProgress) then) =
+      _$DownloadTaskProgressCopyWithImpl<$Res>;
+  $Res call({int galleryId, DownloadTaskState state, int downloadedCount});
+}
+
+class _$DownloadTaskProgressCopyWithImpl<$Res>
+    implements $DownloadTaskProgressCopyWith<$Res> {
+  _$DownloadTaskProgressCopyWithImpl(this._value, this._then);
+
+  final DownloadTaskProgress _value;
+  // ignore: unused_field
+  final $Res Function(DownloadTaskProgress) _then;
+
+  @override
+  $Res call({
+    Object galleryId = freezed,
+    Object state = freezed,
+    Object downloadedCount = freezed,
+  }) {
+    return _then(_value.copyWith(
+      galleryId: galleryId == freezed ? _value.galleryId : galleryId as int,
+      state: state == freezed ? _value.state : state as DownloadTaskState,
+      downloadedCount: downloadedCount == freezed
+          ? _value.downloadedCount
+          : downloadedCount as int,
+    ));
+  }
+}
+
+abstract class _$DownloaTaskProgressCopyWith<$Res>
+    implements $DownloadTaskProgressCopyWith<$Res> {
+  factory _$DownloaTaskProgressCopyWith(_DownloaTaskProgress value,
+          $Res Function(_DownloaTaskProgress) then) =
+      __$DownloaTaskProgressCopyWithImpl<$Res>;
+  @override
+  $Res call({int galleryId, DownloadTaskState state, int downloadedCount});
+}
+
+class __$DownloaTaskProgressCopyWithImpl<$Res>
+    extends _$DownloadTaskProgressCopyWithImpl<$Res>
+    implements _$DownloaTaskProgressCopyWith<$Res> {
+  __$DownloaTaskProgressCopyWithImpl(
+      _DownloaTaskProgress _value, $Res Function(_DownloaTaskProgress) _then)
+      : super(_value, (v) => _then(v as _DownloaTaskProgress));
+
+  @override
+  _DownloaTaskProgress get _value => super._value as _DownloaTaskProgress;
+
+  @override
+  $Res call({
+    Object galleryId = freezed,
+    Object state = freezed,
+    Object downloadedCount = freezed,
+  }) {
+    return _then(_DownloaTaskProgress(
+      galleryId: galleryId == freezed ? _value.galleryId : galleryId as int,
+      state: state == freezed ? _value.state : state as DownloadTaskState,
+      downloadedCount: downloadedCount == freezed
+          ? _value.downloadedCount
+          : downloadedCount as int,
+    ));
+  }
+}
+
+class _$_DownloaTaskProgress implements _DownloaTaskProgress {
+  const _$_DownloaTaskProgress(
+      {@required this.galleryId, @required this.state, this.downloadedCount})
+      : assert(galleryId != null),
+        assert(state != null);
+
+  @override
+  final int galleryId;
+  @override
+  final DownloadTaskState state;
+  @override
+  final int downloadedCount;
+
+  @override
+  String toString() {
+    return 'DownloadTaskProgress(galleryId: $galleryId, state: $state, downloadedCount: $downloadedCount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _DownloaTaskProgress &&
+            (identical(other.galleryId, galleryId) ||
+                const DeepCollectionEquality()
+                    .equals(other.galleryId, galleryId)) &&
+            (identical(other.state, state) ||
+                const DeepCollectionEquality().equals(other.state, state)) &&
+            (identical(other.downloadedCount, downloadedCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.downloadedCount, downloadedCount)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(galleryId) ^
+      const DeepCollectionEquality().hash(state) ^
+      const DeepCollectionEquality().hash(downloadedCount);
+
+  @override
+  _$DownloaTaskProgressCopyWith<_DownloaTaskProgress> get copyWith =>
+      __$DownloaTaskProgressCopyWithImpl<_DownloaTaskProgress>(
+          this, _$identity);
+}
+
+abstract class _DownloaTaskProgress implements DownloadTaskProgress {
+  const factory _DownloaTaskProgress(
+      {@required int galleryId,
+      @required DownloadTaskState state,
+      int downloadedCount}) = _$_DownloaTaskProgress;
+
+  @override
+  int get galleryId;
+  @override
+  DownloadTaskState get state;
+  @override
+  int get downloadedCount;
+  @override
+  _$DownloaTaskProgressCopyWith<_DownloaTaskProgress> get copyWith;
+}
