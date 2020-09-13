@@ -71,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
         child: Scaffold(
           body: PageView(
             controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
             children: tabs.map((e) => e.widget(context)).toList(),
           ),
           bottomNavigationBar: const HomeBottomNav(),
