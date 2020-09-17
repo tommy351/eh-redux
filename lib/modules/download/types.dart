@@ -69,12 +69,3 @@ abstract class DownloadTaskWithGallery with _$DownloadTaskWithGallery {
     );
   }
 }
-
-@freezed
-abstract class DownloadTaskProgress with _$DownloadTaskProgress {
-  const factory DownloadTaskProgress({
-    @required int galleryId,
-    @required DownloadTaskState state,
-    int downloadedCount,
-  }) = _DownloaTaskProgress;
-}
