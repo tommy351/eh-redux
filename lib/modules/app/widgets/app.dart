@@ -2,7 +2,6 @@ import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/modules/check_update/widgets/screen.dart';
 import 'package:eh_redux/modules/download/controller.dart';
-import 'package:eh_redux/modules/download/progress.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:eh_redux/modules/gallery/widgets/screen.dart';
 import 'package:eh_redux/modules/home/widgets/screen.dart';
@@ -43,7 +42,6 @@ class _AppState extends State<App> {
   DownloadController _downloadController;
   EHentaiClient _eHentaiClient;
   SettingStore _settingStore;
-  DownloadProgressListener _downloadProgressListener;
 
   @override
   void initState() {
@@ -55,13 +53,6 @@ class _AppState extends State<App> {
     );
     _eHentaiClient = EHentaiClient(sessionStore: _sessionStore);
     _settingStore = SettingStore(widget.preferences);
-    _downloadProgressListener = DownloadProgressListener();
-  }
-
-  @override
-  void dispose() {
-    _downloadProgressListener.dispose();
-    super.dispose();
   }
 
   @override
@@ -73,7 +64,6 @@ class _AppState extends State<App> {
         Provider.value(value: _downloadController),
         Provider.value(value: _eHentaiClient),
         Provider.value(value: _settingStore),
-        Provider.value(value: _downloadProgressListener),
       ],
       child: ThemeDataBuilder(
         builder: (context, theme) {

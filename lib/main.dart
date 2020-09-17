@@ -17,16 +17,18 @@ import 'tasks/handler.dart';
 Future<void> callbackDispatcher() async {
   await _initializeMain();
 
-  final handler = BackgroundTaskHandler(
-    database: await Database.instance,
-  );
+  return runZonedGuarded(() async {
+    final isolate =
+        await Database.reuseIsolate() ?? await Database.createIsolate();
 
-  Workmanager.executeTask((taskName, inputData) async {
-    return runZonedGuarded(() async {
-      return handler.handle(taskName, inputData);
-    }, (error, stackTrace) {
-      FirebaseCrashlytics.instance.recordError(error, stackTrace);
-    });
+    final handler = BackgroundTaskHandler(
+      database: Database.connect(await isolate.connect()),
+    );
+
+    Workmanager.executeTask(
+        (taskName, inputData) => handler.handle(taskName, inputData));
+  }, (error, stackTrace) {
+    FirebaseCrashlytics.instance.recordError(error, stackTrace);
   });
 }
 
@@ -36,8 +38,13 @@ Future<void> main() async {
   Workmanager.initialize(callbackDispatcher, isInDebugMode: kDebugMode);
 
   runZonedGuarded(() async {
+    final isolate = await Database.createIsolate();
+    final database = Database.connect(await isolate.connect());
+
+    Database.shareIsolate(isolate);
+
     runApp(App(
-      database: await Database.instance,
+      database: database,
       preferences: await StreamingSharedPreferences.instance,
     ));
   }, (error, stackTrace) {

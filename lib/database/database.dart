@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:eh_redux/modules/download/daos/image.dart';
 import 'package:eh_redux/modules/download/daos/task.dart';
@@ -17,38 +18,6 @@ import 'package:path_provider/path_provider.dart';
 import 'converter.dart';
 
 part 'database.g.dart';
-
-Future<String> _getDatabasePath() async {
-  final dir = await getApplicationDocumentsDirectory();
-  return join(dir.path, 'db.sqlite');
-}
-
-LazyDatabase _openConnection() {
-  return LazyDatabase(() async {
-    return VmDatabase(File(await _getDatabasePath()));
-  });
-}
-
-Future<MoorIsolate> _createMoorIsolate() async {
-  final path = await _getDatabasePath();
-  final receivePort = ReceivePort();
-
-  await Isolate.spawn(
-    _startBackground,
-    _IsolateStartRequest(receivePort.sendPort, path),
-  );
-
-  return await receivePort.first as MoorIsolate;
-}
-
-void _startBackground(_IsolateStartRequest request) {
-  final executor = VmDatabase(File(request.targetPath));
-  final moorIsolate = MoorIsolate.inCurrent(
-    () => DatabaseConnection.fromExecutor(executor),
-  );
-
-  request.sendMoorIsolate.send(moorIsolate);
-}
 
 class _IsolateStartRequest {
   _IsolateStartRequest(this.sendMoorIsolate, this.targetPath);
@@ -77,24 +46,69 @@ class Database extends _$Database {
 
   Database.connect(DatabaseConnection connection) : super.connect(connection);
 
-  static Completer<Database> _instanceCompleter;
+  static const _shareRequestPortName = 'database.shareRequest';
+  static const _instancePortName = 'database.instance';
 
-  static Future<DatabaseConnection> getConnection() async {
-    final isolate = await _createMoorIsolate();
-    return isolate.connect();
+  static Future<String> _getDatabasePath() async {
+    final dir = await getApplicationDocumentsDirectory();
+    return join(dir.path, 'db.sqlite');
   }
 
-  static Future<Database> get instance async {
-    if (_instanceCompleter == null) {
-      _instanceCompleter = Completer();
+  static LazyDatabase _openConnection() {
+    return LazyDatabase(() async {
+      return VmDatabase(File(await _getDatabasePath()));
+    });
+  }
 
-      getConnection().then((connection) {
-        final db = Database.connect(connection);
-        _instanceCompleter.complete(db);
-      });
-    }
+  static Future<MoorIsolate> createIsolate() async {
+    final path = await _getDatabasePath();
+    final receivePort = ReceivePort();
 
-    return _instanceCompleter.future;
+    await Isolate.spawn(
+      _startBackground,
+      _IsolateStartRequest(receivePort.sendPort, path),
+    );
+
+    return await receivePort.first as MoorIsolate;
+  }
+
+  static void _startBackground(_IsolateStartRequest request) {
+    final executor = VmDatabase(File(request.targetPath));
+    final moorIsolate = MoorIsolate.inCurrent(
+      () => DatabaseConnection.fromExecutor(executor),
+    );
+
+    request.sendMoorIsolate.send(moorIsolate);
+  }
+
+  static void shareIsolate(MoorIsolate isolate) {
+    final shareRequestPort = ReceivePort();
+
+    shareRequestPort.listen((message) {
+      final instancePort =
+          IsolateNameServer.lookupPortByName(_instancePortName);
+      instancePort?.send(isolate.connectPort);
+    });
+
+    IsolateNameServer.registerPortWithName(
+        shareRequestPort.sendPort, _shareRequestPortName);
+  }
+
+  static Future<MoorIsolate> reuseIsolate() async {
+    final shareRequestPort =
+        IsolateNameServer.lookupPortByName(_shareRequestPortName);
+    if (shareRequestPort == null) return null;
+
+    final instancePort = ReceivePort();
+
+    IsolateNameServer.registerPortWithName(
+        instancePort.sendPort, _instancePortName);
+
+    shareRequestPort.send(null);
+
+    final connectPort = await instancePort.first as SendPort;
+
+    return MoorIsolate.fromConnectPort(connectPort);
   }
 
   @override

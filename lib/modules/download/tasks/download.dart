@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:eh_redux/database/database.dart';
-import 'package:eh_redux/modules/download/progress.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/download/utils.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
@@ -59,12 +58,6 @@ class DownloadTaskHandler {
       queuedAt: queuedAt,
       errorDetails: errorDetails,
     );
-
-    publishDownloadProgress(DownloadTaskProgress(
-      galleryId: galleryId,
-      state: state,
-      downloadedCount: downloadedCount,
-    ));
   }
 
   Future<void> _handleTask(DownloadTask task) async {

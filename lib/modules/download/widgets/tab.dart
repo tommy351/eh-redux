@@ -1,6 +1,5 @@
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/generated/l10n.dart';
-import 'package:eh_redux/modules/download/progress.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/home/widgets/body.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +13,9 @@ part 'tab.g.dart';
 @swidget
 Widget downloadTab(BuildContext context) {
   final database = Provider.of<Database>(context);
-  final listener = Provider.of<DownloadProgressListener>(context);
 
   return StreamProvider<List<DownloadTaskWithGallery>>(
-    create: (_) => listener
-        .mergeListWithGallery(database.downloadTasksDao.watchAllWithGallery()),
+    create: (_) => database.downloadTasksDao.watchAllWithGallery(),
     child: NestedScrollView(
       headerSliverBuilder: (context, _) => const [_AppBar()],
       body: const _Content(),
