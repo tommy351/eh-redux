@@ -28,7 +28,7 @@ class DownloadedImagesDao extends DatabaseAccessor<Database>
   static final _log = Logger('DownloadedImagesDao');
 
   Future<DownloadedImageEntry> getEntry(int galleryId, int page) async {
-    _log.finer('Get downloaded image: galleryId=$galleryId, page=$page');
+    _log.fine('getEntry: galleryId=$galleryId, page=$page');
     final query = select(downloadedImages)
       ..where((t) => t.galleryId.equals(galleryId) & t.page.equals(page));
 
@@ -36,12 +36,12 @@ class DownloadedImagesDao extends DatabaseAccessor<Database>
   }
 
   Future<void> upsertEntry(DownloadedImageEntry entry) async {
-    _log.finer('Upsert downloaded image: $entry');
+    _log.fine('upsertEntry: $entry');
     await into(downloadedImages).insertOnConflictUpdate(entry);
   }
 
   Future<void> deleteEntry(int galleryId, int page) async {
-    _log.finer('Delete downloaded image: galleryId=$galleryId, page=$page');
+    _log.fine('deleteEntry: galleryId=$galleryId, page=$page');
     final query = delete(downloadedImages)
       ..where((t) => t.galleryId.equals(galleryId) & t.page.equals(page));
 
@@ -49,7 +49,7 @@ class DownloadedImagesDao extends DatabaseAccessor<Database>
   }
 
   Future<List<DownloadedImageEntry>> listByGalleryId(int galleryId) async {
-    _log.finer('List downloaded images: galleryId=$galleryId');
+    _log.fine('listByGalleryId: galleryId=$galleryId');
     final query = select(downloadedImages)
       ..where((t) => t.galleryId.equals(galleryId))
       ..orderBy([
@@ -60,7 +60,7 @@ class DownloadedImagesDao extends DatabaseAccessor<Database>
   }
 
   Future<void> deleteByGalleryId(int galleryId) async {
-    _log.finer('Delete downloaded images: galleryId=$galleryId');
+    _log.fine('deleteByGalleryId: galleryId=$galleryId');
     final query = delete(downloadedImages)
       ..where((t) => t.galleryId.equals(galleryId));
 

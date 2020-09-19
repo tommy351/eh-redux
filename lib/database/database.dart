@@ -46,7 +46,7 @@ class Database extends _$Database {
 
   Database.connect(DatabaseConnection connection) : super.connect(connection);
 
-  static const _shareRequestPortName = 'database.shareRequest';
+  static const _requestPortName = 'database.request';
   static const _instancePortName = 'database.instance';
 
   static Future<String> _getDatabasePath() async {
@@ -82,33 +82,39 @@ class Database extends _$Database {
   }
 
   static void shareIsolate(MoorIsolate isolate) {
-    final shareRequestPort = ReceivePort();
+    final requestPort = ReceivePort();
 
-    shareRequestPort.listen((message) {
+    requestPort.listen((message) {
       final instancePort =
           IsolateNameServer.lookupPortByName(_instancePortName);
       instancePort?.send(isolate.connectPort);
     });
 
+    IsolateNameServer.removePortNameMapping(_requestPortName);
     IsolateNameServer.registerPortWithName(
-        shareRequestPort.sendPort, _shareRequestPortName);
+        requestPort.sendPort, _requestPortName);
   }
 
   static Future<MoorIsolate> reuseIsolate() async {
     final shareRequestPort =
-        IsolateNameServer.lookupPortByName(_shareRequestPortName);
+        IsolateNameServer.lookupPortByName(_requestPortName);
     if (shareRequestPort == null) return null;
 
     final instancePort = ReceivePort();
 
-    IsolateNameServer.registerPortWithName(
-        instancePort.sendPort, _instancePortName);
+    try {
+      IsolateNameServer.registerPortWithName(
+          instancePort.sendPort, _instancePortName);
 
-    shareRequestPort.send(null);
+      shareRequestPort.send(null);
 
-    final connectPort = await instancePort.first as SendPort;
+      final connectPort = await instancePort.first as SendPort;
 
-    return MoorIsolate.fromConnectPort(connectPort);
+      return MoorIsolate.fromConnectPort(connectPort);
+    } finally {
+      IsolateNameServer.removePortNameMapping(_instancePortName);
+      instancePort.close();
+    }
   }
 
   @override

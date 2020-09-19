@@ -13,8 +13,10 @@ class _$ImageErrorTearOff {
   const _$ImageErrorTearOff();
 
 // ignore: unused_element
-  ImageErrorNotFound notFound() {
-    return const ImageErrorNotFound();
+  ImageErrorNotFound notFound({@required int page}) {
+    return ImageErrorNotFound(
+      page: page,
+    );
   }
 }
 
@@ -22,13 +24,15 @@ class _$ImageErrorTearOff {
 const $ImageError = _$ImageErrorTearOff();
 
 mixin _$ImageError {
+  int get page;
+
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result notFound(),
+    @required Result notFound(int page),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result notFound(),
+    Result notFound(int page),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -40,12 +44,15 @@ mixin _$ImageError {
     Result notFound(ImageErrorNotFound value),
     @required Result orElse(),
   });
+
+  $ImageErrorCopyWith<ImageError> get copyWith;
 }
 
 abstract class $ImageErrorCopyWith<$Res> {
   factory $ImageErrorCopyWith(
           ImageError value, $Res Function(ImageError) then) =
       _$ImageErrorCopyWithImpl<$Res>;
+  $Res call({int page});
 }
 
 class _$ImageErrorCopyWithImpl<$Res> implements $ImageErrorCopyWith<$Res> {
@@ -54,12 +61,24 @@ class _$ImageErrorCopyWithImpl<$Res> implements $ImageErrorCopyWith<$Res> {
   final ImageError _value;
   // ignore: unused_field
   final $Res Function(ImageError) _then;
+
+  @override
+  $Res call({
+    Object page = freezed,
+  }) {
+    return _then(_value.copyWith(
+      page: page == freezed ? _value.page : page as int,
+    ));
+  }
 }
 
-abstract class $ImageErrorNotFoundCopyWith<$Res> {
+abstract class $ImageErrorNotFoundCopyWith<$Res>
+    implements $ImageErrorCopyWith<$Res> {
   factory $ImageErrorNotFoundCopyWith(
           ImageErrorNotFound value, $Res Function(ImageErrorNotFound) then) =
       _$ImageErrorNotFoundCopyWithImpl<$Res>;
+  @override
+  $Res call({int page});
 }
 
 class _$ImageErrorNotFoundCopyWithImpl<$Res>
@@ -71,42 +90,62 @@ class _$ImageErrorNotFoundCopyWithImpl<$Res>
 
   @override
   ImageErrorNotFound get _value => super._value as ImageErrorNotFound;
+
+  @override
+  $Res call({
+    Object page = freezed,
+  }) {
+    return _then(ImageErrorNotFound(
+      page: page == freezed ? _value.page : page as int,
+    ));
+  }
 }
 
 class _$ImageErrorNotFound implements ImageErrorNotFound {
-  const _$ImageErrorNotFound();
+  const _$ImageErrorNotFound({@required this.page}) : assert(page != null);
+
+  @override
+  final int page;
 
   @override
   String toString() {
-    return 'ImageError.notFound()';
+    return 'ImageError.notFound(page: $page)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is ImageErrorNotFound);
+    return identical(this, other) ||
+        (other is ImageErrorNotFound &&
+            (identical(other.page, page) ||
+                const DeepCollectionEquality().equals(other.page, page)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(page);
+
+  @override
+  $ImageErrorNotFoundCopyWith<ImageErrorNotFound> get copyWith =>
+      _$ImageErrorNotFoundCopyWithImpl<ImageErrorNotFound>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result notFound(),
+    @required Result notFound(int page),
   }) {
     assert(notFound != null);
-    return notFound();
+    return notFound(page);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result notFound(),
+    Result notFound(int page),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (notFound != null) {
-      return notFound();
+      return notFound(page);
     }
     return orElse();
   }
@@ -135,5 +174,10 @@ class _$ImageErrorNotFound implements ImageErrorNotFound {
 }
 
 abstract class ImageErrorNotFound implements ImageError {
-  const factory ImageErrorNotFound() = _$ImageErrorNotFound;
+  const factory ImageErrorNotFound({@required int page}) = _$ImageErrorNotFound;
+
+  @override
+  int get page;
+  @override
+  $ImageErrorNotFoundCopyWith<ImageErrorNotFound> get copyWith;
 }

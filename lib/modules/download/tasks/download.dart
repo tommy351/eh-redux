@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:eh_redux/database/database.dart';
+import 'package:eh_redux/modules/download/interrupter.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/download/utils.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
@@ -14,142 +16,128 @@ import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
-class DownloadTaskHandler {
-  DownloadTaskHandler({
-    @required this.database,
-  }) : assert(database != null) {
-    final sessionStore = SessionStore();
-    _httpClient = http.Client();
-    _client = EHentaiClient(
-      httpClient: _httpClient,
-      sessionStore: sessionStore,
-    );
-  }
+class CanceledException {}
 
-  static final _log = Logger('DownloadTaskHandler');
+class DownloadTaskOperation {
+  DownloadTaskOperation({
+    @required this.database,
+    @required this.httpClient,
+    @required this.client,
+    @required this.task,
+  })  : assert(database != null),
+        assert(httpClient != null),
+        assert(client != null),
+        assert(task != null);
+
+  static final _log = Logger('DownloadTaskOperation');
 
   final Database database;
-  http.Client _httpClient;
-  EHentaiClient _client;
+  final http.Client httpClient;
+  final EHentaiClient client;
+  final DownloadTask task;
 
-  Future<bool> handle(Map<String, dynamic> inputData) async {
-    _log.finer('Handle: $inputData');
+  int get galleryId => task.galleryId;
 
-    DownloadTask task;
+  Gallery _gallery;
+  ImageStore _imageStore;
+  Directory _directory;
+  bool _canceled = false;
+  StreamQueue<int> _queue;
+  Completer<void> _completer;
+  AsyncMemoizer<void> _queueCancelMemo;
 
-    while ((task = await database.downloadTasksDao.nextPendingTask()) != null) {
-      await _handleTask(task);
+  Future<void> start() async {
+    _log.fine('Start: $task');
+
+    _completer = Completer();
+
+    try {
+      // Create the folder
+      _directory = await _guard(() => getGalleryDownloadDirectory(galleryId));
+      await _guard(() => _directory.create(recursive: true));
+      _log.finer('Created directory: $_directory');
+
+      final galleryEntry =
+          await _guard(() => database.galleriesDao.getEntry(galleryId));
+      _gallery = Gallery.fromEntry(galleryEntry);
+      _imageStore = ImageStore(
+        client: client,
+        gallery: _gallery,
+        galleriesDao: database.galleriesDao,
+        downloadedImagesDao: database.downloadedImagesDao,
+      );
+
+      // Update the status as "downloading"
+      await _guard(() => database.downloadTasksDao.updateSingleStatus(
+            galleryId,
+            state: DownloadTaskState.downloading,
+          ));
+
+      await _guard(_startQueue);
+    } on CanceledException catch (err) {
+      _log.finer('Canceled: $err');
+    } catch (err, stackTrace) {
+      // Update the status as "failed"
+      await database.downloadTasksDao.updateSingleStatus(
+        galleryId,
+        state: DownloadTaskState.failed,
+        errorDetails: err.toString(),
+      );
+
+      // Record the error
+      await FirebaseCrashlytics.instance.recordError(err, stackTrace);
+      _log.severe('Failed to download the image', err, stackTrace);
+      return;
+    } finally {
+      _completer.complete();
     }
-
-    return true;
   }
 
-  Future<void> _updateTaskStatus({
-    @required int galleryId,
-    @required DownloadTaskState state,
-    int downloadedCount,
-    DateTime queuedAt,
-    String errorDetails,
-  }) async {
-    await database.downloadTasksDao.updateSingleStatus(
-      galleryId,
-      state: state,
-      downloadedCount: downloadedCount,
-      queuedAt: queuedAt,
-      errorDetails: errorDetails,
-    );
+  Future<void> cancel() async {
+    _log.fine('Cancel: $task');
+    _canceled = true;
+    await _cancelQueue(immediate: true);
+    await _completer?.future;
   }
 
-  Future<void> _handleTask(DownloadTask task) async {
-    _log.finer('Handle download task: $task');
+  Future<T> _guard<T>(FutureOr<T> Function() fn) {
+    if (_canceled) throw CanceledException();
+    return Future.sync(fn);
+  }
 
-    // Update the status as "downloading"
-    await _updateTaskStatus(
-      galleryId: task.galleryId,
-      state: DownloadTaskState.downloading,
-    );
+  Future<void> _startQueue() async {
+    final pages = List.generate(task.totalCount, (index) => index + 1)
+        .skip(task.downloadedCount);
+    _queue = StreamQueue(Stream.fromIterable(pages));
+    _queueCancelMemo = AsyncMemoizer();
 
-    // Create the folder
-    final directory = await getGalleryDownloadDirectory(task.galleryId);
-    await directory.create(recursive: true);
-
-    final gallery = await database.galleriesDao.getEntry(task.galleryId);
-    final imageStore = ImageStore(
-      client: _client,
-      gallery: Gallery.fromEntry(gallery),
-      galleriesDao: database.galleriesDao,
-      downloadedImagesDao: database.downloadedImagesDao,
-    );
-
-    for (int page = task.downloadedCount + 1; page <= task.totalCount; page++) {
-      try {
-        await _downloadImage(
-          directory: directory,
-          task: task,
-          imageStore: imageStore,
-          page: page,
-        );
-
-        // Check the latest status of the task
-        final currentTask =
-            await database.downloadTasksDao.getSingle(task.galleryId);
-
-        if (currentTask == null) {
-          _log.finer('Stop because the download task is deleted');
-          return;
-        }
-
-        if (currentTask.state == DownloadTaskState.deleting) {
-          _log.finer('Stop because the download task is deleting');
-          return;
-        }
-
-        // Update the downloaded count
-        await _updateTaskStatus(
-          galleryId: task.galleryId,
-          state: currentTask.state,
-          downloadedCount: page,
-        );
-
-        // Stop if the task is paused
-        if (currentTask.state == DownloadTaskState.paused) {
-          _log.finer('Stop because the download task is paused');
-          return;
-        }
-      } catch (err, stackTrace) {
-        // TODO: Retry with the reload key
-
-        // Update the status as "failed"
-        await _updateTaskStatus(
-          galleryId: task.galleryId,
-          state: DownloadTaskState.failed,
-          errorDetails: err.toString(),
-        );
-
-        // Record the error
-        await FirebaseCrashlytics.instance.recordError(err, stackTrace);
-        _log.severe('Failed to download the image', err, stackTrace);
-        return;
+    try {
+      while (await _guard(() => _queue.hasNext)) {
+        final page = await _guard(() => _queue.next);
+        await _guard(() => _downloadImage(page));
       }
-    }
 
-    // Update the status as "succeeded"
-    await _updateTaskStatus(
-      galleryId: task.galleryId,
-      state: DownloadTaskState.succeeded,
-    );
+      if (_queue.eventsDispatched == pages.length) {
+        // Update the status as "succeeded"
+        await database.downloadTasksDao.updateSingleStatus(
+          galleryId,
+          state: DownloadTaskState.succeeded,
+        );
+      }
+    } finally {
+      _cancelQueue();
+    }
   }
 
-  Future<void> _downloadImage({
-    @required Directory directory,
-    @required DownloadTask task,
-    @required ImageStore imageStore,
-    @required int page,
-  }) async {
-    _log.finer('Download the image: galleryId=${task.galleryId}, page=$page');
+  Future<void> _cancelQueue({bool immediate = false}) {
+    return _queueCancelMemo?.runOnce(() => _queue.cancel(immediate: immediate));
+  }
+
+  Future<void> _downloadImage(int page) async {
+    _log.fine('Download image: galleryId=$galleryId, page=$page');
 
     // Load the image metadata
-    final image = await imageStore.loadNetworkPage(page);
+    final image = await _guard(() => _imageStore.loadNetworkPage(page));
 
     _log.finer('Get image metadata: $image');
 
@@ -157,7 +145,7 @@ class DownloadTaskHandler {
 
     // Create a File for the image
     final file = File(p.join(
-      directory.path,
+      _directory.path,
       page.toString() + p.extension(image.url),
     ));
 
@@ -168,7 +156,7 @@ class DownloadTaskHandler {
 
     // Send the request
     final req = http.Request('GET', uri);
-    final res = _httpClient.send(req);
+    final res = httpClient.send(req);
 
     res.asStream().listen((event) {
       _log.finer('Response status: ${event.statusCode}');
@@ -213,5 +201,62 @@ class DownloadTaskHandler {
       size: fileSize,
       path: file.path,
     ));
+
+    // Update the downloaded count
+    await database.downloadTasksDao.updateSingleStatus(
+      galleryId,
+      downloadedCount: page,
+    );
+  }
+}
+
+class DownloadTaskHandler {
+  DownloadTaskHandler({
+    @required this.database,
+  }) : assert(database != null) {
+    final sessionStore = SessionStore();
+    _httpClient = http.Client();
+    _client = EHentaiClient(
+      httpClient: _httpClient,
+      sessionStore: sessionStore,
+    );
+  }
+
+  static final _log = Logger('DownloadTaskHandler');
+
+  final Database database;
+  http.Client _httpClient;
+  EHentaiClient _client;
+  final _operations = <int, DownloadTaskOperation>{};
+
+  Future<bool> handle(Map<String, dynamic> inputData) async {
+    _log.fine('handle: $inputData');
+
+    final listener = DownloadInterruptListener((galleryId) async {
+      await _operations[galleryId]?.cancel();
+    });
+
+    try {
+      DownloadTask task;
+
+      while ((task = await _nextTask()) != null) {
+        final operation = _operations[task.galleryId] = DownloadTaskOperation(
+          database: database,
+          httpClient: _httpClient,
+          client: _client,
+          task: task,
+        );
+
+        await operation.start();
+      }
+    } finally {
+      listener.close();
+    }
+
+    return true;
+  }
+
+  Future<DownloadTask> _nextTask() {
+    return database.downloadTasksDao.nextPendingTask();
   }
 }

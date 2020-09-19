@@ -1,5 +1,3 @@
-import 'package:eh_redux/modules/download/daos/task.dart';
-import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/gallery/dao.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:eh_redux/tasks/handler.dart';
@@ -8,20 +6,29 @@ import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:workmanager/workmanager.dart';
 
+import 'daos/image.dart';
+import 'daos/task.dart';
+import 'interrupter.dart';
+import 'types.dart';
+import 'utils.dart';
+
 class DownloadController {
   DownloadController({
     @required this.downloadTasksDao,
+    @required this.downloadedImagesDao,
     @required this.galleriesDao,
   });
 
   static const _taskUniqueName = 'download';
   static final _log = Logger('DownloadController');
 
+  final _interrupter = DownloadInterrupter();
   final DownloadTasksDao downloadTasksDao;
+  final DownloadedImagesDao downloadedImagesDao;
   final GalleriesDao galleriesDao;
 
   Future<void> _registerTask() async {
-    _log.finer('Register download task to work manager');
+    _log.fine('Register download task to work manager');
 
     await Workmanager.registerOneOffTask(
       _taskUniqueName,
@@ -34,7 +41,7 @@ class DownloadController {
   }
 
   Future<void> create(Gallery gallery) async {
-    _log.finer('Create a download task: $gallery');
+    _log.fine('create: $gallery');
 
     final now = DateTime.now();
 
@@ -53,7 +60,9 @@ class DownloadController {
   }
 
   Future<void> pause(int galleryId) async {
-    _log.finer('Pause the download task: $galleryId');
+    _log.fine('pause: $galleryId');
+
+    await _interrupter.interrupt(galleryId);
 
     await downloadTasksDao.updateSingleStatus(
       galleryId,
@@ -62,7 +71,9 @@ class DownloadController {
   }
 
   Future<void> pauseAll() async {
-    _log.finer('Pause all download tasks');
+    _log.fine('pauseAll');
+
+    await _interrupter.interruptAll();
 
     await downloadTasksDao.updateAllStatus(
       state: DownloadTaskState.paused,
@@ -71,7 +82,7 @@ class DownloadController {
   }
 
   Future<void> resume(int galleryId) async {
-    _log.finer('Resume the download task: $galleryId');
+    _log.fine('resume: $galleryId');
 
     await downloadTasksDao.updateSingleStatus(
       galleryId,
@@ -83,7 +94,7 @@ class DownloadController {
   }
 
   Future<void> resumeAll() async {
-    _log.finer('Resumse all download tasks');
+    _log.fine('resumeAll');
 
     await downloadTasksDao.updateAllStatus(
       state: DownloadTaskState.pending,
@@ -94,21 +105,27 @@ class DownloadController {
   }
 
   Future<void> delete(int galleryId) async {
-    _log.finer('Delete the download task: $galleryId');
+    _log.fine('delete: $galleryId');
+
+    await _interrupter.interrupt(galleryId);
 
     await downloadTasksDao.updateSingleStatus(
       galleryId,
       state: DownloadTaskState.deleting,
     );
 
-    await Workmanager.registerOneOffTask(
-      'deleteDownload_$galleryId',
-      EnumToString.parse(TaskTag.deleteDownload),
-      existingWorkPolicy: ExistingWorkPolicy.keep,
-      tag: EnumToString.parse(TaskTag.deleteDownload),
-      inputData: {
-        'galleryId': galleryId,
-      },
-    );
+    // Delete downloaded images of the task
+    await downloadedImagesDao.deleteByGalleryId(galleryId);
+
+    // Delete files
+    final dir = await getGalleryDownloadDirectory(galleryId);
+
+    if (await dir.exists()) {
+      _log.finer('Deleting download directory: $dir');
+      await dir.delete(recursive: true);
+    }
+
+    // Delete the download task
+    await downloadTasksDao.deleteByGalleryId(galleryId);
   }
 }

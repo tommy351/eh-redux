@@ -14,7 +14,7 @@ class HistoryDao extends DatabaseAccessor<Database> with _$HistoryDaoMixin {
   static final _log = Logger('HistoryDao');
 
   Stream<List<Gallery>> watchAll() {
-    _log.finer('Watch history');
+    _log.fine('watchAll');
     final query = select(galleries)
       ..where((t) => isNotNull(t.lastReadAt))
       ..orderBy([
@@ -25,8 +25,11 @@ class HistoryDao extends DatabaseAccessor<Database> with _$HistoryDaoMixin {
   }
 
   Future<void> deleteAll() async {
+    _log.fine('deleteAll');
+
     final taskIds = await select(downloadTasks).map((t) => t.galleryId).get();
-    _log.finer('Delete history: $taskIds');
+    _log.finer('Download task IDs: $taskIds');
+
     final query = delete(galleries)..where((t) => t.id.isNotIn(taskIds));
 
     await query.go();

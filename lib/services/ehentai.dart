@@ -108,12 +108,18 @@ class EHentaiClient {
   }) async {
     _log.fine(
         'getHtml: path=$path, params=$params, disableContentWarning=$disableContentWarning');
+
+    final uri = getUri(path, params: params);
+    _log.finer('URI: $uri');
+
     final res = await _httpClient.get(
-      getUri(path, params: params),
+      uri,
       headers: await _getRequestHeaders(
         disableContentWarning: disableContentWarning,
       ),
     );
+
+    _log.finer('HTML response: statusCode=${res.statusCode}');
 
     if (!isStatusCodeOk(res.statusCode)) {
       throw RequestException.fromResponse(
@@ -134,11 +140,17 @@ class EHentaiClient {
     dynamic body,
   }) async {
     _log.fine('postForm: path=$path, params=$params, body=$body');
+
+    final uri = getUri(path, params: params);
+    _log.finer('URI: $uri');
+
     final res = await _httpClient.post(
       getUri(path, params: params),
       headers: await _getRequestHeaders(),
       body: body,
     );
+
+    _log.finer('postForm response: statusCode=${res.statusCode}');
 
     if (!isStatusCodeOk(res.statusCode)) {
       throw RequestException.fromResponse(
@@ -162,6 +174,8 @@ class EHentaiClient {
         HttpHeaders.contentTypeHeader: 'application/json',
       },
     );
+
+    _log.finer('API response: statusCode=${res.statusCode}');
 
     if (!isStatusCodeOk(res.statusCode)) {
       throw RequestException.fromResponse(

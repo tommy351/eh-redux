@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:async/async.dart';
 import 'package:eh_redux/modules/download/daos/image.dart';
 import 'package:eh_redux/modules/gallery/dao.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
@@ -17,7 +20,9 @@ part 'store.g.dart';
 
 @freezed
 abstract class ImageError with _$ImageError {
-  const factory ImageError.notFound() = ImageErrorNotFound;
+  const factory ImageError.notFound({
+    @required int page,
+  }) = ImageErrorNotFound;
 }
 
 class ImageStore = _ImageStoreBase with _$ImageStore;
@@ -40,8 +45,14 @@ abstract class _ImageStoreBase with Store {
   final GalleriesDao galleriesDao;
   final DownloadedImagesDao downloadedImagesDao;
 
-  final _imageIds = <int, Future<List<ImageId>>>{};
-  int _imagePerPage;
+  final _imagePerPageMemo = AsyncMemoizer<int>();
+
+  final _imageIds = <int, Completer<List<ImageId>>>{};
+
+  Future<int> get _imagePerPage => _imagePerPageMemo.runOnce(() async {
+        final ids = await _getImageIds(0);
+        return ids.length;
+      });
 
   GalleryId get galleryId => gallery.galleryId;
   int get totalPage => gallery.fileCount;
@@ -140,9 +151,16 @@ abstract class _ImageStoreBase with Store {
     );
   }
 
-  Future<NetworkGalleryImage> loadNetworkPage(int page,
-      {String reloadKey}) async {
+  Future<NetworkGalleryImage> loadNetworkPage(
+    int page, {
+    String reloadKey,
+  }) async {
     final id = await _getImageId(page);
+
+    if (id == null) {
+      throw ImageError.notFound(page: page);
+    }
+
     final params = <String, String>{};
 
     if (reloadKey != null && reloadKey.isNotEmpty) {
@@ -158,7 +176,7 @@ abstract class _ImageStoreBase with Store {
     final img = res.document.getElementById('img');
 
     if (img == null) {
-      throw const ImageError.notFound();
+      throw ImageError.notFound(page: page);
     }
 
     final src = img.attributes['src'];
@@ -173,7 +191,7 @@ abstract class _ImageStoreBase with Store {
     );
   }
 
-  Future<List<ImageId>> _getImageIds(int galleryPage) async {
+  Future<List<ImageId>> _fetchImageIds(int galleryPage) async {
     final res = await client.getHtml(
       galleryId.path,
       params: {
@@ -213,13 +231,26 @@ abstract class _ImageStoreBase with Store {
     return ids;
   }
 
+  Future<List<ImageId>> _getImageIds(int galleryPage) async {
+    if (!_imageIds.containsKey(galleryPage)) {
+      final completer = _imageIds[galleryPage] = Completer();
+      _fetchImageIds(galleryPage).then(
+        completer.complete,
+        onError: completer.completeError,
+      );
+    }
+
+    return _imageIds[galleryPage].future;
+  }
+
   Future<ImageId> _getImageId(int imagePage) async {
-    final galleryPage = _imagePerPage == null ? 0 : imagePage ~/ _imagePerPage;
-    final ids = await (_imageIds[galleryPage] ??= _getImageIds(galleryPage));
+    final galleryPage = imagePage ~/ await _imagePerPage;
+    final ids = await _getImageIds(galleryPage);
 
-    _imagePerPage ??= ids.length;
-
-    return ids.firstWhere((e) => e.page == imagePage);
+    return ids.firstWhere(
+      (e) => e.page == imagePage,
+      orElse: () => null,
+    );
   }
 
   int _parseCssPixelSize(String s) {
@@ -237,8 +268,8 @@ abstract class _ImageStoreBase with Store {
     return client.getUri(image.id.path);
   }
 
-  void share(GalleryImage image) {
-    Share.share(
+  Future<void> share(GalleryImage image) {
+    return Share.share(
       getUri(image).toString(),
       subject: gallery.title,
     );

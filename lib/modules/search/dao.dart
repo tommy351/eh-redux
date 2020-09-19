@@ -21,12 +21,12 @@ class SearchHistoriesDao extends DatabaseAccessor<Database>
   static final _log = Logger('SearchHistoriesDao');
 
   Future<void> insertEntry(SearchHistoryEntry entry) async {
-    _log.finer('Insert search history: $entry');
+    _log.fine('insertEntry: $entry');
     await into(searchHistories).insertOnConflictUpdate(entry);
   }
 
   Future<List<SearchHistoryEntry>> listEntries(String pattern) async {
-    _log.finer('List search history: $pattern');
+    _log.fine('listEntries: $pattern');
     final query = select(searchHistories)
       ..where((t) => t.query.like('%$pattern%'))
       ..orderBy([
@@ -38,7 +38,7 @@ class SearchHistoriesDao extends DatabaseAccessor<Database>
   }
 
   Future<void> deleteAllEntries() async {
-    _log.finer('Clear search history');
+    _log.fine('deleteAllEntries');
     await delete(searchHistories).go();
   }
 }

@@ -44,7 +44,6 @@ Widget _downloadCell(
               aspectRatio: 1,
               child: GalleryThumbnail(
                 url: task.gallery.thumbnail,
-                // size: thumbSize,
                 borderRadius: BorderRadius.circular(16),
               ),
             ),

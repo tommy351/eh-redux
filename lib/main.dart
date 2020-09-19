@@ -18,12 +18,7 @@ Future<void> callbackDispatcher() async {
   await _initializeMain();
 
   return runZonedGuarded(() async {
-    final isolate =
-        await Database.reuseIsolate() ?? await Database.createIsolate();
-
-    final handler = BackgroundTaskHandler(
-      database: Database.connect(await isolate.connect()),
-    );
+    final handler = BackgroundTaskHandler();
 
     Workmanager.executeTask(
         (taskName, inputData) => handler.handle(taskName, inputData));

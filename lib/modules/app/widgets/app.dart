@@ -49,6 +49,7 @@ class _AppState extends State<App> {
     _sessionStore = SessionStore();
     _downloadController = DownloadController(
       downloadTasksDao: widget.database.downloadTasksDao,
+      downloadedImagesDao: widget.database.downloadedImagesDao,
       galleriesDao: widget.database.galleriesDao,
     );
     _eHentaiClient = EHentaiClient(sessionStore: _sessionStore);
