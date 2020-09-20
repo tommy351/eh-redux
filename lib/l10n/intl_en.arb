@@ -27,7 +27,7 @@
   "categoryMisc": "Misc",
   "settingSectionAppearance": "Appearance",
   "settingSectionGallery": "Gallery",
-  "settingSectionImageView": "Image View",
+  "settingSectionImage": "Image",
   "settingSectionSearch": "Search",
   "settingTheme": "Theme",
   "settingThemeSystem": "Follow OS settings",
@@ -43,6 +43,7 @@
   "settingTurnPagesWithVolumeKeys": "Turn pages using volume buttons",
   "settingClearSearchHistory": "Clear search history",
   "settingDisplayContentWarning": "Display content warning",
+  "settingClearImageCache": "Clear image cache",
   "cancelButtonLabel": "Cancel",
   "clearButtonLabel": "Clear",
   "clearReadingHistoryDialogTitle": "Clear reading history?",
@@ -123,5 +124,8 @@
   "downloadStartedHint": "Download started",
   "downloadPausedHint": "Download paused",
   "downloadResumedHint": "Download resumed",
-  "downloadDeletedHint": "Download deleted"
+  "downloadDeletedHint": "Download deleted",
+  "clearImageCacheDialogTitle": "Clear image cache?",
+  "clearImageCacheDialogContent": "Cached image on this device will be deleted.",
+  "imageCacheClearSuccess": "Image cache cleared successfully."
 }

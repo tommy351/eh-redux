@@ -27,7 +27,7 @@
   "categoryMisc": "其他",
   "settingSectionAppearance": "外觀",
   "settingSectionGallery": "相簿",
-  "settingSectionImageView": "圖片瀏覽",
+  "settingSectionImage": "圖片",
   "settingSectionSearch": "搜尋",
   "settingTheme": "主題",
   "settingThemeSystem": "根據系統設定",
@@ -43,6 +43,7 @@
   "settingTurnPagesWithVolumeKeys": "使用音量鍵翻頁",
   "settingClearSearchHistory": "清除搜尋紀錄",
   "settingDisplayContentWarning": "顯示內容警告",
+  "settingClearImageCache": "清除圖片快取",
   "cancelButtonLabel": "取消",
   "clearButtonLabel": "清除",
   "clearReadingHistoryDialogTitle": "清除閱讀紀錄？",
@@ -123,5 +124,8 @@
   "downloadStartedHint": "下載已開始",
   "downloadPausedHint": "下載已暫停",
   "downloadResumedHint": "下載已繼續",
-  "downloadDeletedHint": "下載已刪除"
+  "downloadDeletedHint": "下載已刪除",
+  "clearImageCacheDialogTitle": "清除圖片快取？",
+  "clearImageCacheDialogContent": "儲存在此裝置上的快取圖片會被刪除。",
+  "imageCacheClearSuccess": "圖片快取清除成功。"
 }

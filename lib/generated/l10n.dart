@@ -313,11 +313,11 @@ class S {
     );
   }
 
-  /// `Image View`
-  String get settingSectionImageView {
+  /// `Image`
+  String get settingSectionImage {
     return Intl.message(
-      'Image View',
-      name: 'settingSectionImageView',
+      'Image',
+      name: 'settingSectionImage',
       desc: '',
       args: [],
     );
@@ -468,6 +468,16 @@ class S {
     return Intl.message(
       'Display content warning',
       name: 'settingDisplayContentWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear image cache`
+  String get settingClearImageCache {
+    return Intl.message(
+      'Clear image cache',
+      name: 'settingClearImageCache',
       desc: '',
       args: [],
     );
@@ -1280,6 +1290,36 @@ class S {
     return Intl.message(
       'Download deleted',
       name: 'downloadDeletedHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear image cache?`
+  String get clearImageCacheDialogTitle {
+    return Intl.message(
+      'Clear image cache?',
+      name: 'clearImageCacheDialogTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cached image on this device will be deleted.`
+  String get clearImageCacheDialogContent {
+    return Intl.message(
+      'Cached image on this device will be deleted.',
+      name: 'clearImageCacheDialogContent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Image cache cleared successfully.`
+  String get imageCacheClearSuccess {
+    return Intl.message(
+      'Image cache cleared successfully.',
+      name: 'imageCacheClearSuccess',
       desc: '',
       args: [],
     );

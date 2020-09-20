@@ -4,6 +4,7 @@ import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
 import 'package:eh_redux/modules/setting/store.dart';
 import 'package:eh_redux/modules/setting/types.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:provider/provider.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
@@ -88,7 +89,7 @@ Widget _body(BuildContext context) {
         },
       ),
       const Divider(),
-      _Title(S.of(context).settingSectionImageView),
+      _Title(S.of(context).settingSectionImage),
       _SelectTile<OrientationSetting>(
         title: S.of(context).settingScreenOrientation,
         preference: settingStore.orientation,
@@ -110,6 +111,23 @@ Widget _body(BuildContext context) {
       _SwitchTile(
         title: S.of(context).settingTurnPagesWithVolumeKeys,
         preference: settingStore.turnPagesWithVolumeKeys,
+      ),
+      ConfirmListTile(
+        title: Text(S.of(context).settingClearImageCache),
+        dialogTitle: Text(S.of(context).clearImageCacheDialogTitle),
+        dialogContent: Text(S.of(context).clearImageCacheDialogContent),
+        confirmActionChild: Text(S.of(context).clearButtonLabel),
+        onConfirm: () async {
+          final manager = DefaultCacheManager();
+          await showLoadingDialog(
+            context: context,
+            future: manager.emptyCache(),
+          );
+
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(S.of(context).imageCacheClearSuccess),
+          ));
+        },
       ),
       const Divider(),
       _Title(S.of(context).settingSectionSearch),

@@ -52,6 +52,7 @@ dependencies:
   async: ^2.4.2
   rxdart: ^0.24.1
   octo_image: ^0.3.0
+  flutter_cache_manager: ^1.4.2
 
 dev_dependencies:
   flutter_test:
