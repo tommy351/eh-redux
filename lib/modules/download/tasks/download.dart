@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:async/async.dart';
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/modules/download/interrupter.dart';
 import 'package:eh_redux/modules/download/types.dart';
@@ -15,7 +16,18 @@ import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
-class CanceledException {}
+class _CanceledException {}
+
+class _FileWithSize {
+  _FileWithSize({
+    @required this.file,
+    @required this.size,
+  })  : assert(file != null),
+        assert(size >= 0);
+
+  final File file;
+  final int size;
+}
 
 class DownloadTaskOperation {
   DownloadTaskOperation({
@@ -37,9 +49,31 @@ class DownloadTaskOperation {
 
   int get galleryId => task.galleryId;
 
-  Gallery _gallery;
-  ImageStore _imageStore;
-  Directory _directory;
+  final _galleryMemo = AsyncMemoizer<Gallery>();
+
+  Future<Gallery> get _gallery => _galleryMemo.runOnce(() async {
+        final entry = await database.galleriesDao.getEntry(galleryId);
+        return Gallery.fromEntry(entry);
+      });
+
+  final _imageStoreMemo = AsyncMemoizer<ImageStore>();
+
+  Future<ImageStore> get _imageStore =>
+      _imageStoreMemo.runOnce(() async => ImageStore(
+            client: client,
+            gallery: await _gallery,
+            galleriesDao: database.galleriesDao,
+            downloadedImagesDao: database.downloadedImagesDao,
+          ));
+
+  final _directoryMemo = AsyncMemoizer<Directory>();
+
+  Future<Directory> get _directory => _directoryMemo.runOnce(() async {
+        final dir = await getGalleryDownloadDirectory(galleryId);
+        await dir.create(recursive: true);
+        return dir;
+      });
+
   bool _canceled = false;
   Completer<void> _completer;
 
@@ -49,26 +83,13 @@ class DownloadTaskOperation {
     _completer = Completer();
 
     try {
-      // Create the folder
-      _directory = await _guard(() => getGalleryDownloadDirectory(galleryId));
-      await _guard(() => _directory.create(recursive: true));
-      _log.finer('Created directory: $_directory');
-
-      final galleryEntry =
-          await _guard(() => database.galleriesDao.getEntry(galleryId));
-      _gallery = Gallery.fromEntry(galleryEntry);
-      _imageStore = ImageStore(
-        client: client,
-        gallery: _gallery,
-        galleriesDao: database.galleriesDao,
-        downloadedImagesDao: database.downloadedImagesDao,
-      );
-
       // Update the status as "downloading"
       await _guard(() => database.downloadTasksDao.updateSingleStatus(
             galleryId,
             state: DownloadTaskState.downloading,
           ));
+
+      await _guard(_downloadThumbnail);
 
       for (int page = task.downloadedCount + 1;
           page <= task.totalCount && !_canceled;
@@ -81,7 +102,7 @@ class DownloadTaskOperation {
             galleryId,
             state: DownloadTaskState.succeeded,
           ));
-    } on CanceledException catch (err) {
+    } on _CanceledException catch (err) {
       _log.finer('Canceled: $err');
     } catch (err, stackTrace) {
       // Update the status as "failed"
@@ -107,33 +128,25 @@ class DownloadTaskOperation {
   }
 
   Future<T> _guard<T>(FutureOr<T> Function() fn) {
-    if (_canceled) throw CanceledException();
+    if (_canceled) throw _CanceledException();
     return Future.sync(fn);
   }
 
-  Future<void> _downloadImage(int page) async {
-    _log.fine('Download image: galleryId=$galleryId, page=$page');
+  Future<_FileWithSize> _downloadFile({
+    @required String name,
+    @required String url,
+  }) async {
+    _log.finer('downloadFile: $url');
 
-    // Load the image metadata
-    final image = await _guard(() => _imageStore.loadNetworkPage(page));
-
-    _log.finer('Get image metadata: $image');
-
-    final uri = Uri.parse(image.url);
-
-    // Create a File for the image
-    final file = File(p.join(
-      _directory.path,
-      page.toString() + p.extension(image.url),
-    ));
-
+    final dir = await _directory;
+    final file = File(p.join(dir.path, '$name${p.extension(url)}'));
     _log.finer('File path: ${file.path}');
 
     var fileSize = 0;
     final completer = Completer<void>();
 
     // Send the request
-    final req = http.Request('GET', uri);
+    final req = http.Request('GET', Uri.parse(url));
     final res = httpClient.send(req);
 
     res.asStream().listen((event) {
@@ -168,6 +181,40 @@ class DownloadTaskOperation {
 
     _log.finer('File size: $fileSize');
 
+    return _FileWithSize(file: file, size: fileSize);
+  }
+
+  Future<void> _downloadThumbnail() async {
+    if (task.thumbnail?.isNotEmpty ?? false) return;
+
+    final gallery = await _gallery;
+
+    final file = await _guard(() => _downloadFile(
+          name: 'thumbnail',
+          url: gallery.thumbnail,
+        ));
+
+    await _guard(() => database.downloadTasksDao.updateSingleStatus(
+          galleryId,
+          thumbnail: file.file.path,
+        ));
+  }
+
+  Future<void> _downloadImage(int page) async {
+    _log.fine('Download image: galleryId=$galleryId, page=$page');
+
+    final imageStore = await _imageStore;
+
+    // Load the image metadata
+    final image = await _guard(() => imageStore.loadNetworkPage(page));
+
+    _log.finer('Get image metadata: $image');
+
+    final file = await _guard(() => _downloadFile(
+          name: '$page',
+          url: image.url,
+        ));
+
     // Upsert the downloaded image to the database
     await _guard(
         () => database.downloadedImagesDao.upsertEntry(DownloadedImageEntry(
@@ -177,8 +224,8 @@ class DownloadTaskOperation {
               downloadedAt: DateTime.now(),
               width: image.width,
               height: image.height,
-              size: fileSize,
-              path: file.path,
+              size: file.size,
+              path: file.file.path,
             )));
 
     // Update the downloaded count

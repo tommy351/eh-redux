@@ -1,7 +1,7 @@
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/gallery/widgets/screen.dart';
-import 'package:eh_redux/modules/gallery/widgets/thumbnail.dart';
+import 'package:eh_redux/modules/gallery/widgets/square_thumbnail.dart';
 import 'package:eh_redux/modules/gallery/widgets/title.dart';
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
@@ -46,12 +46,9 @@ Widget _downloadCell(
         children: [
           Padding(
             padding: const EdgeInsets.all(8),
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: GalleryThumbnail(
-                url: task.gallery.thumbnail,
-                borderRadius: BorderRadius.circular(16),
-              ),
+            child: GallerySquareThumbnail(
+              galleryId: task.task.galleryId,
+              fallbackUrl: task.gallery.thumbnail,
             ),
           ),
           Expanded(

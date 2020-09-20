@@ -1066,6 +1066,7 @@ class DownloadTaskEntry extends DataClass
   final DateTime queuedAt;
   final DownloadTaskState state;
   final String errorDetails;
+  final String thumbnail;
   DownloadTaskEntry(
       {@required this.galleryId,
       @required this.totalCount,
@@ -1073,7 +1074,8 @@ class DownloadTaskEntry extends DataClass
       @required this.createdAt,
       @required this.queuedAt,
       @required this.state,
-      this.errorDetails});
+      this.errorDetails,
+      this.thumbnail});
   factory DownloadTaskEntry.fromData(
       Map<String, dynamic> data, GeneratedDatabase db,
       {String prefix}) {
@@ -1096,6 +1098,8 @@ class DownloadTaskEntry extends DataClass
           stringType.mapFromDatabaseResponse(data['${effectivePrefix}state'])),
       errorDetails: stringType
           .mapFromDatabaseResponse(data['${effectivePrefix}error_details']),
+      thumbnail: stringType
+          .mapFromDatabaseResponse(data['${effectivePrefix}thumbnail']),
     );
   }
   @override
@@ -1123,6 +1127,9 @@ class DownloadTaskEntry extends DataClass
     if (!nullToAbsent || errorDetails != null) {
       map['error_details'] = Variable<String>(errorDetails);
     }
+    if (!nullToAbsent || thumbnail != null) {
+      map['thumbnail'] = Variable<String>(thumbnail);
+    }
     return map;
   }
 
@@ -1148,6 +1155,9 @@ class DownloadTaskEntry extends DataClass
       errorDetails: errorDetails == null && nullToAbsent
           ? const Value.absent()
           : Value(errorDetails),
+      thumbnail: thumbnail == null && nullToAbsent
+          ? const Value.absent()
+          : Value(thumbnail),
     );
   }
 
@@ -1162,6 +1172,7 @@ class DownloadTaskEntry extends DataClass
       queuedAt: serializer.fromJson<DateTime>(json['queuedAt']),
       state: serializer.fromJson<DownloadTaskState>(json['state']),
       errorDetails: serializer.fromJson<String>(json['errorDetails']),
+      thumbnail: serializer.fromJson<String>(json['thumbnail']),
     );
   }
   @override
@@ -1175,6 +1186,7 @@ class DownloadTaskEntry extends DataClass
       'queuedAt': serializer.toJson<DateTime>(queuedAt),
       'state': serializer.toJson<DownloadTaskState>(state),
       'errorDetails': serializer.toJson<String>(errorDetails),
+      'thumbnail': serializer.toJson<String>(thumbnail),
     };
   }
 
@@ -1185,7 +1197,8 @@ class DownloadTaskEntry extends DataClass
           DateTime createdAt,
           DateTime queuedAt,
           DownloadTaskState state,
-          String errorDetails}) =>
+          String errorDetails,
+          String thumbnail}) =>
       DownloadTaskEntry(
         galleryId: galleryId ?? this.galleryId,
         totalCount: totalCount ?? this.totalCount,
@@ -1194,6 +1207,7 @@ class DownloadTaskEntry extends DataClass
         queuedAt: queuedAt ?? this.queuedAt,
         state: state ?? this.state,
         errorDetails: errorDetails ?? this.errorDetails,
+        thumbnail: thumbnail ?? this.thumbnail,
       );
   @override
   String toString() {
@@ -1204,7 +1218,8 @@ class DownloadTaskEntry extends DataClass
           ..write('createdAt: $createdAt, ')
           ..write('queuedAt: $queuedAt, ')
           ..write('state: $state, ')
-          ..write('errorDetails: $errorDetails')
+          ..write('errorDetails: $errorDetails, ')
+          ..write('thumbnail: $thumbnail')
           ..write(')'))
         .toString();
   }
@@ -1218,8 +1233,12 @@ class DownloadTaskEntry extends DataClass
               downloadedCount.hashCode,
               $mrjc(
                   createdAt.hashCode,
-                  $mrjc(queuedAt.hashCode,
-                      $mrjc(state.hashCode, errorDetails.hashCode)))))));
+                  $mrjc(
+                      queuedAt.hashCode,
+                      $mrjc(
+                          state.hashCode,
+                          $mrjc(
+                              errorDetails.hashCode, thumbnail.hashCode))))))));
   @override
   bool operator ==(dynamic other) =>
       identical(this, other) ||
@@ -1230,7 +1249,8 @@ class DownloadTaskEntry extends DataClass
           other.createdAt == this.createdAt &&
           other.queuedAt == this.queuedAt &&
           other.state == this.state &&
-          other.errorDetails == this.errorDetails);
+          other.errorDetails == this.errorDetails &&
+          other.thumbnail == this.thumbnail);
 }
 
 class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
@@ -1241,6 +1261,7 @@ class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
   final Value<DateTime> queuedAt;
   final Value<DownloadTaskState> state;
   final Value<String> errorDetails;
+  final Value<String> thumbnail;
   const DownloadTasksCompanion({
     this.galleryId = const Value.absent(),
     this.totalCount = const Value.absent(),
@@ -1249,6 +1270,7 @@ class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
     this.queuedAt = const Value.absent(),
     this.state = const Value.absent(),
     this.errorDetails = const Value.absent(),
+    this.thumbnail = const Value.absent(),
   });
   DownloadTasksCompanion.insert({
     this.galleryId = const Value.absent(),
@@ -1258,6 +1280,7 @@ class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
     @required DateTime queuedAt,
     @required DownloadTaskState state,
     this.errorDetails = const Value.absent(),
+    this.thumbnail = const Value.absent(),
   })  : totalCount = Value(totalCount),
         downloadedCount = Value(downloadedCount),
         createdAt = Value(createdAt),
@@ -1271,6 +1294,7 @@ class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
     Expression<DateTime> queuedAt,
     Expression<String> state,
     Expression<String> errorDetails,
+    Expression<String> thumbnail,
   }) {
     return RawValuesInsertable({
       if (galleryId != null) 'gallery_id': galleryId,
@@ -1280,6 +1304,7 @@ class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
       if (queuedAt != null) 'queued_at': queuedAt,
       if (state != null) 'state': state,
       if (errorDetails != null) 'error_details': errorDetails,
+      if (thumbnail != null) 'thumbnail': thumbnail,
     });
   }
 
@@ -1290,7 +1315,8 @@ class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
       Value<DateTime> createdAt,
       Value<DateTime> queuedAt,
       Value<DownloadTaskState> state,
-      Value<String> errorDetails}) {
+      Value<String> errorDetails,
+      Value<String> thumbnail}) {
     return DownloadTasksCompanion(
       galleryId: galleryId ?? this.galleryId,
       totalCount: totalCount ?? this.totalCount,
@@ -1299,6 +1325,7 @@ class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
       queuedAt: queuedAt ?? this.queuedAt,
       state: state ?? this.state,
       errorDetails: errorDetails ?? this.errorDetails,
+      thumbnail: thumbnail ?? this.thumbnail,
     );
   }
 
@@ -1327,6 +1354,9 @@ class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
     if (errorDetails.present) {
       map['error_details'] = Variable<String>(errorDetails.value);
     }
+    if (thumbnail.present) {
+      map['thumbnail'] = Variable<String>(thumbnail.value);
+    }
     return map;
   }
 
@@ -1339,7 +1369,8 @@ class DownloadTasksCompanion extends UpdateCompanion<DownloadTaskEntry> {
           ..write('createdAt: $createdAt, ')
           ..write('queuedAt: $queuedAt, ')
           ..write('state: $state, ')
-          ..write('errorDetails: $errorDetails')
+          ..write('errorDetails: $errorDetails, ')
+          ..write('thumbnail: $thumbnail')
           ..write(')'))
         .toString();
   }
@@ -1438,6 +1469,18 @@ class $DownloadTasksTable extends DownloadTasks
     );
   }
 
+  final VerificationMeta _thumbnailMeta = const VerificationMeta('thumbnail');
+  GeneratedTextColumn _thumbnail;
+  @override
+  GeneratedTextColumn get thumbnail => _thumbnail ??= _constructThumbnail();
+  GeneratedTextColumn _constructThumbnail() {
+    return GeneratedTextColumn(
+      'thumbnail',
+      $tableName,
+      true,
+    );
+  }
+
   @override
   List<GeneratedColumn> get $columns => [
         galleryId,
@@ -1446,7 +1489,8 @@ class $DownloadTasksTable extends DownloadTasks
         createdAt,
         queuedAt,
         state,
-        errorDetails
+        errorDetails,
+        thumbnail
       ];
   @override
   $DownloadTasksTable get asDslTable => this;
@@ -1497,6 +1541,10 @@ class $DownloadTasksTable extends DownloadTasks
           _errorDetailsMeta,
           errorDetails.isAcceptableOrUnknown(
               data['error_details'], _errorDetailsMeta));
+    }
+    if (data.containsKey('thumbnail')) {
+      context.handle(_thumbnailMeta,
+          thumbnail.isAcceptableOrUnknown(data['thumbnail'], _thumbnailMeta));
     }
     return context;
   }

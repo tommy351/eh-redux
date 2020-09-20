@@ -51,6 +51,7 @@ dependencies:
   logging: ^0.11.4
   async: ^2.4.2
   rxdart: ^0.24.1
+  octo_image: ^0.3.0
 
 dev_dependencies:
   flutter_test:

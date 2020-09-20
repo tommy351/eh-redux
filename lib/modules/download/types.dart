@@ -23,6 +23,7 @@ abstract class DownloadTask implements _$DownloadTask {
     @required DateTime queuedAt,
     @Default(DownloadTaskState.pending) DownloadTaskState state,
     String errorDetails,
+    String thumbnail,
   }) = _DownloadTask;
 
   factory DownloadTask.fromEntry(DownloadTaskEntry entry) {
@@ -34,6 +35,7 @@ abstract class DownloadTask implements _$DownloadTask {
       queuedAt: entry.queuedAt,
       state: entry.state,
       errorDetails: entry.errorDetails,
+      thumbnail: entry.thumbnail,
     );
   }
 
@@ -48,6 +50,7 @@ abstract class DownloadTask implements _$DownloadTask {
       queuedAt: queuedAt,
       state: state,
       errorDetails: errorDetails,
+      thumbnail: thumbnail,
     );
   }
 }

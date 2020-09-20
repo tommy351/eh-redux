@@ -6,7 +6,7 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'category_icon.dart';
 import 'category_label.dart';
 import 'screen.dart';
-import 'thumbnail.dart';
+import 'square_thumbnail.dart';
 import 'title.dart';
 
 part 'list.g.dart';
@@ -31,8 +31,6 @@ Widget galleryList(
 
 @swidget
 Widget _galleryCell(BuildContext context, {@required Gallery gallery}) {
-  // const thumbSize = 100.0;
-
   return InkWell(
     onTap: () {
       Navigator.pushNamed(context, GalleryScreen.route, arguments: gallery);
@@ -44,12 +42,9 @@ Widget _galleryCell(BuildContext context, {@required Gallery gallery}) {
         children: [
           Padding(
             padding: const EdgeInsets.all(8),
-            child: AspectRatio(
-              aspectRatio: 1,
-              child: GalleryThumbnail(
-                url: gallery.thumbnail,
-                borderRadius: BorderRadius.circular(16),
-              ),
+            child: GallerySquareThumbnail(
+              galleryId: gallery.id,
+              fallbackUrl: gallery.thumbnail,
             ),
           ),
           Expanded(

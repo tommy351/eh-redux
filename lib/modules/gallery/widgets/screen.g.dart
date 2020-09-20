@@ -14,13 +14,10 @@ class _AppBar extends StatelessWidget {
 }
 
 class _AppBarFlexibleSpace extends StatelessWidget {
-  const _AppBarFlexibleSpace({Key key, @required this.url}) : super(key: key);
-
-  final String url;
+  const _AppBarFlexibleSpace({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext _context) =>
-      _appBarFlexibleSpace(_context, url: url);
+  Widget build(BuildContext _context) => _appBarFlexibleSpace(_context);
 }
 
 class _Divider extends StatelessWidget {

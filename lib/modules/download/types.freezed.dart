@@ -20,7 +20,8 @@ class _$DownloadTaskTearOff {
       @required DateTime createdAt,
       @required DateTime queuedAt,
       DownloadTaskState state = DownloadTaskState.pending,
-      String errorDetails}) {
+      String errorDetails,
+      String thumbnail}) {
     return _DownloadTask(
       galleryId: galleryId,
       totalCount: totalCount,
@@ -29,6 +30,7 @@ class _$DownloadTaskTearOff {
       queuedAt: queuedAt,
       state: state,
       errorDetails: errorDetails,
+      thumbnail: thumbnail,
     );
   }
 }
@@ -44,6 +46,7 @@ mixin _$DownloadTask {
   DateTime get queuedAt;
   DownloadTaskState get state;
   String get errorDetails;
+  String get thumbnail;
 
   $DownloadTaskCopyWith<DownloadTask> get copyWith;
 }
@@ -59,7 +62,8 @@ abstract class $DownloadTaskCopyWith<$Res> {
       DateTime createdAt,
       DateTime queuedAt,
       DownloadTaskState state,
-      String errorDetails});
+      String errorDetails,
+      String thumbnail});
 }
 
 class _$DownloadTaskCopyWithImpl<$Res> implements $DownloadTaskCopyWith<$Res> {
@@ -78,6 +82,7 @@ class _$DownloadTaskCopyWithImpl<$Res> implements $DownloadTaskCopyWith<$Res> {
     Object queuedAt = freezed,
     Object state = freezed,
     Object errorDetails = freezed,
+    Object thumbnail = freezed,
   }) {
     return _then(_value.copyWith(
       galleryId: galleryId == freezed ? _value.galleryId : galleryId as int,
@@ -92,6 +97,7 @@ class _$DownloadTaskCopyWithImpl<$Res> implements $DownloadTaskCopyWith<$Res> {
       errorDetails: errorDetails == freezed
           ? _value.errorDetails
           : errorDetails as String,
+      thumbnail: thumbnail == freezed ? _value.thumbnail : thumbnail as String,
     ));
   }
 }
@@ -109,7 +115,8 @@ abstract class _$DownloadTaskCopyWith<$Res>
       DateTime createdAt,
       DateTime queuedAt,
       DownloadTaskState state,
-      String errorDetails});
+      String errorDetails,
+      String thumbnail});
 }
 
 class __$DownloadTaskCopyWithImpl<$Res> extends _$DownloadTaskCopyWithImpl<$Res>
@@ -130,6 +137,7 @@ class __$DownloadTaskCopyWithImpl<$Res> extends _$DownloadTaskCopyWithImpl<$Res>
     Object queuedAt = freezed,
     Object state = freezed,
     Object errorDetails = freezed,
+    Object thumbnail = freezed,
   }) {
     return _then(_DownloadTask(
       galleryId: galleryId == freezed ? _value.galleryId : galleryId as int,
@@ -144,6 +152,7 @@ class __$DownloadTaskCopyWithImpl<$Res> extends _$DownloadTaskCopyWithImpl<$Res>
       errorDetails: errorDetails == freezed
           ? _value.errorDetails
           : errorDetails as String,
+      thumbnail: thumbnail == freezed ? _value.thumbnail : thumbnail as String,
     ));
   }
 }
@@ -156,7 +165,8 @@ class _$_DownloadTask extends _DownloadTask {
       @required this.createdAt,
       @required this.queuedAt,
       this.state = DownloadTaskState.pending,
-      this.errorDetails})
+      this.errorDetails,
+      this.thumbnail})
       : assert(galleryId != null),
         assert(totalCount != null),
         assert(downloadedCount != null),
@@ -181,10 +191,12 @@ class _$_DownloadTask extends _DownloadTask {
   final DownloadTaskState state;
   @override
   final String errorDetails;
+  @override
+  final String thumbnail;
 
   @override
   String toString() {
-    return 'DownloadTask(galleryId: $galleryId, totalCount: $totalCount, downloadedCount: $downloadedCount, createdAt: $createdAt, queuedAt: $queuedAt, state: $state, errorDetails: $errorDetails)';
+    return 'DownloadTask(galleryId: $galleryId, totalCount: $totalCount, downloadedCount: $downloadedCount, createdAt: $createdAt, queuedAt: $queuedAt, state: $state, errorDetails: $errorDetails, thumbnail: $thumbnail)';
   }
 
   @override
@@ -210,7 +222,10 @@ class _$_DownloadTask extends _DownloadTask {
                 const DeepCollectionEquality().equals(other.state, state)) &&
             (identical(other.errorDetails, errorDetails) ||
                 const DeepCollectionEquality()
-                    .equals(other.errorDetails, errorDetails)));
+                    .equals(other.errorDetails, errorDetails)) &&
+            (identical(other.thumbnail, thumbnail) ||
+                const DeepCollectionEquality()
+                    .equals(other.thumbnail, thumbnail)));
   }
 
   @override
@@ -222,7 +237,8 @@ class _$_DownloadTask extends _DownloadTask {
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(queuedAt) ^
       const DeepCollectionEquality().hash(state) ^
-      const DeepCollectionEquality().hash(errorDetails);
+      const DeepCollectionEquality().hash(errorDetails) ^
+      const DeepCollectionEquality().hash(thumbnail);
 
   @override
   _$DownloadTaskCopyWith<_DownloadTask> get copyWith =>
@@ -238,7 +254,8 @@ abstract class _DownloadTask extends DownloadTask {
       @required DateTime createdAt,
       @required DateTime queuedAt,
       DownloadTaskState state,
-      String errorDetails}) = _$_DownloadTask;
+      String errorDetails,
+      String thumbnail}) = _$_DownloadTask;
 
   @override
   int get galleryId;
@@ -254,6 +271,8 @@ abstract class _DownloadTask extends DownloadTask {
   DownloadTaskState get state;
   @override
   String get errorDetails;
+  @override
+  String get thumbnail;
   @override
   _$DownloadTaskCopyWith<_DownloadTask> get copyWith;
 }

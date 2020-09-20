@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/generated/l10n.dart';
@@ -9,6 +8,7 @@ import 'package:eh_redux/modules/download/widgets/menu_bottom_sheet.dart';
 import 'package:eh_redux/modules/favorite/widgets/bottom_sheet.dart';
 import 'package:eh_redux/modules/gallery/stores/screen.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
+import 'package:eh_redux/modules/gallery/widgets/thumbnail.dart';
 import 'package:eh_redux/modules/image/widgets/screen.dart';
 import 'package:eh_redux/modules/search/types.dart';
 import 'package:eh_redux/modules/search/widgets/screen.dart';
@@ -98,7 +98,7 @@ Widget _appBar(BuildContext context) {
 
   return SliverAppBar(
     pinned: true,
-    flexibleSpace: _AppBarFlexibleSpace(url: store.gallery.thumbnail),
+    flexibleSpace: const _AppBarFlexibleSpace(),
     expandedHeight: 200,
     actions: [
       IconButton(
@@ -122,12 +122,15 @@ Widget _appBar(BuildContext context) {
 }
 
 @swidget
-Widget _appBarFlexibleSpace(BuildContext context, {@required String url}) {
+Widget _appBarFlexibleSpace(BuildContext context) {
+  final store = Provider.of<GalleryScreenStore>(context);
+
   return Stack(
     children: [
       Positioned.fill(
-        child: CachedNetworkImage(
-          imageUrl: url,
+        child: GalleryThumbnail(
+          galleryId: store.gallery.id,
+          fallbackUrl: store.gallery.thumbnail,
           fit: BoxFit.cover,
         ),
       ),

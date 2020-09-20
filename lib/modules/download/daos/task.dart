@@ -18,6 +18,7 @@ class DownloadTasks extends Table {
   TextColumn get state =>
       text().map(const EnumStringConverter(DownloadTaskState.values))();
   TextColumn get errorDetails => text().nullable()();
+  TextColumn get thumbnail => text().nullable()();
 
   @override
   Set<Column> get primaryKey => {galleryId};
@@ -85,9 +86,10 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
     int downloadedCount,
     DateTime queuedAt,
     String errorDetails,
+    String thumbnail,
   }) async {
     _log.fine(
-        'updateSingleStatus: galleryId=$galleryId, state=$state, downloadedCount=$downloadedCount, queuedAt=$queuedAt, errorDetails=$errorDetails');
+        'updateSingleStatus: galleryId=$galleryId, state=$state, downloadedCount=$downloadedCount, queuedAt=$queuedAt, errorDetails=$errorDetails, thumbnail=$thumbnail');
     final query = update(downloadTasks)
       ..where((t) => t.galleryId.equals(galleryId));
 
@@ -99,6 +101,7 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
       queuedAt: queuedAt != null ? Value(queuedAt) : const Value.absent(),
       errorDetails:
           errorDetails != null ? Value(errorDetails) : const Value.absent(),
+      thumbnail: thumbnail != null ? Value(thumbnail) : const Value.absent(),
     ));
   }
 

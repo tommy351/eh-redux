@@ -112,7 +112,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2+1"
   characters:
     dependency: transitive
     description:
@@ -596,12 +596,12 @@ packages:
     source: hosted
     version: "1.1.1"
   octo_image:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: octo_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1"
+    version: "0.3.0"
   package_config:
     dependency: transitive
     description:
@@ -1021,5 +1021,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.9.0-14.0.dev <3.0.0"
+  dart: ">=2.9.0 <3.0.0"
   flutter: ">=1.20.0 <2.0.0"

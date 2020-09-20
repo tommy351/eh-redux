@@ -121,15 +121,21 @@ class Database extends _$Database {
   int get schemaVersion => 2;
 
   @override
-  MigrationStrategy get migration => MigrationStrategy(
-        onCreate: (m) {
-          return m.createAll();
-        },
-        onUpgrade: (m, from, to) async {
-          if (from == 1) {
-            await m.createTable(downloadTasks);
-            await m.createTable(downloadedImages);
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onCreate: (m) {
+        return m.createAll();
+      },
+      onUpgrade: (m, from, to) async {
+        for (int v = from; v < to; v++) {
+          switch (v) {
+            case 1:
+              await m.createTable(downloadTasks);
+              await m.createTable(downloadedImages);
+              break;
           }
-        },
-      );
+        }
+      },
+    );
+  }
 }
