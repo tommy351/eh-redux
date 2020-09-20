@@ -15,5 +15,6 @@ enum SettingKey {
   displayJapaneseTitle,
   orientation,
   turnPagesWithVolumeKeys,
-  theme
+  theme,
+  displayContentWarning,
 }

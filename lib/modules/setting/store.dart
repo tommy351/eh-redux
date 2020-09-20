@@ -20,10 +20,14 @@ class SettingStore {
             defaultValue: false),
         theme = prefs.getCustomValue(_parse(SettingKey.theme),
             defaultValue: ThemeSetting.system,
-            adapter: const EnumAdapter(ThemeSetting.values));
+            adapter: const EnumAdapter(ThemeSetting.values)),
+        displayContentWarning = prefs.getBool(
+            _parse(SettingKey.displayContentWarning),
+            defaultValue: true);
 
   final Preference<bool> displayJapaneseTitle;
   final Preference<OrientationSetting> orientation;
   final Preference<bool> turnPagesWithVolumeKeys;
   final Preference<ThemeSetting> theme;
+  final Preference<bool> displayContentWarning;
 }

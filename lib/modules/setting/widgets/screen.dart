@@ -1,5 +1,6 @@
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/generated/l10n.dart';
+import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
 import 'package:eh_redux/modules/setting/store.dart';
 import 'package:eh_redux/modules/setting/types.dart';
 import 'package:flutter/material.dart';
@@ -61,10 +62,14 @@ Widget _body(BuildContext context) {
         ],
       ),
       const Divider(),
-      _Title(S.of(context).settingSectionGalleryList),
+      _Title(S.of(context).settingSectionGallery),
       _SwitchTile(
         title: S.of(context).settingDisplayJapaneseTitle,
         preference: settingStore.displayJapaneseTitle,
+      ),
+      _SwitchTile(
+        title: S.of(context).settingDisplayContentWarning,
+        preference: settingStore.displayContentWarning,
       ),
       ConfirmListTile(
         title: Text(S.of(context).settingClearReadingHistory),
@@ -72,7 +77,10 @@ Widget _body(BuildContext context) {
         dialogContent: Text(S.of(context).clearReadingHistoryDialogContent),
         confirmActionChild: Text(S.of(context).clearButtonLabel),
         onConfirm: () async {
-          await database.historyDao.deleteAll();
+          await showLoadingDialog(
+            context: context,
+            future: database.historyDao.deleteAll(),
+          );
 
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text(S.of(context).readingHistoryClearSuccess),
@@ -111,7 +119,10 @@ Widget _body(BuildContext context) {
         dialogContent: Text(S.of(context).clearSearchHistoryDialogContent),
         confirmActionChild: Text(S.of(context).clearButtonLabel),
         onConfirm: () async {
-          await database.searchHistoriesDao.deleteAllEntries();
+          await showLoadingDialog(
+            context: context,
+            future: database.searchHistoriesDao.deleteAllEntries(),
+          );
 
           Scaffold.of(context).showSnackBar(SnackBar(
             content: Text(S.of(context).searchHistoryClearSuccess),

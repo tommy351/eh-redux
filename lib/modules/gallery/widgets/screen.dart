@@ -57,10 +57,17 @@ class _GalleryScreenState extends State<GalleryScreen> {
   void initState() {
     super.initState();
 
+    final settingStore = Provider.of<SettingStore>(context, listen: false);
     _store = GalleryScreenStore(
       client: Provider.of<EHentaiClient>(context, listen: false),
       gallery: widget.gallery,
-    )..load();
+    );
+
+    if (!settingStore.displayContentWarning.getValue()) {
+      _store.disableContentWarning();
+    }
+
+    _store.load();
   }
 
   @override

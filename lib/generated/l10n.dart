@@ -303,11 +303,11 @@ class S {
     );
   }
 
-  /// `Gallery List`
-  String get settingSectionGalleryList {
+  /// `Gallery`
+  String get settingSectionGallery {
     return Intl.message(
-      'Gallery List',
-      name: 'settingSectionGalleryList',
+      'Gallery',
+      name: 'settingSectionGallery',
       desc: '',
       args: [],
     );
@@ -458,6 +458,16 @@ class S {
     return Intl.message(
       'Clear search history',
       name: 'settingClearSearchHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Display content warning`
+  String get settingDisplayContentWarning {
+    return Intl.message(
+      'Display content warning',
+      name: 'settingDisplayContentWarning',
       desc: '',
       args: [],
     );
