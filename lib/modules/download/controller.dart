@@ -70,15 +70,22 @@ class DownloadController {
     );
   }
 
-  Future<void> pauseAll() async {
+  Future<int> pauseAll() async {
     _log.fine('pauseAll');
 
     await _interrupter.interruptAll();
 
-    await downloadTasksDao.updateAllStatus(
+    final updated = await downloadTasksDao.updateAllStatus(
       state: DownloadTaskState.paused,
-      stateIsIn: [DownloadTaskState.downloading],
+      stateIsIn: [
+        DownloadTaskState.pending,
+        DownloadTaskState.downloading,
+      ],
     );
+
+    _log.finer('Updated count: $updated');
+
+    return updated;
   }
 
   Future<void> resume(int galleryId) async {
@@ -93,15 +100,22 @@ class DownloadController {
     await _registerTask();
   }
 
-  Future<void> resumeAll() async {
+  Future<int> resumeAll() async {
     _log.fine('resumeAll');
 
-    await downloadTasksDao.updateAllStatus(
+    final updated = await downloadTasksDao.updateAllStatus(
       state: DownloadTaskState.pending,
       queuedAt: DateTime.now(),
+      stateIsIn: [DownloadTaskState.paused],
     );
 
-    await _registerTask();
+    _log.finer('Updated count: $updated');
+
+    if (updated > 0) {
+      await _registerTask();
+    }
+
+    return updated;
   }
 
   Future<void> delete(int galleryId) async {

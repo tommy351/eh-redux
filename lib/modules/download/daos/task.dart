@@ -102,7 +102,7 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
     ));
   }
 
-  Future<void> updateAllStatus({
+  Future<int> updateAllStatus({
     @required DownloadTaskState state,
     Iterable<DownloadTaskState> stateIsIn,
     DateTime queuedAt,
@@ -116,7 +116,7 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
           (t) => t.state.isIn(stateIsIn.map((e) => EnumToString.parse(e))));
     }
 
-    await query.write(DownloadTasksCompanion(
+    return query.write(DownloadTasksCompanion(
       state: Value(state),
       queuedAt: queuedAt != null ? Value(queuedAt) : const Value.absent(),
     ));

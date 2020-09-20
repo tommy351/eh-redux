@@ -116,5 +116,11 @@
   "downloadDeleteButtonLabel": "刪除",
   "downloadConfirmTitle": "下載 ({fileCount} 個檔案，{size})",
   "downloadDeleteDialogTitle": "刪除？",
-  "downloadDeleteDialogContent": "儲存在此裝置上的已下載相簿圖片將會被刪除。"
+  "downloadDeleteDialogContent": "儲存在此裝置上的已下載相簿圖片將會被刪除。",
+  "downloadResumeAllButtonTooltip": "全部繼續",
+  "downloadPauseAllButtonTooltip": "全部暫停",
+  "downloadStartedHint": "下載已開始",
+  "downloadPausedHint": "下載已暫停",
+  "downloadResumedHint": "下載已繼續",
+  "downloadDeletedHint": "下載已刪除"
 }

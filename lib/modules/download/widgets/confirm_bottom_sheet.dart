@@ -1,6 +1,7 @@
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/modules/common/widgets/bottom_sheet_container.dart';
 import 'package:eh_redux/modules/common/widgets/full_width.dart';
+import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
 import 'package:eh_redux/modules/download/controller.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:filesize/filesize.dart';
@@ -9,6 +10,23 @@ import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:provider/provider.dart';
 
 part 'confirm_bottom_sheet.g.dart';
+
+Future<void> showDownloadConfirmBottomSheet({
+  @required BuildContext context,
+  @required Gallery gallery,
+}) async {
+  await showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    builder: (context) {
+      return DownloadConfirmBottomSheet(gallery: gallery);
+    },
+  );
+
+  Scaffold.of(context).showSnackBar(SnackBar(
+    content: Text(S.of(context).downloadStartedHint),
+  ));
+}
 
 @swidget
 Widget downloadConfirmBottomSheet(
@@ -35,7 +53,10 @@ Widget downloadConfirmBottomSheet(
           child: FullWidth(
             child: RaisedButton.icon(
               onPressed: () async {
-                await controller.create(gallery);
+                await showLoadingDialog(
+                  context: context,
+                  future: controller.create(gallery),
+                );
                 Navigator.pop(context);
               },
               icon: const Icon(Icons.file_download),

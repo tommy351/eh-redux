@@ -403,12 +403,9 @@ Widget _downloadButtonContent(BuildContext context) {
           },
         );
       } else {
-        showModalBottomSheet(
+        showDownloadMenuBottomSheet(
           context: context,
-          isScrollControlled: true,
-          builder: (context) {
-            return DownloadMenuBottomSheet(task: task);
-          },
+          task: task,
         );
       }
     },
@@ -433,6 +430,9 @@ Widget _downloadButtonIcon(BuildContext context) {
 
     case DownloadTaskState.failed:
       return Icon(Icons.error, color: theme.errorColor);
+
+    case DownloadTaskState.paused:
+      return const Icon(Icons.pause);
 
     default:
   }

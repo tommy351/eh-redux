@@ -1,9 +1,9 @@
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/modules/common/widgets/bottom_sheet_container.dart';
 import 'package:eh_redux/modules/common/widgets/full_width.dart';
+import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
 import 'package:eh_redux/modules/favorite/store.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
-import 'package:eh_redux/modules/gallery/widgets/screen.dart';
 import 'package:eh_redux/services/ehentai.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -159,7 +159,10 @@ Widget _addButton(BuildContext context) {
   return FullWidth(
     child: RaisedButton.icon(
       onPressed: () async {
-        await store.addToFavorites();
+        await showLoadingDialog(
+          context: context,
+          future: store.addToFavorites(),
+        );
         Navigator.pop(context);
       },
       icon: const Icon(Icons.favorite),
@@ -181,12 +184,16 @@ Widget _deleteButton(BuildContext context) {
       return FullWidth(
         child: FlatButton.icon(
           onPressed: () async {
-            showDialog(
+            final confirmed = await showDialog<bool>(
               context: context,
               builder: (context) {
                 return _DeleteConfirm(store: store);
               },
             );
+
+            if (confirmed) {
+              Navigator.pop(context);
+            }
           },
           icon: const Icon(Icons.delete),
           label: Text(S.of(context).favoriteDeleteButtonLabel),
@@ -208,14 +215,17 @@ Widget _deleteConfirm(
     actions: <Widget>[
       FlatButton(
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pop(context, false);
         },
         child: Text(S.of(context).cancelButtonLabel),
       ),
       FlatButton(
         onPressed: () async {
-          await store.deleteFromFavorites();
-          Navigator.popUntil(context, ModalRoute.withName(GalleryScreen.route));
+          await showLoadingDialog(
+            context: context,
+            future: store.deleteFromFavorites(),
+          );
+          Navigator.pop(context, true);
         },
         child: Text(S.of(context).removeButtonLabel),
       ),

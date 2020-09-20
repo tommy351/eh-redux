@@ -116,5 +116,11 @@
   "downloadDeleteButtonLabel": "Delete",
   "downloadConfirmTitle": "Download ({fileCount} files, {size})",
   "downloadDeleteDialogTitle": "Delete?",
-  "downloadDeleteDialogContent": "Downloaded images of this gallery will be deleted from the storage."
+  "downloadDeleteDialogContent": "Downloaded images of this gallery will be deleted from the storage.",
+  "downloadResumeAllButtonTooltip": "Resume all",
+  "downloadPauseAllButtonTooltip": "Pause all",
+  "downloadStartedHint": "Download started",
+  "downloadPausedHint": "Download paused",
+  "downloadResumedHint": "Download resumed",
+  "downloadDeletedHint": "Download deleted"
 }

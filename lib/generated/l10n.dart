@@ -1214,6 +1214,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Resume all`
+  String get downloadResumeAllButtonTooltip {
+    return Intl.message(
+      'Resume all',
+      name: 'downloadResumeAllButtonTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pause all`
+  String get downloadPauseAllButtonTooltip {
+    return Intl.message(
+      'Pause all',
+      name: 'downloadPauseAllButtonTooltip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download started`
+  String get downloadStartedHint {
+    return Intl.message(
+      'Download started',
+      name: 'downloadStartedHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download paused`
+  String get downloadPausedHint {
+    return Intl.message(
+      'Download paused',
+      name: 'downloadPausedHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download resumed`
+  String get downloadResumedHint {
+    return Intl.message(
+      'Download resumed',
+      name: 'downloadResumedHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Download deleted`
+  String get downloadDeletedHint {
+    return Intl.message(
+      'Download deleted',
+      name: 'downloadDeletedHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

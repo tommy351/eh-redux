@@ -3,6 +3,7 @@ import 'dart:isolate';
 import 'dart:ui';
 
 import 'package:logging/logging.dart';
+import 'package:meta/meta.dart';
 
 const _reqPortName = 'download.interrupt.req';
 const _ackPortName = 'download.interrupt.ack';
@@ -12,15 +13,21 @@ String _getAckPortName(int galleryId) {
 }
 
 class DownloadInterruptListener {
-  DownloadInterruptListener(
-    FutureOr<dynamic> Function(int) handler,
-  ) : _port = ReceivePort() {
+  DownloadInterruptListener({
+    @required FutureOr<dynamic> Function(int) onInterrupt,
+    @required FutureOr<dynamic> Function() onInterruptAll,
+  }) : _port = ReceivePort() {
     _port.listen((message) async {
       final galleryId = message as int;
-      final ackPortName = _getAckPortName(galleryId);
+      final ackPortName =
+          galleryId > 0 ? _getAckPortName(galleryId) : _ackPortName;
       final ackPort = IsolateNameServer.lookupPortByName(ackPortName);
 
-      await Future.sync(() => handler(galleryId));
+      if (galleryId > 0) {
+        await Future.sync(() => onInterrupt(galleryId));
+      } else {
+        await Future.sync(onInterruptAll);
+      }
       ackPort?.send(null);
     });
 
@@ -38,12 +45,12 @@ class DownloadInterruptListener {
 class DownloadInterrupter {
   static final _log = Logger('DownloadInterrupter');
 
-  Future<void> interrupt(int galleryId) async {
-    _log.fine('interrupt: $galleryId');
+  SendPort get _reqPort => IsolateNameServer.lookupPortByName(_reqPortName);
 
-    final reqPort = IsolateNameServer.lookupPortByName(_reqPortName);
+  bool get isListening => _reqPort != null;
 
-    if (reqPort == null) {
+  Future<void> _interrupt(int galleryId) async {
+    if (_reqPort == null) {
       _log.finer('Cannot find req port');
       return;
     }
@@ -57,7 +64,7 @@ class DownloadInterrupter {
       IsolateNameServer.registerPortWithName(ackPort.sendPort, ackPortName);
 
       _log.finer('Send req: $galleryId');
-      reqPort.send(galleryId);
+      _reqPort.send(galleryId);
 
       await ackPort.first;
       _log.finer('Received ack: $galleryId');
@@ -67,7 +74,14 @@ class DownloadInterrupter {
     }
   }
 
-  Future<void> interruptAll() async {
-    // TODO: Interrupt all tasks
+  Future<void> interrupt(int galleryId) {
+    assert(galleryId > 0);
+    _log.fine('interrupt: $galleryId');
+    return _interrupt(galleryId);
+  }
+
+  Future<void> interruptAll() {
+    _log.fine('interruptAll');
+    return _interrupt(-1);
   }
 }

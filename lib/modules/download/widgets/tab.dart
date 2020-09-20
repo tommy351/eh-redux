@@ -1,5 +1,6 @@
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/generated/l10n.dart';
+import 'package:eh_redux/modules/download/controller.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/home/widgets/body.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,48 @@ Widget _appBar(BuildContext context) {
   return SliverAppBar(
     title: Text(S.of(context).homeTabTitleDownload),
     pinned: true,
+    actions: const [
+      _ResumeAllButton(),
+      _PauseAllButton(),
+    ],
+  );
+}
+
+@swidget
+Widget _resumeAllButton(BuildContext context) {
+  final controller = Provider.of<DownloadController>(context);
+
+  return IconButton(
+    icon: const Icon(Icons.play_arrow),
+    tooltip: S.of(context).downloadResumeAllButtonTooltip,
+    onPressed: () async {
+      final count = await controller.resumeAll();
+
+      if (count > 0) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(S.of(context).downloadResumedHint),
+        ));
+      }
+    },
+  );
+}
+
+@swidget
+Widget _pauseAllButton(BuildContext context) {
+  final controller = Provider.of<DownloadController>(context);
+
+  return IconButton(
+    icon: const Icon(Icons.pause),
+    tooltip: S.of(context).downloadPauseAllButtonTooltip,
+    onPressed: () async {
+      final count = await controller.pauseAll();
+
+      if (count > 0) {
+        Scaffold.of(context).showSnackBar(SnackBar(
+          content: Text(S.of(context).downloadPausedHint),
+        ));
+      }
+    },
   );
 }
 

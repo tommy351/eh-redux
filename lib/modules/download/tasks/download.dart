@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:async/async.dart';
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/modules/download/interrupter.dart';
 import 'package:eh_redux/modules/download/types.dart';
@@ -42,9 +41,7 @@ class DownloadTaskOperation {
   ImageStore _imageStore;
   Directory _directory;
   bool _canceled = false;
-  StreamQueue<int> _queue;
   Completer<void> _completer;
-  AsyncMemoizer<void> _queueCancelMemo;
 
   Future<void> start() async {
     _log.fine('Start: $task');
@@ -73,7 +70,17 @@ class DownloadTaskOperation {
             state: DownloadTaskState.downloading,
           ));
 
-      await _guard(_startQueue);
+      for (int page = task.downloadedCount + 1;
+          page <= task.totalCount && !_canceled;
+          page++) {
+        await _guard(() => _downloadImage(page));
+      }
+
+      // Update the status as "succeeded"
+      await _guard(() => database.downloadTasksDao.updateSingleStatus(
+            galleryId,
+            state: DownloadTaskState.succeeded,
+          ));
     } on CanceledException catch (err) {
       _log.finer('Canceled: $err');
     } catch (err, stackTrace) {
@@ -96,41 +103,12 @@ class DownloadTaskOperation {
   Future<void> cancel() async {
     _log.fine('Cancel: $task');
     _canceled = true;
-    await _cancelQueue(immediate: true);
     await _completer?.future;
   }
 
   Future<T> _guard<T>(FutureOr<T> Function() fn) {
     if (_canceled) throw CanceledException();
     return Future.sync(fn);
-  }
-
-  Future<void> _startQueue() async {
-    final pages = List.generate(task.totalCount, (index) => index + 1)
-        .skip(task.downloadedCount);
-    _queue = StreamQueue(Stream.fromIterable(pages));
-    _queueCancelMemo = AsyncMemoizer();
-
-    try {
-      while (await _guard(() => _queue.hasNext)) {
-        final page = await _guard(() => _queue.next);
-        await _guard(() => _downloadImage(page));
-      }
-
-      if (_queue.eventsDispatched == pages.length) {
-        // Update the status as "succeeded"
-        await database.downloadTasksDao.updateSingleStatus(
-          galleryId,
-          state: DownloadTaskState.succeeded,
-        );
-      }
-    } finally {
-      _cancelQueue();
-    }
-  }
-
-  Future<void> _cancelQueue({bool immediate = false}) {
-    return _queueCancelMemo?.runOnce(() => _queue.cancel(immediate: immediate));
   }
 
   Future<void> _downloadImage(int page) async {
@@ -191,22 +169,23 @@ class DownloadTaskOperation {
     _log.finer('File size: $fileSize');
 
     // Upsert the downloaded image to the database
-    await database.downloadedImagesDao.upsertEntry(DownloadedImageEntry(
-      galleryId: task.galleryId,
-      key: image.id.key,
-      page: page,
-      downloadedAt: DateTime.now(),
-      width: image.width,
-      height: image.height,
-      size: fileSize,
-      path: file.path,
-    ));
+    await _guard(
+        () => database.downloadedImagesDao.upsertEntry(DownloadedImageEntry(
+              galleryId: task.galleryId,
+              key: image.id.key,
+              page: page,
+              downloadedAt: DateTime.now(),
+              width: image.width,
+              height: image.height,
+              size: fileSize,
+              path: file.path,
+            )));
 
     // Update the downloaded count
-    await database.downloadTasksDao.updateSingleStatus(
-      galleryId,
-      downloadedCount: page,
-    );
+    await _guard(() => database.downloadTasksDao.updateSingleStatus(
+          galleryId,
+          downloadedCount: page,
+        ));
   }
 }
 
@@ -228,18 +207,25 @@ class DownloadTaskHandler {
   http.Client _httpClient;
   EHentaiClient _client;
   final _operations = <int, DownloadTaskOperation>{};
+  bool _canceled = false;
 
   Future<bool> handle(Map<String, dynamic> inputData) async {
     _log.fine('handle: $inputData');
 
-    final listener = DownloadInterruptListener((galleryId) async {
-      await _operations[galleryId]?.cancel();
-    });
+    final listener = DownloadInterruptListener(
+      onInterrupt: (galleryId) async {
+        await _operations[galleryId]?.cancel();
+      },
+      onInterruptAll: () async {
+        _canceled = true;
+        await Future.wait(_operations.values.map((value) => value.cancel()));
+      },
+    );
 
     try {
       DownloadTask task;
 
-      while ((task = await _nextTask()) != null) {
+      while (!_canceled && (task = await _nextTask()) != null) {
         final operation = _operations[task.galleryId] = DownloadTaskOperation(
           database: database,
           httpClient: _httpClient,
@@ -247,7 +233,11 @@ class DownloadTaskHandler {
           task: task,
         );
 
-        await operation.start();
+        try {
+          await operation.start();
+        } finally {
+          _operations.remove(task.galleryId);
+        }
       }
     } finally {
       listener.close();

@@ -20,6 +20,20 @@ class _AppBar extends StatelessWidget {
   Widget build(BuildContext _context) => _appBar(_context);
 }
 
+class _ResumeAllButton extends StatelessWidget {
+  const _ResumeAllButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext _context) => _resumeAllButton(_context);
+}
+
+class _PauseAllButton extends StatelessWidget {
+  const _PauseAllButton({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext _context) => _pauseAllButton(_context);
+}
+
 class _Content extends StatelessWidget {
   const _Content({Key key}) : super(key: key);
 

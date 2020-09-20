@@ -33,6 +33,12 @@ Widget _downloadCell(
       Navigator.pushNamed(context, GalleryScreen.route,
           arguments: task.gallery);
     },
+    onLongPress: () {
+      showDownloadMenuBottomSheet(
+        context: context,
+        task: task.task,
+      );
+    },
     child: SizedBox(
       height: 116,
       child: Row(
@@ -82,13 +88,11 @@ Widget _cellRight(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Expanded(
-          child: _CellTitle(
-            title: task.gallery.title,
-            titleJpn: task.gallery.titleJpn,
-          ),
+        _CellTitle(
+          title: task.gallery.title,
+          titleJpn: task.gallery.titleJpn,
         ),
-        const SizedBox(height: 8),
+        const Spacer(),
         _ProgressBar(task: task.task),
       ],
     ),
@@ -128,6 +132,14 @@ Widget _progressBar(
     DownloadTaskState.failed: S.of(context).downloadTaskStateFailed,
     DownloadTaskState.deleting: S.of(context).downloadTaskStateDeleting,
   };
+  final statusIcon = <DownloadTaskState, Icon>{
+    DownloadTaskState.pending: const Icon(Icons.schedule),
+    DownloadTaskState.downloading: const Icon(Icons.file_download),
+    DownloadTaskState.paused: const Icon(Icons.pause),
+    DownloadTaskState.succeeded: const Icon(Icons.check, color: Colors.green),
+    DownloadTaskState.failed: Icon(Icons.error, color: theme.errorColor),
+    DownloadTaskState.deleting: const Icon(Icons.delete_forever),
+  };
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -136,9 +148,13 @@ Widget _progressBar(
         style: theme.textTheme.caption,
         child: Row(
           children: [
-            Expanded(
-              child: Text(statusText[task.state]),
+            IconTheme(
+              data: IconThemeData(size: 16, color: theme.hintColor),
+              child: statusIcon[task.state],
             ),
+            const SizedBox(width: 4),
+            Text(statusText[task.state]),
+            const Spacer(),
             Text(
                 '${task.downloadedCount}/${task.totalCount} (${(task.downloadedCount / task.totalCount * 100).round()}%)'),
           ],
@@ -148,6 +164,7 @@ Widget _progressBar(
       LinearProgressIndicator(
         value: task.downloadedCount / task.totalCount,
       ),
+      const SizedBox(height: 4),
     ],
   );
 }
@@ -159,12 +176,9 @@ Widget _menuButton(
 }) {
   return IconButton(
     onPressed: () {
-      showModalBottomSheet(
+      showDownloadMenuBottomSheet(
         context: context,
-        isScrollControlled: true,
-        builder: (context) {
-          return DownloadMenuBottomSheet(task: task);
-        },
+        task: task,
       );
     },
     icon: const Icon(Icons.more_vert),
