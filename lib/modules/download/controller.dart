@@ -142,4 +142,23 @@ class DownloadController {
     // Delete the download task
     await downloadTasksDao.deleteByGalleryId(galleryId);
   }
+
+  Future<void> resetState() async {
+    _log.fine('resetState');
+
+    if (_interrupter.isListening) {
+      _log.finer('Skip because the background service is listening');
+      return;
+    }
+
+    final updated = await downloadTasksDao.updateAllStatus(
+      state: DownloadTaskState.paused,
+      stateIsIn: [
+        DownloadTaskState.pending,
+        DownloadTaskState.downloading,
+      ],
+    );
+
+    _log.finer('Updated count: $updated');
+  }
 }

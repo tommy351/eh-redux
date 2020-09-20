@@ -54,6 +54,8 @@ class _AppState extends State<App> {
     );
     _eHentaiClient = EHentaiClient(sessionStore: _sessionStore);
     _settingStore = SettingStore(widget.preferences);
+
+    _downloadController.resetState();
   }
 
   @override
