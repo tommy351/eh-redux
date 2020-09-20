@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:eh_redux/services/ehentai.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -74,6 +76,9 @@ abstract class _GalleryScreenStoreBase with Store {
       error = err;
     } on RequestException catch (err) {
       error = GalleryError(message: err.message);
+    } on SocketException catch (_) {
+      // When network is disconnected
+      loaded = true;
     } catch (err) {
       error = GalleryError(message: err.toString());
     } finally {

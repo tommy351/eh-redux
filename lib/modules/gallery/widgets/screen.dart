@@ -302,12 +302,16 @@ Widget _buttonBar(BuildContext context) {
 
   return Observer(
     builder: (context) {
+      final rating = store.gallery.rating;
+      final ratingCount = store.ratingCount;
+
       return Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           _ActionButton(
             icon: const Icon(Icons.star),
-            label: Text('${store.gallery.rating} (${store.ratingCount})'),
+            label: Text(
+                ratingCount != null ? '$rating ($ratingCount)' : '$rating'),
           ),
           const _FavButton(),
           const _DownloadButton(),
@@ -473,7 +477,7 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
     notFound: (_) => S.of(context).galleryNotFoundMessage,
   );
 
-  final actions = error.map<List<Widget>>(
+  final actions = error.maybeMap<List<Widget>>(
     (_) => [
       FlatButton.icon(
         onPressed: () {
@@ -493,7 +497,7 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
         label: Text(S.of(context).hideButtonLabel),
       ),
     ],
-    notFound: (_) => [],
+    orElse: () => [],
   );
 
   return Card(
