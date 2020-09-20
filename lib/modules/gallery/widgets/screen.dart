@@ -409,12 +409,9 @@ Widget _downloadButtonContent(BuildContext context) {
   return _ActionButton(
     onPressed: () {
       if (task == null) {
-        showModalBottomSheet(
+        showDownloadConfirmBottomSheet(
           context: context,
-          isScrollControlled: true,
-          builder: (context) {
-            return DownloadConfirmBottomSheet(gallery: store.gallery);
-          },
+          gallery: store.gallery,
         );
       } else {
         showDownloadMenuBottomSheet(
