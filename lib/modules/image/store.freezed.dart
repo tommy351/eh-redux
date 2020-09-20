@@ -13,10 +13,27 @@ class _$ImageErrorTearOff {
   const _$ImageErrorTearOff();
 
 // ignore: unused_element
+  _ImageError call({@required String message}) {
+    return _ImageError(
+      message: message,
+    );
+  }
+
+// ignore: unused_element
   ImageErrorNotFound notFound({@required int page}) {
     return ImageErrorNotFound(
       page: page,
     );
+  }
+
+// ignore: unused_element
+  ImageErrorDisconnected disconnected() {
+    return const ImageErrorDisconnected();
+  }
+
+// ignore: unused_element
+  ImageErrorGalleryUnavailable galleryUnavailable() {
+    return const ImageErrorGalleryUnavailable();
   }
 }
 
@@ -24,35 +41,42 @@ class _$ImageErrorTearOff {
 const $ImageError = _$ImageErrorTearOff();
 
 mixin _$ImageError {
-  int get page;
-
   @optionalTypeArgs
-  Result when<Result extends Object>({
+  Result when<Result extends Object>(
+    Result $default(String message), {
     @required Result notFound(int page),
+    @required Result disconnected(),
+    @required Result galleryUnavailable(),
   });
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
+  Result maybeWhen<Result extends Object>(
+    Result $default(String message), {
     Result notFound(int page),
+    Result disconnected(),
+    Result galleryUnavailable(),
     @required Result orElse(),
   });
   @optionalTypeArgs
-  Result map<Result extends Object>({
+  Result map<Result extends Object>(
+    Result $default(_ImageError value), {
     @required Result notFound(ImageErrorNotFound value),
+    @required Result disconnected(ImageErrorDisconnected value),
+    @required Result galleryUnavailable(ImageErrorGalleryUnavailable value),
   });
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
+  Result maybeMap<Result extends Object>(
+    Result $default(_ImageError value), {
     Result notFound(ImageErrorNotFound value),
+    Result disconnected(ImageErrorDisconnected value),
+    Result galleryUnavailable(ImageErrorGalleryUnavailable value),
     @required Result orElse(),
   });
-
-  $ImageErrorCopyWith<ImageError> get copyWith;
 }
 
 abstract class $ImageErrorCopyWith<$Res> {
   factory $ImageErrorCopyWith(
           ImageError value, $Res Function(ImageError) then) =
       _$ImageErrorCopyWithImpl<$Res>;
-  $Res call({int page});
 }
 
 class _$ImageErrorCopyWithImpl<$Res> implements $ImageErrorCopyWith<$Res> {
@@ -61,23 +85,135 @@ class _$ImageErrorCopyWithImpl<$Res> implements $ImageErrorCopyWith<$Res> {
   final ImageError _value;
   // ignore: unused_field
   final $Res Function(ImageError) _then;
+}
+
+abstract class _$ImageErrorCopyWith<$Res> {
+  factory _$ImageErrorCopyWith(
+          _ImageError value, $Res Function(_ImageError) then) =
+      __$ImageErrorCopyWithImpl<$Res>;
+  $Res call({String message});
+}
+
+class __$ImageErrorCopyWithImpl<$Res> extends _$ImageErrorCopyWithImpl<$Res>
+    implements _$ImageErrorCopyWith<$Res> {
+  __$ImageErrorCopyWithImpl(
+      _ImageError _value, $Res Function(_ImageError) _then)
+      : super(_value, (v) => _then(v as _ImageError));
+
+  @override
+  _ImageError get _value => super._value as _ImageError;
 
   @override
   $Res call({
-    Object page = freezed,
+    Object message = freezed,
   }) {
-    return _then(_value.copyWith(
-      page: page == freezed ? _value.page : page as int,
+    return _then(_ImageError(
+      message: message == freezed ? _value.message : message as String,
     ));
   }
 }
 
-abstract class $ImageErrorNotFoundCopyWith<$Res>
-    implements $ImageErrorCopyWith<$Res> {
+class _$_ImageError implements _ImageError {
+  const _$_ImageError({@required this.message}) : assert(message != null);
+
+  @override
+  final String message;
+
+  @override
+  String toString() {
+    return 'ImageError(message: $message)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _ImageError &&
+            (identical(other.message, message) ||
+                const DeepCollectionEquality().equals(other.message, message)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
+
+  @override
+  _$ImageErrorCopyWith<_ImageError> get copyWith =>
+      __$ImageErrorCopyWithImpl<_ImageError>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>(
+    Result $default(String message), {
+    @required Result notFound(int page),
+    @required Result disconnected(),
+    @required Result galleryUnavailable(),
+  }) {
+    assert($default != null);
+    assert(notFound != null);
+    assert(disconnected != null);
+    assert(galleryUnavailable != null);
+    return $default(message);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>(
+    Result $default(String message), {
+    Result notFound(int page),
+    Result disconnected(),
+    Result galleryUnavailable(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if ($default != null) {
+      return $default(message);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>(
+    Result $default(_ImageError value), {
+    @required Result notFound(ImageErrorNotFound value),
+    @required Result disconnected(ImageErrorDisconnected value),
+    @required Result galleryUnavailable(ImageErrorGalleryUnavailable value),
+  }) {
+    assert($default != null);
+    assert(notFound != null);
+    assert(disconnected != null);
+    assert(galleryUnavailable != null);
+    return $default(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>(
+    Result $default(_ImageError value), {
+    Result notFound(ImageErrorNotFound value),
+    Result disconnected(ImageErrorDisconnected value),
+    Result galleryUnavailable(ImageErrorGalleryUnavailable value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if ($default != null) {
+      return $default(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ImageError implements ImageError {
+  const factory _ImageError({@required String message}) = _$_ImageError;
+
+  String get message;
+  _$ImageErrorCopyWith<_ImageError> get copyWith;
+}
+
+abstract class $ImageErrorNotFoundCopyWith<$Res> {
   factory $ImageErrorNotFoundCopyWith(
           ImageErrorNotFound value, $Res Function(ImageErrorNotFound) then) =
       _$ImageErrorNotFoundCopyWithImpl<$Res>;
-  @override
   $Res call({int page});
 }
 
@@ -130,17 +266,26 @@ class _$ImageErrorNotFound implements ImageErrorNotFound {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
+  Result when<Result extends Object>(
+    Result $default(String message), {
     @required Result notFound(int page),
+    @required Result disconnected(),
+    @required Result galleryUnavailable(),
   }) {
+    assert($default != null);
     assert(notFound != null);
+    assert(disconnected != null);
+    assert(galleryUnavailable != null);
     return notFound(page);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
+  Result maybeWhen<Result extends Object>(
+    Result $default(String message), {
     Result notFound(int page),
+    Result disconnected(),
+    Result galleryUnavailable(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -152,17 +297,26 @@ class _$ImageErrorNotFound implements ImageErrorNotFound {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
+  Result map<Result extends Object>(
+    Result $default(_ImageError value), {
     @required Result notFound(ImageErrorNotFound value),
+    @required Result disconnected(ImageErrorDisconnected value),
+    @required Result galleryUnavailable(ImageErrorGalleryUnavailable value),
   }) {
+    assert($default != null);
     assert(notFound != null);
+    assert(disconnected != null);
+    assert(galleryUnavailable != null);
     return notFound(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
+  Result maybeMap<Result extends Object>(
+    Result $default(_ImageError value), {
     Result notFound(ImageErrorNotFound value),
+    Result disconnected(ImageErrorDisconnected value),
+    Result galleryUnavailable(ImageErrorGalleryUnavailable value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -176,8 +330,209 @@ class _$ImageErrorNotFound implements ImageErrorNotFound {
 abstract class ImageErrorNotFound implements ImageError {
   const factory ImageErrorNotFound({@required int page}) = _$ImageErrorNotFound;
 
-  @override
   int get page;
-  @override
   $ImageErrorNotFoundCopyWith<ImageErrorNotFound> get copyWith;
+}
+
+abstract class $ImageErrorDisconnectedCopyWith<$Res> {
+  factory $ImageErrorDisconnectedCopyWith(ImageErrorDisconnected value,
+          $Res Function(ImageErrorDisconnected) then) =
+      _$ImageErrorDisconnectedCopyWithImpl<$Res>;
+}
+
+class _$ImageErrorDisconnectedCopyWithImpl<$Res>
+    extends _$ImageErrorCopyWithImpl<$Res>
+    implements $ImageErrorDisconnectedCopyWith<$Res> {
+  _$ImageErrorDisconnectedCopyWithImpl(ImageErrorDisconnected _value,
+      $Res Function(ImageErrorDisconnected) _then)
+      : super(_value, (v) => _then(v as ImageErrorDisconnected));
+
+  @override
+  ImageErrorDisconnected get _value => super._value as ImageErrorDisconnected;
+}
+
+class _$ImageErrorDisconnected implements ImageErrorDisconnected {
+  const _$ImageErrorDisconnected();
+
+  @override
+  String toString() {
+    return 'ImageError.disconnected()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is ImageErrorDisconnected);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>(
+    Result $default(String message), {
+    @required Result notFound(int page),
+    @required Result disconnected(),
+    @required Result galleryUnavailable(),
+  }) {
+    assert($default != null);
+    assert(notFound != null);
+    assert(disconnected != null);
+    assert(galleryUnavailable != null);
+    return disconnected();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>(
+    Result $default(String message), {
+    Result notFound(int page),
+    Result disconnected(),
+    Result galleryUnavailable(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (disconnected != null) {
+      return disconnected();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>(
+    Result $default(_ImageError value), {
+    @required Result notFound(ImageErrorNotFound value),
+    @required Result disconnected(ImageErrorDisconnected value),
+    @required Result galleryUnavailable(ImageErrorGalleryUnavailable value),
+  }) {
+    assert($default != null);
+    assert(notFound != null);
+    assert(disconnected != null);
+    assert(galleryUnavailable != null);
+    return disconnected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>(
+    Result $default(_ImageError value), {
+    Result notFound(ImageErrorNotFound value),
+    Result disconnected(ImageErrorDisconnected value),
+    Result galleryUnavailable(ImageErrorGalleryUnavailable value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (disconnected != null) {
+      return disconnected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ImageErrorDisconnected implements ImageError {
+  const factory ImageErrorDisconnected() = _$ImageErrorDisconnected;
+}
+
+abstract class $ImageErrorGalleryUnavailableCopyWith<$Res> {
+  factory $ImageErrorGalleryUnavailableCopyWith(
+          ImageErrorGalleryUnavailable value,
+          $Res Function(ImageErrorGalleryUnavailable) then) =
+      _$ImageErrorGalleryUnavailableCopyWithImpl<$Res>;
+}
+
+class _$ImageErrorGalleryUnavailableCopyWithImpl<$Res>
+    extends _$ImageErrorCopyWithImpl<$Res>
+    implements $ImageErrorGalleryUnavailableCopyWith<$Res> {
+  _$ImageErrorGalleryUnavailableCopyWithImpl(
+      ImageErrorGalleryUnavailable _value,
+      $Res Function(ImageErrorGalleryUnavailable) _then)
+      : super(_value, (v) => _then(v as ImageErrorGalleryUnavailable));
+
+  @override
+  ImageErrorGalleryUnavailable get _value =>
+      super._value as ImageErrorGalleryUnavailable;
+}
+
+class _$ImageErrorGalleryUnavailable implements ImageErrorGalleryUnavailable {
+  const _$ImageErrorGalleryUnavailable();
+
+  @override
+  String toString() {
+    return 'ImageError.galleryUnavailable()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is ImageErrorGalleryUnavailable);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>(
+    Result $default(String message), {
+    @required Result notFound(int page),
+    @required Result disconnected(),
+    @required Result galleryUnavailable(),
+  }) {
+    assert($default != null);
+    assert(notFound != null);
+    assert(disconnected != null);
+    assert(galleryUnavailable != null);
+    return galleryUnavailable();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>(
+    Result $default(String message), {
+    Result notFound(int page),
+    Result disconnected(),
+    Result galleryUnavailable(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (galleryUnavailable != null) {
+      return galleryUnavailable();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>(
+    Result $default(_ImageError value), {
+    @required Result notFound(ImageErrorNotFound value),
+    @required Result disconnected(ImageErrorDisconnected value),
+    @required Result galleryUnavailable(ImageErrorGalleryUnavailable value),
+  }) {
+    assert($default != null);
+    assert(notFound != null);
+    assert(disconnected != null);
+    assert(galleryUnavailable != null);
+    return galleryUnavailable(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>(
+    Result $default(_ImageError value), {
+    Result notFound(ImageErrorNotFound value),
+    Result disconnected(ImageErrorDisconnected value),
+    Result galleryUnavailable(ImageErrorGalleryUnavailable value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (galleryUnavailable != null) {
+      return galleryUnavailable(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ImageErrorGalleryUnavailable implements ImageError {
+  const factory ImageErrorGalleryUnavailable() = _$ImageErrorGalleryUnavailable;
 }

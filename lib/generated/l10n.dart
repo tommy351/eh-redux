@@ -1095,11 +1095,71 @@ class S {
     );
   }
 
-  /// `Load failed`
+  /// `Error`
   String get imageErrorTitle {
     return Intl.message(
-      'Load failed',
+      'Error',
       name: 'imageErrorTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Image not found`
+  String get imageNotFoundTitle {
+    return Intl.message(
+      'Image not found',
+      name: 'imageNotFoundTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This page is not available currently. Please try again later.`
+  String get imageNotFoundMessage {
+    return Intl.message(
+      'This page is not available currently. Please try again later.',
+      name: 'imageNotFoundMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disconnected`
+  String get imageDisconnectedTitle {
+    return Intl.message(
+      'Disconnected',
+      name: 'imageDisconnectedTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your device is not connected to the internet.`
+  String get imageDisconnectedMessage {
+    return Intl.message(
+      'Your device is not connected to the internet.',
+      name: 'imageDisconnectedMessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Gallery unavailable`
+  String get imageGalleryUnavailableTitle {
+    return Intl.message(
+      'Gallery unavailable',
+      name: 'imageGalleryUnavailableTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This gallery is deleted or expunged.`
+  String get imageGalleryUnavailableMessage {
+    return Intl.message(
+      'This gallery is deleted or expunged.',
+      name: 'imageGalleryUnavailableMessage',
       desc: '',
       args: [],
     );

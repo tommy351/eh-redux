@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:async/async.dart';
 import 'package:eh_redux/modules/download/daos/image.dart';
@@ -9,6 +10,7 @@ import 'package:eh_redux/services/ehentai.dart';
 import 'package:eh_redux/utils/css.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:eh_redux/utils/string.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:html/dom.dart';
 import 'package:meta/meta.dart';
@@ -20,9 +22,33 @@ part 'store.g.dart';
 
 @freezed
 abstract class ImageError with _$ImageError {
+  const factory ImageError({
+    @required String message,
+  }) = _ImageError;
+
   const factory ImageError.notFound({
     @required int page,
   }) = ImageErrorNotFound;
+
+  const factory ImageError.disconnected() = ImageErrorDisconnected;
+
+  const factory ImageError.galleryUnavailable() = ImageErrorGalleryUnavailable;
+
+  factory ImageError.wrap(Object err) {
+    if (err is ImageError) {
+      return err;
+    }
+
+    if (err is RequestException) {
+      return ImageError(message: err.message);
+    }
+
+    if (err is SocketException) {
+      return const ImageError.disconnected();
+    }
+
+    return ImageError(message: err.toString());
+  }
 }
 
 class ImageStore = _ImageStoreBase with _$ImageStore;
@@ -51,6 +77,11 @@ abstract class _ImageStoreBase with Store {
 
   Future<int> get _imagePerPage => _imagePerPageMemo.runOnce(() async {
         final ids = await _getImageIds(0);
+
+        if (ids.isEmpty) {
+          throw const ImageError.galleryUnavailable();
+        }
+
         return ids.length;
       });
 
@@ -68,6 +99,9 @@ abstract class _ImageStoreBase with Store {
 
   @observable
   ObservableSet<int> loading = ObservableSet();
+
+  @observable
+  ObservableMap<int, ImageError> error = ObservableMap();
 
   @observable
   bool navVisible = false;
@@ -118,6 +152,7 @@ abstract class _ImageStoreBase with Store {
     if (loading.contains(page)) return;
 
     loading.add(page);
+    error.remove(page);
 
     try {
       if (!networkOnly) {
@@ -130,6 +165,9 @@ abstract class _ImageStoreBase with Store {
       }
 
       data[page] = await loadNetworkPage(page, reloadKey: reloadKey);
+    } catch (err, stackTrace) {
+      FirebaseCrashlytics.instance.recordError(err, stackTrace);
+      error[page] = ImageError.wrap(err);
     } finally {
       loading.remove(page);
     }
@@ -246,6 +284,8 @@ abstract class _ImageStoreBase with Store {
   Future<ImageId> _getImageId(int imagePage) async {
     final galleryPage = imagePage ~/ await _imagePerPage;
     final ids = await _getImageIds(galleryPage);
+
+    if (ids.isEmpty) return null;
 
     return ids.firstWhere(
       (e) => e.page == imagePage,

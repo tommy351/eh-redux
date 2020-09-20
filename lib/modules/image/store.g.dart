@@ -85,6 +85,21 @@ mixin _$ImageStore on _ImageStoreBase, Store {
     });
   }
 
+  final _$errorAtom = Atom(name: '_ImageStoreBase.error');
+
+  @override
+  ObservableMap<int, ImageError> get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(ObservableMap<int, ImageError> value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
+
   final _$navVisibleAtom = Atom(name: '_ImageStoreBase.navVisible');
 
   @override
@@ -149,6 +164,7 @@ currentPage: ${currentPage},
 readPositionLoaded: ${readPositionLoaded},
 data: ${data},
 loading: ${loading},
+error: ${error},
 navVisible: ${navVisible},
 currentPage1: ${currentPage1},
 currentImage: ${currentImage}

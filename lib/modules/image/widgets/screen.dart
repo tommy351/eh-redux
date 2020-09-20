@@ -61,6 +61,7 @@ class _ImageScreenState extends State<ImageScreen> {
 Widget _content(BuildContext context) {
   final store = Provider.of<ImageStore>(context);
   final mediaQuery = MediaQuery.of(context);
+  final theme = Theme.of(context);
 
   return StatefulWrapper(
     onDispose: () {
@@ -81,20 +82,26 @@ Widget _content(BuildContext context) {
                 viewPadding: EdgeInsets.zero,
                 viewInsets: EdgeInsets.zero,
               ),
-              child: Scaffold(
-                backgroundColor: Colors.black,
-                extendBody: true,
-                extendBodyBehindAppBar: true,
-                appBar: ImageAppBar(
-                  padding: mediaQuery.viewInsets == EdgeInsets.zero
-                      ? mediaQuery.padding
-                      : EdgeInsets.only(top: mediaQuery.padding.top),
+              child: Theme(
+                data: ThemeData.dark().copyWith(
+                  accentColor: theme.accentColor,
+                  scaffoldBackgroundColor: Colors.black,
+                  sliderTheme: theme.sliderTheme,
                 ),
-                body: const _Body(),
-                bottomNavigationBar: ImageBottomNav(
-                  padding: mediaQuery.viewInsets == EdgeInsets.zero
-                      ? mediaQuery.padding.copyWith(top: 0)
-                      : mediaQuery.viewInsets,
+                child: Scaffold(
+                  extendBody: true,
+                  extendBodyBehindAppBar: true,
+                  appBar: ImageAppBar(
+                    padding: mediaQuery.viewInsets == EdgeInsets.zero
+                        ? mediaQuery.padding
+                        : EdgeInsets.only(top: mediaQuery.padding.top),
+                  ),
+                  body: const _Body(),
+                  bottomNavigationBar: ImageBottomNav(
+                    padding: mediaQuery.viewInsets == EdgeInsets.zero
+                        ? mediaQuery.padding.copyWith(top: 0)
+                        : mediaQuery.viewInsets,
+                  ),
                 ),
               ),
             ),

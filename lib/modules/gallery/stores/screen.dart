@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:eh_redux/services/ehentai.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:html/dom.dart';
 import 'package:meta/meta.dart';
@@ -79,7 +80,8 @@ abstract class _GalleryScreenStoreBase with Store {
     } on SocketException catch (_) {
       // When network is disconnected
       loaded = true;
-    } catch (err) {
+    } catch (err, stackTrace) {
+      FirebaseCrashlytics.instance.recordError(err, stackTrace);
       error = GalleryError(message: err.toString());
     } finally {
       loading = false;

@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/modules/common/widgets/stateful_wrapper.dart';
 import 'package:eh_redux/modules/image/store.dart';
-import 'package:eh_redux/modules/image/types.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -148,6 +147,15 @@ Widget _imageView(BuildContext context, {@required int page}) {
             return const _ImageLoading();
           }
 
+          final err = store.error[page];
+
+          if (err != null) {
+            return _ImageError(
+              page: page,
+              error: err,
+            );
+          }
+
           final image = store.data[page];
 
           if (image == null) {
@@ -160,8 +168,12 @@ Widget _imageView(BuildContext context, {@required int page}) {
               FirebaseCrashlytics.instance.recordError(err, stackTrace);
 
               return _ImageError(
-                image: image,
-                error: err,
+                page: page,
+                reloadKey: image.maybeMap(
+                  network: (img) => img.reloadKey,
+                  orElse: () => null,
+                ),
+                error: ImageError.wrap(err),
               );
             },
             minScale: PhotoViewComputedScale.contained,
@@ -180,35 +192,60 @@ Widget _imageView(BuildContext context, {@required int page}) {
 @swidget
 Widget _imageError(
   BuildContext context, {
-  GalleryImage image,
-  Object error,
+  @required int page,
+  ImageError error,
+  String reloadKey,
 }) {
+  final theme = Theme.of(context);
   final store = Provider.of<ImageStore>(context);
+  final title = error.map(
+    (_) => S.of(context).imageErrorTitle,
+    notFound: (_) => S.of(context).imageNotFoundTitle,
+    disconnected: (_) => S.of(context).imageDisconnectedTitle,
+    galleryUnavailable: (_) => S.of(context).imageGalleryUnavailableTitle,
+  );
+  final message = error.map(
+    (value) => value.message,
+    notFound: (_) => S.of(context).imageNotFoundMessage,
+    disconnected: (_) => S.of(context).imageDisconnectedMessage,
+    galleryUnavailable: (_) => S.of(context).imageGalleryUnavailableMessage,
+  );
+  final icon = error.maybeMap(
+    (_) => const Icon(Icons.broken_image),
+    disconnected: (_) => const Icon(Icons.cloud_off),
+    orElse: () => const Icon(Icons.broken_image),
+  );
 
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
-      Icon(
-        Icons.broken_image,
-        size: 40,
-        color: Colors.white.withOpacity(0.5),
+      IconTheme(
+        data: const IconThemeData(
+          size: 40,
+          color: Colors.white,
+          opacity: 0.5,
+        ),
+        child: icon,
       ),
-      Text(error?.toString() ?? S.of(context).imageErrorTitle),
+      const SizedBox(height: 16),
+      Text(title, style: theme.textTheme.bodyText1),
+      ...message != null && message.isNotEmpty
+          ? [
+              const SizedBox(height: 8),
+              Text(message, style: theme.textTheme.bodyText2)
+            ]
+          : [],
       const SizedBox(height: 16),
       OutlineButton(
         onPressed: () async {
           analytics.logEvent(name: 'retry_image');
           await store.loadPage(
-            image.id.page,
+            page,
             networkOnly: true,
-            reloadKey: image.maybeMap(
-              network: (image) => image.reloadKey,
-              orElse: null,
-            ),
+            reloadKey: reloadKey,
           );
         },
-        textColor: Colors.white,
-        borderSide: const BorderSide(color: Colors.white),
+        borderSide: BorderSide(color: Colors.white.withOpacity(0.5)),
         highlightedBorderColor: Colors.white,
         child: Text(S.of(context).retryButtonLabel),
       ),

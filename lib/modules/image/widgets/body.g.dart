@@ -32,13 +32,16 @@ class _ImageView extends StatelessWidget {
 }
 
 class _ImageError extends StatelessWidget {
-  const _ImageError({Key key, this.image, this.error}) : super(key: key);
+  const _ImageError({Key key, @required this.page, this.error, this.reloadKey})
+      : super(key: key);
 
-  final GalleryImage image;
+  final int page;
 
-  final Object error;
+  final ImageError error;
+
+  final String reloadKey;
 
   @override
   Widget build(BuildContext _context) =>
-      _imageError(_context, image: image, error: error);
+      _imageError(_context, page: page, error: error, reloadKey: reloadKey);
 }
