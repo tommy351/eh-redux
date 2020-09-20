@@ -1,0 +1,151 @@
+import 'package:eh_redux/generated/l10n.dart';
+import 'package:eh_redux/modules/check_update/store.dart';
+import 'package:eh_redux/modules/check_update/types.dart';
+import 'package:eh_redux/utils/launch.dart';
+import 'package:filesize/filesize.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:functional_widget_annotation/functional_widget_annotation.dart';
+import 'package:provider/provider.dart';
+
+part 'screen.g.dart';
+
+enum _PopupAction {
+  openInBrowser,
+}
+
+class CheckUpdateScreen extends StatefulWidget {
+  const CheckUpdateScreen({Key key}) : super(key: key);
+
+  static String route = '/checkUpdate';
+
+  @override
+  _CheckUpdateScreenState createState() => _CheckUpdateScreenState();
+}
+
+class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
+  CheckUpdateStore _store;
+
+  @override
+  void initState() {
+    super.initState();
+    _store = CheckUpdateStore()..check();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Observer(
+      builder: (context) {
+        final actions = <Widget>[];
+
+        if (_store.releaseFuture.value != null) {
+          actions.add(PopupMenuButton<_PopupAction>(
+            onSelected: (action) {
+              switch (action) {
+                case _PopupAction.openInBrowser:
+                  tryLaunch(_store.releaseFuture.value.htmlUrl);
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: _PopupAction.openInBrowser,
+                child: Text(S.of(context).checkUpdateActionOpenInBrowser),
+              ),
+            ],
+          ));
+        }
+
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(S.of(context).checkUpdateScreenTitle),
+            actions: actions,
+          ),
+          body: const _Body(),
+        );
+      },
+    );
+  }
+}
+
+@swidget
+Widget _body(BuildContext context) {
+  final theme = Theme.of(context);
+  final store = Provider.of<CheckUpdateStore>(context);
+
+  return Padding(
+    padding: const EdgeInsets.all(16),
+    child: SafeArea(
+      top: false,
+      child: Observer(
+        builder: (context) {
+          if (store.status == UpdateStatus.pending) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (store.status == UpdateStatus.failed) {
+            return Center(
+              child: Text(S.of(context).checkUpdateErrorMessage),
+            );
+          }
+
+          final release = store.releaseFuture.value;
+
+          return Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      release.name,
+                      style: theme.textTheme.headline6,
+                    ),
+                  ),
+                  const _DownloadButton(),
+                ],
+              ),
+              Expanded(
+                child: Markdown(
+                  data: release.body,
+                  padding: const EdgeInsets.only(top: 16),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    ),
+  );
+}
+
+@swidget
+Widget _downloadButton(BuildContext context) {
+  final store = Provider.of<CheckUpdateStore>(context);
+
+  return Observer(
+    builder: (context) {
+      final asset = store.asset;
+
+      if (asset == null || store.status != UpdateStatus.canUpdate) {
+        return FlatButton(
+          onPressed: null,
+          child: Text(S.of(context).checkUpdateUpToDate),
+        );
+      }
+
+      return RaisedButton.icon(
+        onPressed: () {
+          tryLaunch(asset.browserDownloadUrl);
+        },
+        color: Theme.of(context).accentColor,
+        icon: const Icon(Icons.file_download),
+        label: Text(
+          S.of(context).checkUpdateDownloadButtonLabel(filesize(asset.size)),
+        ),
+      );
+    },
+  );
+}

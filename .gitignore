@@ -44,3 +44,4 @@ app.*.map.json
 
 /.gradle/
 /coverage/
+/.vscode/
