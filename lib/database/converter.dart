@@ -25,7 +25,7 @@ class EnumStringConverter<T> extends TypeConverter<T, String> {
   @override
   String mapToSql(T value) {
     if (value == null) return null;
-    return EnumToString.parse(value);
+    return EnumToString.convertToString(value);
   }
 
   @override

@@ -115,8 +115,8 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
     final query = update(downloadTasks);
 
     if (stateIsIn != null) {
-      query.where(
-          (t) => t.state.isIn(stateIsIn.map((e) => EnumToString.parse(e))));
+      query.where((t) =>
+          t.state.isIn(stateIsIn.map((e) => EnumToString.convertToString(e))));
     }
 
     return query.write(DownloadTasksCompanion(
@@ -128,8 +128,8 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
   Future<DownloadTask> nextPendingTask() async {
     _log.fine('nextPendingTask');
     final query = select(downloadTasks)
-      ..where(
-          (t) => t.state.equals(EnumToString.parse(DownloadTaskState.pending)))
+      ..where((t) => t.state
+          .equals(EnumToString.convertToString(DownloadTaskState.pending)))
       ..orderBy([
         (t) => OrderingTerm.asc(t.queuedAt),
         (t) => OrderingTerm.asc(t.createdAt),

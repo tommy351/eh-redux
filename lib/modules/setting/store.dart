@@ -4,7 +4,7 @@ import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 import 'enum_adapter.dart';
 import 'types.dart';
 
-const _parse = EnumToString.parse;
+const _parse = EnumToString.convertToString;
 
 class SettingStore {
   SettingStore(StreamingSharedPreferences prefs)

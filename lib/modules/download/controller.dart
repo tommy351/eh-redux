@@ -32,7 +32,7 @@ class DownloadController {
 
     await Workmanager.registerOneOffTask(
       _taskUniqueName,
-      EnumToString.parse(TaskTag.download),
+      EnumToString.convertToString(TaskTag.download),
       existingWorkPolicy: ExistingWorkPolicy.keep,
       constraints: Constraints(
         networkType: NetworkType.connected,

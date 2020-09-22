@@ -15,6 +15,6 @@ class EnumAdapter<T> extends PreferenceAdapter<T> {
 
   @override
   Future<bool> setValue(SharedPreferences preferences, String key, T value) {
-    return preferences.setString(key, EnumToString.parse(value));
+    return preferences.setString(key, EnumToString.convertToString(value));
   }
 }
