@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:isolate';
 import 'dart:ui';
 
+import 'package:async/async.dart';
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
 
@@ -14,36 +15,59 @@ String _getAckPortName(int galleryId) {
 
 class DownloadInterruptListener {
   DownloadInterruptListener({
-    @required FutureOr<dynamic> Function(int) onInterrupt,
-    @required FutureOr<dynamic> Function() onInterruptAll,
-  }) : _port = ReceivePort() {
-    _port.listen((message) async {
+    @required this.onInterrupt,
+    @required this.onInterruptAll,
+  })  : assert(onInterrupt != null),
+        assert(onInterruptAll != null),
+        _port = ReceivePort() {
+    _port.listen((message) {
       _log.fine('Received: $message');
-
-      final galleryId = message as int;
-      final ackPortName = _getAckPortName(galleryId);
-      final ackPort = IsolateNameServer.lookupPortByName(ackPortName);
-
-      if (galleryId > 0) {
-        await Future.sync(() => onInterrupt(galleryId));
-      } else {
-        await Future.sync(onInterruptAll);
-      }
-
-      _log.finer('Send ack to: $ackPortName');
-      ackPort?.send(null);
+      _futureGroup.add(_handleRequest(message as int));
     });
 
+    _log.finer('Remove req port mapping: $_reqPortName');
+    IsolateNameServer.removePortNameMapping(_reqPortName);
+
+    _log.finer('Register req port: $_reqPortName');
     IsolateNameServer.registerPortWithName(_port.sendPort, _reqPortName);
   }
 
   static final _log = Logger('DownloadInterruptListener');
 
-  final ReceivePort _port;
+  final FutureOr<dynamic> Function(int) onInterrupt;
+  final FutureOr<dynamic> Function() onInterruptAll;
 
-  void close() {
-    _port.close();
+  final ReceivePort _port;
+  final _futureGroup = FutureGroup<void>();
+
+  Future<void> close() async {
+    _log.fine('close');
+
+    _log.finer('Remove req port mapping: $_reqPortName');
     IsolateNameServer.removePortNameMapping(_reqPortName);
+
+    _log.finer('Close req port');
+    _port.close();
+
+    _log.finer('Close future group');
+    _futureGroup.close();
+
+    _log.finer('Wait for future group to be done');
+    await _futureGroup.future;
+  }
+
+  Future<void> _handleRequest(int galleryId) async {
+    final ackPortName = _getAckPortName(galleryId);
+    final ackPort = IsolateNameServer.lookupPortByName(ackPortName);
+
+    if (galleryId > 0) {
+      await Future.sync(() => onInterrupt(galleryId));
+    } else {
+      await Future.sync(onInterruptAll);
+    }
+
+    _log.finer('Send ack to: $ackPortName');
+    ackPort?.send(null);
   }
 }
 
@@ -74,7 +98,10 @@ class DownloadInterrupter {
       await ackPort.first;
       _log.finer('Received ack: $galleryId');
     } finally {
+      _log.finer('Remove ack port name mapping: $ackPortName');
       IsolateNameServer.removePortNameMapping(ackPortName);
+
+      _log.finer('Close ack port');
       ackPort.close();
     }
   }

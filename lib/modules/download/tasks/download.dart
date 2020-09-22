@@ -110,8 +110,8 @@ class DownloadTaskOperation {
           ));
 
       await _guard(() => _showNotification(title: 'Downloaded successfully'));
-    } on _CanceledException catch (err) {
-      _log.finer('Canceled: $err');
+    } on _CanceledException catch (_) {
+      _log.finer('Canceled');
     } catch (err, stackTrace) {
       // Update the status as "failed"
       await database.downloadTasksDao.updateSingleStatus(
@@ -321,9 +321,11 @@ class DownloadTaskHandler {
 
     final listener = DownloadInterruptListener(
       onInterrupt: (galleryId) async {
+        _log.finer('onInterrupt: $galleryId');
         await _operations[galleryId]?.cancel();
       },
       onInterruptAll: () async {
+        _log.finer('onInterruptAll');
         _canceled = true;
         await Future.wait(_operations.values.map((value) => value.cancel()));
       },
@@ -347,7 +349,7 @@ class DownloadTaskHandler {
         }
       }
     } finally {
-      listener.close();
+      await listener.close();
     }
 
     return true;
