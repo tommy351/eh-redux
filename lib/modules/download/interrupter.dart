@@ -18,9 +18,10 @@ class DownloadInterruptListener {
     @required FutureOr<dynamic> Function() onInterruptAll,
   }) : _port = ReceivePort() {
     _port.listen((message) async {
+      _log.fine('Received: $message');
+
       final galleryId = message as int;
-      final ackPortName =
-          galleryId > 0 ? _getAckPortName(galleryId) : _ackPortName;
+      final ackPortName = _getAckPortName(galleryId);
       final ackPort = IsolateNameServer.lookupPortByName(ackPortName);
 
       if (galleryId > 0) {
@@ -28,11 +29,15 @@ class DownloadInterruptListener {
       } else {
         await Future.sync(onInterruptAll);
       }
+
+      _log.finer('Send ack to: $ackPortName');
       ackPort?.send(null);
     });
 
     IsolateNameServer.registerPortWithName(_port.sendPort, _reqPortName);
   }
+
+  static final _log = Logger('DownloadInterruptListener');
 
   final ReceivePort _port;
 
@@ -59,7 +64,7 @@ class DownloadInterrupter {
     final ackPortName = _getAckPortName(galleryId);
 
     try {
-      _log.finer('Register ack port');
+      _log.finer('Register ack port: $ackPortName');
       IsolateNameServer.removePortNameMapping(ackPortName);
       IsolateNameServer.registerPortWithName(ackPort.sendPort, ackPortName);
 

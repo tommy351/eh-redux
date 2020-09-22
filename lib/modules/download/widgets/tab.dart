@@ -1,5 +1,6 @@
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/generated/l10n.dart';
+import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
 import 'package:eh_redux/modules/download/controller.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/home/widgets/body.dart';
@@ -44,7 +45,8 @@ Widget _resumeAllButton(BuildContext context) {
     icon: const Icon(Icons.play_arrow),
     tooltip: S.of(context).downloadResumeAllButtonTooltip,
     onPressed: () async {
-      final count = await controller.resumeAll();
+      final count = await showLoadingDialog(
+          context: context, future: controller.resumeAll());
 
       if (count > 0) {
         Scaffold.of(context).showSnackBar(SnackBar(
@@ -63,7 +65,8 @@ Widget _pauseAllButton(BuildContext context) {
     icon: const Icon(Icons.pause),
     tooltip: S.of(context).downloadPauseAllButtonTooltip,
     onPressed: () async {
-      final count = await controller.pauseAll();
+      final count = await showLoadingDialog(
+          context: context, future: controller.pauseAll());
 
       if (count > 0) {
         Scaffold.of(context).showSnackBar(SnackBar(
