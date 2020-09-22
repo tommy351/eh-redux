@@ -10,7 +10,9 @@ import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:eh_redux/modules/image/store.dart';
 import 'package:eh_redux/modules/session/store.dart';
 import 'package:eh_redux/services/ehentai.dart';
+import 'package:eh_redux/utils/notification.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:meta/meta.dart';
@@ -76,6 +78,7 @@ class DownloadTaskOperation {
 
   bool _canceled = false;
   Completer<void> _completer;
+  String _thumbnailPath;
 
   Future<void> start() async {
     _log.fine('Start: $task');
@@ -91,6 +94,9 @@ class DownloadTaskOperation {
 
       await _guard(_downloadThumbnail);
 
+      // The notification must be displayed AFTER the thumbnail is downloaded.
+      await _guard(() => _showDownloadingNotification(task.downloadedCount));
+
       for (int page = task.downloadedCount + 1;
           page <= task.totalCount && !_canceled;
           page++) {
@@ -102,6 +108,8 @@ class DownloadTaskOperation {
             galleryId,
             state: DownloadTaskState.succeeded,
           ));
+
+      await _guard(() => _showNotification(title: 'Downloaded successfully'));
     } on _CanceledException catch (err) {
       _log.finer('Canceled: $err');
     } catch (err, stackTrace) {
@@ -111,6 +119,8 @@ class DownloadTaskOperation {
         state: DownloadTaskState.failed,
         errorDetails: err.toString(),
       );
+
+      await _showNotification(title: 'Download failed');
 
       // Record the error
       await FirebaseCrashlytics.instance.recordError(err, stackTrace);
@@ -125,6 +135,7 @@ class DownloadTaskOperation {
     _log.fine('Cancel: $task');
     _canceled = true;
     await _completer?.future;
+    await _showNotification(title: 'Download paused');
   }
 
   Future<T> _guard<T>(FutureOr<T> Function() fn) {
@@ -185,7 +196,10 @@ class DownloadTaskOperation {
   }
 
   Future<void> _downloadThumbnail() async {
-    if (task.thumbnail?.isNotEmpty ?? false) return;
+    if (task.thumbnail?.isNotEmpty ?? false) {
+      _thumbnailPath = task.thumbnail;
+      return;
+    }
 
     final gallery = await _gallery;
 
@@ -193,6 +207,8 @@ class DownloadTaskOperation {
           name: 'thumbnail',
           url: gallery.thumbnail,
         ));
+
+    _thumbnailPath = file.file.path;
 
     await _guard(() => database.downloadTasksDao.updateSingleStatus(
           galleryId,
@@ -233,6 +249,50 @@ class DownloadTaskOperation {
           galleryId,
           downloadedCount: page,
         ));
+
+    // Show the notification
+    await _guard(() => _showDownloadingNotification(page));
+  }
+
+  Future<void> _showNotification({
+    @required String title,
+    int downloadedCount,
+    bool showProgress = false,
+  }) async {
+    final androidDetails = AndroidNotificationDetails(
+      'download',
+      'Download',
+      'Download progress',
+      icon: 'download',
+      playSound: false,
+      enableVibration: false,
+      largeIcon: FilePathAndroidBitmap(_thumbnailPath),
+      category: 'progress',
+      onlyAlertOnce: true,
+      maxProgress: task.totalCount,
+      progress: downloadedCount,
+      channelShowBadge: false,
+      showProgress: showProgress,
+    );
+    const iosDetails = IOSNotificationDetails(presentSound: false);
+    final details = NotificationDetails(androidDetails, iosDetails);
+    final gallery = await _gallery;
+
+    await notificationPlugin.show(
+      galleryId,
+      title,
+      gallery.title,
+      details,
+      payload: '/home/download',
+    );
+  }
+
+  Future<void> _showDownloadingNotification(int downloadedCount) {
+    return _showNotification(
+      title: 'Downloading',
+      downloadedCount: downloadedCount,
+      showProgress: true,
+    );
   }
 }
 

@@ -4,6 +4,7 @@ import 'dart:developer' as developer;
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/modules/app/widgets/app.dart';
 import 'package:eh_redux/utils/firebase.dart';
+import 'package:eh_redux/utils/notification.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -52,6 +53,7 @@ Future<void> _initializeMain() async {
   WidgetsFlutterBinding.ensureInitialized();
   _logMobxMainContext();
   await initializeFirebase();
+  await initializeNotificationPlugin();
 }
 
 void _setupLogger() {
