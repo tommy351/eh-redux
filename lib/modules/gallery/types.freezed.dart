@@ -9,6 +9,7 @@ part of 'types.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$GalleryIdTearOff {
   const _$GalleryIdTearOff();
 
@@ -21,9 +22,11 @@ class _$GalleryIdTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $GalleryId = _$GalleryIdTearOff();
 
+/// @nodoc
 mixin _$GalleryId {
   int get id;
   String get token;
@@ -31,12 +34,14 @@ mixin _$GalleryId {
   $GalleryIdCopyWith<GalleryId> get copyWith;
 }
 
+/// @nodoc
 abstract class $GalleryIdCopyWith<$Res> {
   factory $GalleryIdCopyWith(GalleryId value, $Res Function(GalleryId) then) =
       _$GalleryIdCopyWithImpl<$Res>;
   $Res call({int id, String token});
 }
 
+/// @nodoc
 class _$GalleryIdCopyWithImpl<$Res> implements $GalleryIdCopyWith<$Res> {
   _$GalleryIdCopyWithImpl(this._value, this._then);
 
@@ -56,6 +61,7 @@ class _$GalleryIdCopyWithImpl<$Res> implements $GalleryIdCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$GalleryIdCopyWith<$Res> implements $GalleryIdCopyWith<$Res> {
   factory _$GalleryIdCopyWith(
           _GalleryId value, $Res Function(_GalleryId) then) =
@@ -64,6 +70,7 @@ abstract class _$GalleryIdCopyWith<$Res> implements $GalleryIdCopyWith<$Res> {
   $Res call({int id, String token});
 }
 
+/// @nodoc
 class __$GalleryIdCopyWithImpl<$Res> extends _$GalleryIdCopyWithImpl<$Res>
     implements _$GalleryIdCopyWith<$Res> {
   __$GalleryIdCopyWithImpl(_GalleryId _value, $Res Function(_GalleryId) _then)
@@ -84,6 +91,7 @@ class __$GalleryIdCopyWithImpl<$Res> extends _$GalleryIdCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_GalleryId extends _GalleryId {
   const _$_GalleryId({@required this.id, @required this.token})
       : assert(id != null),
@@ -134,6 +142,7 @@ abstract class _GalleryId extends GalleryId {
   _$GalleryIdCopyWith<_GalleryId> get copyWith;
 }
 
+/// @nodoc
 class _$GalleryTearOff {
   const _$GalleryTearOff();
 
@@ -170,9 +179,11 @@ class _$GalleryTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $Gallery = _$GalleryTearOff();
 
+/// @nodoc
 mixin _$Gallery {
   int get id;
   String get token;
@@ -191,6 +202,7 @@ mixin _$Gallery {
   $GalleryCopyWith<Gallery> get copyWith;
 }
 
+/// @nodoc
 abstract class $GalleryCopyWith<$Res> {
   factory $GalleryCopyWith(Gallery value, $Res Function(Gallery) then) =
       _$GalleryCopyWithImpl<$Res>;
@@ -210,6 +222,7 @@ abstract class $GalleryCopyWith<$Res> {
       DateTime posted});
 }
 
+/// @nodoc
 class _$GalleryCopyWithImpl<$Res> implements $GalleryCopyWith<$Res> {
   _$GalleryCopyWithImpl(this._value, this._then);
 
@@ -251,6 +264,7 @@ class _$GalleryCopyWithImpl<$Res> implements $GalleryCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$GalleryCopyWith<$Res> implements $GalleryCopyWith<$Res> {
   factory _$GalleryCopyWith(_Gallery value, $Res Function(_Gallery) then) =
       __$GalleryCopyWithImpl<$Res>;
@@ -271,6 +285,7 @@ abstract class _$GalleryCopyWith<$Res> implements $GalleryCopyWith<$Res> {
       DateTime posted});
 }
 
+/// @nodoc
 class __$GalleryCopyWithImpl<$Res> extends _$GalleryCopyWithImpl<$Res>
     implements _$GalleryCopyWith<$Res> {
   __$GalleryCopyWithImpl(_Gallery _value, $Res Function(_Gallery) _then)
@@ -313,6 +328,7 @@ class __$GalleryCopyWithImpl<$Res> extends _$GalleryCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_Gallery extends _Gallery {
   const _$_Gallery(
       {@required this.id,
@@ -483,6 +499,7 @@ abstract class _Gallery extends Gallery {
   _$GalleryCopyWith<_Gallery> get copyWith;
 }
 
+/// @nodoc
 class _$GalleryTagTearOff {
   const _$GalleryTagTearOff();
 
@@ -495,9 +512,11 @@ class _$GalleryTagTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $GalleryTag = _$GalleryTagTearOff();
 
+/// @nodoc
 mixin _$GalleryTag {
   String get namespace;
   String get tag;
@@ -505,6 +524,7 @@ mixin _$GalleryTag {
   $GalleryTagCopyWith<GalleryTag> get copyWith;
 }
 
+/// @nodoc
 abstract class $GalleryTagCopyWith<$Res> {
   factory $GalleryTagCopyWith(
           GalleryTag value, $Res Function(GalleryTag) then) =
@@ -512,6 +532,7 @@ abstract class $GalleryTagCopyWith<$Res> {
   $Res call({String namespace, String tag});
 }
 
+/// @nodoc
 class _$GalleryTagCopyWithImpl<$Res> implements $GalleryTagCopyWith<$Res> {
   _$GalleryTagCopyWithImpl(this._value, this._then);
 
@@ -531,6 +552,7 @@ class _$GalleryTagCopyWithImpl<$Res> implements $GalleryTagCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$GalleryTagCopyWith<$Res> implements $GalleryTagCopyWith<$Res> {
   factory _$GalleryTagCopyWith(
           _GalleryTag value, $Res Function(_GalleryTag) then) =
@@ -539,6 +561,7 @@ abstract class _$GalleryTagCopyWith<$Res> implements $GalleryTagCopyWith<$Res> {
   $Res call({String namespace, String tag});
 }
 
+/// @nodoc
 class __$GalleryTagCopyWithImpl<$Res> extends _$GalleryTagCopyWithImpl<$Res>
     implements _$GalleryTagCopyWith<$Res> {
   __$GalleryTagCopyWithImpl(
@@ -560,6 +583,7 @@ class __$GalleryTagCopyWithImpl<$Res> extends _$GalleryTagCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_GalleryTag extends _GalleryTag {
   const _$_GalleryTag({this.namespace = '', @required this.tag})
       : assert(namespace != null),
@@ -616,6 +640,7 @@ GalleryResponse _$GalleryResponseFromJson(Map<String, dynamic> json) {
   return _GalleryResponse.fromJson(json);
 }
 
+/// @nodoc
 class _$GalleryResponseTearOff {
   const _$GalleryResponseTearOff();
 
@@ -650,11 +675,18 @@ class _$GalleryResponseTearOff {
       posted: posted,
     );
   }
+
+// ignore: unused_element
+  GalleryResponse fromJson(Map<String, Object> json) {
+    return GalleryResponse.fromJson(json);
+  }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $GalleryResponse = _$GalleryResponseTearOff();
 
+/// @nodoc
 mixin _$GalleryResponse {
   @JsonKey(name: 'gid')
   int get id;
@@ -681,6 +713,7 @@ mixin _$GalleryResponse {
   $GalleryResponseCopyWith<GalleryResponse> get copyWith;
 }
 
+/// @nodoc
 abstract class $GalleryResponseCopyWith<$Res> {
   factory $GalleryResponseCopyWith(
           GalleryResponse value, $Res Function(GalleryResponse) then) =
@@ -701,6 +734,7 @@ abstract class $GalleryResponseCopyWith<$Res> {
       @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime posted});
 }
 
+/// @nodoc
 class _$GalleryResponseCopyWithImpl<$Res>
     implements $GalleryResponseCopyWith<$Res> {
   _$GalleryResponseCopyWithImpl(this._value, this._then);
@@ -743,6 +777,7 @@ class _$GalleryResponseCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$GalleryResponseCopyWith<$Res>
     implements $GalleryResponseCopyWith<$Res> {
   factory _$GalleryResponseCopyWith(
@@ -765,6 +800,7 @@ abstract class _$GalleryResponseCopyWith<$Res>
       @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime posted});
 }
 
+/// @nodoc
 class __$GalleryResponseCopyWithImpl<$Res>
     extends _$GalleryResponseCopyWithImpl<$Res>
     implements _$GalleryResponseCopyWith<$Res> {
@@ -810,6 +846,8 @@ class __$GalleryResponseCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+
+/// @nodoc
 class _$_GalleryResponse implements _GalleryResponse {
   const _$_GalleryResponse(
       {@JsonKey(name: 'gid') this.id,
@@ -991,6 +1029,7 @@ abstract class _GalleryResponse implements GalleryResponse {
   _$GalleryResponseCopyWith<_GalleryResponse> get copyWith;
 }
 
+/// @nodoc
 class _$GalleryReadPositionTearOff {
   const _$GalleryReadPositionTearOff();
 
@@ -1003,9 +1042,11 @@ class _$GalleryReadPositionTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $GalleryReadPosition = _$GalleryReadPositionTearOff();
 
+/// @nodoc
 mixin _$GalleryReadPosition {
   int get page;
   DateTime get time;
@@ -1013,6 +1054,7 @@ mixin _$GalleryReadPosition {
   $GalleryReadPositionCopyWith<GalleryReadPosition> get copyWith;
 }
 
+/// @nodoc
 abstract class $GalleryReadPositionCopyWith<$Res> {
   factory $GalleryReadPositionCopyWith(
           GalleryReadPosition value, $Res Function(GalleryReadPosition) then) =
@@ -1020,6 +1062,7 @@ abstract class $GalleryReadPositionCopyWith<$Res> {
   $Res call({int page, DateTime time});
 }
 
+/// @nodoc
 class _$GalleryReadPositionCopyWithImpl<$Res>
     implements $GalleryReadPositionCopyWith<$Res> {
   _$GalleryReadPositionCopyWithImpl(this._value, this._then);
@@ -1040,6 +1083,7 @@ class _$GalleryReadPositionCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$GalleryReadPositionCopyWith<$Res>
     implements $GalleryReadPositionCopyWith<$Res> {
   factory _$GalleryReadPositionCopyWith(_GalleryReadPosition value,
@@ -1049,6 +1093,7 @@ abstract class _$GalleryReadPositionCopyWith<$Res>
   $Res call({int page, DateTime time});
 }
 
+/// @nodoc
 class __$GalleryReadPositionCopyWithImpl<$Res>
     extends _$GalleryReadPositionCopyWithImpl<$Res>
     implements _$GalleryReadPositionCopyWith<$Res> {
@@ -1071,6 +1116,7 @@ class __$GalleryReadPositionCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_GalleryReadPosition implements _GalleryReadPosition {
   const _$_GalleryReadPosition({@required this.page, @required this.time})
       : assert(page != null),

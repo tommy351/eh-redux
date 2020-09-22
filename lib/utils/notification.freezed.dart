@@ -9,6 +9,7 @@ part of 'notification.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$ReceivedNotificationTearOff {
   const _$ReceivedNotificationTearOff();
 
@@ -27,9 +28,11 @@ class _$ReceivedNotificationTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $ReceivedNotification = _$ReceivedNotificationTearOff();
 
+/// @nodoc
 mixin _$ReceivedNotification {
   int get id;
   String get title;
@@ -39,6 +42,7 @@ mixin _$ReceivedNotification {
   $ReceivedNotificationCopyWith<ReceivedNotification> get copyWith;
 }
 
+/// @nodoc
 abstract class $ReceivedNotificationCopyWith<$Res> {
   factory $ReceivedNotificationCopyWith(ReceivedNotification value,
           $Res Function(ReceivedNotification) then) =
@@ -46,6 +50,7 @@ abstract class $ReceivedNotificationCopyWith<$Res> {
   $Res call({int id, String title, String body, String payload});
 }
 
+/// @nodoc
 class _$ReceivedNotificationCopyWithImpl<$Res>
     implements $ReceivedNotificationCopyWith<$Res> {
   _$ReceivedNotificationCopyWithImpl(this._value, this._then);
@@ -70,6 +75,7 @@ class _$ReceivedNotificationCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$ReceivedNotificationCopyWith<$Res>
     implements $ReceivedNotificationCopyWith<$Res> {
   factory _$ReceivedNotificationCopyWith(_ReceivedNotification value,
@@ -79,6 +85,7 @@ abstract class _$ReceivedNotificationCopyWith<$Res>
   $Res call({int id, String title, String body, String payload});
 }
 
+/// @nodoc
 class __$ReceivedNotificationCopyWithImpl<$Res>
     extends _$ReceivedNotificationCopyWithImpl<$Res>
     implements _$ReceivedNotificationCopyWith<$Res> {
@@ -105,6 +112,7 @@ class __$ReceivedNotificationCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_ReceivedNotification implements _ReceivedNotification {
   const _$_ReceivedNotification(
       {@required this.id,

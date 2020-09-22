@@ -9,6 +9,7 @@ part of 'types.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$ImageIdTearOff {
   const _$ImageIdTearOff();
 
@@ -25,9 +26,11 @@ class _$ImageIdTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $ImageId = _$ImageIdTearOff();
 
+/// @nodoc
 mixin _$ImageId {
   GalleryId get galleryId;
   int get page;
@@ -36,6 +39,7 @@ mixin _$ImageId {
   $ImageIdCopyWith<ImageId> get copyWith;
 }
 
+/// @nodoc
 abstract class $ImageIdCopyWith<$Res> {
   factory $ImageIdCopyWith(ImageId value, $Res Function(ImageId) then) =
       _$ImageIdCopyWithImpl<$Res>;
@@ -44,6 +48,7 @@ abstract class $ImageIdCopyWith<$Res> {
   $GalleryIdCopyWith<$Res> get galleryId;
 }
 
+/// @nodoc
 class _$ImageIdCopyWithImpl<$Res> implements $ImageIdCopyWith<$Res> {
   _$ImageIdCopyWithImpl(this._value, this._then);
 
@@ -76,6 +81,7 @@ class _$ImageIdCopyWithImpl<$Res> implements $ImageIdCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$ImageIdCopyWith<$Res> implements $ImageIdCopyWith<$Res> {
   factory _$ImageIdCopyWith(_ImageId value, $Res Function(_ImageId) then) =
       __$ImageIdCopyWithImpl<$Res>;
@@ -86,6 +92,7 @@ abstract class _$ImageIdCopyWith<$Res> implements $ImageIdCopyWith<$Res> {
   $GalleryIdCopyWith<$Res> get galleryId;
 }
 
+/// @nodoc
 class __$ImageIdCopyWithImpl<$Res> extends _$ImageIdCopyWithImpl<$Res>
     implements _$ImageIdCopyWith<$Res> {
   __$ImageIdCopyWithImpl(_ImageId _value, $Res Function(_ImageId) _then)
@@ -109,6 +116,7 @@ class __$ImageIdCopyWithImpl<$Res> extends _$ImageIdCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_ImageId extends _ImageId {
   const _$_ImageId(
       {@required this.galleryId, @required this.page, @required this.key})
@@ -171,6 +179,7 @@ abstract class _ImageId extends ImageId {
   _$ImageIdCopyWith<_ImageId> get copyWith;
 }
 
+/// @nodoc
 class _$GalleryImageTearOff {
   const _$GalleryImageTearOff();
 
@@ -205,9 +214,11 @@ class _$GalleryImageTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $GalleryImage = _$GalleryImageTearOff();
 
+/// @nodoc
 mixin _$GalleryImage {
   ImageId get id;
   int get width;
@@ -242,6 +253,7 @@ mixin _$GalleryImage {
   $GalleryImageCopyWith<GalleryImage> get copyWith;
 }
 
+/// @nodoc
 abstract class $GalleryImageCopyWith<$Res> {
   factory $GalleryImageCopyWith(
           GalleryImage value, $Res Function(GalleryImage) then) =
@@ -251,6 +263,7 @@ abstract class $GalleryImageCopyWith<$Res> {
   $ImageIdCopyWith<$Res> get id;
 }
 
+/// @nodoc
 class _$GalleryImageCopyWithImpl<$Res> implements $GalleryImageCopyWith<$Res> {
   _$GalleryImageCopyWithImpl(this._value, this._then);
 
@@ -282,6 +295,7 @@ class _$GalleryImageCopyWithImpl<$Res> implements $GalleryImageCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class $NetworkGalleryImageCopyWith<$Res>
     implements $GalleryImageCopyWith<$Res> {
   factory $NetworkGalleryImageCopyWith(
@@ -294,6 +308,7 @@ abstract class $NetworkGalleryImageCopyWith<$Res>
   $ImageIdCopyWith<$Res> get id;
 }
 
+/// @nodoc
 class _$NetworkGalleryImageCopyWithImpl<$Res>
     extends _$GalleryImageCopyWithImpl<$Res>
     implements $NetworkGalleryImageCopyWith<$Res> {
@@ -322,6 +337,7 @@ class _$NetworkGalleryImageCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$NetworkGalleryImage implements NetworkGalleryImage {
   const _$NetworkGalleryImage(
       {@required this.id,
@@ -452,6 +468,7 @@ abstract class NetworkGalleryImage implements GalleryImage {
   $NetworkGalleryImageCopyWith<NetworkGalleryImage> get copyWith;
 }
 
+/// @nodoc
 abstract class $LocalGalleryImageCopyWith<$Res>
     implements $GalleryImageCopyWith<$Res> {
   factory $LocalGalleryImageCopyWith(
@@ -464,6 +481,7 @@ abstract class $LocalGalleryImageCopyWith<$Res>
   $ImageIdCopyWith<$Res> get id;
 }
 
+/// @nodoc
 class _$LocalGalleryImageCopyWithImpl<$Res>
     extends _$GalleryImageCopyWithImpl<$Res>
     implements $LocalGalleryImageCopyWith<$Res> {
@@ -490,6 +508,7 @@ class _$LocalGalleryImageCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$LocalGalleryImage implements LocalGalleryImage {
   const _$LocalGalleryImage(
       {@required this.id,

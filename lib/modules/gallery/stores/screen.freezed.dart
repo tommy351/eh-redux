@@ -9,6 +9,7 @@ part of 'screen.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$GalleryErrorTearOff {
   const _$GalleryErrorTearOff();
 
@@ -32,9 +33,11 @@ class _$GalleryErrorTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $GalleryError = _$GalleryErrorTearOff();
 
+/// @nodoc
 mixin _$GalleryError {
   @optionalTypeArgs
   Result when<Result extends Object>(
@@ -64,12 +67,14 @@ mixin _$GalleryError {
   });
 }
 
+/// @nodoc
 abstract class $GalleryErrorCopyWith<$Res> {
   factory $GalleryErrorCopyWith(
           GalleryError value, $Res Function(GalleryError) then) =
       _$GalleryErrorCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$GalleryErrorCopyWithImpl<$Res> implements $GalleryErrorCopyWith<$Res> {
   _$GalleryErrorCopyWithImpl(this._value, this._then);
 
@@ -78,6 +83,7 @@ class _$GalleryErrorCopyWithImpl<$Res> implements $GalleryErrorCopyWith<$Res> {
   final $Res Function(GalleryError) _then;
 }
 
+/// @nodoc
 abstract class _$GalleryErrorCopyWith<$Res> {
   factory _$GalleryErrorCopyWith(
           _GalleryError value, $Res Function(_GalleryError) then) =
@@ -85,6 +91,7 @@ abstract class _$GalleryErrorCopyWith<$Res> {
   $Res call({String message});
 }
 
+/// @nodoc
 class __$GalleryErrorCopyWithImpl<$Res> extends _$GalleryErrorCopyWithImpl<$Res>
     implements _$GalleryErrorCopyWith<$Res> {
   __$GalleryErrorCopyWithImpl(
@@ -104,6 +111,7 @@ class __$GalleryErrorCopyWithImpl<$Res> extends _$GalleryErrorCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_GalleryError implements _GalleryError {
   const _$_GalleryError({@required this.message}) : assert(message != null);
 
@@ -195,6 +203,7 @@ abstract class _GalleryError implements GalleryError {
   _$GalleryErrorCopyWith<_GalleryError> get copyWith;
 }
 
+/// @nodoc
 abstract class $GalleryErrorContentWarningCopyWith<$Res> {
   factory $GalleryErrorContentWarningCopyWith(GalleryErrorContentWarning value,
           $Res Function(GalleryErrorContentWarning) then) =
@@ -202,6 +211,7 @@ abstract class $GalleryErrorContentWarningCopyWith<$Res> {
   $Res call({String reason});
 }
 
+/// @nodoc
 class _$GalleryErrorContentWarningCopyWithImpl<$Res>
     extends _$GalleryErrorCopyWithImpl<$Res>
     implements $GalleryErrorContentWarningCopyWith<$Res> {
@@ -223,6 +233,7 @@ class _$GalleryErrorContentWarningCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$GalleryErrorContentWarning implements GalleryErrorContentWarning {
   const _$GalleryErrorContentWarning({@required this.reason})
       : assert(reason != null);
@@ -318,12 +329,14 @@ abstract class GalleryErrorContentWarning implements GalleryError {
   $GalleryErrorContentWarningCopyWith<GalleryErrorContentWarning> get copyWith;
 }
 
+/// @nodoc
 abstract class $GalleryErrorNotFoundCopyWith<$Res> {
   factory $GalleryErrorNotFoundCopyWith(GalleryErrorNotFound value,
           $Res Function(GalleryErrorNotFound) then) =
       _$GalleryErrorNotFoundCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$GalleryErrorNotFoundCopyWithImpl<$Res>
     extends _$GalleryErrorCopyWithImpl<$Res>
     implements $GalleryErrorNotFoundCopyWith<$Res> {
@@ -335,6 +348,7 @@ class _$GalleryErrorNotFoundCopyWithImpl<$Res>
   GalleryErrorNotFound get _value => super._value as GalleryErrorNotFound;
 }
 
+/// @nodoc
 class _$GalleryErrorNotFound implements GalleryErrorNotFound {
   const _$GalleryErrorNotFound();
 

@@ -9,6 +9,7 @@ part of 'tabs.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$TabTearOff {
   const _$TabTearOff();
 
@@ -27,9 +28,11 @@ class _$TabTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $Tab = _$TabTearOff();
 
+/// @nodoc
 mixin _$Tab {
   String get name;
   IconData get icon;
@@ -39,6 +42,7 @@ mixin _$Tab {
   $TabCopyWith<Tab> get copyWith;
 }
 
+/// @nodoc
 abstract class $TabCopyWith<$Res> {
   factory $TabCopyWith(Tab value, $Res Function(Tab) then) =
       _$TabCopyWithImpl<$Res>;
@@ -49,6 +53,7 @@ abstract class $TabCopyWith<$Res> {
       Widget Function(BuildContext) widget});
 }
 
+/// @nodoc
 class _$TabCopyWithImpl<$Res> implements $TabCopyWith<$Res> {
   _$TabCopyWithImpl(this._value, this._then);
 
@@ -76,6 +81,7 @@ class _$TabCopyWithImpl<$Res> implements $TabCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$TabCopyWith<$Res> implements $TabCopyWith<$Res> {
   factory _$TabCopyWith(_Tab value, $Res Function(_Tab) then) =
       __$TabCopyWithImpl<$Res>;
@@ -87,6 +93,7 @@ abstract class _$TabCopyWith<$Res> implements $TabCopyWith<$Res> {
       Widget Function(BuildContext) widget});
 }
 
+/// @nodoc
 class __$TabCopyWithImpl<$Res> extends _$TabCopyWithImpl<$Res>
     implements _$TabCopyWith<$Res> {
   __$TabCopyWithImpl(_Tab _value, $Res Function(_Tab) _then)
@@ -115,6 +122,7 @@ class __$TabCopyWithImpl<$Res> extends _$TabCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_Tab implements _Tab {
   const _$_Tab(
       {@required this.name,

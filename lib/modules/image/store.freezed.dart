@@ -9,6 +9,7 @@ part of 'store.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$ImageErrorTearOff {
   const _$ImageErrorTearOff();
 
@@ -37,9 +38,11 @@ class _$ImageErrorTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $ImageError = _$ImageErrorTearOff();
 
+/// @nodoc
 mixin _$ImageError {
   @optionalTypeArgs
   Result when<Result extends Object>(
@@ -73,12 +76,14 @@ mixin _$ImageError {
   });
 }
 
+/// @nodoc
 abstract class $ImageErrorCopyWith<$Res> {
   factory $ImageErrorCopyWith(
           ImageError value, $Res Function(ImageError) then) =
       _$ImageErrorCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$ImageErrorCopyWithImpl<$Res> implements $ImageErrorCopyWith<$Res> {
   _$ImageErrorCopyWithImpl(this._value, this._then);
 
@@ -87,6 +92,7 @@ class _$ImageErrorCopyWithImpl<$Res> implements $ImageErrorCopyWith<$Res> {
   final $Res Function(ImageError) _then;
 }
 
+/// @nodoc
 abstract class _$ImageErrorCopyWith<$Res> {
   factory _$ImageErrorCopyWith(
           _ImageError value, $Res Function(_ImageError) then) =
@@ -94,6 +100,7 @@ abstract class _$ImageErrorCopyWith<$Res> {
   $Res call({String message});
 }
 
+/// @nodoc
 class __$ImageErrorCopyWithImpl<$Res> extends _$ImageErrorCopyWithImpl<$Res>
     implements _$ImageErrorCopyWith<$Res> {
   __$ImageErrorCopyWithImpl(
@@ -113,6 +120,7 @@ class __$ImageErrorCopyWithImpl<$Res> extends _$ImageErrorCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_ImageError implements _ImageError {
   const _$_ImageError({@required this.message}) : assert(message != null);
 
@@ -210,6 +218,7 @@ abstract class _ImageError implements ImageError {
   _$ImageErrorCopyWith<_ImageError> get copyWith;
 }
 
+/// @nodoc
 abstract class $ImageErrorNotFoundCopyWith<$Res> {
   factory $ImageErrorNotFoundCopyWith(
           ImageErrorNotFound value, $Res Function(ImageErrorNotFound) then) =
@@ -217,6 +226,7 @@ abstract class $ImageErrorNotFoundCopyWith<$Res> {
   $Res call({int page});
 }
 
+/// @nodoc
 class _$ImageErrorNotFoundCopyWithImpl<$Res>
     extends _$ImageErrorCopyWithImpl<$Res>
     implements $ImageErrorNotFoundCopyWith<$Res> {
@@ -237,6 +247,7 @@ class _$ImageErrorNotFoundCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$ImageErrorNotFound implements ImageErrorNotFound {
   const _$ImageErrorNotFound({@required this.page}) : assert(page != null);
 
@@ -334,12 +345,14 @@ abstract class ImageErrorNotFound implements ImageError {
   $ImageErrorNotFoundCopyWith<ImageErrorNotFound> get copyWith;
 }
 
+/// @nodoc
 abstract class $ImageErrorDisconnectedCopyWith<$Res> {
   factory $ImageErrorDisconnectedCopyWith(ImageErrorDisconnected value,
           $Res Function(ImageErrorDisconnected) then) =
       _$ImageErrorDisconnectedCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$ImageErrorDisconnectedCopyWithImpl<$Res>
     extends _$ImageErrorCopyWithImpl<$Res>
     implements $ImageErrorDisconnectedCopyWith<$Res> {
@@ -351,6 +364,7 @@ class _$ImageErrorDisconnectedCopyWithImpl<$Res>
   ImageErrorDisconnected get _value => super._value as ImageErrorDisconnected;
 }
 
+/// @nodoc
 class _$ImageErrorDisconnected implements ImageErrorDisconnected {
   const _$ImageErrorDisconnected();
 
@@ -434,6 +448,7 @@ abstract class ImageErrorDisconnected implements ImageError {
   const factory ImageErrorDisconnected() = _$ImageErrorDisconnected;
 }
 
+/// @nodoc
 abstract class $ImageErrorGalleryUnavailableCopyWith<$Res> {
   factory $ImageErrorGalleryUnavailableCopyWith(
           ImageErrorGalleryUnavailable value,
@@ -441,6 +456,7 @@ abstract class $ImageErrorGalleryUnavailableCopyWith<$Res> {
       _$ImageErrorGalleryUnavailableCopyWithImpl<$Res>;
 }
 
+/// @nodoc
 class _$ImageErrorGalleryUnavailableCopyWithImpl<$Res>
     extends _$ImageErrorCopyWithImpl<$Res>
     implements $ImageErrorGalleryUnavailableCopyWith<$Res> {
@@ -454,6 +470,7 @@ class _$ImageErrorGalleryUnavailableCopyWithImpl<$Res>
       super._value as ImageErrorGalleryUnavailable;
 }
 
+/// @nodoc
 class _$ImageErrorGalleryUnavailable implements ImageErrorGalleryUnavailable {
   const _$ImageErrorGalleryUnavailable();
 

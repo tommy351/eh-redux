@@ -9,6 +9,7 @@ part of 'ehentai.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$RequestExceptionTearOff {
   const _$RequestExceptionTearOff();
 
@@ -29,9 +30,11 @@ class _$RequestExceptionTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $RequestException = _$RequestExceptionTearOff();
 
+/// @nodoc
 mixin _$RequestException {
   String get method;
   Uri get url;
@@ -42,6 +45,7 @@ mixin _$RequestException {
   $RequestExceptionCopyWith<RequestException> get copyWith;
 }
 
+/// @nodoc
 abstract class $RequestExceptionCopyWith<$Res> {
   factory $RequestExceptionCopyWith(
           RequestException value, $Res Function(RequestException) then) =
@@ -50,6 +54,7 @@ abstract class $RequestExceptionCopyWith<$Res> {
       {String method, Uri url, String message, int statusCode, String body});
 }
 
+/// @nodoc
 class _$RequestExceptionCopyWithImpl<$Res>
     implements $RequestExceptionCopyWith<$Res> {
   _$RequestExceptionCopyWithImpl(this._value, this._then);
@@ -76,6 +81,7 @@ class _$RequestExceptionCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$RequestExceptionCopyWith<$Res>
     implements $RequestExceptionCopyWith<$Res> {
   factory _$RequestExceptionCopyWith(
@@ -86,6 +92,7 @@ abstract class _$RequestExceptionCopyWith<$Res>
       {String method, Uri url, String message, int statusCode, String body});
 }
 
+/// @nodoc
 class __$RequestExceptionCopyWithImpl<$Res>
     extends _$RequestExceptionCopyWithImpl<$Res>
     implements _$RequestExceptionCopyWith<$Res> {
@@ -115,6 +122,8 @@ class __$RequestExceptionCopyWithImpl<$Res>
 }
 
 @Implements(Exception)
+
+/// @nodoc
 class _$_RequestException
     with DiagnosticableTreeMixin
     implements _RequestException {
@@ -215,6 +224,7 @@ abstract class _RequestException implements RequestException, Exception {
   _$RequestExceptionCopyWith<_RequestException> get copyWith;
 }
 
+/// @nodoc
 class _$ResponseTearOff {
   const _$ResponseTearOff();
 
@@ -242,9 +252,11 @@ class _$ResponseTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $Response = _$ResponseTearOff();
 
+/// @nodoc
 mixin _$Response {
   int get statusCode;
 
@@ -278,12 +290,14 @@ mixin _$Response {
   $ResponseCopyWith<Response> get copyWith;
 }
 
+/// @nodoc
 abstract class $ResponseCopyWith<$Res> {
   factory $ResponseCopyWith(Response value, $Res Function(Response) then) =
       _$ResponseCopyWithImpl<$Res>;
   $Res call({int statusCode});
 }
 
+/// @nodoc
 class _$ResponseCopyWithImpl<$Res> implements $ResponseCopyWith<$Res> {
   _$ResponseCopyWithImpl(this._value, this._then);
 
@@ -301,6 +315,7 @@ class _$ResponseCopyWithImpl<$Res> implements $ResponseCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class $BaseResponseCopyWith<$Res> implements $ResponseCopyWith<$Res> {
   factory $BaseResponseCopyWith(
           BaseResponse value, $Res Function(BaseResponse) then) =
@@ -309,6 +324,7 @@ abstract class $BaseResponseCopyWith<$Res> implements $ResponseCopyWith<$Res> {
   $Res call({int statusCode});
 }
 
+/// @nodoc
 class _$BaseResponseCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
     implements $BaseResponseCopyWith<$Res> {
   _$BaseResponseCopyWithImpl(
@@ -328,6 +344,7 @@ class _$BaseResponseCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$BaseResponse with DiagnosticableTreeMixin implements BaseResponse {
   const _$BaseResponse({@required this.statusCode})
       : assert(statusCode != null);
@@ -431,6 +448,7 @@ abstract class BaseResponse implements Response {
   $BaseResponseCopyWith<BaseResponse> get copyWith;
 }
 
+/// @nodoc
 abstract class $HtmlResponseCopyWith<$Res> implements $ResponseCopyWith<$Res> {
   factory $HtmlResponseCopyWith(
           HtmlResponse value, $Res Function(HtmlResponse) then) =
@@ -439,6 +457,7 @@ abstract class $HtmlResponseCopyWith<$Res> implements $ResponseCopyWith<$Res> {
   $Res call({int statusCode, Document document});
 }
 
+/// @nodoc
 class _$HtmlResponseCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
     implements $HtmlResponseCopyWith<$Res> {
   _$HtmlResponseCopyWithImpl(
@@ -460,6 +479,7 @@ class _$HtmlResponseCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$HtmlResponse with DiagnosticableTreeMixin implements HtmlResponse {
   const _$HtmlResponse({@required this.statusCode, @required this.document})
       : assert(statusCode != null),
@@ -574,6 +594,7 @@ abstract class HtmlResponse implements Response {
   $HtmlResponseCopyWith<HtmlResponse> get copyWith;
 }
 
+/// @nodoc
 abstract class $ApiResponseCopyWith<$Res> implements $ResponseCopyWith<$Res> {
   factory $ApiResponseCopyWith(
           ApiResponse value, $Res Function(ApiResponse) then) =
@@ -582,6 +603,7 @@ abstract class $ApiResponseCopyWith<$Res> implements $ResponseCopyWith<$Res> {
   $Res call({int statusCode, dynamic data});
 }
 
+/// @nodoc
 class _$ApiResponseCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
     implements $ApiResponseCopyWith<$Res> {
   _$ApiResponseCopyWithImpl(
@@ -603,6 +625,7 @@ class _$ApiResponseCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$ApiResponse with DiagnosticableTreeMixin implements ApiResponse {
   const _$ApiResponse({@required this.statusCode, @required this.data})
       : assert(statusCode != null),

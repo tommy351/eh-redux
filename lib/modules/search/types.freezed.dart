@@ -9,6 +9,7 @@ part of 'types.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$SearchArgumentsTearOff {
   const _$SearchArgumentsTearOff();
 
@@ -20,15 +21,18 @@ class _$SearchArgumentsTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $SearchArguments = _$SearchArgumentsTearOff();
 
+/// @nodoc
 mixin _$SearchArguments {
   String get query;
 
   $SearchArgumentsCopyWith<SearchArguments> get copyWith;
 }
 
+/// @nodoc
 abstract class $SearchArgumentsCopyWith<$Res> {
   factory $SearchArgumentsCopyWith(
           SearchArguments value, $Res Function(SearchArguments) then) =
@@ -36,6 +40,7 @@ abstract class $SearchArgumentsCopyWith<$Res> {
   $Res call({String query});
 }
 
+/// @nodoc
 class _$SearchArgumentsCopyWithImpl<$Res>
     implements $SearchArgumentsCopyWith<$Res> {
   _$SearchArgumentsCopyWithImpl(this._value, this._then);
@@ -54,6 +59,7 @@ class _$SearchArgumentsCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$SearchArgumentsCopyWith<$Res>
     implements $SearchArgumentsCopyWith<$Res> {
   factory _$SearchArgumentsCopyWith(
@@ -63,6 +69,7 @@ abstract class _$SearchArgumentsCopyWith<$Res>
   $Res call({String query});
 }
 
+/// @nodoc
 class __$SearchArgumentsCopyWithImpl<$Res>
     extends _$SearchArgumentsCopyWithImpl<$Res>
     implements _$SearchArgumentsCopyWith<$Res> {
@@ -83,6 +90,7 @@ class __$SearchArgumentsCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_SearchArguments implements _SearchArguments {
   const _$_SearchArguments({this.query = ''}) : assert(query != null);
 

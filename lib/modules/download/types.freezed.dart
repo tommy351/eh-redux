@@ -9,6 +9,7 @@ part of 'types.dart';
 
 T _$identity<T>(T value) => value;
 
+/// @nodoc
 class _$DownloadTaskTearOff {
   const _$DownloadTaskTearOff();
 
@@ -35,9 +36,11 @@ class _$DownloadTaskTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $DownloadTask = _$DownloadTaskTearOff();
 
+/// @nodoc
 mixin _$DownloadTask {
   int get galleryId;
   int get totalCount;
@@ -51,6 +54,7 @@ mixin _$DownloadTask {
   $DownloadTaskCopyWith<DownloadTask> get copyWith;
 }
 
+/// @nodoc
 abstract class $DownloadTaskCopyWith<$Res> {
   factory $DownloadTaskCopyWith(
           DownloadTask value, $Res Function(DownloadTask) then) =
@@ -66,6 +70,7 @@ abstract class $DownloadTaskCopyWith<$Res> {
       String thumbnail});
 }
 
+/// @nodoc
 class _$DownloadTaskCopyWithImpl<$Res> implements $DownloadTaskCopyWith<$Res> {
   _$DownloadTaskCopyWithImpl(this._value, this._then);
 
@@ -102,6 +107,7 @@ class _$DownloadTaskCopyWithImpl<$Res> implements $DownloadTaskCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$DownloadTaskCopyWith<$Res>
     implements $DownloadTaskCopyWith<$Res> {
   factory _$DownloadTaskCopyWith(
@@ -119,6 +125,7 @@ abstract class _$DownloadTaskCopyWith<$Res>
       String thumbnail});
 }
 
+/// @nodoc
 class __$DownloadTaskCopyWithImpl<$Res> extends _$DownloadTaskCopyWithImpl<$Res>
     implements _$DownloadTaskCopyWith<$Res> {
   __$DownloadTaskCopyWithImpl(
@@ -157,6 +164,7 @@ class __$DownloadTaskCopyWithImpl<$Res> extends _$DownloadTaskCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_DownloadTask extends _DownloadTask {
   const _$_DownloadTask(
       {@required this.galleryId,
@@ -277,6 +285,7 @@ abstract class _DownloadTask extends DownloadTask {
   _$DownloadTaskCopyWith<_DownloadTask> get copyWith;
 }
 
+/// @nodoc
 class _$DownloadTaskWithGalleryTearOff {
   const _$DownloadTaskWithGalleryTearOff();
 
@@ -290,9 +299,11 @@ class _$DownloadTaskWithGalleryTearOff {
   }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $DownloadTaskWithGallery = _$DownloadTaskWithGalleryTearOff();
 
+/// @nodoc
 mixin _$DownloadTaskWithGallery {
   DownloadTask get task;
   Gallery get gallery;
@@ -300,6 +311,7 @@ mixin _$DownloadTaskWithGallery {
   $DownloadTaskWithGalleryCopyWith<DownloadTaskWithGallery> get copyWith;
 }
 
+/// @nodoc
 abstract class $DownloadTaskWithGalleryCopyWith<$Res> {
   factory $DownloadTaskWithGalleryCopyWith(DownloadTaskWithGallery value,
           $Res Function(DownloadTaskWithGallery) then) =
@@ -310,6 +322,7 @@ abstract class $DownloadTaskWithGalleryCopyWith<$Res> {
   $GalleryCopyWith<$Res> get gallery;
 }
 
+/// @nodoc
 class _$DownloadTaskWithGalleryCopyWithImpl<$Res>
     implements $DownloadTaskWithGalleryCopyWith<$Res> {
   _$DownloadTaskWithGalleryCopyWithImpl(this._value, this._then);
@@ -350,6 +363,7 @@ class _$DownloadTaskWithGalleryCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 abstract class _$DownloadTaskWithGalleryCopyWith<$Res>
     implements $DownloadTaskWithGalleryCopyWith<$Res> {
   factory _$DownloadTaskWithGalleryCopyWith(_DownloadTaskWithGallery value,
@@ -364,6 +378,7 @@ abstract class _$DownloadTaskWithGalleryCopyWith<$Res>
   $GalleryCopyWith<$Res> get gallery;
 }
 
+/// @nodoc
 class __$DownloadTaskWithGalleryCopyWithImpl<$Res>
     extends _$DownloadTaskWithGalleryCopyWithImpl<$Res>
     implements _$DownloadTaskWithGalleryCopyWith<$Res> {
@@ -387,6 +402,7 @@ class __$DownloadTaskWithGalleryCopyWithImpl<$Res>
   }
 }
 
+/// @nodoc
 class _$_DownloadTaskWithGallery implements _DownloadTaskWithGallery {
   const _$_DownloadTaskWithGallery(
       {@required this.task, @required this.gallery})
