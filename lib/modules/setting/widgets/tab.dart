@@ -1,4 +1,5 @@
 import 'package:eh_redux/generated/l10n.dart';
+import 'package:eh_redux/modules/check_update/widgets/screen.dart';
 import 'package:eh_redux/modules/login/widgets/screen.dart';
 import 'package:eh_redux/modules/session/store.dart';
 import 'package:eh_redux/modules/setting/widgets/log_out_confirm.dart';
@@ -51,7 +52,7 @@ Widget settingTab(BuildContext context) {
               title: Text(S.of(context).settingTabCheckUpdates),
               leading: const Icon(Icons.system_update),
               onTap: () {
-                // TODO
+                Navigator.pushNamed(context, CheckUpdateScreen.route);
               },
             ),
             const _VersionTile(),

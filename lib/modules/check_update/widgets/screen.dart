@@ -35,36 +35,39 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (context) {
-        final actions = <Widget>[];
+    return Provider.value(
+      value: _store,
+      child: Observer(
+        builder: (context) {
+          final actions = <Widget>[];
 
-        if (_store.releaseFuture.value != null) {
-          actions.add(PopupMenuButton<_PopupAction>(
-            onSelected: (action) {
-              switch (action) {
-                case _PopupAction.openInBrowser:
-                  tryLaunch(_store.releaseFuture.value.htmlUrl);
-                  break;
-              }
-            },
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: _PopupAction.openInBrowser,
-                child: Text(S.of(context).checkUpdateActionOpenInBrowser),
-              ),
-            ],
-          ));
-        }
+          if (_store.releaseFuture.value != null) {
+            actions.add(PopupMenuButton<_PopupAction>(
+              onSelected: (action) {
+                switch (action) {
+                  case _PopupAction.openInBrowser:
+                    tryLaunch(_store.releaseFuture.value.htmlUrl);
+                    break;
+                }
+              },
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  value: _PopupAction.openInBrowser,
+                  child: Text(S.of(context).checkUpdateActionOpenInBrowser),
+                ),
+              ],
+            ));
+          }
 
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(S.of(context).checkUpdateScreenTitle),
-            actions: actions,
-          ),
-          body: const _Body(),
-        );
-      },
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(S.of(context).checkUpdateScreenTitle),
+              actions: actions,
+            ),
+            body: const _Body(),
+          );
+        },
+      ),
     );
   }
 }
@@ -142,6 +145,7 @@ Widget _downloadButton(BuildContext context) {
         },
         color: Theme.of(context).accentColor,
         icon: const Icon(Icons.file_download),
+        textColor: Colors.white,
         label: Text(
           S.of(context).checkUpdateDownloadButtonLabel(filesize(asset.size)),
         ),
