@@ -15,7 +15,7 @@ Future<void> showDownloadConfirmBottomSheet({
   @required BuildContext context,
   @required Gallery gallery,
 }) async {
-  await showModalBottomSheet(
+  final result = await showModalBottomSheet(
     context: context,
     isScrollControlled: true,
     builder: (context) {
@@ -23,9 +23,11 @@ Future<void> showDownloadConfirmBottomSheet({
     },
   );
 
-  Scaffold.of(context).showSnackBar(SnackBar(
-    content: Text(S.of(context).downloadStartedHint),
-  ));
+  if (result is bool && result) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(S.of(context).downloadStartedHint),
+    ));
+  }
 }
 
 @swidget
@@ -57,7 +59,7 @@ Widget downloadConfirmBottomSheet(
                   context: context,
                   future: controller.create(gallery),
                 );
-                Navigator.pop(context);
+                Navigator.pop(context, true);
               },
               icon: const Icon(Icons.file_download),
               label: Text(S.of(context).downloadButtonLabel),
