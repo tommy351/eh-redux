@@ -12,13 +12,13 @@ Android 4.4 and above
 
 [Latest APK]((https://github.com/tommy351/eh-redux/releases/latest/download/app-arm64-v8a-release.apk))
 
-[![](docs/download-qrcode.png)](https://github.com/tommy351/eh-redux/releases/latest/download/app-arm64-v8a-release.apk)
+[![Download link](docs/download-qrcode.png)](https://github.com/tommy351/eh-redux/releases/latest/download/app-arm64-v8a-release.apk)
 
 Using devices that do not support ARM64? See [other versions](https://github.com/tommy351/eh-redux/releases).
 
 ## Screenshots
 
-![](docs/screenshot-list.png) ![](docs/screenshot-info.png) ![](docs/screenshot-view.png) ![](docs/screenshot-search.png)
+![Gallery list](docs/screenshot-list.png) ![Gallery info](docs/screenshot-info.png) ![Image view](docs/screenshot-view.png) ![Search](docs/screenshot-search.png) ![Download](docs/screenshot-download.png)
 
 ## Contributing
 
