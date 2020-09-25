@@ -39,5 +39,15 @@ Widget galleryThumbnail(
     width: width,
     height: height,
     fit: fit,
+    placeholderBuilder: (context) => const _Placeholder(),
+  );
+}
+
+@swidget
+Widget _placeholder(BuildContext context) {
+  return SizedBox.expand(
+    child: Container(
+      color: Colors.grey.withOpacity(0.4),
+    ),
   );
 }

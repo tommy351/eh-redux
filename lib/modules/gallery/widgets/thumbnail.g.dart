@@ -34,3 +34,10 @@ class GalleryThumbnail extends StatelessWidget {
       height: height,
       fit: fit);
 }
+
+class _Placeholder extends StatelessWidget {
+  const _Placeholder({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext _context) => _placeholder(_context);
+}
