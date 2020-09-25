@@ -62,7 +62,8 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
   Future<DownloadTask> getSingle(int galleryId) {
     _log.fine('getSingle: $galleryId');
     final query = select(downloadTasks)
-      ..where((t) => t.galleryId.equals(galleryId));
+      ..where((t) => t.galleryId.equals(galleryId))
+      ..limit(1);
 
     return query.map((e) => DownloadTask.fromEntry(e)).getSingle();
   }
@@ -133,7 +134,8 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
       ..orderBy([
         (t) => OrderingTerm.asc(t.queuedAt),
         (t) => OrderingTerm.asc(t.createdAt),
-      ]);
+      ])
+      ..limit(1);
 
     return query.map((e) => DownloadTask.fromEntry(e)).getSingle();
   }

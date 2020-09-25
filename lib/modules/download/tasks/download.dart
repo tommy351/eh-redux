@@ -348,6 +348,10 @@ class DownloadTaskHandler {
           _operations.remove(task.galleryId);
         }
       }
+    } catch (err, stackTrace) {
+      _log.severe('Operation error', err, stackTrace);
+      FirebaseCrashlytics.instance.recordError(err, stackTrace);
+      return false;
     } finally {
       await listener.close();
     }
@@ -355,7 +359,9 @@ class DownloadTaskHandler {
     return true;
   }
 
-  Future<DownloadTask> _nextTask() {
-    return database.downloadTasksDao.nextPendingTask();
+  Future<DownloadTask> _nextTask() async {
+    final task = await database.downloadTasksDao.nextPendingTask();
+    _log.finer('Next task: $task');
+    return task;
   }
 }

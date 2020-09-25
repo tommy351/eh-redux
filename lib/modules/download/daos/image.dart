@@ -30,7 +30,8 @@ class DownloadedImagesDao extends DatabaseAccessor<Database>
   Future<DownloadedImageEntry> getEntry(int galleryId, int page) async {
     _log.fine('getEntry: galleryId=$galleryId, page=$page');
     final query = select(downloadedImages)
-      ..where((t) => t.galleryId.equals(galleryId) & t.page.equals(page));
+      ..where((t) => t.galleryId.equals(galleryId) & t.page.equals(page))
+      ..limit(1);
 
     return query.getSingle();
   }

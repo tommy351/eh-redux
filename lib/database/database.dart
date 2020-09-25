@@ -9,6 +9,7 @@ import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/gallery/dao.dart';
 import 'package:eh_redux/modules/history/dao.dart';
 import 'package:eh_redux/modules/search/dao.dart';
+import 'package:flutter/foundation.dart';
 import 'package:moor/ffi.dart';
 import 'package:moor/isolate.dart';
 import 'package:moor/moor.dart';
@@ -48,6 +49,7 @@ class Database extends _$Database {
 
   static const _requestPortName = 'database.request';
   static const _instancePortName = 'database.instance';
+  static const _logStatements = kDebugMode;
 
   static Future<String> _getDatabasePath() async {
     final dir = await getApplicationDocumentsDirectory();
@@ -56,7 +58,10 @@ class Database extends _$Database {
 
   static LazyDatabase _openConnection() {
     return LazyDatabase(() async {
-      return VmDatabase(File(await _getDatabasePath()));
+      return VmDatabase(
+        File(await _getDatabasePath()),
+        logStatements: _logStatements,
+      );
     });
   }
 
@@ -73,7 +78,10 @@ class Database extends _$Database {
   }
 
   static void _startBackground(_IsolateStartRequest request) {
-    final executor = VmDatabase(File(request.targetPath));
+    final executor = VmDatabase(
+      File(request.targetPath),
+      logStatements: _logStatements,
+    );
     final moorIsolate = MoorIsolate.inCurrent(
       () => DatabaseConnection.fromExecutor(executor),
     );
