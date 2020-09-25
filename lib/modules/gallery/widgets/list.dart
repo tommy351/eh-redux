@@ -134,8 +134,15 @@ Widget _cellFooter(BuildContext context, {@required Gallery gallery}) {
         children: [
           CategoryIcon(category: gallery.category),
           const SizedBox(width: 4),
-          CategoryLabel(category: gallery.category),
-          Text(' / ${gallery.fileCount}P'),
+          Text.rich(
+            TextSpan(children: [
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: CategoryLabel(category: gallery.category),
+              ),
+              TextSpan(text: ' / ${gallery.fileCount}P'),
+            ]),
+          ),
           const Spacer(),
           Text(gallery.rating.toStringAsFixed(2)),
           const SizedBox(width: 4),
