@@ -17,7 +17,7 @@ Widget homeBottomNav(BuildContext context) {
       final items = tabs
           .map((tab) => BottomNavigationBarItem(
                 icon: Icon(tab.icon),
-                title: Text(tab.title(context)),
+                label: tab.title(context),
               ))
           .toList();
 

@@ -627,7 +627,7 @@ Widget _tagList(BuildContext context) {
             Text(entry.key),
             const SizedBox(width: 8),
             Expanded(
-              child: Container(
+              child: SizedBox(
                 height: 44,
                 child: ListView.separated(
                   padding: EdgeInsets.only(right: _safeAreaPadding.right),

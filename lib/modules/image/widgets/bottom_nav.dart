@@ -48,7 +48,7 @@ class _ImageBottomNavState extends State<ImageBottomNav> {
       child: Container(
         color: Colors.black.withOpacity(0.4),
         padding: widget.padding,
-        child: Container(
+        child: SizedBox(
           height: 60,
           child: SliderTheme(
             data: SliderTheme.of(context),
