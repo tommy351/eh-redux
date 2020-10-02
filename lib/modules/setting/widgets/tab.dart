@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/check_update/widgets/screen.dart';
 import 'package:eh_redux/modules/login/widgets/screen.dart';
 import 'package:eh_redux/modules/session/store.dart';
@@ -18,7 +18,7 @@ Widget settingTab(BuildContext context) {
   return CustomScrollView(
     slivers: [
       SliverAppBar(
-        title: Text(S.of(context).homeTabTitleSettings),
+        title: Text(AppLocalizations.of(context).homeTabTitleSettings),
         pinned: true,
       ),
       SliverSafeArea(
@@ -27,7 +27,7 @@ Widget settingTab(BuildContext context) {
           delegate: SliverChildListDelegate.fixed([
             const _LoginTile(),
             ListTile(
-              title: Text(S.of(context).settingTabSettings),
+              title: Text(AppLocalizations.of(context).settingTabSettings),
               leading: const Icon(Icons.settings),
               onTap: () {
                 Navigator.pushNamed(context, SettingScreen.route);
@@ -35,21 +35,21 @@ Widget settingTab(BuildContext context) {
             ),
             const Divider(),
             ListTile(
-              title: Text(S.of(context).settingTabProjectPage),
+              title: Text(AppLocalizations.of(context).settingTabProjectPage),
               leading: const Icon(Icons.home),
               onTap: () {
                 tryLaunch('https://github.com/tommy351/eh-redux');
               },
             ),
             ListTile(
-              title: Text(S.of(context).settingTabLicenses),
+              title: Text(AppLocalizations.of(context).settingTabLicenses),
               leading: const Icon(Icons.account_balance),
               onTap: () {
                 showLicensePage(context: context);
               },
             ),
             ListTile(
-              title: Text(S.of(context).settingTabCheckUpdates),
+              title: Text(AppLocalizations.of(context).settingTabCheckUpdates),
               leading: const Icon(Icons.system_update),
               onTap: () {
                 Navigator.pushNamed(context, CheckUpdateScreen.route);
@@ -71,7 +71,7 @@ Widget _loginTile(BuildContext context) {
     builder: (context) {
       if (sessionStore.loginStatus == LoginStatus.loggedIn) {
         return ListTile(
-          title: Text(S.of(context).settingTabLogOut),
+          title: Text(AppLocalizations.of(context).settingTabLogOut),
           leading: const Icon(Icons.exit_to_app),
           onTap: () {
             showDialog(
@@ -85,7 +85,7 @@ Widget _loginTile(BuildContext context) {
       }
 
       return ListTile(
-        title: Text(S.of(context).settingTabLogIn),
+        title: Text(AppLocalizations.of(context).settingTabLogIn),
         leading: const Icon(Icons.person),
         enabled: sessionStore.loginStatus != LoginStatus.pending,
         onTap: () {
@@ -110,7 +110,7 @@ Widget _versionTile(BuildContext context) {
       return ListTile(
         dense: true,
         title: Text(
-          S.of(context).settingTabVersion(snapshot.data.version),
+          AppLocalizations.of(context).settingTabVersion(snapshot.data.version),
           style: theme.textTheme.caption,
         ),
       );

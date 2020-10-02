@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/bottom_sheet_container.dart';
 import 'package:eh_redux/modules/common/widgets/full_width.dart';
 import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
@@ -145,7 +145,7 @@ Widget _noteField(BuildContext context) {
     maxLength: 200,
     controller: store.note,
     decoration: InputDecoration(
-      hintText: S.of(context).favoriteNotePlaceholder,
+      hintText: AppLocalizations.of(context).favoriteNotePlaceholder,
       border: const OutlineInputBorder(),
     ),
   );
@@ -166,7 +166,7 @@ Widget _addButton(BuildContext context) {
         Navigator.pop(context);
       },
       icon: const Icon(Icons.favorite),
-      label: Text(S.of(context).favoriteAddButtonLabel),
+      label: Text(AppLocalizations.of(context).favoriteAddButtonLabel),
       color: theme.accentColor,
     ),
   );
@@ -196,7 +196,7 @@ Widget _deleteButton(BuildContext context) {
             }
           },
           icon: const Icon(Icons.delete),
-          label: Text(S.of(context).favoriteDeleteButtonLabel),
+          label: Text(AppLocalizations.of(context).favoriteDeleteButtonLabel),
           textColor: theme.errorColor,
         ),
       );
@@ -210,14 +210,14 @@ Widget _deleteConfirm(
   @required FavoriteStore store,
 }) {
   return AlertDialog(
-    title: Text(S.of(context).favoriteDeleteDialogTitle),
-    content: Text(S.of(context).favoriteDeleteDialogContent),
+    title: Text(AppLocalizations.of(context).favoriteDeleteDialogTitle),
+    content: Text(AppLocalizations.of(context).favoriteDeleteDialogContent),
     actions: <Widget>[
       FlatButton(
         onPressed: () {
           Navigator.pop(context, false);
         },
-        child: Text(S.of(context).cancelButtonLabel),
+        child: Text(AppLocalizations.of(context).cancelButtonLabel),
       ),
       FlatButton(
         onPressed: () async {
@@ -227,7 +227,7 @@ Widget _deleteConfirm(
           );
           Navigator.pop(context, true);
         },
-        child: Text(S.of(context).removeButtonLabel),
+        child: Text(AppLocalizations.of(context).removeButtonLabel),
       ),
     ],
   );

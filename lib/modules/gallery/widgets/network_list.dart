@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/stateful_wrapper.dart';
 import 'package:eh_redux/modules/gallery/stores/network_list.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +71,7 @@ Widget _placeholder(BuildContext context) {
           ),
           child: Center(
             child: Text(
-              S.of(context).galleryListNoDataPlaceholderTitle,
+              AppLocalizations.of(context).galleryListNoDataPlaceholderTitle,
               style: theme.textTheme.headline6,
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:eh_redux/database/database.dart';
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/full_width.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/download/widgets/confirm_bottom_sheet.dart';
@@ -80,10 +80,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
             const _AppBar(),
             const _Header(),
             const _Divider(),
-            _SectionTitle(S.of(context).gallerySectionInfo),
+            _SectionTitle(AppLocalizations.of(context).gallerySectionInfo),
             const _Info(),
             const _Divider(),
-            _SectionTitle(S.of(context).gallerySectionTags),
+            _SectionTitle(AppLocalizations.of(context).gallerySectionTags),
             const _TagList(),
           ],
         ),
@@ -103,7 +103,7 @@ Widget _appBar(BuildContext context) {
     actions: [
       IconButton(
         icon: const Icon(Icons.share),
-        tooltip: S.of(context).shareButtonTooltip,
+        tooltip: AppLocalizations.of(context).shareButtonTooltip,
         onPressed: () => store.share(),
       ),
       PopupMenuButton<_AppBarAction>(
@@ -113,7 +113,8 @@ Widget _appBar(BuildContext context) {
         itemBuilder: (context) => [
           PopupMenuItem(
             value: _AppBarAction.openInBrowser,
-            child: Text(S.of(context).galleryActionOpenInBrowser),
+            child:
+                Text(AppLocalizations.of(context).galleryActionOpenInBrowser),
           ),
         ],
       ),
@@ -293,7 +294,7 @@ Widget _readButton(BuildContext context) {
       );
     },
     icon: const Icon(Icons.play_arrow),
-    label: Text(S.of(context).readButtonLabel),
+    label: Text(AppLocalizations.of(context).readButtonLabel),
     color: theme.accentColor,
     textColor: Colors.white,
   );
@@ -321,7 +322,7 @@ Widget _buttonBar(BuildContext context) {
           _ActionButton(
             onPressed: () => store.share(),
             icon: const Icon(Icons.share),
-            label: Text(S.of(context).shareButtonLabel),
+            label: Text(AppLocalizations.of(context).shareButtonLabel),
           ),
         ],
       );
@@ -372,7 +373,7 @@ Widget _favButton(BuildContext context) {
     onPressed: () {
       if (sessionStore.loginStatus != LoginStatus.loggedIn) {
         Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(S.of(context).logInRequiredHint),
+          content: Text(AppLocalizations.of(context).logInRequiredHint),
         ));
         return;
       }
@@ -386,7 +387,7 @@ Widget _favButton(BuildContext context) {
       );
     },
     icon: const Icon(Icons.favorite_border),
-    label: Text(S.of(context).favoriteButtonLabel),
+    label: Text(AppLocalizations.of(context).favoriteButtonLabel),
   );
 }
 
@@ -421,7 +422,7 @@ Widget _downloadButtonContent(BuildContext context) {
       }
     },
     icon: const _DownloadButtonIcon(),
-    label: Text(S.of(context).downloadButtonLabel),
+    label: Text(AppLocalizations.of(context).downloadButtonLabel),
   );
 }
 
@@ -466,15 +467,17 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
   final store = Provider.of<GalleryScreenStore>(context);
 
   final title = error.map<String>(
-    (_) => S.of(context).galleryErrorTitle,
-    contentWarning: (_) => S.of(context).galleryContentWarningTitle,
-    notFound: (_) => S.of(context).galleryNotFoundTitle,
+    (_) => AppLocalizations.of(context).galleryErrorTitle,
+    contentWarning: (_) =>
+        AppLocalizations.of(context).galleryContentWarningTitle,
+    notFound: (_) => AppLocalizations.of(context).galleryNotFoundTitle,
   );
 
   final subtitle = error.map<String>(
     (e) => e.message,
-    contentWarning: (e) => S.of(context).galleryContentWarningMessage(e.reason),
-    notFound: (_) => S.of(context).galleryNotFoundMessage,
+    contentWarning: (e) =>
+        AppLocalizations.of(context).galleryContentWarningMessage(e.reason),
+    notFound: (_) => AppLocalizations.of(context).galleryNotFoundMessage,
   );
 
   final actions = error.maybeMap<List<Widget>>(
@@ -484,7 +487,7 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
           store.load();
         },
         icon: const Icon(Icons.refresh),
-        label: Text(S.of(context).retryButtonLabel),
+        label: Text(AppLocalizations.of(context).retryButtonLabel),
       ),
     ],
     contentWarning: (_) => [
@@ -494,7 +497,7 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
           store.load();
         },
         icon: const Icon(Icons.close),
-        label: Text(S.of(context).hideButtonLabel),
+        label: Text(AppLocalizations.of(context).hideButtonLabel),
       ),
     ],
     orElse: () => [],
@@ -551,12 +554,12 @@ Widget _info(BuildContext context) {
     sliver: SliverList(
       delegate: SliverChildListDelegate.fixed([
         _InfoTile(
-          title: Text(S.of(context).galleryInfoPostedTime),
+          title: Text(AppLocalizations.of(context).galleryInfoPostedTime),
           trailing:
               Text(DateFormat.yMMMd().add_Hm().format(store.gallery.posted)),
         ),
         _InfoTile(
-          title: Text(S.of(context).galleryInfoUploader),
+          title: Text(AppLocalizations.of(context).galleryInfoUploader),
           trailing: Text(store.gallery.uploader),
           onTap: () {
             Navigator.pushNamed(
@@ -568,12 +571,12 @@ Widget _info(BuildContext context) {
           },
         ),
         _InfoTile(
-          title: Text(S.of(context).galleryInfoLength),
-          trailing:
-              Text(S.of(context).galleryPageCount(store.gallery.fileCount)),
+          title: Text(AppLocalizations.of(context).galleryInfoLength),
+          trailing: Text(AppLocalizations.of(context)
+              .galleryPageCount(store.gallery.fileCount)),
         ),
         _InfoTile(
-          title: Text(S.of(context).galleryInfoFileSize),
+          title: Text(AppLocalizations.of(context).galleryInfoFileSize),
           trailing: Text(filesize(store.gallery.fileSize)),
         ),
       ]),
@@ -611,7 +614,7 @@ Widget _tagList(BuildContext context) {
   if (groups.isEmpty) {
     return _HorizontalSafeArea(
       sliver: SliverToBoxAdapter(
-        child: Text(S.of(context).galleryNoTagsPlaceholder),
+        child: Text(AppLocalizations.of(context).galleryNoTagsPlaceholder),
       ),
     );
   }

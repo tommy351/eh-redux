@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/gallery/stores/network_list.dart';
 import 'package:eh_redux/modules/gallery/widgets/network_list.dart';
 import 'package:eh_redux/modules/home/widgets/body.dart';
@@ -39,12 +39,12 @@ class _GalleryTabState extends State<GalleryTab>
       child: NestedScrollView(
         headerSliverBuilder: (context, _) => [
           SliverAppBar(
-            title: Text(S.of(context).homeTabTitleGallery),
+            title: Text(AppLocalizations.of(context).homeTabTitleGallery),
             pinned: true,
             actions: [
               IconButton(
                 icon: const Icon(Icons.search),
-                tooltip: S.of(context).searchButtonTooltip,
+                tooltip: AppLocalizations.of(context).searchButtonTooltip,
                 onPressed: () {
                   Navigator.pushNamed(
                     context,

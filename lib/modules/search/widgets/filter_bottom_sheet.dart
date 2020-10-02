@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/bottom_sheet_container.dart';
 import 'package:eh_redux/modules/search/store.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +14,16 @@ Widget filterBottomSheet(
   @required SearchStore store,
 }) {
   final options = <String, String>{
-    'f_sname': S.of(context).searchFilterSearchGalleryName,
-    'f_stags': S.of(context).searchFilterSearchGalleryTags,
-    'f_sdesc': S.of(context).searchFilterSearchGalleryDescription,
-    'f_storr': S.of(context).searchFilterSearchTorrentFilenames,
-    'f_sto': S.of(context).searchFilterOnlyShowGalleriesWithTorrents,
-    'f_sdt1': S.of(context).searchFilterSearchLowPowerTags,
-    'f_sdt2': S.of(context).searchFilterSearchDownvotedTags,
-    'f_sh': S.of(context).searchFilterShowExpungedGalleries,
+    'f_sname': AppLocalizations.of(context).searchFilterSearchGalleryName,
+    'f_stags': AppLocalizations.of(context).searchFilterSearchGalleryTags,
+    'f_sdesc':
+        AppLocalizations.of(context).searchFilterSearchGalleryDescription,
+    'f_storr': AppLocalizations.of(context).searchFilterSearchTorrentFilenames,
+    'f_sto':
+        AppLocalizations.of(context).searchFilterOnlyShowGalleriesWithTorrents,
+    'f_sdt1': AppLocalizations.of(context).searchFilterSearchLowPowerTags,
+    'f_sdt2': AppLocalizations.of(context).searchFilterSearchDownvotedTags,
+    'f_sh': AppLocalizations.of(context).searchFilterShowExpungedGalleries,
   };
 
   return Provider.value(

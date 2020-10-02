@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/check_update/store.dart';
 import 'package:eh_redux/modules/check_update/types.dart';
 import 'package:eh_redux/utils/launch.dart';
@@ -53,7 +53,8 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
               itemBuilder: (context) => [
                 PopupMenuItem(
                   value: _PopupAction.openInBrowser,
-                  child: Text(S.of(context).checkUpdateActionOpenInBrowser),
+                  child: Text(AppLocalizations.of(context)
+                      .checkUpdateActionOpenInBrowser),
                 ),
               ],
             ));
@@ -61,7 +62,7 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
 
           return Scaffold(
             appBar: AppBar(
-              title: Text(S.of(context).checkUpdateScreenTitle),
+              title: Text(AppLocalizations.of(context).checkUpdateScreenTitle),
               actions: actions,
             ),
             body: const _Body(),
@@ -91,7 +92,7 @@ Widget _body(BuildContext context) {
 
           if (store.status == UpdateStatus.failed) {
             return Center(
-              child: Text(S.of(context).checkUpdateErrorMessage),
+              child: Text(AppLocalizations.of(context).checkUpdateErrorMessage),
             );
           }
 
@@ -135,7 +136,7 @@ Widget _downloadButton(BuildContext context) {
       if (asset == null || store.status != UpdateStatus.canUpdate) {
         return FlatButton(
           onPressed: null,
-          child: Text(S.of(context).checkUpdateUpToDate),
+          child: Text(AppLocalizations.of(context).checkUpdateUpToDate),
         );
       }
 
@@ -147,7 +148,8 @@ Widget _downloadButton(BuildContext context) {
         icon: const Icon(Icons.file_download),
         textColor: Colors.white,
         label: Text(
-          S.of(context).checkUpdateDownloadButtonLabel(filesize(asset.size)),
+          AppLocalizations.of(context)
+              .checkUpdateDownloadButtonLabel(filesize(asset.size)),
         ),
       );
     },

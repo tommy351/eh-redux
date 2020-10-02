@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/gallery/widgets/screen.dart';
 import 'package:eh_redux/modules/gallery/widgets/square_thumbnail.dart';
@@ -122,12 +122,18 @@ Widget _progressBar(
 }) {
   final theme = Theme.of(context);
   final statusText = <DownloadTaskState, String>{
-    DownloadTaskState.pending: S.of(context).downloadTaskStatePending,
-    DownloadTaskState.downloading: S.of(context).downloadTaskStateDownloading,
-    DownloadTaskState.paused: S.of(context).downloadTaskStatePaused,
-    DownloadTaskState.succeeded: S.of(context).downloadTaskStateSucceeded,
-    DownloadTaskState.failed: S.of(context).downloadTaskStateFailed,
-    DownloadTaskState.deleting: S.of(context).downloadTaskStateDeleting,
+    DownloadTaskState.pending:
+        AppLocalizations.of(context).downloadTaskStatePending,
+    DownloadTaskState.downloading:
+        AppLocalizations.of(context).downloadTaskStateDownloading,
+    DownloadTaskState.paused:
+        AppLocalizations.of(context).downloadTaskStatePaused,
+    DownloadTaskState.succeeded:
+        AppLocalizations.of(context).downloadTaskStateSucceeded,
+    DownloadTaskState.failed:
+        AppLocalizations.of(context).downloadTaskStateFailed,
+    DownloadTaskState.deleting:
+        AppLocalizations.of(context).downloadTaskStateDeleting,
   };
   final statusIcon = <DownloadTaskState, Icon>{
     DownloadTaskState.pending: const Icon(Icons.schedule),

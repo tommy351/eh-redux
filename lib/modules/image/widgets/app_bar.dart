@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/image/store.dart';
 import 'package:eh_redux/modules/image/types.dart';
 import 'package:eh_redux/modules/setting/widgets/screen.dart';
@@ -71,7 +71,7 @@ Widget _shareButton(
 
   return IconButton(
     icon: const Icon(Icons.share),
-    tooltip: S.of(context).shareButtonTooltip,
+    tooltip: AppLocalizations.of(context).shareButtonTooltip,
     onPressed: () {
       store.share(image);
     },
@@ -100,11 +100,11 @@ Widget _popupButton(
     itemBuilder: (context) => [
       PopupMenuItem(
         value: _PopupAction.settings,
-        child: Text(S.of(context).imageActionSettings),
+        child: Text(AppLocalizations.of(context).imageActionSettings),
       ),
       PopupMenuItem(
         value: _PopupAction.openInBrowser,
-        child: Text(S.of(context).imageActionOpenInBrowser),
+        child: Text(AppLocalizations.of(context).imageActionOpenInBrowser),
       ),
     ],
   );

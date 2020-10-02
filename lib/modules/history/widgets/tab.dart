@@ -1,5 +1,5 @@
 import 'package:eh_redux/database/database.dart';
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:eh_redux/modules/gallery/widgets/list.dart';
 import 'package:eh_redux/modules/home/widgets/body.dart';
@@ -25,7 +25,7 @@ Widget historyTab(BuildContext context) {
 @swidget
 Widget _appBar(BuildContext context) {
   return SliverAppBar(
-    title: Text(S.of(context).homeTabTitleHistory),
+    title: Text(AppLocalizations.of(context).homeTabTitleHistory),
     pinned: true,
   );
 }

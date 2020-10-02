@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/bottom_sheet_container.dart';
 import 'package:eh_redux/modules/common/widgets/full_width.dart';
 import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
@@ -25,7 +25,7 @@ Future<void> showDownloadConfirmBottomSheet({
 
   if (result is bool && result) {
     Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(S.of(context).downloadStartedHint),
+      content: Text(AppLocalizations.of(context).downloadStartedHint),
     ));
   }
 }
@@ -44,10 +44,10 @@ Widget downloadConfirmBottomSheet(
       children: [
         ListTile(
           title: Text(
-            S.of(context).downloadConfirmTitle(
-                  gallery.fileCount,
-                  filesize(gallery.fileSize),
-                ),
+            AppLocalizations.of(context).downloadConfirmTitle(
+              gallery.fileCount,
+              filesize(gallery.fileSize),
+            ),
           ),
         ),
         Padding(
@@ -62,7 +62,7 @@ Widget downloadConfirmBottomSheet(
                 Navigator.pop(context, true);
               },
               icon: const Icon(Icons.file_download),
-              label: Text(S.of(context).downloadButtonLabel),
+              label: Text(AppLocalizations.of(context).downloadButtonLabel),
               color: theme.accentColor,
               textColor: Colors.white,
             ),

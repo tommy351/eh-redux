@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/stateful_wrapper.dart';
 import 'package:eh_redux/modules/image/store.dart';
 import 'package:eh_redux/utils/firebase.dart';
@@ -199,16 +199,18 @@ Widget _imageError(
   final theme = Theme.of(context);
   final store = Provider.of<ImageStore>(context);
   final title = error.map(
-    (_) => S.of(context).imageErrorTitle,
-    notFound: (_) => S.of(context).imageNotFoundTitle,
-    disconnected: (_) => S.of(context).imageDisconnectedTitle,
-    galleryUnavailable: (_) => S.of(context).imageGalleryUnavailableTitle,
+    (_) => AppLocalizations.of(context).imageErrorTitle,
+    notFound: (_) => AppLocalizations.of(context).imageNotFoundTitle,
+    disconnected: (_) => AppLocalizations.of(context).imageDisconnectedTitle,
+    galleryUnavailable: (_) =>
+        AppLocalizations.of(context).imageGalleryUnavailableTitle,
   );
   final message = error.map(
     (value) => value.message,
-    notFound: (_) => S.of(context).imageNotFoundMessage,
-    disconnected: (_) => S.of(context).imageDisconnectedMessage,
-    galleryUnavailable: (_) => S.of(context).imageGalleryUnavailableMessage,
+    notFound: (_) => AppLocalizations.of(context).imageNotFoundMessage,
+    disconnected: (_) => AppLocalizations.of(context).imageDisconnectedMessage,
+    galleryUnavailable: (_) =>
+        AppLocalizations.of(context).imageGalleryUnavailableMessage,
   );
   final icon = error.maybeMap(
     (_) => const Icon(Icons.broken_image),
@@ -247,7 +249,7 @@ Widget _imageError(
         },
         borderSide: BorderSide(color: Colors.white.withOpacity(0.5)),
         highlightedBorderColor: Colors.white,
-        child: Text(S.of(context).retryButtonLabel),
+        child: Text(AppLocalizations.of(context).retryButtonLabel),
       ),
     ],
   );

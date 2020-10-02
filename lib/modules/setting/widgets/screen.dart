@@ -1,5 +1,5 @@
 import 'package:eh_redux/database/database.dart';
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
 import 'package:eh_redux/modules/setting/store.dart';
 import 'package:eh_redux/modules/setting/types.dart';
@@ -23,7 +23,7 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).settingScreenTitle),
+        title: Text(AppLocalizations.of(context).settingScreenTitle),
       ),
       body: const SafeArea(
         child: _Body(),
@@ -39,44 +39,46 @@ Widget _body(BuildContext context) {
 
   return ListView(
     children: [
-      _Title(S.of(context).settingSectionAppearance),
+      _Title(AppLocalizations.of(context).settingSectionAppearance),
       _SelectTile(
-        title: S.of(context).settingTheme,
+        title: AppLocalizations.of(context).settingTheme,
         preference: settingStore.theme,
         items: [
           DropdownMenuItem(
             value: ThemeSetting.system,
-            child: Text(S.of(context).settingThemeSystem),
+            child: Text(AppLocalizations.of(context).settingThemeSystem),
           ),
           DropdownMenuItem(
             value: ThemeSetting.light,
-            child: Text(S.of(context).settingThemeLight),
+            child: Text(AppLocalizations.of(context).settingThemeLight),
           ),
           DropdownMenuItem(
             value: ThemeSetting.dark,
-            child: Text(S.of(context).settingThemeDark),
+            child: Text(AppLocalizations.of(context).settingThemeDark),
           ),
           DropdownMenuItem(
             value: ThemeSetting.black,
-            child: Text(S.of(context).settingThemeBlack),
+            child: Text(AppLocalizations.of(context).settingThemeBlack),
           ),
         ],
       ),
       const Divider(),
-      _Title(S.of(context).settingSectionGallery),
+      _Title(AppLocalizations.of(context).settingSectionGallery),
       _SwitchTile(
-        title: S.of(context).settingDisplayJapaneseTitle,
+        title: AppLocalizations.of(context).settingDisplayJapaneseTitle,
         preference: settingStore.displayJapaneseTitle,
       ),
       _SwitchTile(
-        title: S.of(context).settingDisplayContentWarning,
+        title: AppLocalizations.of(context).settingDisplayContentWarning,
         preference: settingStore.displayContentWarning,
       ),
       ConfirmListTile(
-        title: Text(S.of(context).settingClearReadingHistory),
-        dialogTitle: Text(S.of(context).clearReadingHistoryDialogTitle),
-        dialogContent: Text(S.of(context).clearReadingHistoryDialogContent),
-        confirmActionChild: Text(S.of(context).clearButtonLabel),
+        title: Text(AppLocalizations.of(context).settingClearReadingHistory),
+        dialogTitle:
+            Text(AppLocalizations.of(context).clearReadingHistoryDialogTitle),
+        dialogContent:
+            Text(AppLocalizations.of(context).clearReadingHistoryDialogContent),
+        confirmActionChild: Text(AppLocalizations.of(context).clearButtonLabel),
         onConfirm: () async {
           await showLoadingDialog(
             context: context,
@@ -84,39 +86,45 @@ Widget _body(BuildContext context) {
           );
 
           Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(S.of(context).readingHistoryClearSuccess),
+            content:
+                Text(AppLocalizations.of(context).readingHistoryClearSuccess),
           ));
         },
       ),
       const Divider(),
-      _Title(S.of(context).settingSectionImage),
+      _Title(AppLocalizations.of(context).settingSectionImage),
       _SelectTile<OrientationSetting>(
-        title: S.of(context).settingScreenOrientation,
+        title: AppLocalizations.of(context).settingScreenOrientation,
         preference: settingStore.orientation,
         items: [
           DropdownMenuItem(
             value: OrientationSetting.auto,
-            child: Text(S.of(context).settingScreenOrientationAuto),
+            child:
+                Text(AppLocalizations.of(context).settingScreenOrientationAuto),
           ),
           DropdownMenuItem(
             value: OrientationSetting.portrait,
-            child: Text(S.of(context).settingScreenOrientationPortrait),
+            child: Text(
+                AppLocalizations.of(context).settingScreenOrientationPortrait),
           ),
           DropdownMenuItem(
             value: OrientationSetting.landscape,
-            child: Text(S.of(context).settingScreenOrientationLandscape),
+            child: Text(
+                AppLocalizations.of(context).settingScreenOrientationLandscape),
           ),
         ],
       ),
       _SwitchTile(
-        title: S.of(context).settingTurnPagesWithVolumeKeys,
+        title: AppLocalizations.of(context).settingTurnPagesWithVolumeKeys,
         preference: settingStore.turnPagesWithVolumeKeys,
       ),
       ConfirmListTile(
-        title: Text(S.of(context).settingClearImageCache),
-        dialogTitle: Text(S.of(context).clearImageCacheDialogTitle),
-        dialogContent: Text(S.of(context).clearImageCacheDialogContent),
-        confirmActionChild: Text(S.of(context).clearButtonLabel),
+        title: Text(AppLocalizations.of(context).settingClearImageCache),
+        dialogTitle:
+            Text(AppLocalizations.of(context).clearImageCacheDialogTitle),
+        dialogContent:
+            Text(AppLocalizations.of(context).clearImageCacheDialogContent),
+        confirmActionChild: Text(AppLocalizations.of(context).clearButtonLabel),
         onConfirm: () async {
           final manager = DefaultCacheManager();
           await showLoadingDialog(
@@ -125,17 +133,19 @@ Widget _body(BuildContext context) {
           );
 
           Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(S.of(context).imageCacheClearSuccess),
+            content: Text(AppLocalizations.of(context).imageCacheClearSuccess),
           ));
         },
       ),
       const Divider(),
-      _Title(S.of(context).settingSectionSearch),
+      _Title(AppLocalizations.of(context).settingSectionSearch),
       ConfirmListTile(
-        title: Text(S.of(context).settingClearSearchHistory),
-        dialogTitle: Text(S.of(context).clearSearchHistoryDialogTitle),
-        dialogContent: Text(S.of(context).clearSearchHistoryDialogContent),
-        confirmActionChild: Text(S.of(context).clearButtonLabel),
+        title: Text(AppLocalizations.of(context).settingClearSearchHistory),
+        dialogTitle:
+            Text(AppLocalizations.of(context).clearSearchHistoryDialogTitle),
+        dialogContent:
+            Text(AppLocalizations.of(context).clearSearchHistoryDialogContent),
+        confirmActionChild: Text(AppLocalizations.of(context).clearButtonLabel),
         onConfirm: () async {
           await showLoadingDialog(
             context: context,
@@ -143,7 +153,8 @@ Widget _body(BuildContext context) {
           );
 
           Scaffold.of(context).showSnackBar(SnackBar(
-            content: Text(S.of(context).searchHistoryClearSuccess),
+            content:
+                Text(AppLocalizations.of(context).searchHistoryClearSuccess),
           ));
         },
       ),

@@ -1,5 +1,5 @@
 import 'package:eh_redux/database/database.dart';
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
 import 'package:eh_redux/modules/download/controller.dart';
 import 'package:eh_redux/modules/download/types.dart';
@@ -28,7 +28,7 @@ Widget downloadTab(BuildContext context) {
 @swidget
 Widget _appBar(BuildContext context) {
   return SliverAppBar(
-    title: Text(S.of(context).homeTabTitleDownload),
+    title: Text(AppLocalizations.of(context).homeTabTitleDownload),
     pinned: true,
     actions: const [
       _ResumeAllButton(),
@@ -43,14 +43,14 @@ Widget _resumeAllButton(BuildContext context) {
 
   return IconButton(
     icon: const Icon(Icons.play_arrow),
-    tooltip: S.of(context).downloadResumeAllButtonTooltip,
+    tooltip: AppLocalizations.of(context).downloadResumeAllButtonTooltip,
     onPressed: () async {
       final count = await showLoadingDialog(
           context: context, future: controller.resumeAll());
 
       if (count > 0) {
         Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(S.of(context).downloadResumedHint),
+          content: Text(AppLocalizations.of(context).downloadResumedHint),
         ));
       }
     },
@@ -63,14 +63,14 @@ Widget _pauseAllButton(BuildContext context) {
 
   return IconButton(
     icon: const Icon(Icons.pause),
-    tooltip: S.of(context).downloadPauseAllButtonTooltip,
+    tooltip: AppLocalizations.of(context).downloadPauseAllButtonTooltip,
     onPressed: () async {
       final count = await showLoadingDialog(
           context: context, future: controller.pauseAll());
 
       if (count > 0) {
         Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(S.of(context).downloadPausedHint),
+          content: Text(AppLocalizations.of(context).downloadPausedHint),
         ));
       }
     },

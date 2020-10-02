@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/bottom_sheet_container.dart';
 import 'package:eh_redux/modules/search/store.dart';
 import 'package:flutter/material.dart';
@@ -30,13 +30,14 @@ Widget _body(BuildContext context) {
   return Observer(
     builder: (context) {
       final label = store.minimumRating > 0
-          ? S.of(context).searchMinimumRatingLabel(store.minimumRating)
-          : S.of(context).searchMinimumRatingDisabled;
+          ? AppLocalizations.of(context)
+              .searchMinimumRatingLabel(store.minimumRating)
+          : AppLocalizations.of(context).searchMinimumRatingDisabled;
 
       return Wrap(
         children: [
           ListTile(
-            title: Text(S.of(context).searchMinimumRatingTitle),
+            title: Text(AppLocalizations.of(context).searchMinimumRatingTitle),
             trailing: store.minimumRating > 0 ? Text(label) : null,
           ),
           Slider(

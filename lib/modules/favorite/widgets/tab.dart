@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/gallery/stores/network_list.dart';
 import 'package:eh_redux/modules/gallery/widgets/network_list.dart';
 import 'package:eh_redux/modules/home/widgets/body.dart';
@@ -58,7 +58,7 @@ class _FavoriteTabState extends State<FavoriteTab>
 @swidget
 Widget _appBar(BuildContext context) {
   return SliverAppBar(
-    title: Text(S.of(context).homeTabTitleFavorite),
+    title: Text(AppLocalizations.of(context).homeTabTitleFavorite),
     pinned: true,
   );
 }
@@ -73,7 +73,7 @@ Widget _loginHint(BuildContext context) {
       SliverFillRemaining(
         child: Center(
           child: Text(
-            S.of(context).logInRequiredHint,
+            AppLocalizations.of(context).logInRequiredHint,
             style: theme.textTheme.headline6,
           ),
         ),

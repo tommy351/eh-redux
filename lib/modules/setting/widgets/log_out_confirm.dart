@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/session/store.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/material.dart';
@@ -12,14 +12,14 @@ Widget logOutConfirm(BuildContext context) {
   final sessionStore = Provider.of<SessionStore>(context);
 
   return AlertDialog(
-    title: Text(S.of(context).logOutDialogTitle),
-    content: Text(S.of(context).logOutDialogContent),
+    title: Text(AppLocalizations.of(context).logOutDialogTitle),
+    content: Text(AppLocalizations.of(context).logOutDialogContent),
     actions: <Widget>[
       FlatButton(
         onPressed: () {
           Navigator.pop(context);
         },
-        child: Text(S.of(context).cancelButtonLabel),
+        child: Text(AppLocalizations.of(context).cancelButtonLabel),
       ),
       FlatButton(
         onPressed: () async {
@@ -27,7 +27,7 @@ Widget logOutConfirm(BuildContext context) {
           analytics.logEvent(name: 'logout');
           Navigator.pop(context);
         },
-        child: Text(S.of(context).logOutButtonLabel),
+        child: Text(AppLocalizations.of(context).logOutButtonLabel),
       ),
     ],
   );

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/session/store.dart';
 import 'package:eh_redux/utils/cookie.dart';
 import 'package:eh_redux/utils/firebase.dart';
@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(S.of(context).logInScreenTitle),
+        title: Text(AppLocalizations.of(context).logInScreenTitle),
       ),
       body: WebView(
         initialUrl: _loginUrl,

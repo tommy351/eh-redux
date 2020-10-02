@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/download/widgets/tab.dart';
 import 'package:eh_redux/modules/favorite/widgets/tab.dart';
 import 'package:eh_redux/modules/gallery/widgets/tab.dart';
@@ -23,31 +23,31 @@ final tabs = <Tab>[
   Tab(
     name: 'gallery',
     icon: Icons.photo_library,
-    title: (context) => S.of(context).homeTabTitleGallery,
+    title: (context) => AppLocalizations.of(context).homeTabTitleGallery,
     widget: (context) => const GalleryTab(),
   ),
   Tab(
     name: 'favorite',
     icon: Icons.favorite,
-    title: (context) => S.of(context).homeTabTitleFavorite,
+    title: (context) => AppLocalizations.of(context).homeTabTitleFavorite,
     widget: (context) => const FavoriteTab(),
   ),
   Tab(
     name: 'download',
     icon: Icons.file_download,
-    title: (context) => S.of(context).homeTabTitleDownload,
+    title: (context) => AppLocalizations.of(context).homeTabTitleDownload,
     widget: (context) => const DownloadTab(),
   ),
   Tab(
     name: 'history',
     icon: Icons.history,
-    title: (context) => S.of(context).homeTabTitleHistory,
+    title: (context) => AppLocalizations.of(context).homeTabTitleHistory,
     widget: (context) => const HistoryTab(),
   ),
   Tab(
     name: 'settings',
     icon: Icons.settings,
-    title: (context) => S.of(context).homeTabTitleSettings,
+    title: (context) => AppLocalizations.of(context).homeTabTitleSettings,
     widget: (context) => const SettingTab(),
   ),
 ];

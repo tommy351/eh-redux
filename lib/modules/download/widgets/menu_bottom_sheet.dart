@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/bottom_sheet_container.dart';
 import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
 import 'package:eh_redux/modules/download/controller.dart';
@@ -32,20 +32,20 @@ Future<void> showDownloadMenuBottomSheet({
   switch (result) {
     case _BottomSheetResult.pause:
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(S.of(context).downloadPausedHint),
+        content: Text(AppLocalizations.of(context).downloadPausedHint),
       ));
       break;
 
     case _BottomSheetResult.resume:
     case _BottomSheetResult.retry:
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(S.of(context).downloadResumedHint),
+        content: Text(AppLocalizations.of(context).downloadResumedHint),
       ));
       break;
 
     case _BottomSheetResult.delete:
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text(S.of(context).downloadDeletedHint),
+        content: Text(AppLocalizations.of(context).downloadDeletedHint),
       ));
       break;
   }
@@ -94,7 +94,7 @@ Widget _pauseButton(BuildContext context) {
       Navigator.pop(context, _BottomSheetResult.pause);
     },
     leading: const Icon(Icons.pause),
-    title: Text(S.of(context).downloadPauseButtonLabel),
+    title: Text(AppLocalizations.of(context).downloadPauseButtonLabel),
   );
 }
 
@@ -112,7 +112,7 @@ Widget _resumeButton(BuildContext context) {
       Navigator.pop(context, _BottomSheetResult.resume);
     },
     leading: const Icon(Icons.play_arrow),
-    title: Text(S.of(context).downloadResumeButtonLabel),
+    title: Text(AppLocalizations.of(context).downloadResumeButtonLabel),
   );
 }
 
@@ -130,7 +130,7 @@ Widget _retryButton(BuildContext context) {
       Navigator.pop(context, _BottomSheetResult.retry);
     },
     leading: const Icon(Icons.refresh),
-    title: Text(S.of(context).downloadRetryButtonLabel),
+    title: Text(AppLocalizations.of(context).downloadRetryButtonLabel),
   );
 }
 
@@ -145,9 +145,10 @@ Widget _deleteButton(BuildContext context) {
     iconColor: theme.errorColor,
     child: ConfirmListTile(
       leading: const Icon(Icons.delete_forever),
-      title: Text(S.of(context).downloadDeleteButtonLabel),
-      dialogTitle: Text(S.of(context).downloadDeleteDialogTitle),
-      dialogContent: Text(S.of(context).downloadDeleteDialogContent),
+      title: Text(AppLocalizations.of(context).downloadDeleteButtonLabel),
+      dialogTitle: Text(AppLocalizations.of(context).downloadDeleteDialogTitle),
+      dialogContent:
+          Text(AppLocalizations.of(context).downloadDeleteDialogContent),
       onConfirm: () async {
         await showLoadingDialog(
           context: context,
@@ -155,7 +156,8 @@ Widget _deleteButton(BuildContext context) {
         );
         Navigator.pop(context, _BottomSheetResult.delete);
       },
-      confirmActionChild: Text(S.of(context).downloadDeleteButtonLabel),
+      confirmActionChild:
+          Text(AppLocalizations.of(context).downloadDeleteButtonLabel),
       disabled: task.state == DownloadTaskState.deleting,
     ),
   );

@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/search/store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -31,7 +31,7 @@ class SearchFilter extends StatelessWidget with PreferredSizeWidget {
             ).whenComplete(() => store.updateParams());
           },
           icon: const Icon(Icons.category),
-          label: Text(S.of(context).searchCategoryButtonLabel),
+          label: Text(AppLocalizations.of(context).searchCategoryButtonLabel),
         ),
         FlatButton.icon(
           onPressed: () {
@@ -44,7 +44,7 @@ class SearchFilter extends StatelessWidget with PreferredSizeWidget {
             ).whenComplete(() => store.updateParams());
           },
           icon: const Icon(Icons.star),
-          label: Text(S.of(context).searchRatingButtonLabel),
+          label: Text(AppLocalizations.of(context).searchRatingButtonLabel),
         ),
         const Spacer(),
         IconButton(

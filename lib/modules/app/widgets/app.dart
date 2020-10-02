@@ -1,5 +1,4 @@
 import 'package:eh_redux/database/database.dart';
-import 'package:eh_redux/generated/l10n.dart';
 import 'package:eh_redux/modules/check_update/widgets/screen.dart';
 import 'package:eh_redux/modules/download/controller.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
@@ -15,7 +14,7 @@ import 'package:eh_redux/modules/setting/widgets/screen.dart';
 import 'package:eh_redux/services/ehentai.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:streaming_shared_preferences/streaming_shared_preferences.dart';
 
@@ -75,12 +74,8 @@ class _AppState extends State<App> {
             navigatorObservers: [
               firebaseAnalyticsObserver,
             ],
-            localizationsDelegates: const [
-              S.delegate,
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-            ],
-            supportedLocales: S.delegate.supportedLocales,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
             theme: theme,
             initialRoute: HomeScreen.route,
             routes: {

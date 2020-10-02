@@ -1,5 +1,5 @@
 import 'package:eh_redux/database/database.dart';
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/search/store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -44,7 +44,7 @@ class _SearchTextFieldState extends State<SearchTextField> {
           store.setQuery(value as String);
         },
         decoration: InputDecoration(
-          hintText: S.of(context).searchTextFieldHint,
+          hintText: AppLocalizations.of(context).searchTextFieldHint,
           border: InputBorder.none,
         ),
         style: theme.textTheme.headline6,

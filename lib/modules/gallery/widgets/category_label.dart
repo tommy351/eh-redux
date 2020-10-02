@@ -1,4 +1,4 @@
-import 'package:eh_redux/generated/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 
@@ -10,16 +10,16 @@ Widget categoryLabel(
   @required String category,
 }) {
   final labels = <String, String>{
-    'Doujinshi': S.of(context).categoryDoujinshi,
-    'Manga': S.of(context).categoryManga,
-    'Artist CG': S.of(context).categoryArtistCG,
-    'Game CG': S.of(context).categoryGameCG,
-    'Western': S.of(context).categoryWestern,
-    'Non-H': S.of(context).categoryNonH,
-    'Image Set': S.of(context).categoryImageSet,
-    'Cosplay': S.of(context).categoryCosplay,
-    'Asian Porn': S.of(context).categoryAsianPorn,
-    'Misc': S.of(context).categoryMisc,
+    'Doujinshi': AppLocalizations.of(context).categoryDoujinshi,
+    'Manga': AppLocalizations.of(context).categoryManga,
+    'Artist CG': AppLocalizations.of(context).categoryArtistCG,
+    'Game CG': AppLocalizations.of(context).categoryGameCG,
+    'Western': AppLocalizations.of(context).categoryWestern,
+    'Non-H': AppLocalizations.of(context).categoryNonH,
+    'Image Set': AppLocalizations.of(context).categoryImageSet,
+    'Cosplay': AppLocalizations.of(context).categoryCosplay,
+    'Asian Porn': AppLocalizations.of(context).categoryAsianPorn,
+    'Misc': AppLocalizations.of(context).categoryMisc,
   };
 
   return Text(labels[category] ?? category);

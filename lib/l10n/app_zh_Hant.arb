@@ -60,7 +60,7 @@
   "galleryInfoPostedTime": "上傳日期",
   "galleryInfoUploader": "上傳者",
   "galleryInfoLength": "長度",
-  "galleryPageCount": "{count} 頁",
+  "galleryPageCount": "{count, plural, other{{count} 頁}}",
   "galleryInfoFileSize": "檔案大小",
   "readButtonLabel": "閱讀",
   "favoriteButtonLabel": "收藏",
