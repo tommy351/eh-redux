@@ -636,11 +636,14 @@ Widget _tagList(BuildContext context) {
                   separatorBuilder: (context, index) =>
                       const SizedBox(width: 8),
                   itemBuilder: (context, index) {
+                    final tag = entry.value[index];
+
                     return ActionChip(
                       onPressed: () {
-                        // TODO
+                        Navigator.of(context).pushNamed(SearchScreen.route,
+                            arguments: SearchArguments(query: tag.fullTag));
                       },
-                      label: Text(entry.value[index].tag),
+                      label: Text(tag.tag),
                     );
                   },
                 ),
