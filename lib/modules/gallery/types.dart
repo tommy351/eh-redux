@@ -2,9 +2,12 @@ import 'package:built_collection/built_collection.dart';
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/utils/datetime.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:html_unescape/html_unescape_small.dart';
 
 part 'types.freezed.dart';
 part 'types.g.dart';
+
+final _htmlUnescape = HtmlUnescape();
 
 @freezed
 abstract class GalleryId implements _$GalleryId {
@@ -40,8 +43,8 @@ abstract class Gallery implements _$Gallery {
     return Gallery(
       id: res.id,
       token: res.token,
-      title: res.title,
-      titleJpn: res.titleJpn,
+      title: _htmlUnescape.convert(res.title),
+      titleJpn: _htmlUnescape.convert(res.titleJpn),
       category: res.category,
       thumbnail: res.thumbnail,
       uploader: res.uploader,
