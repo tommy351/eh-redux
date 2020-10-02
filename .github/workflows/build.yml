@@ -16,7 +16,7 @@ jobs:
           flutter-version: "1.22.x"
           channel: stable
       - run: flutter pub get
-      - run: flutter build apk --debug --split-per-abi
+      - run: flutter build apk --debug
       - uses: actions/upload-artifact@v2
         with:
           name: apk-debug
