@@ -35,7 +35,6 @@ Widget downloadConfirmBottomSheet(
   BuildContext context, {
   @required Gallery gallery,
 }) {
-  final theme = Theme.of(context);
   final controller = Provider.of<DownloadController>(context);
 
   return BottomSheetContainer(
@@ -53,7 +52,7 @@ Widget downloadConfirmBottomSheet(
         Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
           child: FullWidth(
-            child: RaisedButton.icon(
+            child: ElevatedButton.icon(
               onPressed: () async {
                 await showLoadingDialog(
                   context: context,
@@ -63,8 +62,6 @@ Widget downloadConfirmBottomSheet(
               },
               icon: const Icon(Icons.file_download),
               label: Text(AppLocalizations.of(context).downloadButtonLabel),
-              color: theme.accentColor,
-              textColor: Colors.white,
             ),
           ),
         ),

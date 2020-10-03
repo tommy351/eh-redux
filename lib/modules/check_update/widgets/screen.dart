@@ -134,19 +134,17 @@ Widget _downloadButton(BuildContext context) {
       final asset = store.asset;
 
       if (asset == null || store.status != UpdateStatus.canUpdate) {
-        return FlatButton(
+        return TextButton(
           onPressed: null,
           child: Text(AppLocalizations.of(context).checkUpdateUpToDate),
         );
       }
 
-      return RaisedButton.icon(
+      return ElevatedButton.icon(
         onPressed: () {
           tryLaunch(asset.browserDownloadUrl);
         },
-        color: Theme.of(context).accentColor,
         icon: const Icon(Icons.file_download),
-        textColor: Colors.white,
         label: Text(
           AppLocalizations.of(context)
               .checkUpdateDownloadButtonLabel(filesize(asset.size)),

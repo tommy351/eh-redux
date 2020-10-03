@@ -238,7 +238,7 @@ Widget _imageError(
             ]
           : [],
       const SizedBox(height: 16),
-      OutlineButton(
+      OutlinedButton(
         onPressed: () async {
           analytics.logEvent(name: 'retry_image');
           await store.loadPage(
@@ -247,8 +247,9 @@ Widget _imageError(
             reloadKey: reloadKey,
           );
         },
-        borderSide: BorderSide(color: Colors.white.withOpacity(0.5)),
-        highlightedBorderColor: Colors.white,
+        style: OutlinedButton.styleFrom(
+          primary: theme.accentColor,
+        ),
         child: Text(AppLocalizations.of(context).retryButtonLabel),
       ),
     ],

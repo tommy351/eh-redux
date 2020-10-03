@@ -15,18 +15,23 @@ final _sliderTheme = SliderThemeData.fromPrimaryColors(
   primaryColorLight: _accentColor,
   valueIndicatorTextStyle: const TextStyle(),
 );
+final _elevatedButtonTheme = ElevatedButtonThemeData(
+  style: ElevatedButton.styleFrom(primary: _accentColor),
+);
 final _themeData = <ThemeSetting, ThemeData>{
   ThemeSetting.light: ThemeData(
     primarySwatch: Colors.brown,
     accentColor: _accentColor,
     brightness: Brightness.light,
     sliderTheme: _sliderTheme,
+    elevatedButtonTheme: _elevatedButtonTheme,
   ),
   ThemeSetting.dark: ThemeData(
     accentColor: _accentColor,
     toggleableActiveColor: _accentColor,
     brightness: Brightness.dark,
     sliderTheme: _sliderTheme,
+    elevatedButtonTheme: _elevatedButtonTheme,
   ),
   ThemeSetting.black: ThemeData(
     accentColor: _accentColor,
@@ -35,6 +40,7 @@ final _themeData = <ThemeSetting, ThemeData>{
     scaffoldBackgroundColor: Colors.black,
     dividerColor: Colors.grey[800],
     sliderTheme: _sliderTheme,
+    elevatedButtonTheme: _elevatedButtonTheme,
   ),
 };
 

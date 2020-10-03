@@ -153,11 +153,10 @@ Widget _noteField(BuildContext context) {
 
 @swidget
 Widget _addButton(BuildContext context) {
-  final theme = Theme.of(context);
   final store = Provider.of<FavoriteStore>(context);
 
   return FullWidth(
-    child: RaisedButton.icon(
+    child: ElevatedButton.icon(
       onPressed: () async {
         await showLoadingDialog(
           context: context,
@@ -167,7 +166,6 @@ Widget _addButton(BuildContext context) {
       },
       icon: const Icon(Icons.favorite),
       label: Text(AppLocalizations.of(context).favoriteAddButtonLabel),
-      color: theme.accentColor,
     ),
   );
 }
@@ -182,7 +180,7 @@ Widget _deleteButton(BuildContext context) {
       if (!store.canDelete) return Container();
 
       return FullWidth(
-        child: FlatButton.icon(
+        child: TextButton.icon(
           onPressed: () async {
             final confirmed = await showDialog<bool>(
               context: context,
@@ -197,7 +195,9 @@ Widget _deleteButton(BuildContext context) {
           },
           icon: const Icon(Icons.delete),
           label: Text(AppLocalizations.of(context).favoriteDeleteButtonLabel),
-          textColor: theme.errorColor,
+          style: TextButton.styleFrom(
+            primary: theme.errorColor,
+          ),
         ),
       );
     },
@@ -213,13 +213,13 @@ Widget _deleteConfirm(
     title: Text(AppLocalizations.of(context).favoriteDeleteDialogTitle),
     content: Text(AppLocalizations.of(context).favoriteDeleteDialogContent),
     actions: <Widget>[
-      FlatButton(
+      TextButton(
         onPressed: () {
           Navigator.pop(context, false);
         },
         child: Text(AppLocalizations.of(context).cancelButtonLabel),
       ),
-      FlatButton(
+      TextButton(
         onPressed: () async {
           await showLoadingDialog(
             context: context,

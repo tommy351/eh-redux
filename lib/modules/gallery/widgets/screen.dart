@@ -282,10 +282,9 @@ Widget _sectionTitle(BuildContext context, String text) {
 
 @swidget
 Widget _readButton(BuildContext context) {
-  final theme = Theme.of(context);
   final store = Provider.of<GalleryScreenStore>(context);
 
-  return RaisedButton.icon(
+  return ElevatedButton.icon(
     onPressed: () {
       Navigator.pushNamed(
         context,
@@ -295,8 +294,6 @@ Widget _readButton(BuildContext context) {
     },
     icon: const Icon(Icons.play_arrow),
     label: Text(AppLocalizations.of(context).readButtonLabel),
-    color: theme.accentColor,
-    textColor: Colors.white,
   );
 }
 
@@ -482,7 +479,7 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
 
   final actions = error.maybeMap<List<Widget>>(
     (_) => [
-      FlatButton.icon(
+      TextButton.icon(
         onPressed: () {
           store.load();
         },
@@ -491,7 +488,7 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
       ),
     ],
     contentWarning: (_) => [
-      FlatButton.icon(
+      TextButton.icon(
         onPressed: () {
           store.disableContentWarning();
           store.load();
@@ -534,9 +531,15 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
         ),
         ...actions.isNotEmpty
             ? [
-                ButtonBar(
-                  buttonTextTheme: ButtonTextTheme.normal,
-                  children: actions,
+                TextButtonTheme(
+                  data: TextButtonThemeData(
+                    style: TextButton.styleFrom(
+                      primary: theme.textTheme.bodyText1.color,
+                    ),
+                  ),
+                  child: ButtonBar(
+                    children: actions,
+                  ),
                 ),
               ]
             : [],

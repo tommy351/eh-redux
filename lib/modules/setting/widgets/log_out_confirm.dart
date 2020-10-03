@@ -15,13 +15,13 @@ Widget logOutConfirm(BuildContext context) {
     title: Text(AppLocalizations.of(context).logOutDialogTitle),
     content: Text(AppLocalizations.of(context).logOutDialogContent),
     actions: <Widget>[
-      FlatButton(
+      TextButton(
         onPressed: () {
           Navigator.pop(context);
         },
         child: Text(AppLocalizations.of(context).cancelButtonLabel),
       ),
-      FlatButton(
+      TextButton(
         onPressed: () async {
           await sessionStore.deleteSession();
           analytics.logEvent(name: 'logout');

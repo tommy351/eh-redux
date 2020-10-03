@@ -17,48 +17,56 @@ class SearchFilter extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final store = Provider.of<SearchStore>(context);
+    final theme = Theme.of(context);
 
-    return Row(
-      children: [
-        const SizedBox(width: 8),
-        FlatButton.icon(
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return CategoryBottomSheet(store: store);
-              },
-            ).whenComplete(() => store.updateParams());
-          },
-          icon: const Icon(Icons.category),
-          label: Text(AppLocalizations.of(context).searchCategoryButtonLabel),
+    return TextButtonTheme(
+      data: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          primary: theme.textTheme.bodyText1.color,
         ),
-        FlatButton.icon(
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              isScrollControlled: true,
-              builder: (context) {
-                return RatingBottomSheet(store: store);
-              },
-            ).whenComplete(() => store.updateParams());
-          },
-          icon: const Icon(Icons.star),
-          label: Text(AppLocalizations.of(context).searchRatingButtonLabel),
-        ),
-        const Spacer(),
-        IconButton(
-          onPressed: () {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return FilterBottomSheet(store: store);
-              },
-            ).whenComplete(() => store.updateParams());
-          },
-          icon: const Icon(Icons.more_vert),
-        ),
-      ],
+      ),
+      child: Row(
+        children: [
+          const SizedBox(width: 8),
+          TextButton.icon(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return CategoryBottomSheet(store: store);
+                },
+              ).whenComplete(() => store.updateParams());
+            },
+            icon: const Icon(Icons.category),
+            label: Text(AppLocalizations.of(context).searchCategoryButtonLabel),
+          ),
+          TextButton.icon(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                builder: (context) {
+                  return RatingBottomSheet(store: store);
+                },
+              ).whenComplete(() => store.updateParams());
+            },
+            icon: const Icon(Icons.star),
+            label: Text(AppLocalizations.of(context).searchRatingButtonLabel),
+          ),
+          const Spacer(),
+          IconButton(
+            onPressed: () {
+              showModalBottomSheet(
+                context: context,
+                builder: (context) {
+                  return FilterBottomSheet(store: store);
+                },
+              ).whenComplete(() => store.updateParams());
+            },
+            icon: const Icon(Icons.more_vert),
+          ),
+        ],
+      ),
     );
   }
 }

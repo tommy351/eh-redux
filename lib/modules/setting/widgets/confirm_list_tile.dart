@@ -29,13 +29,13 @@ Widget confirmListTile(
                 title: dialogTitle,
                 content: dialogContent,
                 actions: [
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: Text(AppLocalizations.of(context).cancelButtonLabel),
                   ),
-                  FlatButton(
+                  TextButton(
                     onPressed: () async {
                       await onConfirm();
                       Navigator.pop(context);
