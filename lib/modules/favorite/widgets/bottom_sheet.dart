@@ -112,8 +112,10 @@ Widget _favoriteSelect(BuildContext context) {
       final nameKeys = store.names.keys.toList();
 
       return DropdownButtonFormField<String>(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          hintText: AppLocalizations.of(context).favoriteFavoritesPlaceholder,
+          labelText: AppLocalizations.of(context).favoriteFavoritesPlaceholder,
         ),
         isExpanded: true,
         value: store.index,
@@ -146,6 +148,7 @@ Widget _noteField(BuildContext context) {
     controller: store.note,
     decoration: InputDecoration(
       hintText: AppLocalizations.of(context).favoriteNotePlaceholder,
+      labelText: AppLocalizations.of(context).favoriteNotePlaceholder,
       border: const OutlineInputBorder(),
     ),
   );
