@@ -7,7 +7,7 @@ part of 'app_bar.dart';
 // **************************************************************************
 
 class _ShareButton extends StatelessWidget {
-  const _ShareButton({Key key, @required this.image}) : super(key: key);
+  const _ShareButton({Key? key, required this.image}) : super(key: key);
 
   final GalleryImage image;
 
@@ -16,7 +16,7 @@ class _ShareButton extends StatelessWidget {
 }
 
 class _PopupButton extends StatelessWidget {
-  const _PopupButton({Key key, @required this.image}) : super(key: key);
+  const _PopupButton({Key? key, required this.image}) : super(key: key);
 
   final GalleryImage image;
 

@@ -1,19 +1,19 @@
 import 'package:eh_redux/database/database.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/search/store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 
 class SearchTextField extends StatefulWidget {
-  const SearchTextField({Key key}) : super(key: key);
+  const SearchTextField({Key? key}) : super(key: key);
 
   @override
   _SearchTextFieldState createState() => _SearchTextFieldState();
 }
 
 class _SearchTextFieldState extends State<SearchTextField> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
 
   @override
   void initState() {
@@ -41,10 +41,10 @@ class _SearchTextFieldState extends State<SearchTextField> {
         autofocus: _controller.text.isEmpty,
         controller: _controller,
         onSubmitted: (value) {
-          store.setQuery(value as String);
+          store.setQuery(value);
         },
         decoration: InputDecoration(
-          hintText: AppLocalizations.of(context).searchTextFieldHint,
+          hintText: AppLocalizations.of(context)!.searchTextFieldHint,
           border: InputBorder.none,
         ),
         style: theme.textTheme.headline6,

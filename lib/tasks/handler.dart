@@ -23,7 +23,7 @@ class BackgroundTaskHandler {
 
   Future<bool> handle(
     String taskName,
-    Map<String, dynamic> inputData,
+    Map<String, dynamic>? inputData,
   ) async {
     _log.fine('Handle: name=$taskName, data=$inputData');
 
@@ -33,8 +33,9 @@ class BackgroundTaskHandler {
           database: await _database,
         );
         return handler.handle(inputData);
-    }
 
-    return true;
+      default:
+        return true;
+    }
   }
 }

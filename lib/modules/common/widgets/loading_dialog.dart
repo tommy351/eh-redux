@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 class LoadingDialog<T> extends StatefulWidget {
   const LoadingDialog({
-    Key key,
-    @required this.future,
-  })  : assert(future != null),
-        super(key: key);
+    Key? key,
+    required this.future,
+  }) : super(key: key);
 
   final Future<T> future;
 
@@ -35,12 +34,10 @@ class _LoadingDialogState extends State<LoadingDialog> {
   }
 }
 
-Future<T> showLoadingDialog<T>({
-  @required BuildContext context,
-  @required Future<T> future,
+Future<T?> showLoadingDialog<T>({
+  required BuildContext context,
+  required Future<T> future,
 }) async {
-  assert(future != null);
-
   return showDialog<T>(
     context: context,
     barrierDismissible: false,

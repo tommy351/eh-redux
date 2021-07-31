@@ -29,7 +29,7 @@ class KeyEventListener {
     final sub = _keyDownEventChannel.receiveBroadcastStream().listen((event) {
       final code = KeyCode.valueOf(event as String);
 
-      if (code != null && keys.contains(code)) {
+      if (keys.contains(code)) {
         callback(code);
       }
     });

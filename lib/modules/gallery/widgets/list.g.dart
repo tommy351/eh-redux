@@ -7,12 +7,12 @@ part of 'list.dart';
 // **************************************************************************
 
 class GalleryList extends StatelessWidget {
-  const GalleryList({Key key, @required this.data, this.footer})
+  const GalleryList({Key? key, required this.data, this.footer})
       : super(key: key);
 
   final Iterable<Gallery> data;
 
-  final Widget footer;
+  final Widget? footer;
 
   @override
   Widget build(BuildContext _context) =>
@@ -20,7 +20,7 @@ class GalleryList extends StatelessWidget {
 }
 
 class _GalleryCell extends StatelessWidget {
-  const _GalleryCell({Key key, @required this.gallery}) : super(key: key);
+  const _GalleryCell({Key? key, required this.gallery}) : super(key: key);
 
   final Gallery gallery;
 
@@ -30,7 +30,7 @@ class _GalleryCell extends StatelessWidget {
 }
 
 class _CellRight extends StatelessWidget {
-  const _CellRight({Key key, @required this.gallery}) : super(key: key);
+  const _CellRight({Key? key, required this.gallery}) : super(key: key);
 
   final Gallery gallery;
 
@@ -39,7 +39,7 @@ class _CellRight extends StatelessWidget {
 }
 
 class _CellTitle extends StatelessWidget {
-  const _CellTitle({Key key, @required this.title, this.titleJpn = ''})
+  const _CellTitle({Key? key, required this.title, this.titleJpn = ''})
       : super(key: key);
 
   final String title;
@@ -52,7 +52,7 @@ class _CellTitle extends StatelessWidget {
 }
 
 class _CellTags extends StatelessWidget {
-  const _CellTags({Key key, @required this.tags}) : super(key: key);
+  const _CellTags({Key? key, required this.tags}) : super(key: key);
 
   final Iterable<GalleryTag> tags;
 
@@ -61,7 +61,7 @@ class _CellTags extends StatelessWidget {
 }
 
 class _CellFooter extends StatelessWidget {
-  const _CellFooter({Key key, @required this.gallery}) : super(key: key);
+  const _CellFooter({Key? key, required this.gallery}) : super(key: key);
 
   final Gallery gallery;
 

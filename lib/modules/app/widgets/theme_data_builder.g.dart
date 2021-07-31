@@ -7,7 +7,7 @@ part of 'theme_data_builder.dart';
 // **************************************************************************
 
 class ThemeDataBuilder extends StatelessWidget {
-  const ThemeDataBuilder({Key key, @required this.builder}) : super(key: key);
+  const ThemeDataBuilder({Key? key, required this.builder}) : super(key: key);
 
   final Widget Function(BuildContext, ThemeData) builder;
 

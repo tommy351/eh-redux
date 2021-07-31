@@ -9,7 +9,7 @@ part 'title.g.dart';
 @swidget
 Widget galleryTitle(
   BuildContext context, {
-  @required String title,
+  required String title,
   String titleJpn = '',
 }) {
   final settingStore = Provider.of<SettingStore>(context);

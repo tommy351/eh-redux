@@ -3,7 +3,6 @@ import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:eh_redux/tasks/handler.dart';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:logging/logging.dart';
-import 'package:meta/meta.dart';
 import 'package:workmanager/workmanager.dart';
 
 import 'daos/image.dart';
@@ -14,9 +13,9 @@ import 'utils.dart';
 
 class DownloadController {
   DownloadController({
-    @required this.downloadTasksDao,
-    @required this.downloadedImagesDao,
-    @required this.galleriesDao,
+    required this.downloadTasksDao,
+    required this.downloadedImagesDao,
+    required this.galleriesDao,
   });
 
   static const _taskUniqueName = 'download';
@@ -30,7 +29,7 @@ class DownloadController {
   Future<void> _registerTask() async {
     _log.fine('Register download task to work manager');
 
-    await Workmanager.registerOneOffTask(
+    await Workmanager().registerOneOffTask(
       _taskUniqueName,
       EnumToString.convertToString(TaskTag.download),
       existingWorkPolicy: ExistingWorkPolicy.keep,

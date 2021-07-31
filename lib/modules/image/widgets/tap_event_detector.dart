@@ -8,9 +8,9 @@ part 'tap_event_detector.g.dart';
 @swidget
 Widget tapEventDetector(
   BuildContext context, {
-  @required void Function() onPrevious,
-  @required void Function() onNext,
-  @required Widget child,
+  required void Function() onPrevious,
+  required void Function() onNext,
+  required Widget child,
 }) {
   final width = MediaQuery.of(context).size.width;
   final store = Provider.of<ImageStore>(context);

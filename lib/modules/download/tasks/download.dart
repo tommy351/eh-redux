@@ -15,17 +15,15 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
-import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 class _CanceledException {}
 
 class _FileWithSize {
   _FileWithSize({
-    @required this.file,
-    @required this.size,
-  })  : assert(file != null),
-        assert(size >= 0);
+    required this.file,
+    required this.size,
+  }) : assert(size >= 0);
 
   final File file;
   final int size;
@@ -33,14 +31,11 @@ class _FileWithSize {
 
 class DownloadTaskOperation {
   DownloadTaskOperation({
-    @required this.database,
-    @required this.httpClient,
-    @required this.client,
-    @required this.task,
-  })  : assert(database != null),
-        assert(httpClient != null),
-        assert(client != null),
-        assert(task != null);
+    required this.database,
+    required this.httpClient,
+    required this.client,
+    required this.task,
+  });
 
   static final _log = Logger('DownloadTaskOperation');
 
@@ -51,22 +46,27 @@ class DownloadTaskOperation {
 
   int get galleryId => task.galleryId;
 
-  final _galleryMemo = AsyncMemoizer<Gallery>();
+  final _galleryMemo = AsyncMemoizer<Gallery?>();
 
-  Future<Gallery> get _gallery => _galleryMemo.runOnce(() async {
+  Future<Gallery?> get _gallery => _galleryMemo.runOnce(() async {
         final entry = await database.galleriesDao.getEntry(galleryId);
+        if (entry == null) return null;
         return Gallery.fromEntry(entry);
       });
 
   final _imageStoreMemo = AsyncMemoizer<ImageStore>();
 
-  Future<ImageStore> get _imageStore =>
-      _imageStoreMemo.runOnce(() async => ImageStore(
-            client: client,
-            gallery: await _gallery,
-            galleriesDao: database.galleriesDao,
-            downloadedImagesDao: database.downloadedImagesDao,
-          ));
+  Future<ImageStore?> get _imageStore async {
+    final gallery = await _gallery;
+    if (gallery == null) return null;
+
+    _imageStoreMemo.runOnce(() async => ImageStore(
+          client: client,
+          gallery: gallery,
+          galleriesDao: database.galleriesDao,
+          downloadedImagesDao: database.downloadedImagesDao,
+        ));
+  }
 
   final _directoryMemo = AsyncMemoizer<Directory>();
 
@@ -77,8 +77,8 @@ class DownloadTaskOperation {
       });
 
   bool _canceled = false;
-  Completer<void> _completer;
-  String _thumbnailPath;
+  Completer<void>? _completer;
+  String? _thumbnailPath;
 
   Future<void> start() async {
     _log.fine('Start: $task');
@@ -127,7 +127,7 @@ class DownloadTaskOperation {
       _log.severe('Failed to download the image', err, stackTrace);
       return;
     } finally {
-      _completer.complete();
+      _completer?.complete();
     }
   }
 
@@ -144,8 +144,8 @@ class DownloadTaskOperation {
   }
 
   Future<_FileWithSize> _downloadFile({
-    @required String name,
-    @required String url,
+    required String name,
+    required String url,
   }) async {
     _log.finer('downloadFile: $url');
 
@@ -154,7 +154,7 @@ class DownloadTaskOperation {
     _log.finer('File path: ${file.path}');
 
     var fileSize = 0;
-    final completer = Completer<void>();
+    final completer = Completer<dynamic>();
 
     // Send the request
     final req = http.Request('GET', Uri.parse(url));
@@ -202,10 +202,12 @@ class DownloadTaskOperation {
     }
 
     final gallery = await _gallery;
+    final thumbnail = gallery?.thumbnail;
+    if (thumbnail == null) return;
 
     final file = await _guard(() => _downloadFile(
           name: 'thumbnail',
-          url: gallery.thumbnail,
+          url: thumbnail,
         ));
 
     _thumbnailPath = file.file.path;
@@ -220,6 +222,7 @@ class DownloadTaskOperation {
     _log.fine('Download image: galleryId=$galleryId, page=$page');
 
     final imageStore = await _imageStore;
+    if (imageStore == null) return;
 
     // Load the image metadata
     final image = await _guard(() => imageStore.loadNetworkPage(page));
@@ -255,8 +258,8 @@ class DownloadTaskOperation {
   }
 
   Future<void> _showNotification({
-    @required String title,
-    int downloadedCount,
+    required String title,
+    int downloadedCount = 0,
     bool showProgress = false,
   }) async {
     final androidDetails = AndroidNotificationDetails(
@@ -266,7 +269,7 @@ class DownloadTaskOperation {
       icon: 'download',
       playSound: false,
       enableVibration: false,
-      largeIcon: FilePathAndroidBitmap(_thumbnailPath),
+      largeIcon: FilePathAndroidBitmap(_thumbnailPath ?? ''),
       category: 'progress',
       onlyAlertOnce: true,
       maxProgress: task.totalCount,
@@ -274,9 +277,12 @@ class DownloadTaskOperation {
       channelShowBadge: false,
       showProgress: showProgress,
     );
+
     const iosDetails = IOSNotificationDetails(presentSound: false);
-    final details = NotificationDetails(androidDetails, iosDetails);
+    final details =
+        NotificationDetails(android: androidDetails, iOS: iosDetails);
     final gallery = await _gallery;
+    if (gallery == null) return;
 
     await notificationPlugin.show(
       galleryId,
@@ -298,8 +304,8 @@ class DownloadTaskOperation {
 
 class DownloadTaskHandler {
   DownloadTaskHandler({
-    @required this.database,
-  }) : assert(database != null) {
+    required this.database,
+  }) {
     final sessionStore = SessionStore();
     _httpClient = http.Client();
     _client = EHentaiClient(
@@ -311,12 +317,12 @@ class DownloadTaskHandler {
   static final _log = Logger('DownloadTaskHandler');
 
   final Database database;
-  http.Client _httpClient;
-  EHentaiClient _client;
+  late http.Client _httpClient;
+  late EHentaiClient _client;
   final _operations = <int, DownloadTaskOperation>{};
   bool _canceled = false;
 
-  Future<bool> handle(Map<String, dynamic> inputData) async {
+  Future<bool> handle(Map<String, dynamic>? inputData) async {
     _log.fine('handle: $inputData');
 
     final listener = DownloadInterruptListener(
@@ -332,10 +338,10 @@ class DownloadTaskHandler {
     );
 
     try {
-      DownloadTask task;
+      DownloadTask? task;
 
       while (!_canceled && (task = await _nextTask()) != null) {
-        final operation = _operations[task.galleryId] = DownloadTaskOperation(
+        final operation = _operations[task!.galleryId] = DownloadTaskOperation(
           database: database,
           httpClient: _httpClient,
           client: _client,
@@ -359,7 +365,7 @@ class DownloadTaskHandler {
     return true;
   }
 
-  Future<DownloadTask> _nextTask() async {
+  Future<DownloadTask?> _nextTask() async {
     final task = await database.downloadTasksDao.nextPendingTask();
     _log.finer('Next task: $task');
     return task;

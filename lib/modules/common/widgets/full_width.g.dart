@@ -7,7 +7,7 @@ part of 'full_width.dart';
 // **************************************************************************
 
 class FullWidth extends StatelessWidget {
-  const FullWidth({Key key, @required this.child}) : super(key: key);
+  const FullWidth({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 

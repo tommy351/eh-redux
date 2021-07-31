@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 
 class KeyEventDetector extends StatefulWidget {
   const KeyEventDetector({
-    Key key,
-    @required this.child,
-    @required this.onPrevious,
-    @required this.onNext,
-  })  : assert(child != null),
-        assert(onPrevious != null),
-        assert(onNext != null),
-        super(key: key);
+    Key? key,
+    required this.child,
+    required this.onPrevious,
+    required this.onNext,
+  }) : super(key: key);
 
   final Widget child;
   final void Function() onPrevious;
@@ -21,8 +18,8 @@ class KeyEventDetector extends StatefulWidget {
 }
 
 class _KeyEventDetectorState extends State<KeyEventDetector> {
-  KeyEventListener _listener;
-  Function _dispose;
+  late KeyEventListener _listener;
+  Function? _dispose;
 
   @override
   void initState() {
@@ -51,7 +48,7 @@ class _KeyEventDetectorState extends State<KeyEventDetector> {
       ], _handleKeyEvent);
     } else {
       if (_dispose != null) {
-        _dispose();
+        _dispose!();
         _dispose = null;
       }
     }

@@ -47,7 +47,7 @@ final _themeData = <ThemeSetting, ThemeData>{
 @swidget
 Widget themeDataBuilder(
   BuildContext context, {
-  @required Widget Function(BuildContext, ThemeData) builder,
+  required Widget Function(BuildContext, ThemeData) builder,
 }) {
   final settings = Provider.of<SettingStore>(context);
 
@@ -66,7 +66,7 @@ Widget themeDataBuilder(
             }
           }
 
-          return builder(context, _themeData[key]);
+          return builder(context, _themeData[key]!);
         },
       );
     },

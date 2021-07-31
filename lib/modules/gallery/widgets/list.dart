@@ -14,8 +14,8 @@ part 'list.g.dart';
 @swidget
 Widget galleryList(
   BuildContext context, {
-  @required Iterable<Gallery> data,
-  Widget footer,
+  required Iterable<Gallery> data,
+  Widget? footer,
 }) {
   return ListView.builder(
     itemCount: data.length + (footer == null ? 0 : 1),
@@ -30,7 +30,7 @@ Widget galleryList(
 }
 
 @swidget
-Widget _galleryCell(BuildContext context, {@required Gallery gallery}) {
+Widget _galleryCell(BuildContext context, {required Gallery gallery}) {
   return InkWell(
     onTap: () {
       Navigator.pushNamed(context, GalleryScreen.route, arguments: gallery);
@@ -59,7 +59,7 @@ Widget _galleryCell(BuildContext context, {@required Gallery gallery}) {
 @swidget
 Widget _cellRight(
   BuildContext context, {
-  @required Gallery gallery,
+  required Gallery gallery,
 }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,13 +91,13 @@ Widget _cellRight(
 @swidget
 Widget _cellTitle(
   BuildContext context, {
-  @required String title,
+  required String title,
   String titleJpn = '',
 }) {
   final theme = Theme.of(context);
 
   return DefaultTextStyle(
-    style: theme.textTheme.subtitle1.copyWith(height: 1.4),
+    style: theme.textTheme.subtitle1!.copyWith(height: 1.4),
     maxLines: 2,
     overflow: TextOverflow.ellipsis,
     child: GalleryTitle(
@@ -108,7 +108,7 @@ Widget _cellTitle(
 }
 
 @swidget
-Widget _cellTags(BuildContext context, {@required Iterable<GalleryTag> tags}) {
+Widget _cellTags(BuildContext context, {required Iterable<GalleryTag> tags}) {
   final theme = Theme.of(context);
 
   return Text(
@@ -120,11 +120,11 @@ Widget _cellTags(BuildContext context, {@required Iterable<GalleryTag> tags}) {
 }
 
 @swidget
-Widget _cellFooter(BuildContext context, {@required Gallery gallery}) {
+Widget _cellFooter(BuildContext context, {required Gallery gallery}) {
   final theme = Theme.of(context);
 
   return DefaultTextStyle(
-    style: theme.textTheme.caption,
+    style: theme.textTheme.caption!,
     child: IconTheme(
       data: IconThemeData(
         size: 16,

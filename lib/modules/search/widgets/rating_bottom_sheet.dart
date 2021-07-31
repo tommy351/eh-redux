@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/bottom_sheet_container.dart';
 import 'package:eh_redux/modules/search/store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +13,7 @@ part 'rating_bottom_sheet.g.dart';
 @swidget
 Widget ratingBottomSheet(
   BuildContext context, {
-  @required SearchStore store,
+  required SearchStore store,
 }) {
   return Provider.value(
     value: store,
@@ -30,14 +30,14 @@ Widget _body(BuildContext context) {
   return Observer(
     builder: (context) {
       final label = store.minimumRating > 0
-          ? AppLocalizations.of(context)
+          ? AppLocalizations.of(context)!
               .searchMinimumRatingLabel(store.minimumRating)
-          : AppLocalizations.of(context).searchMinimumRatingDisabled;
+          : AppLocalizations.of(context)!.searchMinimumRatingDisabled;
 
       return Wrap(
         children: [
           ListTile(
-            title: Text(AppLocalizations.of(context).searchMinimumRatingTitle),
+            title: Text(AppLocalizations.of(context)!.searchMinimumRatingTitle),
             trailing: store.minimumRating > 0 ? Text(label) : null,
           ),
           Slider(

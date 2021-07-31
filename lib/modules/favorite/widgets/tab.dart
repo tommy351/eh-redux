@@ -1,10 +1,10 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/gallery/stores/network_list.dart';
 import 'package:eh_redux/modules/gallery/widgets/network_list.dart';
 import 'package:eh_redux/modules/home/widgets/body.dart';
 import 'package:eh_redux/modules/session/store.dart';
 import 'package:eh_redux/services/ehentai.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 part 'tab.g.dart';
 
 class FavoriteTab extends StatefulWidget {
-  const FavoriteTab({Key key}) : super(key: key);
+  const FavoriteTab({Key? key}) : super(key: key);
 
   @override
   _FavoriteTabState createState() => _FavoriteTabState();
@@ -20,7 +20,7 @@ class FavoriteTab extends StatefulWidget {
 
 class _FavoriteTabState extends State<FavoriteTab>
     with AutomaticKeepAliveClientMixin<FavoriteTab> {
-  NetworkGalleryListStore _store;
+  late NetworkGalleryListStore _store;
 
   @override
   bool get wantKeepAlive => true;
@@ -58,7 +58,7 @@ class _FavoriteTabState extends State<FavoriteTab>
 @swidget
 Widget _appBar(BuildContext context) {
   return SliverAppBar(
-    title: Text(AppLocalizations.of(context).homeTabTitleFavorite),
+    title: Text(AppLocalizations.of(context)!.homeTabTitleFavorite),
     pinned: true,
   );
 }
@@ -73,7 +73,7 @@ Widget _loginHint(BuildContext context) {
       SliverFillRemaining(
         child: Center(
           child: Text(
-            AppLocalizations.of(context).logInRequiredHint,
+            AppLocalizations.of(context)!.logInRequiredHint,
             style: theme.textTheme.headline6,
           ),
         ),

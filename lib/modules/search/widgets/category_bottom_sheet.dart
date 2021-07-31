@@ -12,7 +12,7 @@ part 'category_bottom_sheet.g.dart';
 @swidget
 Widget categoryBottomSheet(
   BuildContext context, {
-  @required SearchStore store,
+  required SearchStore store,
 }) {
   const categories = <String, int>{
     'Doujinshi': 1 << 1,
@@ -55,8 +55,8 @@ Widget categoryBottomSheet(
 @swidget
 Widget _categoryTile(
   BuildContext context, {
-  @required String category,
-  @required int value,
+  required String category,
+  required int value,
 }) {
   final store = Provider.of<SearchStore>(context);
 
@@ -75,7 +75,7 @@ Widget _categoryTile(
         ),
         value: store.categoryFilter & value == 0,
         onChanged: (checked) {
-          if (checked) {
+          if (checked ?? false) {
             store.setCategoryFilter(store.categoryFilter - value);
           } else {
             store.setCategoryFilter(store.categoryFilter + value);

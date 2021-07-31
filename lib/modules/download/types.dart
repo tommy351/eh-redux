@@ -14,16 +14,16 @@ enum DownloadTaskState {
 }
 
 @freezed
-abstract class DownloadTask implements _$DownloadTask {
+class DownloadTask with _$DownloadTask {
   const factory DownloadTask({
-    @required int galleryId,
-    @required int totalCount,
+    required int galleryId,
+    required int totalCount,
     @Default(0) int downloadedCount,
-    @required DateTime createdAt,
-    @required DateTime queuedAt,
+    required DateTime createdAt,
+    required DateTime queuedAt,
     @Default(DownloadTaskState.pending) DownloadTaskState state,
-    String errorDetails,
-    String thumbnail,
+    String? errorDetails,
+    String? thumbnail,
   }) = _DownloadTask;
 
   factory DownloadTask.fromEntry(DownloadTaskEntry entry) {
@@ -56,15 +56,15 @@ abstract class DownloadTask implements _$DownloadTask {
 }
 
 @freezed
-abstract class DownloadTaskWithGallery with _$DownloadTaskWithGallery {
+class DownloadTaskWithGallery with _$DownloadTaskWithGallery {
   const factory DownloadTaskWithGallery({
-    @required DownloadTask task,
-    @required Gallery gallery,
+    required DownloadTask task,
+    required Gallery gallery,
   }) = _DownloadTaskWithGallery;
 
   factory DownloadTaskWithGallery.fromEntry({
-    @required DownloadTaskEntry task,
-    @required GalleryEntry gallery,
+    required DownloadTaskEntry task,
+    required GalleryEntry gallery,
   }) {
     return DownloadTaskWithGallery(
       task: DownloadTask.fromEntry(task),

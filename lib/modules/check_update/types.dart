@@ -5,14 +5,14 @@ part 'types.freezed.dart';
 part 'types.g.dart';
 
 @freezed
-abstract class GitHubAsset with _$GitHubAsset {
+class GitHubAsset with _$GitHubAsset {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory GitHubAsset({
-    String name,
-    String contentType,
-    String state,
-    int size,
-    String browserDownloadUrl,
+    @Default('') String name,
+    @Default('') String contentType,
+    @Default('') String state,
+    @Default(0) int size,
+    @Default('') String browserDownloadUrl,
   }) = _GitHubAsset;
 
   factory GitHubAsset.fromJson(Map<String, dynamic> json) =>
@@ -20,14 +20,14 @@ abstract class GitHubAsset with _$GitHubAsset {
 }
 
 @freezed
-abstract class GitHubRelease with _$GitHubRelease {
+class GitHubRelease with _$GitHubRelease {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory GitHubRelease({
-    String name,
-    String body,
-    String tagName,
-    String htmlUrl,
-    BuiltList<GitHubAsset> assets,
+    @Default('') String name,
+    @Default('') String body,
+    @Default('') String tagName,
+    @Default('') String htmlUrl,
+    BuiltList<GitHubAsset>? assets,
   }) = _GitHubRelease;
 
   factory GitHubRelease.fromJson(Map<String, dynamic> json) =>

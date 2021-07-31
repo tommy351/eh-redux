@@ -8,12 +8,13 @@ part 'types.freezed.dart';
 part 'types.g.dart';
 
 final _htmlUnescape = HtmlUnescape();
+final zeroDateTime = DateTime.fromMillisecondsSinceEpoch(0);
 
 @freezed
-abstract class GalleryId implements _$GalleryId {
+class GalleryId with _$GalleryId {
   const factory GalleryId({
-    @required int id,
-    @required String token,
+    required int id,
+    required String token,
   }) = _GalleryId;
 
   const GalleryId._();
@@ -22,21 +23,21 @@ abstract class GalleryId implements _$GalleryId {
 }
 
 @freezed
-abstract class Gallery implements _$Gallery {
+class Gallery with _$Gallery {
   const factory Gallery({
-    @required int id,
-    @required String token,
-    @required String title,
-    @required String titleJpn,
-    @required String category,
-    @required String thumbnail,
-    @required String uploader,
-    @required int fileCount,
-    @required int fileSize,
-    @required bool expunged,
-    @required double rating,
-    @required BuiltList<GalleryTag> tags,
-    @required DateTime posted,
+    required int id,
+    required String token,
+    required String title,
+    required String titleJpn,
+    required String category,
+    required String thumbnail,
+    required String uploader,
+    required int fileCount,
+    required int fileSize,
+    required bool expunged,
+    required double rating,
+    required BuiltList<GalleryTag> tags,
+    required DateTime posted,
   }) = _Gallery;
 
   factory Gallery.fromResponse(GalleryResponse res) {
@@ -48,12 +49,12 @@ abstract class Gallery implements _$Gallery {
       category: res.category,
       thumbnail: res.thumbnail,
       uploader: res.uploader,
-      fileCount: res.fileCount,
+      fileCount: res.fileCount ?? 0,
       fileSize: res.fileSize,
       expunged: res.expunged,
-      rating: res.rating,
+      rating: res.rating ?? 0,
       tags: BuiltList.from(res.tags.map((e) => GalleryTag.fromString(e))),
-      posted: res.posted,
+      posted: res.posted ?? zeroDateTime,
     );
   }
 
@@ -99,10 +100,10 @@ abstract class Gallery implements _$Gallery {
 }
 
 @freezed
-abstract class GalleryTag implements _$GalleryTag {
+class GalleryTag with _$GalleryTag {
   const factory GalleryTag({
     @Default('') String namespace,
-    @required String tag,
+    required String tag,
   }) = _GalleryTag;
 
   factory GalleryTag.fromString(String s) {
@@ -130,21 +131,21 @@ abstract class GalleryTag implements _$GalleryTag {
 }
 
 @freezed
-abstract class GalleryResponse with _$GalleryResponse {
+class GalleryResponse with _$GalleryResponse {
   const factory GalleryResponse({
-    @JsonKey(name: 'gid') int id,
-    String token,
-    String title,
-    @JsonKey(name: 'title_jpn') String titleJpn,
-    String category,
-    @JsonKey(name: 'thumb') String thumbnail,
-    String uploader,
-    @JsonKey(name: 'filecount', fromJson: int.tryParse) int fileCount,
-    @JsonKey(name: 'filesize') int fileSize,
-    bool expunged,
-    @JsonKey(fromJson: double.tryParse) double rating,
-    List<String> tags,
-    @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime posted,
+    @JsonKey(name: 'gid') required int id,
+    required String token,
+    required String title,
+    @JsonKey(name: 'title_jpn') @Default('') String titleJpn,
+    @Default('') String category,
+    @JsonKey(name: 'thumb') @Default('') String thumbnail,
+    @Default('') String uploader,
+    @JsonKey(name: 'filecount', fromJson: int.tryParse) int? fileCount,
+    @JsonKey(name: 'filesize') @Default(0) int fileSize,
+    @Default(false) bool expunged,
+    @JsonKey(fromJson: double.tryParse) double? rating,
+    @Default([]) List<String> tags,
+    @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime? posted,
   }) = _GalleryResponse;
 
   factory GalleryResponse.fromJson(Map<String, dynamic> json) =>
@@ -152,9 +153,9 @@ abstract class GalleryResponse with _$GalleryResponse {
 }
 
 @freezed
-abstract class GalleryReadPosition with _$GalleryReadPosition {
+class GalleryReadPosition with _$GalleryReadPosition {
   const factory GalleryReadPosition({
-    @required int page,
-    @required DateTime time,
+    required int page,
+    required DateTime time,
   }) = _GalleryReadPosition;
 }

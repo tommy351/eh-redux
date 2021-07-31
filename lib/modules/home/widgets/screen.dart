@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'bottom_nav.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
   static String route = '/home';
 
@@ -17,9 +17,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with RouteAware {
-  PageController _pageController;
-  HomeStore _homeStore;
-  ReactionDisposer _dispose;
+  late PageController _pageController;
+  late HomeStore _homeStore;
+  late ReactionDisposer _dispose;
 
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   void didChangeDependencies() {
     super.didChangeDependencies();
     firebaseAnalyticsObserver.subscribe(
-        this, ModalRoute.of(context) as PageRoute);
+        this, ModalRoute.of(context)! as PageRoute);
   }
 
   @override

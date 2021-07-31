@@ -6,7 +6,7 @@ part 'icon.g.dart';
 @swidget
 Widget favoriteIcon(
   BuildContext context, {
-  @required int favorite,
+  required int favorite,
 }) {
   final data = IconTheme.of(context);
   const colors = [
@@ -27,7 +27,7 @@ Widget favoriteIcon(
     height: data.size,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: colors[favorite] ?? Colors.grey,
+      color: colors[favorite],
     ),
   );
 }

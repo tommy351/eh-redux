@@ -8,11 +8,11 @@ part of 'types.dart';
 
 _$_GitHubAsset _$_$_GitHubAssetFromJson(Map<String, dynamic> json) {
   return _$_GitHubAsset(
-    name: json['name'] as String,
-    contentType: json['content_type'] as String,
-    state: json['state'] as String,
-    size: json['size'] as int,
-    browserDownloadUrl: json['browser_download_url'] as String,
+    name: json['name'] as String? ?? '',
+    contentType: json['content_type'] as String? ?? '',
+    state: json['state'] as String? ?? '',
+    size: json['size'] as int? ?? 0,
+    browserDownloadUrl: json['browser_download_url'] as String? ?? '',
   );
 }
 
@@ -27,15 +27,13 @@ Map<String, dynamic> _$_$_GitHubAssetToJson(_$_GitHubAsset instance) =>
 
 _$_GitHubRelease _$_$_GitHubReleaseFromJson(Map<String, dynamic> json) {
   return _$_GitHubRelease(
-    name: json['name'] as String,
-    body: json['body'] as String,
-    tagName: json['tag_name'] as String,
-    htmlUrl: json['html_url'] as String,
+    name: json['name'] as String? ?? '',
+    body: json['body'] as String? ?? '',
+    tagName: json['tag_name'] as String? ?? '',
+    htmlUrl: json['html_url'] as String? ?? '',
     assets: json['assets'] != null
-        ? (json['assets'] as List)
-            .map((e) => e == null
-                ? null
-                : GitHubAsset.fromJson(e as Map<String, dynamic>))
+        ? ((json['assets'] as List)
+                .map((e) => GitHubAsset.fromJson(e as Map<String, dynamic>)))
             .toBuiltList()
         : null,
   );
@@ -47,5 +45,5 @@ Map<String, dynamic> _$_$_GitHubReleaseToJson(_$_GitHubRelease instance) =>
       'body': instance.body,
       'tag_name': instance.tagName,
       'html_url': instance.htmlUrl,
-      'assets': instance.assets?.map((e) => e?.toJson())?.toList(),
+      'assets': instance.assets?.map((e) => e.toJson()).toList(),
     };

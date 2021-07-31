@@ -22,12 +22,10 @@ import 'theme_data_builder.dart';
 
 class App extends StatefulWidget {
   const App({
-    Key key,
-    @required this.database,
-    @required this.preferences,
-  })  : assert(database != null),
-        assert(preferences != null),
-        super(key: key);
+    Key? key,
+    required this.database,
+    required this.preferences,
+  }) : super(key: key);
 
   final Database database;
   final StreamingSharedPreferences preferences;
@@ -37,10 +35,10 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  SessionStore _sessionStore;
-  DownloadController _downloadController;
-  EHentaiClient _eHentaiClient;
-  SettingStore _settingStore;
+  late SessionStore _sessionStore;
+  late DownloadController _downloadController;
+  late EHentaiClient _eHentaiClient;
+  late SettingStore _settingStore;
 
   @override
   void initState() {
@@ -84,16 +82,16 @@ class _AppState extends State<App> {
               LoginScreen.route: (_) => const LoginScreen(),
               GalleryScreen.route: (context) => GalleryScreen(
                     gallery:
-                        ModalRoute.of(context).settings.arguments as Gallery,
+                        ModalRoute.of(context)!.settings.arguments! as Gallery,
                   ),
               CheckUpdateScreen.route: (_) => const CheckUpdateScreen(),
               SearchScreen.route: (context) => SearchScreen(
-                    arguments: ModalRoute.of(context).settings.arguments
+                    arguments: ModalRoute.of(context)!.settings.arguments!
                         as SearchArguments,
                   ),
               ImageScreen.route: (context) => ImageScreen(
                     gallery:
-                        ModalRoute.of(context).settings.arguments as Gallery,
+                        ModalRoute.of(context)!.settings.arguments! as Gallery,
                   ),
             },
           );

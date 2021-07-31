@@ -9,18 +9,18 @@ part of 'store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$ImageStore on _ImageStoreBase, Store {
-  Computed<int> _$currentPage1Computed;
+  Computed<int>? _$currentPage1Computed;
 
   @override
   int get currentPage1 =>
       (_$currentPage1Computed ??= Computed<int>(() => super.currentPage1,
               name: '_ImageStoreBase.currentPage1'))
           .value;
-  Computed<GalleryImage> _$currentImageComputed;
+  Computed<GalleryImage?>? _$currentImageComputed;
 
   @override
-  GalleryImage get currentImage => (_$currentImageComputed ??=
-          Computed<GalleryImage>(() => super.currentImage,
+  GalleryImage? get currentImage => (_$currentImageComputed ??=
+          Computed<GalleryImage?>(() => super.currentImage,
               name: '_ImageStoreBase.currentImage'))
       .value;
 
@@ -127,7 +127,7 @@ mixin _$ImageStore on _ImageStoreBase, Store {
 
   @override
   Future<void> loadPage(int page,
-      {String reloadKey, bool networkOnly = false}) {
+      {String? reloadKey, bool networkOnly = false}) {
     return _$loadPageAsyncAction.run(() =>
         super.loadPage(page, reloadKey: reloadKey, networkOnly: networkOnly));
   }

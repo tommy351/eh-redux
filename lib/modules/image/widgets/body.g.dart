@@ -7,23 +7,23 @@ part of 'body.dart';
 // **************************************************************************
 
 class _StatusBar extends StatelessWidget {
-  const _StatusBar({Key key}) : super(key: key);
+  const _StatusBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => _statusBar(_context);
 }
 
 class _ImageLoading extends StatelessWidget {
-  const _ImageLoading({Key key, this.event}) : super(key: key);
+  const _ImageLoading({Key? key, this.event}) : super(key: key);
 
-  final ImageChunkEvent event;
+  final ImageChunkEvent? event;
 
   @override
   Widget build(BuildContext _context) => _imageLoading(_context, event: event);
 }
 
 class _ImageView extends StatelessWidget {
-  const _ImageView({Key key, @required this.page}) : super(key: key);
+  const _ImageView({Key? key, required this.page}) : super(key: key);
 
   final int page;
 
@@ -32,14 +32,14 @@ class _ImageView extends StatelessWidget {
 }
 
 class _ImageError extends StatelessWidget {
-  const _ImageError({Key key, @required this.page, this.error, this.reloadKey})
+  const _ImageError({Key? key, required this.page, this.error, this.reloadKey})
       : super(key: key);
 
   final int page;
 
-  final ImageError error;
+  final ImageError? error;
 
-  final String reloadKey;
+  final String? reloadKey;
 
   @override
   Widget build(BuildContext _context) =>

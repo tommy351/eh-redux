@@ -16,7 +16,7 @@ class HistoryDao extends DatabaseAccessor<Database> with _$HistoryDaoMixin {
   Stream<List<Gallery>> watchAll() {
     _log.fine('watchAll');
     final query = select(galleries)
-      ..where((t) => isNotNull(t.lastReadAt))
+      ..where((t) => SqlIsNull(t.lastReadAt).isNotNull())
       ..orderBy([
         (t) => OrderingTerm.desc(t.lastReadAt),
       ]);

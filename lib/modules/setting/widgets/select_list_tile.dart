@@ -6,16 +6,16 @@ part 'select_list_tile.g.dart';
 @swidget
 Widget selectListTile<T>(
   BuildContext context, {
-  Widget title,
-  @required List<DropdownMenuItem<T>> items,
-  @required T value,
-  @required Function(T) onChanged,
+  Widget? title,
+  required List<DropdownMenuItem<T>> items,
+  required T value,
+  required Function(T) onChanged,
 }) {
   final index = items.indexWhere((e) => e.value == value);
 
   return ListTile(
     title: title,
-    subtitle: items[index]?.child,
+    subtitle: items[index].child,
     onTap: () {
       showDialog(
         context: context,
@@ -23,17 +23,14 @@ Widget selectListTile<T>(
           return SimpleDialog(
             title: title,
             children: items
-                .map((e) => RadioListTile<T>(
+                .map((e) => RadioListTile<T?>(
                       key: e.key,
                       value: e.value,
-                      groupValue: items[index]?.value,
+                      groupValue: items[index].value,
                       title: e.child,
                       onChanged: (value) {
-                        if (e.onTap != null) {
-                          e.onTap();
-                        }
-
-                        onChanged(value);
+                        e.onTap?.call();
+                        if (value != null) onChanged(value);
                         Navigator.pop(context);
                       },
                     ))

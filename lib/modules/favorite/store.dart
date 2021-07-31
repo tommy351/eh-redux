@@ -1,7 +1,6 @@
 import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:eh_redux/services/ehentai.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 
 part 'store.g.dart';
@@ -10,10 +9,9 @@ class FavoriteStore = _FavoriteStoreBase with _$FavoriteStore;
 
 abstract class _FavoriteStoreBase with Store {
   _FavoriteStoreBase({
-    @required this.client,
-    @required this.gallery,
-  })  : assert(client != null),
-        assert(gallery != null);
+    required this.client,
+    required this.gallery,
+  });
 
   static const _popupPath = '/gallerypopups.php';
 
@@ -32,7 +30,7 @@ abstract class _FavoriteStoreBase with Store {
   ObservableMap<String, String> names = ObservableMap();
 
   @observable
-  String index;
+  String? index;
 
   @observable
   bool loading = false;
@@ -64,20 +62,21 @@ abstract class _FavoriteStoreBase with Store {
       final inputs = res.document.querySelectorAll('input[name="favcat"]');
 
       for (final element in inputs) {
-        final value = element.attributes['value'];
+        final value = element.attributes['value'] ?? '';
 
         if (value == 'favdel') {
           canDelete = true;
         } else {
           final checked = element.attributes.containsKey('checked');
-          final label = element.parent.parent.text;
+          final label = element.parent?.parent?.text ?? '';
 
           if (checked) index = value;
           names[value] = label.trim();
         }
       }
 
-      note.text = res.document.querySelector('textarea[name="favnote"]')?.text;
+      note.text =
+          res.document.querySelector('textarea[name="favnote"]')?.text ?? '';
       loaded = true;
     } finally {
       loading = false;

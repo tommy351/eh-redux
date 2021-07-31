@@ -1,9 +1,9 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/check_update/store.dart';
 import 'package:eh_redux/modules/check_update/types.dart';
 import 'package:eh_redux/utils/launch.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
@@ -16,7 +16,7 @@ enum _PopupAction {
 }
 
 class CheckUpdateScreen extends StatefulWidget {
-  const CheckUpdateScreen({Key key}) : super(key: key);
+  const CheckUpdateScreen({Key? key}) : super(key: key);
 
   static String route = '/checkUpdate';
 
@@ -25,7 +25,7 @@ class CheckUpdateScreen extends StatefulWidget {
 }
 
 class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
-  CheckUpdateStore _store;
+  late CheckUpdateStore _store;
 
   @override
   void initState() {
@@ -40,20 +40,21 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
       child: Observer(
         builder: (context) {
           final actions = <Widget>[];
+          final value = _store.releaseFuture?.value;
 
-          if (_store.releaseFuture.value != null) {
+          if (value != null) {
             actions.add(PopupMenuButton<_PopupAction>(
               onSelected: (action) {
                 switch (action) {
                   case _PopupAction.openInBrowser:
-                    tryLaunch(_store.releaseFuture.value.htmlUrl);
+                    tryLaunch(value.htmlUrl);
                     break;
                 }
               },
               itemBuilder: (context) => [
                 PopupMenuItem(
                   value: _PopupAction.openInBrowser,
-                  child: Text(AppLocalizations.of(context)
+                  child: Text(AppLocalizations.of(context)!
                       .checkUpdateActionOpenInBrowser),
                 ),
               ],
@@ -62,7 +63,7 @@ class _CheckUpdateScreenState extends State<CheckUpdateScreen> {
 
           return Scaffold(
             appBar: AppBar(
-              title: Text(AppLocalizations.of(context).checkUpdateScreenTitle),
+              title: Text(AppLocalizations.of(context)!.checkUpdateScreenTitle),
               actions: actions,
             ),
             body: const _Body(),
@@ -84,7 +85,9 @@ Widget _body(BuildContext context) {
       top: false,
       child: Observer(
         builder: (context) {
-          if (store.status == UpdateStatus.pending) {
+          final release = store.releaseFuture?.value;
+
+          if (store.status == UpdateStatus.pending || release == null) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -92,11 +95,10 @@ Widget _body(BuildContext context) {
 
           if (store.status == UpdateStatus.failed) {
             return Center(
-              child: Text(AppLocalizations.of(context).checkUpdateErrorMessage),
+              child:
+                  Text(AppLocalizations.of(context)!.checkUpdateErrorMessage),
             );
           }
-
-          final release = store.releaseFuture.value;
 
           return Column(
             children: [
@@ -133,10 +135,10 @@ Widget _downloadButton(BuildContext context) {
     builder: (context) {
       final asset = store.asset;
 
-      if (asset == null || store.status != UpdateStatus.canUpdate) {
+      if (store.status != UpdateStatus.canUpdate || asset == null) {
         return TextButton(
           onPressed: null,
-          child: Text(AppLocalizations.of(context).checkUpdateUpToDate),
+          child: Text(AppLocalizations.of(context)!.checkUpdateUpToDate),
         );
       }
 
@@ -146,7 +148,7 @@ Widget _downloadButton(BuildContext context) {
         },
         icon: const Icon(Icons.file_download),
         label: Text(
-          AppLocalizations.of(context)
+          AppLocalizations.of(context)!
               .checkUpdateDownloadButtonLabel(filesize(asset.size)),
         ),
       );

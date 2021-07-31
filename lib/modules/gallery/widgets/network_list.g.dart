@@ -7,14 +7,14 @@ part of 'network_list.dart';
 // **************************************************************************
 
 class _Placeholder extends StatelessWidget {
-  const _Placeholder({Key key}) : super(key: key);
+  const _Placeholder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => _placeholder(_context);
 }
 
 class _Footer extends StatelessWidget {
-  const _Footer({Key key}) : super(key: key);
+  const _Footer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => _footer(_context);

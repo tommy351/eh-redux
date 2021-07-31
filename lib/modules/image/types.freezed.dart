@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'types.dart';
 
@@ -9,15 +9,15 @@ part of 'types.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$ImageIdTearOff {
   const _$ImageIdTearOff();
 
-// ignore: unused_element
   _ImageId call(
-      {@required GalleryId galleryId,
-      @required int page,
-      @required String key}) {
+      {required GalleryId galleryId, required int page, required String key}) {
     return _ImageId(
       galleryId: galleryId,
       page: page,
@@ -27,16 +27,16 @@ class _$ImageIdTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $ImageId = _$ImageIdTearOff();
 
 /// @nodoc
 mixin _$ImageId {
-  GalleryId get galleryId;
-  int get page;
-  String get key;
+  GalleryId get galleryId => throw _privateConstructorUsedError;
+  int get page => throw _privateConstructorUsedError;
+  String get key => throw _privateConstructorUsedError;
 
-  $ImageIdCopyWith<ImageId> get copyWith;
+  @JsonKey(ignore: true)
+  $ImageIdCopyWith<ImageId> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -58,23 +58,28 @@ class _$ImageIdCopyWithImpl<$Res> implements $ImageIdCopyWith<$Res> {
 
   @override
   $Res call({
-    Object galleryId = freezed,
-    Object page = freezed,
-    Object key = freezed,
+    Object? galleryId = freezed,
+    Object? page = freezed,
+    Object? key = freezed,
   }) {
     return _then(_value.copyWith(
-      galleryId:
-          galleryId == freezed ? _value.galleryId : galleryId as GalleryId,
-      page: page == freezed ? _value.page : page as int,
-      key: key == freezed ? _value.key : key as String,
+      galleryId: galleryId == freezed
+          ? _value.galleryId
+          : galleryId // ignore: cast_nullable_to_non_nullable
+              as GalleryId,
+      page: page == freezed
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      key: key == freezed
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 
   @override
   $GalleryIdCopyWith<$Res> get galleryId {
-    if (_value.galleryId == null) {
-      return null;
-    }
     return $GalleryIdCopyWith<$Res>(_value.galleryId, (value) {
       return _then(_value.copyWith(galleryId: value));
     });
@@ -103,27 +108,32 @@ class __$ImageIdCopyWithImpl<$Res> extends _$ImageIdCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object galleryId = freezed,
-    Object page = freezed,
-    Object key = freezed,
+    Object? galleryId = freezed,
+    Object? page = freezed,
+    Object? key = freezed,
   }) {
     return _then(_ImageId(
-      galleryId:
-          galleryId == freezed ? _value.galleryId : galleryId as GalleryId,
-      page: page == freezed ? _value.page : page as int,
-      key: key == freezed ? _value.key : key as String,
+      galleryId: galleryId == freezed
+          ? _value.galleryId
+          : galleryId // ignore: cast_nullable_to_non_nullable
+              as GalleryId,
+      page: page == freezed
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      key: key == freezed
+          ? _value.key
+          : key // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_ImageId extends _ImageId {
-  const _$_ImageId(
-      {@required this.galleryId, @required this.page, @required this.key})
-      : assert(galleryId != null),
-        assert(page != null),
-        assert(key != null),
-        super._();
+  _$_ImageId({required this.galleryId, required this.page, required this.key})
+      : super._();
 
   @override
   final GalleryId galleryId;
@@ -157,39 +167,41 @@ class _$_ImageId extends _ImageId {
       const DeepCollectionEquality().hash(page) ^
       const DeepCollectionEquality().hash(key);
 
+  @JsonKey(ignore: true)
   @override
   _$ImageIdCopyWith<_ImageId> get copyWith =>
       __$ImageIdCopyWithImpl<_ImageId>(this, _$identity);
 }
 
 abstract class _ImageId extends ImageId {
-  const _ImageId._() : super._();
-  const factory _ImageId(
-      {@required GalleryId galleryId,
-      @required int page,
-      @required String key}) = _$_ImageId;
+  factory _ImageId(
+      {required GalleryId galleryId,
+      required int page,
+      required String key}) = _$_ImageId;
+  _ImageId._() : super._();
 
   @override
-  GalleryId get galleryId;
+  GalleryId get galleryId => throw _privateConstructorUsedError;
   @override
-  int get page;
+  int get page => throw _privateConstructorUsedError;
   @override
-  String get key;
+  String get key => throw _privateConstructorUsedError;
   @override
-  _$ImageIdCopyWith<_ImageId> get copyWith;
+  @JsonKey(ignore: true)
+  _$ImageIdCopyWith<_ImageId> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$GalleryImageTearOff {
   const _$GalleryImageTearOff();
 
-// ignore: unused_element
   NetworkGalleryImage network(
-      {@required ImageId id,
-      int width,
-      int height,
-      @required String url,
-      String reloadKey}) {
+      {required ImageId id,
+      required int width,
+      required int height,
+      required String url,
+      String? reloadKey}) {
     return NetworkGalleryImage(
       id: id,
       width: width,
@@ -199,12 +211,11 @@ class _$GalleryImageTearOff {
     );
   }
 
-// ignore: unused_element
   LocalGalleryImage local(
-      {@required ImageId id,
-      @required int width,
-      @required int height,
-      @required String path}) {
+      {required ImageId id,
+      required int width,
+      required int height,
+      required String path}) {
     return LocalGalleryImage(
       id: id,
       width: width,
@@ -215,42 +226,49 @@ class _$GalleryImageTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $GalleryImage = _$GalleryImageTearOff();
 
 /// @nodoc
 mixin _$GalleryImage {
-  ImageId get id;
-  int get width;
-  int get height;
+  ImageId get id => throw _privateConstructorUsedError;
+  int get width => throw _privateConstructorUsedError;
+  int get height => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required
-        Result network(
-            ImageId id, int width, int height, String url, String reloadKey),
-    @required Result local(ImageId id, int width, int height, String path),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            ImageId id, int width, int height, String url, String? reloadKey)
+        network,
+    required TResult Function(ImageId id, int width, int height, String path)
+        local,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result network(
-        ImageId id, int width, int height, String url, String reloadKey),
-    Result local(ImageId id, int width, int height, String path),
-    @required Result orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            ImageId id, int width, int height, String url, String? reloadKey)?
+        network,
+    TResult Function(ImageId id, int width, int height, String path)? local,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result network(NetworkGalleryImage value),
-    @required Result local(LocalGalleryImage value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(NetworkGalleryImage value) network,
+    required TResult Function(LocalGalleryImage value) local,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result network(NetworkGalleryImage value),
-    Result local(LocalGalleryImage value),
-    @required Result orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NetworkGalleryImage value)? network,
+    TResult Function(LocalGalleryImage value)? local,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 
-  $GalleryImageCopyWith<GalleryImage> get copyWith;
+  @JsonKey(ignore: true)
+  $GalleryImageCopyWith<GalleryImage> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -273,22 +291,28 @@ class _$GalleryImageCopyWithImpl<$Res> implements $GalleryImageCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object width = freezed,
-    Object height = freezed,
+    Object? id = freezed,
+    Object? width = freezed,
+    Object? height = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as ImageId,
-      width: width == freezed ? _value.width : width as int,
-      height: height == freezed ? _value.height : height as int,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as ImageId,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 
   @override
   $ImageIdCopyWith<$Res> get id {
-    if (_value.id == null) {
-      return null;
-    }
     return $ImageIdCopyWith<$Res>(_value.id, (value) {
       return _then(_value.copyWith(id: value));
     });
@@ -302,7 +326,7 @@ abstract class $NetworkGalleryImageCopyWith<$Res>
           NetworkGalleryImage value, $Res Function(NetworkGalleryImage) then) =
       _$NetworkGalleryImageCopyWithImpl<$Res>;
   @override
-  $Res call({ImageId id, int width, int height, String url, String reloadKey});
+  $Res call({ImageId id, int width, int height, String url, String? reloadKey});
 
   @override
   $ImageIdCopyWith<$Res> get id;
@@ -321,32 +345,46 @@ class _$NetworkGalleryImageCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object width = freezed,
-    Object height = freezed,
-    Object url = freezed,
-    Object reloadKey = freezed,
+    Object? id = freezed,
+    Object? width = freezed,
+    Object? height = freezed,
+    Object? url = freezed,
+    Object? reloadKey = freezed,
   }) {
     return _then(NetworkGalleryImage(
-      id: id == freezed ? _value.id : id as ImageId,
-      width: width == freezed ? _value.width : width as int,
-      height: height == freezed ? _value.height : height as int,
-      url: url == freezed ? _value.url : url as String,
-      reloadKey: reloadKey == freezed ? _value.reloadKey : reloadKey as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as ImageId,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      reloadKey: reloadKey == freezed
+          ? _value.reloadKey
+          : reloadKey // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$NetworkGalleryImage implements NetworkGalleryImage {
   const _$NetworkGalleryImage(
-      {@required this.id,
-      this.width,
-      this.height,
-      @required this.url,
-      this.reloadKey})
-      : assert(id != null),
-        assert(url != null);
+      {required this.id,
+      required this.width,
+      required this.height,
+      required this.url,
+      this.reloadKey});
 
   @override
   final ImageId id;
@@ -357,7 +395,7 @@ class _$NetworkGalleryImage implements NetworkGalleryImage {
   @override
   final String url;
   @override
-  final String reloadKey;
+  final String? reloadKey;
 
   @override
   String toString() {
@@ -390,32 +428,32 @@ class _$NetworkGalleryImage implements NetworkGalleryImage {
       const DeepCollectionEquality().hash(url) ^
       const DeepCollectionEquality().hash(reloadKey);
 
+  @JsonKey(ignore: true)
   @override
   $NetworkGalleryImageCopyWith<NetworkGalleryImage> get copyWith =>
       _$NetworkGalleryImageCopyWithImpl<NetworkGalleryImage>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required
-        Result network(
-            ImageId id, int width, int height, String url, String reloadKey),
-    @required Result local(ImageId id, int width, int height, String path),
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            ImageId id, int width, int height, String url, String? reloadKey)
+        network,
+    required TResult Function(ImageId id, int width, int height, String path)
+        local,
   }) {
-    assert(network != null);
-    assert(local != null);
     return network(id, width, height, url, reloadKey);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result network(
-        ImageId id, int width, int height, String url, String reloadKey),
-    Result local(ImageId id, int width, int height, String path),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            ImageId id, int width, int height, String url, String? reloadKey)?
+        network,
+    TResult Function(ImageId id, int width, int height, String path)? local,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (network != null) {
       return network(id, width, height, url, reloadKey);
     }
@@ -424,23 +462,20 @@ class _$NetworkGalleryImage implements NetworkGalleryImage {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result network(NetworkGalleryImage value),
-    @required Result local(LocalGalleryImage value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(NetworkGalleryImage value) network,
+    required TResult Function(LocalGalleryImage value) local,
   }) {
-    assert(network != null);
-    assert(local != null);
     return network(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result network(NetworkGalleryImage value),
-    Result local(LocalGalleryImage value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NetworkGalleryImage value)? network,
+    TResult Function(LocalGalleryImage value)? local,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (network != null) {
       return network(this);
     }
@@ -450,22 +485,24 @@ class _$NetworkGalleryImage implements NetworkGalleryImage {
 
 abstract class NetworkGalleryImage implements GalleryImage {
   const factory NetworkGalleryImage(
-      {@required ImageId id,
-      int width,
-      int height,
-      @required String url,
-      String reloadKey}) = _$NetworkGalleryImage;
+      {required ImageId id,
+      required int width,
+      required int height,
+      required String url,
+      String? reloadKey}) = _$NetworkGalleryImage;
 
   @override
-  ImageId get id;
+  ImageId get id => throw _privateConstructorUsedError;
   @override
-  int get width;
+  int get width => throw _privateConstructorUsedError;
   @override
-  int get height;
-  String get url;
-  String get reloadKey;
+  int get height => throw _privateConstructorUsedError;
+  String get url => throw _privateConstructorUsedError;
+  String? get reloadKey => throw _privateConstructorUsedError;
   @override
-  $NetworkGalleryImageCopyWith<NetworkGalleryImage> get copyWith;
+  @JsonKey(ignore: true)
+  $NetworkGalleryImageCopyWith<NetworkGalleryImage> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -494,31 +531,40 @@ class _$LocalGalleryImageCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object width = freezed,
-    Object height = freezed,
-    Object path = freezed,
+    Object? id = freezed,
+    Object? width = freezed,
+    Object? height = freezed,
+    Object? path = freezed,
   }) {
     return _then(LocalGalleryImage(
-      id: id == freezed ? _value.id : id as ImageId,
-      width: width == freezed ? _value.width : width as int,
-      height: height == freezed ? _value.height : height as int,
-      path: path == freezed ? _value.path : path as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as ImageId,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int,
+      path: path == freezed
+          ? _value.path
+          : path // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$LocalGalleryImage implements LocalGalleryImage {
   const _$LocalGalleryImage(
-      {@required this.id,
-      @required this.width,
-      @required this.height,
-      @required this.path})
-      : assert(id != null),
-        assert(width != null),
-        assert(height != null),
-        assert(path != null);
+      {required this.id,
+      required this.width,
+      required this.height,
+      required this.path});
 
   @override
   final ImageId id;
@@ -556,32 +602,32 @@ class _$LocalGalleryImage implements LocalGalleryImage {
       const DeepCollectionEquality().hash(height) ^
       const DeepCollectionEquality().hash(path);
 
+  @JsonKey(ignore: true)
   @override
   $LocalGalleryImageCopyWith<LocalGalleryImage> get copyWith =>
       _$LocalGalleryImageCopyWithImpl<LocalGalleryImage>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required
-        Result network(
-            ImageId id, int width, int height, String url, String reloadKey),
-    @required Result local(ImageId id, int width, int height, String path),
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            ImageId id, int width, int height, String url, String? reloadKey)
+        network,
+    required TResult Function(ImageId id, int width, int height, String path)
+        local,
   }) {
-    assert(network != null);
-    assert(local != null);
     return local(id, width, height, path);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result network(
-        ImageId id, int width, int height, String url, String reloadKey),
-    Result local(ImageId id, int width, int height, String path),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            ImageId id, int width, int height, String url, String? reloadKey)?
+        network,
+    TResult Function(ImageId id, int width, int height, String path)? local,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (local != null) {
       return local(id, width, height, path);
     }
@@ -590,23 +636,20 @@ class _$LocalGalleryImage implements LocalGalleryImage {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result network(NetworkGalleryImage value),
-    @required Result local(LocalGalleryImage value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(NetworkGalleryImage value) network,
+    required TResult Function(LocalGalleryImage value) local,
   }) {
-    assert(network != null);
-    assert(local != null);
     return local(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result network(NetworkGalleryImage value),
-    Result local(LocalGalleryImage value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NetworkGalleryImage value)? network,
+    TResult Function(LocalGalleryImage value)? local,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (local != null) {
       return local(this);
     }
@@ -616,18 +659,20 @@ class _$LocalGalleryImage implements LocalGalleryImage {
 
 abstract class LocalGalleryImage implements GalleryImage {
   const factory LocalGalleryImage(
-      {@required ImageId id,
-      @required int width,
-      @required int height,
-      @required String path}) = _$LocalGalleryImage;
+      {required ImageId id,
+      required int width,
+      required int height,
+      required String path}) = _$LocalGalleryImage;
 
   @override
-  ImageId get id;
+  ImageId get id => throw _privateConstructorUsedError;
   @override
-  int get width;
+  int get width => throw _privateConstructorUsedError;
   @override
-  int get height;
-  String get path;
+  int get height => throw _privateConstructorUsedError;
+  String get path => throw _privateConstructorUsedError;
   @override
-  $LocalGalleryImageCopyWith<LocalGalleryImage> get copyWith;
+  @JsonKey(ignore: true)
+  $LocalGalleryImageCopyWith<LocalGalleryImage> get copyWith =>
+      throw _privateConstructorUsedError;
 }

@@ -1,9 +1,9 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/image/store.dart';
 import 'package:eh_redux/modules/image/types.dart';
 import 'package:eh_redux/modules/setting/widgets/screen.dart';
 import 'package:eh_redux/utils/launch.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +19,7 @@ enum _PopupAction {
 
 class ImageAppBar extends StatelessWidget implements PreferredSizeWidget {
   ImageAppBar({
-    Key key,
+    Key? key,
     this.padding = EdgeInsets.zero,
   })  : preferredSize = Size.fromHeight(56 + padding.top),
         super(key: key);
@@ -52,7 +52,7 @@ class ImageAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  List<Widget> _getActions(GalleryImage image) {
+  List<Widget> _getActions(GalleryImage? image) {
     if (image == null) return [];
 
     return [
@@ -65,13 +65,13 @@ class ImageAppBar extends StatelessWidget implements PreferredSizeWidget {
 @swidget
 Widget _shareButton(
   BuildContext context, {
-  @required GalleryImage image,
+  required GalleryImage image,
 }) {
   final store = Provider.of<ImageStore>(context);
 
   return IconButton(
     icon: const Icon(Icons.share),
-    tooltip: AppLocalizations.of(context).shareButtonTooltip,
+    tooltip: AppLocalizations.of(context)!.shareButtonTooltip,
     onPressed: () {
       store.share(image);
     },
@@ -81,7 +81,7 @@ Widget _shareButton(
 @swidget
 Widget _popupButton(
   BuildContext context, {
-  @required GalleryImage image,
+  required GalleryImage image,
 }) {
   final store = Provider.of<ImageStore>(context);
 
@@ -100,11 +100,11 @@ Widget _popupButton(
     itemBuilder: (context) => [
       PopupMenuItem(
         value: _PopupAction.settings,
-        child: Text(AppLocalizations.of(context).imageActionSettings),
+        child: Text(AppLocalizations.of(context)!.imageActionSettings),
       ),
       PopupMenuItem(
         value: _PopupAction.openInBrowser,
-        child: Text(AppLocalizations.of(context).imageActionOpenInBrowser),
+        child: Text(AppLocalizations.of(context)!.imageActionOpenInBrowser),
       ),
     ],
   );

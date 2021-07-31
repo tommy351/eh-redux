@@ -8,10 +8,10 @@ part 'square_thumbnail.g.dart';
 @swidget
 Widget gallerySquareThumbnail(
   BuildContext context, {
-  @required int galleryId,
-  @required String fallbackUrl,
-  double size,
-  BorderRadius borderRadius,
+  required int galleryId,
+  required String fallbackUrl,
+  double? size,
+  BorderRadius? borderRadius,
 }) {
   return AspectRatio(
     aspectRatio: 1,

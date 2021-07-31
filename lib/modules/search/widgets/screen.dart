@@ -17,10 +17,9 @@ part 'screen.g.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({
-    Key key,
+    Key? key,
     this.arguments = const SearchArguments(),
-  })  : assert(arguments != null),
-        super(key: key);
+  }) : super(key: key);
 
   static const route = '/search';
 
@@ -31,7 +30,7 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  SearchStore _store;
+  late SearchStore _store;
 
   @override
   void initState() {

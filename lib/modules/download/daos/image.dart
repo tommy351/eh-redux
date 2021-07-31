@@ -27,13 +27,13 @@ class DownloadedImagesDao extends DatabaseAccessor<Database>
 
   static final _log = Logger('DownloadedImagesDao');
 
-  Future<DownloadedImageEntry> getEntry(int galleryId, int page) async {
+  Future<DownloadedImageEntry?> getEntry(int galleryId, int page) async {
     _log.fine('getEntry: galleryId=$galleryId, page=$page');
     final query = select(downloadedImages)
       ..where((t) => t.galleryId.equals(galleryId) & t.page.equals(page))
       ..limit(1);
 
-    return query.getSingle();
+    return query.getSingleOrNull();
   }
 
   Future<void> upsertEntry(DownloadedImageEntry entry) async {
@@ -46,7 +46,7 @@ class DownloadedImagesDao extends DatabaseAccessor<Database>
     final query = delete(downloadedImages)
       ..where((t) => t.galleryId.equals(galleryId) & t.page.equals(page));
 
-    return query.go();
+    await query.go();
   }
 
   Future<List<DownloadedImageEntry>> listByGalleryId(int galleryId) async {
@@ -65,6 +65,6 @@ class DownloadedImagesDao extends DatabaseAccessor<Database>
     final query = delete(downloadedImages)
       ..where((t) => t.galleryId.equals(galleryId));
 
-    return query.go();
+    await query.go();
   }
 }

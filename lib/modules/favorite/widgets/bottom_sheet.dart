@@ -1,4 +1,3 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/bottom_sheet_container.dart';
 import 'package:eh_redux/modules/common/widgets/full_width.dart';
 import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
@@ -6,6 +5,7 @@ import 'package:eh_redux/modules/favorite/store.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:eh_redux/services/ehentai.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:provider/provider.dart';
@@ -16,10 +16,9 @@ part 'bottom_sheet.g.dart';
 
 class FavoriteBottomSheet extends StatefulWidget {
   const FavoriteBottomSheet({
-    Key key,
-    @required this.gallery,
-  })  : assert(gallery != null),
-        super(key: key);
+    Key? key,
+    required this.gallery,
+  }) : super(key: key);
 
   final Gallery gallery;
 
@@ -28,7 +27,7 @@ class FavoriteBottomSheet extends StatefulWidget {
 }
 
 class _FavoriteBottomSheetState extends State<FavoriteBottomSheet> {
-  FavoriteStore _store;
+  late FavoriteStore _store;
 
   @override
   void initState() {
@@ -114,12 +113,14 @@ Widget _favoriteSelect(BuildContext context) {
       return DropdownButtonFormField<String>(
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
-          hintText: AppLocalizations.of(context).favoriteFavoritesPlaceholder,
-          labelText: AppLocalizations.of(context).favoriteFavoritesPlaceholder,
+          hintText: AppLocalizations.of(context)!.favoriteFavoritesPlaceholder,
+          labelText: AppLocalizations.of(context)!.favoriteFavoritesPlaceholder,
         ),
         isExpanded: true,
         value: store.index,
-        onChanged: store.setIndex,
+        onChanged: (value) {
+          if (value != null) store.setIndex(value);
+        },
         items: store.names.entries
             .map((e) => DropdownMenuItem<String>(
                   value: e.key,
@@ -147,8 +148,8 @@ Widget _noteField(BuildContext context) {
     maxLength: 200,
     controller: store.note,
     decoration: InputDecoration(
-      hintText: AppLocalizations.of(context).favoriteNotePlaceholder,
-      labelText: AppLocalizations.of(context).favoriteNotePlaceholder,
+      hintText: AppLocalizations.of(context)!.favoriteNotePlaceholder,
+      labelText: AppLocalizations.of(context)!.favoriteNotePlaceholder,
       border: const OutlineInputBorder(),
     ),
   );
@@ -168,7 +169,7 @@ Widget _addButton(BuildContext context) {
         Navigator.pop(context);
       },
       icon: const Icon(Icons.favorite),
-      label: Text(AppLocalizations.of(context).favoriteAddButtonLabel),
+      label: Text(AppLocalizations.of(context)!.favoriteAddButtonLabel),
     ),
   );
 }
@@ -186,18 +187,19 @@ Widget _deleteButton(BuildContext context) {
         child: TextButton.icon(
           onPressed: () async {
             final confirmed = await showDialog<bool>(
-              context: context,
-              builder: (context) {
-                return _DeleteConfirm(store: store);
-              },
-            );
+                  context: context,
+                  builder: (context) {
+                    return _DeleteConfirm(store: store);
+                  },
+                ) ??
+                false;
 
             if (confirmed) {
               Navigator.pop(context);
             }
           },
           icon: const Icon(Icons.delete),
-          label: Text(AppLocalizations.of(context).favoriteDeleteButtonLabel),
+          label: Text(AppLocalizations.of(context)!.favoriteDeleteButtonLabel),
           style: TextButton.styleFrom(
             primary: theme.errorColor,
           ),
@@ -210,17 +212,17 @@ Widget _deleteButton(BuildContext context) {
 @swidget
 Widget _deleteConfirm(
   BuildContext context, {
-  @required FavoriteStore store,
+  required FavoriteStore store,
 }) {
   return AlertDialog(
-    title: Text(AppLocalizations.of(context).favoriteDeleteDialogTitle),
-    content: Text(AppLocalizations.of(context).favoriteDeleteDialogContent),
+    title: Text(AppLocalizations.of(context)!.favoriteDeleteDialogTitle),
+    content: Text(AppLocalizations.of(context)!.favoriteDeleteDialogContent),
     actions: <Widget>[
       TextButton(
         onPressed: () {
           Navigator.pop(context, false);
         },
-        child: Text(AppLocalizations.of(context).cancelButtonLabel),
+        child: Text(AppLocalizations.of(context)!.cancelButtonLabel),
       ),
       TextButton(
         onPressed: () async {
@@ -230,7 +232,7 @@ Widget _deleteConfirm(
           );
           Navigator.pop(context, true);
         },
-        child: Text(AppLocalizations.of(context).removeButtonLabel),
+        child: Text(AppLocalizations.of(context)!.removeButtonLabel),
       ),
     ],
   );

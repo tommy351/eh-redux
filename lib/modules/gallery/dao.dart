@@ -34,11 +34,11 @@ class GalleriesDao extends DatabaseAccessor<Database> with _$GalleriesDaoMixin {
 
   static final _log = Logger('GalleriesDao');
 
-  Future<GalleryEntry> getEntry(int id) async {
+  Future<GalleryEntry?> getEntry(int id) async {
     _log.fine('getEntry: $id');
     final query = select(galleries)..where((t) => t.id.equals(id));
 
-    return query.getSingle();
+    return query.getSingleOrNull();
   }
 
   Future<void> upsertEntry(GalleryEntry entry) async {
@@ -46,20 +46,23 @@ class GalleriesDao extends DatabaseAccessor<Database> with _$GalleriesDaoMixin {
     await into(galleries).insertOnConflictUpdate(entry);
   }
 
-  Future<GalleryReadPosition> getReadPosition(int id) async {
+  Future<GalleryReadPosition?> getReadPosition(int id) async {
     _log.fine('getReadPosition: $id');
     final query = select(galleries)..where((t) => t.id.equals(id));
 
     return query.map((e) {
-      if (e != null && e.lastReadPage != null && e.lastReadAt != null) {
+      final page = e.lastReadPage;
+      final time = e.lastReadAt;
+
+      if (page != null && time != null) {
         return GalleryReadPosition(
-          page: e.lastReadPage,
-          time: e.lastReadAt,
+          page: page,
+          time: time,
         );
       }
 
       return null;
-    }).getSingle();
+    }).getSingleOrNull();
   }
 
   Future<void> updateReadPosition(int id, int page) async {

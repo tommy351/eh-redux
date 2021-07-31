@@ -8,10 +8,9 @@ import 'package:provider/provider.dart';
 
 class OrientationSetter extends StatefulWidget {
   const OrientationSetter({
-    Key key,
-    @required this.child,
-  })  : assert(child != null),
-        super(key: key);
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   final Widget child;
 
@@ -20,7 +19,7 @@ class OrientationSetter extends StatefulWidget {
 }
 
 class _OrientationSetterState extends State<OrientationSetter> {
-  StreamSubscription<OrientationSetting> _subscription;
+  late StreamSubscription<OrientationSetting> _subscription;
 
   @override
   void initState() {

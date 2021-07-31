@@ -7,10 +7,9 @@ import 'package:provider/provider.dart';
 
 class SystemOverlaySetter extends StatefulWidget {
   const SystemOverlaySetter({
-    Key key,
-    @required this.child,
-  })  : assert(child != null),
-        super(key: key);
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   final Widget child;
 
@@ -19,7 +18,7 @@ class SystemOverlaySetter extends StatefulWidget {
 }
 
 class _SystemOverlaySetterState extends State<SystemOverlaySetter> {
-  ReactionDisposer _dispose;
+  late ReactionDisposer _dispose;
 
   @override
   void initState() {

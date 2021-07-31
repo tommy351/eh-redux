@@ -121,7 +121,7 @@ mixin _$SearchStore on _SearchStoreBase, Store {
   }
 
   @override
-  void setAdvancedOption({@required String key, @required bool value}) {
+  void setAdvancedOption({required String key, required bool value}) {
     final _$actionInfo = _$_SearchStoreBaseActionController.startAction(
         name: '_SearchStoreBase.setAdvancedOption');
     try {

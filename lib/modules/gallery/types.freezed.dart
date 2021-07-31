@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'types.dart';
 
@@ -9,12 +9,14 @@ part of 'types.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$GalleryIdTearOff {
   const _$GalleryIdTearOff();
 
-// ignore: unused_element
-  _GalleryId call({@required int id, @required String token}) {
+  _GalleryId call({required int id, required String token}) {
     return _GalleryId(
       id: id,
       token: token,
@@ -23,15 +25,16 @@ class _$GalleryIdTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $GalleryId = _$GalleryIdTearOff();
 
 /// @nodoc
 mixin _$GalleryId {
-  int get id;
-  String get token;
+  int get id => throw _privateConstructorUsedError;
+  String get token => throw _privateConstructorUsedError;
 
-  $GalleryIdCopyWith<GalleryId> get copyWith;
+  @JsonKey(ignore: true)
+  $GalleryIdCopyWith<GalleryId> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -51,12 +54,18 @@ class _$GalleryIdCopyWithImpl<$Res> implements $GalleryIdCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object token = freezed,
+    Object? id = freezed,
+    Object? token = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as int,
-      token: token == freezed ? _value.token : token as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -81,22 +90,26 @@ class __$GalleryIdCopyWithImpl<$Res> extends _$GalleryIdCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object token = freezed,
+    Object? id = freezed,
+    Object? token = freezed,
   }) {
     return _then(_GalleryId(
-      id: id == freezed ? _value.id : id as int,
-      token: token == freezed ? _value.token : token as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_GalleryId extends _GalleryId {
-  const _$_GalleryId({@required this.id, @required this.token})
-      : assert(id != null),
-        assert(token != null),
-        super._();
+  const _$_GalleryId({required this.id, required this.token}) : super._();
 
   @override
   final int id;
@@ -124,43 +137,45 @@ class _$_GalleryId extends _GalleryId {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(token);
 
+  @JsonKey(ignore: true)
   @override
   _$GalleryIdCopyWith<_GalleryId> get copyWith =>
       __$GalleryIdCopyWithImpl<_GalleryId>(this, _$identity);
 }
 
 abstract class _GalleryId extends GalleryId {
-  const _GalleryId._() : super._();
-  const factory _GalleryId({@required int id, @required String token}) =
+  const factory _GalleryId({required int id, required String token}) =
       _$_GalleryId;
+  const _GalleryId._() : super._();
 
   @override
-  int get id;
+  int get id => throw _privateConstructorUsedError;
   @override
-  String get token;
+  String get token => throw _privateConstructorUsedError;
   @override
-  _$GalleryIdCopyWith<_GalleryId> get copyWith;
+  @JsonKey(ignore: true)
+  _$GalleryIdCopyWith<_GalleryId> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$GalleryTearOff {
   const _$GalleryTearOff();
 
-// ignore: unused_element
   _Gallery call(
-      {@required int id,
-      @required String token,
-      @required String title,
-      @required String titleJpn,
-      @required String category,
-      @required String thumbnail,
-      @required String uploader,
-      @required int fileCount,
-      @required int fileSize,
-      @required bool expunged,
-      @required double rating,
-      @required BuiltList<GalleryTag> tags,
-      @required DateTime posted}) {
+      {required int id,
+      required String token,
+      required String title,
+      required String titleJpn,
+      required String category,
+      required String thumbnail,
+      required String uploader,
+      required int fileCount,
+      required int fileSize,
+      required bool expunged,
+      required double rating,
+      required BuiltList<GalleryTag> tags,
+      required DateTime posted}) {
     return _Gallery(
       id: id,
       token: token,
@@ -180,26 +195,26 @@ class _$GalleryTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $Gallery = _$GalleryTearOff();
 
 /// @nodoc
 mixin _$Gallery {
-  int get id;
-  String get token;
-  String get title;
-  String get titleJpn;
-  String get category;
-  String get thumbnail;
-  String get uploader;
-  int get fileCount;
-  int get fileSize;
-  bool get expunged;
-  double get rating;
-  BuiltList<GalleryTag> get tags;
-  DateTime get posted;
+  int get id => throw _privateConstructorUsedError;
+  String get token => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String get titleJpn => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
+  String get thumbnail => throw _privateConstructorUsedError;
+  String get uploader => throw _privateConstructorUsedError;
+  int get fileCount => throw _privateConstructorUsedError;
+  int get fileSize => throw _privateConstructorUsedError;
+  bool get expunged => throw _privateConstructorUsedError;
+  double get rating => throw _privateConstructorUsedError;
+  BuiltList<GalleryTag> get tags => throw _privateConstructorUsedError;
+  DateTime get posted => throw _privateConstructorUsedError;
 
-  $GalleryCopyWith<Gallery> get copyWith;
+  @JsonKey(ignore: true)
+  $GalleryCopyWith<Gallery> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -232,34 +247,73 @@ class _$GalleryCopyWithImpl<$Res> implements $GalleryCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object token = freezed,
-    Object title = freezed,
-    Object titleJpn = freezed,
-    Object category = freezed,
-    Object thumbnail = freezed,
-    Object uploader = freezed,
-    Object fileCount = freezed,
-    Object fileSize = freezed,
-    Object expunged = freezed,
-    Object rating = freezed,
-    Object tags = freezed,
-    Object posted = freezed,
+    Object? id = freezed,
+    Object? token = freezed,
+    Object? title = freezed,
+    Object? titleJpn = freezed,
+    Object? category = freezed,
+    Object? thumbnail = freezed,
+    Object? uploader = freezed,
+    Object? fileCount = freezed,
+    Object? fileSize = freezed,
+    Object? expunged = freezed,
+    Object? rating = freezed,
+    Object? tags = freezed,
+    Object? posted = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as int,
-      token: token == freezed ? _value.token : token as String,
-      title: title == freezed ? _value.title : title as String,
-      titleJpn: titleJpn == freezed ? _value.titleJpn : titleJpn as String,
-      category: category == freezed ? _value.category : category as String,
-      thumbnail: thumbnail == freezed ? _value.thumbnail : thumbnail as String,
-      uploader: uploader == freezed ? _value.uploader : uploader as String,
-      fileCount: fileCount == freezed ? _value.fileCount : fileCount as int,
-      fileSize: fileSize == freezed ? _value.fileSize : fileSize as int,
-      expunged: expunged == freezed ? _value.expunged : expunged as bool,
-      rating: rating == freezed ? _value.rating : rating as double,
-      tags: tags == freezed ? _value.tags : tags as BuiltList<GalleryTag>,
-      posted: posted == freezed ? _value.posted : posted as DateTime,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      titleJpn: titleJpn == freezed
+          ? _value.titleJpn
+          : titleJpn // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      thumbnail: thumbnail == freezed
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String,
+      uploader: uploader == freezed
+          ? _value.uploader
+          : uploader // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileCount: fileCount == freezed
+          ? _value.fileCount
+          : fileCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      fileSize: fileSize == freezed
+          ? _value.fileSize
+          : fileSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      expunged: expunged == freezed
+          ? _value.expunged
+          : expunged // ignore: cast_nullable_to_non_nullable
+              as bool,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as BuiltList<GalleryTag>,
+      posted: posted == freezed
+          ? _value.posted
+          : posted // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -296,68 +350,95 @@ class __$GalleryCopyWithImpl<$Res> extends _$GalleryCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object token = freezed,
-    Object title = freezed,
-    Object titleJpn = freezed,
-    Object category = freezed,
-    Object thumbnail = freezed,
-    Object uploader = freezed,
-    Object fileCount = freezed,
-    Object fileSize = freezed,
-    Object expunged = freezed,
-    Object rating = freezed,
-    Object tags = freezed,
-    Object posted = freezed,
+    Object? id = freezed,
+    Object? token = freezed,
+    Object? title = freezed,
+    Object? titleJpn = freezed,
+    Object? category = freezed,
+    Object? thumbnail = freezed,
+    Object? uploader = freezed,
+    Object? fileCount = freezed,
+    Object? fileSize = freezed,
+    Object? expunged = freezed,
+    Object? rating = freezed,
+    Object? tags = freezed,
+    Object? posted = freezed,
   }) {
     return _then(_Gallery(
-      id: id == freezed ? _value.id : id as int,
-      token: token == freezed ? _value.token : token as String,
-      title: title == freezed ? _value.title : title as String,
-      titleJpn: titleJpn == freezed ? _value.titleJpn : titleJpn as String,
-      category: category == freezed ? _value.category : category as String,
-      thumbnail: thumbnail == freezed ? _value.thumbnail : thumbnail as String,
-      uploader: uploader == freezed ? _value.uploader : uploader as String,
-      fileCount: fileCount == freezed ? _value.fileCount : fileCount as int,
-      fileSize: fileSize == freezed ? _value.fileSize : fileSize as int,
-      expunged: expunged == freezed ? _value.expunged : expunged as bool,
-      rating: rating == freezed ? _value.rating : rating as double,
-      tags: tags == freezed ? _value.tags : tags as BuiltList<GalleryTag>,
-      posted: posted == freezed ? _value.posted : posted as DateTime,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      titleJpn: titleJpn == freezed
+          ? _value.titleJpn
+          : titleJpn // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      thumbnail: thumbnail == freezed
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String,
+      uploader: uploader == freezed
+          ? _value.uploader
+          : uploader // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileCount: fileCount == freezed
+          ? _value.fileCount
+          : fileCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      fileSize: fileSize == freezed
+          ? _value.fileSize
+          : fileSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      expunged: expunged == freezed
+          ? _value.expunged
+          : expunged // ignore: cast_nullable_to_non_nullable
+              as bool,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as BuiltList<GalleryTag>,
+      posted: posted == freezed
+          ? _value.posted
+          : posted // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_Gallery extends _Gallery {
   const _$_Gallery(
-      {@required this.id,
-      @required this.token,
-      @required this.title,
-      @required this.titleJpn,
-      @required this.category,
-      @required this.thumbnail,
-      @required this.uploader,
-      @required this.fileCount,
-      @required this.fileSize,
-      @required this.expunged,
-      @required this.rating,
-      @required this.tags,
-      @required this.posted})
-      : assert(id != null),
-        assert(token != null),
-        assert(title != null),
-        assert(titleJpn != null),
-        assert(category != null),
-        assert(thumbnail != null),
-        assert(uploader != null),
-        assert(fileCount != null),
-        assert(fileSize != null),
-        assert(expunged != null),
-        assert(rating != null),
-        assert(tags != null),
-        assert(posted != null),
-        super._();
+      {required this.id,
+      required this.token,
+      required this.title,
+      required this.titleJpn,
+      required this.category,
+      required this.thumbnail,
+      required this.uploader,
+      required this.fileCount,
+      required this.fileSize,
+      required this.expunged,
+      required this.rating,
+      required this.tags,
+      required this.posted})
+      : super._();
 
   @override
   final int id;
@@ -447,64 +528,66 @@ class _$_Gallery extends _Gallery {
       const DeepCollectionEquality().hash(tags) ^
       const DeepCollectionEquality().hash(posted);
 
+  @JsonKey(ignore: true)
   @override
   _$GalleryCopyWith<_Gallery> get copyWith =>
       __$GalleryCopyWithImpl<_Gallery>(this, _$identity);
 }
 
 abstract class _Gallery extends Gallery {
-  const _Gallery._() : super._();
   const factory _Gallery(
-      {@required int id,
-      @required String token,
-      @required String title,
-      @required String titleJpn,
-      @required String category,
-      @required String thumbnail,
-      @required String uploader,
-      @required int fileCount,
-      @required int fileSize,
-      @required bool expunged,
-      @required double rating,
-      @required BuiltList<GalleryTag> tags,
-      @required DateTime posted}) = _$_Gallery;
+      {required int id,
+      required String token,
+      required String title,
+      required String titleJpn,
+      required String category,
+      required String thumbnail,
+      required String uploader,
+      required int fileCount,
+      required int fileSize,
+      required bool expunged,
+      required double rating,
+      required BuiltList<GalleryTag> tags,
+      required DateTime posted}) = _$_Gallery;
+  const _Gallery._() : super._();
 
   @override
-  int get id;
+  int get id => throw _privateConstructorUsedError;
   @override
-  String get token;
+  String get token => throw _privateConstructorUsedError;
   @override
-  String get title;
+  String get title => throw _privateConstructorUsedError;
   @override
-  String get titleJpn;
+  String get titleJpn => throw _privateConstructorUsedError;
   @override
-  String get category;
+  String get category => throw _privateConstructorUsedError;
   @override
-  String get thumbnail;
+  String get thumbnail => throw _privateConstructorUsedError;
   @override
-  String get uploader;
+  String get uploader => throw _privateConstructorUsedError;
   @override
-  int get fileCount;
+  int get fileCount => throw _privateConstructorUsedError;
   @override
-  int get fileSize;
+  int get fileSize => throw _privateConstructorUsedError;
   @override
-  bool get expunged;
+  bool get expunged => throw _privateConstructorUsedError;
   @override
-  double get rating;
+  double get rating => throw _privateConstructorUsedError;
   @override
-  BuiltList<GalleryTag> get tags;
+  BuiltList<GalleryTag> get tags => throw _privateConstructorUsedError;
   @override
-  DateTime get posted;
+  DateTime get posted => throw _privateConstructorUsedError;
   @override
-  _$GalleryCopyWith<_Gallery> get copyWith;
+  @JsonKey(ignore: true)
+  _$GalleryCopyWith<_Gallery> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$GalleryTagTearOff {
   const _$GalleryTagTearOff();
 
-// ignore: unused_element
-  _GalleryTag call({String namespace = '', @required String tag}) {
+  _GalleryTag call({String namespace = '', required String tag}) {
     return _GalleryTag(
       namespace: namespace,
       tag: tag,
@@ -513,15 +596,16 @@ class _$GalleryTagTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $GalleryTag = _$GalleryTagTearOff();
 
 /// @nodoc
 mixin _$GalleryTag {
-  String get namespace;
-  String get tag;
+  String get namespace => throw _privateConstructorUsedError;
+  String get tag => throw _privateConstructorUsedError;
 
-  $GalleryTagCopyWith<GalleryTag> get copyWith;
+  @JsonKey(ignore: true)
+  $GalleryTagCopyWith<GalleryTag> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -542,12 +626,18 @@ class _$GalleryTagCopyWithImpl<$Res> implements $GalleryTagCopyWith<$Res> {
 
   @override
   $Res call({
-    Object namespace = freezed,
-    Object tag = freezed,
+    Object? namespace = freezed,
+    Object? tag = freezed,
   }) {
     return _then(_value.copyWith(
-      namespace: namespace == freezed ? _value.namespace : namespace as String,
-      tag: tag == freezed ? _value.tag : tag as String,
+      namespace: namespace == freezed
+          ? _value.namespace
+          : namespace // ignore: cast_nullable_to_non_nullable
+              as String,
+      tag: tag == freezed
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -573,22 +663,26 @@ class __$GalleryTagCopyWithImpl<$Res> extends _$GalleryTagCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object namespace = freezed,
-    Object tag = freezed,
+    Object? namespace = freezed,
+    Object? tag = freezed,
   }) {
     return _then(_GalleryTag(
-      namespace: namespace == freezed ? _value.namespace : namespace as String,
-      tag: tag == freezed ? _value.tag : tag as String,
+      namespace: namespace == freezed
+          ? _value.namespace
+          : namespace // ignore: cast_nullable_to_non_nullable
+              as String,
+      tag: tag == freezed
+          ? _value.tag
+          : tag // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_GalleryTag extends _GalleryTag {
-  const _$_GalleryTag({this.namespace = '', @required this.tag})
-      : assert(namespace != null),
-        assert(tag != null),
-        super._();
+  const _$_GalleryTag({this.namespace = '', required this.tag}) : super._();
 
   @JsonKey(defaultValue: '')
   @override
@@ -618,22 +712,25 @@ class _$_GalleryTag extends _GalleryTag {
       const DeepCollectionEquality().hash(namespace) ^
       const DeepCollectionEquality().hash(tag);
 
+  @JsonKey(ignore: true)
   @override
   _$GalleryTagCopyWith<_GalleryTag> get copyWith =>
       __$GalleryTagCopyWithImpl<_GalleryTag>(this, _$identity);
 }
 
 abstract class _GalleryTag extends GalleryTag {
-  const _GalleryTag._() : super._();
-  const factory _GalleryTag({String namespace, @required String tag}) =
+  const factory _GalleryTag({String namespace, required String tag}) =
       _$_GalleryTag;
+  const _GalleryTag._() : super._();
 
   @override
-  String get namespace;
+  String get namespace => throw _privateConstructorUsedError;
   @override
-  String get tag;
+  String get tag => throw _privateConstructorUsedError;
   @override
-  _$GalleryTagCopyWith<_GalleryTag> get copyWith;
+  @JsonKey(ignore: true)
+  _$GalleryTagCopyWith<_GalleryTag> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 GalleryResponse _$GalleryResponseFromJson(Map<String, dynamic> json) {
@@ -644,21 +741,20 @@ GalleryResponse _$GalleryResponseFromJson(Map<String, dynamic> json) {
 class _$GalleryResponseTearOff {
   const _$GalleryResponseTearOff();
 
-// ignore: unused_element
   _GalleryResponse call(
-      {@JsonKey(name: 'gid') int id,
-      String token,
-      String title,
-      @JsonKey(name: 'title_jpn') String titleJpn,
-      String category,
-      @JsonKey(name: 'thumb') String thumbnail,
-      String uploader,
-      @JsonKey(name: 'filecount', fromJson: int.tryParse) int fileCount,
-      @JsonKey(name: 'filesize') int fileSize,
-      bool expunged,
-      @JsonKey(fromJson: double.tryParse) double rating,
-      List<String> tags,
-      @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime posted}) {
+      {@JsonKey(name: 'gid') required int id,
+      required String token,
+      required String title,
+      @JsonKey(name: 'title_jpn') String titleJpn = '',
+      String category = '',
+      @JsonKey(name: 'thumb') String thumbnail = '',
+      String uploader = '',
+      @JsonKey(name: 'filecount', fromJson: int.tryParse) int? fileCount,
+      @JsonKey(name: 'filesize') int fileSize = 0,
+      bool expunged = false,
+      @JsonKey(fromJson: double.tryParse) double? rating,
+      List<String> tags = const [],
+      @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime? posted}) {
     return _GalleryResponse(
       id: id,
       token: token,
@@ -676,41 +772,41 @@ class _$GalleryResponseTearOff {
     );
   }
 
-// ignore: unused_element
   GalleryResponse fromJson(Map<String, Object> json) {
     return GalleryResponse.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $GalleryResponse = _$GalleryResponseTearOff();
 
 /// @nodoc
 mixin _$GalleryResponse {
   @JsonKey(name: 'gid')
-  int get id;
-  String get token;
-  String get title;
+  int get id => throw _privateConstructorUsedError;
+  String get token => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   @JsonKey(name: 'title_jpn')
-  String get titleJpn;
-  String get category;
+  String get titleJpn => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
   @JsonKey(name: 'thumb')
-  String get thumbnail;
-  String get uploader;
+  String get thumbnail => throw _privateConstructorUsedError;
+  String get uploader => throw _privateConstructorUsedError;
   @JsonKey(name: 'filecount', fromJson: int.tryParse)
-  int get fileCount;
+  int? get fileCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'filesize')
-  int get fileSize;
-  bool get expunged;
+  int get fileSize => throw _privateConstructorUsedError;
+  bool get expunged => throw _privateConstructorUsedError;
   @JsonKey(fromJson: double.tryParse)
-  double get rating;
-  List<String> get tags;
+  double? get rating => throw _privateConstructorUsedError;
+  List<String> get tags => throw _privateConstructorUsedError;
   @JsonKey(fromJson: tryParseSecondsSinceEpoch)
-  DateTime get posted;
+  DateTime? get posted => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $GalleryResponseCopyWith<GalleryResponse> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GalleryResponseCopyWith<GalleryResponse> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -726,12 +822,12 @@ abstract class $GalleryResponseCopyWith<$Res> {
       String category,
       @JsonKey(name: 'thumb') String thumbnail,
       String uploader,
-      @JsonKey(name: 'filecount', fromJson: int.tryParse) int fileCount,
+      @JsonKey(name: 'filecount', fromJson: int.tryParse) int? fileCount,
       @JsonKey(name: 'filesize') int fileSize,
       bool expunged,
-      @JsonKey(fromJson: double.tryParse) double rating,
+      @JsonKey(fromJson: double.tryParse) double? rating,
       List<String> tags,
-      @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime posted});
+      @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime? posted});
 }
 
 /// @nodoc
@@ -745,34 +841,73 @@ class _$GalleryResponseCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object token = freezed,
-    Object title = freezed,
-    Object titleJpn = freezed,
-    Object category = freezed,
-    Object thumbnail = freezed,
-    Object uploader = freezed,
-    Object fileCount = freezed,
-    Object fileSize = freezed,
-    Object expunged = freezed,
-    Object rating = freezed,
-    Object tags = freezed,
-    Object posted = freezed,
+    Object? id = freezed,
+    Object? token = freezed,
+    Object? title = freezed,
+    Object? titleJpn = freezed,
+    Object? category = freezed,
+    Object? thumbnail = freezed,
+    Object? uploader = freezed,
+    Object? fileCount = freezed,
+    Object? fileSize = freezed,
+    Object? expunged = freezed,
+    Object? rating = freezed,
+    Object? tags = freezed,
+    Object? posted = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as int,
-      token: token == freezed ? _value.token : token as String,
-      title: title == freezed ? _value.title : title as String,
-      titleJpn: titleJpn == freezed ? _value.titleJpn : titleJpn as String,
-      category: category == freezed ? _value.category : category as String,
-      thumbnail: thumbnail == freezed ? _value.thumbnail : thumbnail as String,
-      uploader: uploader == freezed ? _value.uploader : uploader as String,
-      fileCount: fileCount == freezed ? _value.fileCount : fileCount as int,
-      fileSize: fileSize == freezed ? _value.fileSize : fileSize as int,
-      expunged: expunged == freezed ? _value.expunged : expunged as bool,
-      rating: rating == freezed ? _value.rating : rating as double,
-      tags: tags == freezed ? _value.tags : tags as List<String>,
-      posted: posted == freezed ? _value.posted : posted as DateTime,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      titleJpn: titleJpn == freezed
+          ? _value.titleJpn
+          : titleJpn // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      thumbnail: thumbnail == freezed
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String,
+      uploader: uploader == freezed
+          ? _value.uploader
+          : uploader // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileCount: fileCount == freezed
+          ? _value.fileCount
+          : fileCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      fileSize: fileSize == freezed
+          ? _value.fileSize
+          : fileSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      expunged: expunged == freezed
+          ? _value.expunged
+          : expunged // ignore: cast_nullable_to_non_nullable
+              as bool,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      posted: posted == freezed
+          ? _value.posted
+          : posted // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -792,12 +927,12 @@ abstract class _$GalleryResponseCopyWith<$Res>
       String category,
       @JsonKey(name: 'thumb') String thumbnail,
       String uploader,
-      @JsonKey(name: 'filecount', fromJson: int.tryParse) int fileCount,
+      @JsonKey(name: 'filecount', fromJson: int.tryParse) int? fileCount,
       @JsonKey(name: 'filesize') int fileSize,
       bool expunged,
-      @JsonKey(fromJson: double.tryParse) double rating,
+      @JsonKey(fromJson: double.tryParse) double? rating,
       List<String> tags,
-      @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime posted});
+      @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime? posted});
 }
 
 /// @nodoc
@@ -813,55 +948,93 @@ class __$GalleryResponseCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object token = freezed,
-    Object title = freezed,
-    Object titleJpn = freezed,
-    Object category = freezed,
-    Object thumbnail = freezed,
-    Object uploader = freezed,
-    Object fileCount = freezed,
-    Object fileSize = freezed,
-    Object expunged = freezed,
-    Object rating = freezed,
-    Object tags = freezed,
-    Object posted = freezed,
+    Object? id = freezed,
+    Object? token = freezed,
+    Object? title = freezed,
+    Object? titleJpn = freezed,
+    Object? category = freezed,
+    Object? thumbnail = freezed,
+    Object? uploader = freezed,
+    Object? fileCount = freezed,
+    Object? fileSize = freezed,
+    Object? expunged = freezed,
+    Object? rating = freezed,
+    Object? tags = freezed,
+    Object? posted = freezed,
   }) {
     return _then(_GalleryResponse(
-      id: id == freezed ? _value.id : id as int,
-      token: token == freezed ? _value.token : token as String,
-      title: title == freezed ? _value.title : title as String,
-      titleJpn: titleJpn == freezed ? _value.titleJpn : titleJpn as String,
-      category: category == freezed ? _value.category : category as String,
-      thumbnail: thumbnail == freezed ? _value.thumbnail : thumbnail as String,
-      uploader: uploader == freezed ? _value.uploader : uploader as String,
-      fileCount: fileCount == freezed ? _value.fileCount : fileCount as int,
-      fileSize: fileSize == freezed ? _value.fileSize : fileSize as int,
-      expunged: expunged == freezed ? _value.expunged : expunged as bool,
-      rating: rating == freezed ? _value.rating : rating as double,
-      tags: tags == freezed ? _value.tags : tags as List<String>,
-      posted: posted == freezed ? _value.posted : posted as DateTime,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      token: token == freezed
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      titleJpn: titleJpn == freezed
+          ? _value.titleJpn
+          : titleJpn // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      thumbnail: thumbnail == freezed
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String,
+      uploader: uploader == freezed
+          ? _value.uploader
+          : uploader // ignore: cast_nullable_to_non_nullable
+              as String,
+      fileCount: fileCount == freezed
+          ? _value.fileCount
+          : fileCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      fileSize: fileSize == freezed
+          ? _value.fileSize
+          : fileSize // ignore: cast_nullable_to_non_nullable
+              as int,
+      expunged: expunged == freezed
+          ? _value.expunged
+          : expunged // ignore: cast_nullable_to_non_nullable
+              as bool,
+      rating: rating == freezed
+          ? _value.rating
+          : rating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      tags: tags == freezed
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      posted: posted == freezed
+          ? _value.posted
+          : posted // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_GalleryResponse implements _GalleryResponse {
   const _$_GalleryResponse(
-      {@JsonKey(name: 'gid') this.id,
-      this.token,
-      this.title,
-      @JsonKey(name: 'title_jpn') this.titleJpn,
-      this.category,
-      @JsonKey(name: 'thumb') this.thumbnail,
-      this.uploader,
+      {@JsonKey(name: 'gid') required this.id,
+      required this.token,
+      required this.title,
+      @JsonKey(name: 'title_jpn') this.titleJpn = '',
+      this.category = '',
+      @JsonKey(name: 'thumb') this.thumbnail = '',
+      this.uploader = '',
       @JsonKey(name: 'filecount', fromJson: int.tryParse) this.fileCount,
-      @JsonKey(name: 'filesize') this.fileSize,
-      this.expunged,
+      @JsonKey(name: 'filesize') this.fileSize = 0,
+      this.expunged = false,
       @JsonKey(fromJson: double.tryParse) this.rating,
-      this.tags,
+      this.tags = const [],
       @JsonKey(fromJson: tryParseSecondsSinceEpoch) this.posted});
 
   factory _$_GalleryResponse.fromJson(Map<String, dynamic> json) =>
@@ -877,29 +1050,33 @@ class _$_GalleryResponse implements _GalleryResponse {
   @override
   @JsonKey(name: 'title_jpn')
   final String titleJpn;
+  @JsonKey(defaultValue: '')
   @override
   final String category;
   @override
   @JsonKey(name: 'thumb')
   final String thumbnail;
+  @JsonKey(defaultValue: '')
   @override
   final String uploader;
   @override
   @JsonKey(name: 'filecount', fromJson: int.tryParse)
-  final int fileCount;
+  final int? fileCount;
   @override
   @JsonKey(name: 'filesize')
   final int fileSize;
+  @JsonKey(defaultValue: false)
   @override
   final bool expunged;
   @override
   @JsonKey(fromJson: double.tryParse)
-  final double rating;
+  final double? rating;
+  @JsonKey(defaultValue: const [])
   @override
   final List<String> tags;
   @override
   @JsonKey(fromJson: tryParseSecondsSinceEpoch)
-  final DateTime posted;
+  final DateTime? posted;
 
   @override
   String toString() {
@@ -962,6 +1139,7 @@ class _$_GalleryResponse implements _GalleryResponse {
       const DeepCollectionEquality().hash(tags) ^
       const DeepCollectionEquality().hash(posted);
 
+  @JsonKey(ignore: true)
   @override
   _$GalleryResponseCopyWith<_GalleryResponse> get copyWith =>
       __$GalleryResponseCopyWithImpl<_GalleryResponse>(this, _$identity);
@@ -974,19 +1152,19 @@ class _$_GalleryResponse implements _GalleryResponse {
 
 abstract class _GalleryResponse implements GalleryResponse {
   const factory _GalleryResponse(
-          {@JsonKey(name: 'gid') int id,
-          String token,
-          String title,
+          {@JsonKey(name: 'gid') required int id,
+          required String token,
+          required String title,
           @JsonKey(name: 'title_jpn') String titleJpn,
           String category,
           @JsonKey(name: 'thumb') String thumbnail,
           String uploader,
-          @JsonKey(name: 'filecount', fromJson: int.tryParse) int fileCount,
+          @JsonKey(name: 'filecount', fromJson: int.tryParse) int? fileCount,
           @JsonKey(name: 'filesize') int fileSize,
           bool expunged,
-          @JsonKey(fromJson: double.tryParse) double rating,
+          @JsonKey(fromJson: double.tryParse) double? rating,
           List<String> tags,
-          @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime posted}) =
+          @JsonKey(fromJson: tryParseSecondsSinceEpoch) DateTime? posted}) =
       _$_GalleryResponse;
 
   factory _GalleryResponse.fromJson(Map<String, dynamic> json) =
@@ -994,47 +1172,48 @@ abstract class _GalleryResponse implements GalleryResponse {
 
   @override
   @JsonKey(name: 'gid')
-  int get id;
+  int get id => throw _privateConstructorUsedError;
   @override
-  String get token;
+  String get token => throw _privateConstructorUsedError;
   @override
-  String get title;
+  String get title => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'title_jpn')
-  String get titleJpn;
+  String get titleJpn => throw _privateConstructorUsedError;
   @override
-  String get category;
+  String get category => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'thumb')
-  String get thumbnail;
+  String get thumbnail => throw _privateConstructorUsedError;
   @override
-  String get uploader;
+  String get uploader => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'filecount', fromJson: int.tryParse)
-  int get fileCount;
+  int? get fileCount => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'filesize')
-  int get fileSize;
+  int get fileSize => throw _privateConstructorUsedError;
   @override
-  bool get expunged;
+  bool get expunged => throw _privateConstructorUsedError;
   @override
   @JsonKey(fromJson: double.tryParse)
-  double get rating;
+  double? get rating => throw _privateConstructorUsedError;
   @override
-  List<String> get tags;
+  List<String> get tags => throw _privateConstructorUsedError;
   @override
   @JsonKey(fromJson: tryParseSecondsSinceEpoch)
-  DateTime get posted;
+  DateTime? get posted => throw _privateConstructorUsedError;
   @override
-  _$GalleryResponseCopyWith<_GalleryResponse> get copyWith;
+  @JsonKey(ignore: true)
+  _$GalleryResponseCopyWith<_GalleryResponse> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$GalleryReadPositionTearOff {
   const _$GalleryReadPositionTearOff();
 
-// ignore: unused_element
-  _GalleryReadPosition call({@required int page, @required DateTime time}) {
+  _GalleryReadPosition call({required int page, required DateTime time}) {
     return _GalleryReadPosition(
       page: page,
       time: time,
@@ -1043,15 +1222,16 @@ class _$GalleryReadPositionTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $GalleryReadPosition = _$GalleryReadPositionTearOff();
 
 /// @nodoc
 mixin _$GalleryReadPosition {
-  int get page;
-  DateTime get time;
+  int get page => throw _privateConstructorUsedError;
+  DateTime get time => throw _privateConstructorUsedError;
 
-  $GalleryReadPositionCopyWith<GalleryReadPosition> get copyWith;
+  @JsonKey(ignore: true)
+  $GalleryReadPositionCopyWith<GalleryReadPosition> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1073,12 +1253,18 @@ class _$GalleryReadPositionCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object page = freezed,
-    Object time = freezed,
+    Object? page = freezed,
+    Object? time = freezed,
   }) {
     return _then(_value.copyWith(
-      page: page == freezed ? _value.page : page as int,
-      time: time == freezed ? _value.time : time as DateTime,
+      page: page == freezed
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -1106,21 +1292,26 @@ class __$GalleryReadPositionCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object page = freezed,
-    Object time = freezed,
+    Object? page = freezed,
+    Object? time = freezed,
   }) {
     return _then(_GalleryReadPosition(
-      page: page == freezed ? _value.page : page as int,
-      time: time == freezed ? _value.time : time as DateTime,
+      page: page == freezed
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_GalleryReadPosition implements _GalleryReadPosition {
-  const _$_GalleryReadPosition({@required this.page, @required this.time})
-      : assert(page != null),
-        assert(time != null);
+  const _$_GalleryReadPosition({required this.page, required this.time});
 
   @override
   final int page;
@@ -1148,6 +1339,7 @@ class _$_GalleryReadPosition implements _GalleryReadPosition {
       const DeepCollectionEquality().hash(page) ^
       const DeepCollectionEquality().hash(time);
 
+  @JsonKey(ignore: true)
   @override
   _$GalleryReadPositionCopyWith<_GalleryReadPosition> get copyWith =>
       __$GalleryReadPositionCopyWithImpl<_GalleryReadPosition>(
@@ -1156,12 +1348,14 @@ class _$_GalleryReadPosition implements _GalleryReadPosition {
 
 abstract class _GalleryReadPosition implements GalleryReadPosition {
   const factory _GalleryReadPosition(
-      {@required int page, @required DateTime time}) = _$_GalleryReadPosition;
+      {required int page, required DateTime time}) = _$_GalleryReadPosition;
 
   @override
-  int get page;
+  int get page => throw _privateConstructorUsedError;
   @override
-  DateTime get time;
+  DateTime get time => throw _privateConstructorUsedError;
   @override
-  _$GalleryReadPositionCopyWith<_GalleryReadPosition> get copyWith;
+  @JsonKey(ignore: true)
+  _$GalleryReadPositionCopyWith<_GalleryReadPosition> get copyWith =>
+      throw _privateConstructorUsedError;
 }

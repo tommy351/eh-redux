@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'screen.dart';
 
@@ -9,62 +9,65 @@ part of 'screen.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$GalleryErrorTearOff {
   const _$GalleryErrorTearOff();
 
-// ignore: unused_element
-  _GalleryError call({@required String message}) {
+  _GalleryError call({required String message}) {
     return _GalleryError(
       message: message,
     );
   }
 
-// ignore: unused_element
-  GalleryErrorContentWarning contentWarning({@required String reason}) {
+  GalleryErrorContentWarning contentWarning({required String reason}) {
     return GalleryErrorContentWarning(
       reason: reason,
     );
   }
 
-// ignore: unused_element
   GalleryErrorNotFound notFound() {
     return const GalleryErrorNotFound();
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $GalleryError = _$GalleryErrorTearOff();
 
 /// @nodoc
 mixin _$GalleryError {
   @optionalTypeArgs
-  Result when<Result extends Object>(
-    Result $default(String message), {
-    @required Result contentWarning(String reason),
-    @required Result notFound(),
-  });
+  TResult when<TResult extends Object?>(
+    TResult Function(String message) $default, {
+    required TResult Function(String reason) contentWarning,
+    required TResult Function() notFound,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>(
-    Result $default(String message), {
-    Result contentWarning(String reason),
-    Result notFound(),
-    @required Result orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String message)? $default, {
+    TResult Function(String reason)? contentWarning,
+    TResult Function()? notFound,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>(
-    Result $default(_GalleryError value), {
-    @required Result contentWarning(GalleryErrorContentWarning value),
-    @required Result notFound(GalleryErrorNotFound value),
-  });
+  TResult map<TResult extends Object?>(
+    TResult Function(_GalleryError value) $default, {
+    required TResult Function(GalleryErrorContentWarning value) contentWarning,
+    required TResult Function(GalleryErrorNotFound value) notFound,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>(
-    Result $default(_GalleryError value), {
-    Result contentWarning(GalleryErrorContentWarning value),
-    Result notFound(GalleryErrorNotFound value),
-    @required Result orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_GalleryError value)? $default, {
+    TResult Function(GalleryErrorContentWarning value)? contentWarning,
+    TResult Function(GalleryErrorNotFound value)? notFound,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -103,17 +106,21 @@ class __$GalleryErrorCopyWithImpl<$Res> extends _$GalleryErrorCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object message = freezed,
+    Object? message = freezed,
   }) {
     return _then(_GalleryError(
-      message: message == freezed ? _value.message : message as String,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_GalleryError implements _GalleryError {
-  const _$_GalleryError({@required this.message}) : assert(message != null);
+  const _$_GalleryError({required this.message});
 
   @override
   final String message;
@@ -135,32 +142,29 @@ class _$_GalleryError implements _GalleryError {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(message);
 
+  @JsonKey(ignore: true)
   @override
   _$GalleryErrorCopyWith<_GalleryError> get copyWith =>
       __$GalleryErrorCopyWithImpl<_GalleryError>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>(
-    Result $default(String message), {
-    @required Result contentWarning(String reason),
-    @required Result notFound(),
+  TResult when<TResult extends Object?>(
+    TResult Function(String message) $default, {
+    required TResult Function(String reason) contentWarning,
+    required TResult Function() notFound,
   }) {
-    assert($default != null);
-    assert(contentWarning != null);
-    assert(notFound != null);
     return $default(message);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>(
-    Result $default(String message), {
-    Result contentWarning(String reason),
-    Result notFound(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String message)? $default, {
+    TResult Function(String reason)? contentWarning,
+    TResult Function()? notFound,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if ($default != null) {
       return $default(message);
     }
@@ -169,26 +173,22 @@ class _$_GalleryError implements _GalleryError {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>(
-    Result $default(_GalleryError value), {
-    @required Result contentWarning(GalleryErrorContentWarning value),
-    @required Result notFound(GalleryErrorNotFound value),
+  TResult map<TResult extends Object?>(
+    TResult Function(_GalleryError value) $default, {
+    required TResult Function(GalleryErrorContentWarning value) contentWarning,
+    required TResult Function(GalleryErrorNotFound value) notFound,
   }) {
-    assert($default != null);
-    assert(contentWarning != null);
-    assert(notFound != null);
     return $default(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>(
-    Result $default(_GalleryError value), {
-    Result contentWarning(GalleryErrorContentWarning value),
-    Result notFound(GalleryErrorNotFound value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_GalleryError value)? $default, {
+    TResult Function(GalleryErrorContentWarning value)? contentWarning,
+    TResult Function(GalleryErrorNotFound value)? notFound,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if ($default != null) {
       return $default(this);
     }
@@ -197,10 +197,12 @@ class _$_GalleryError implements _GalleryError {
 }
 
 abstract class _GalleryError implements GalleryError {
-  const factory _GalleryError({@required String message}) = _$_GalleryError;
+  const factory _GalleryError({required String message}) = _$_GalleryError;
 
-  String get message;
-  _$GalleryErrorCopyWith<_GalleryError> get copyWith;
+  String get message => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$GalleryErrorCopyWith<_GalleryError> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -225,18 +227,21 @@ class _$GalleryErrorContentWarningCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object reason = freezed,
+    Object? reason = freezed,
   }) {
     return _then(GalleryErrorContentWarning(
-      reason: reason == freezed ? _value.reason : reason as String,
+      reason: reason == freezed
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$GalleryErrorContentWarning implements GalleryErrorContentWarning {
-  const _$GalleryErrorContentWarning({@required this.reason})
-      : assert(reason != null);
+  const _$GalleryErrorContentWarning({required this.reason});
 
   @override
   final String reason;
@@ -258,6 +263,7 @@ class _$GalleryErrorContentWarning implements GalleryErrorContentWarning {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(reason);
 
+  @JsonKey(ignore: true)
   @override
   $GalleryErrorContentWarningCopyWith<GalleryErrorContentWarning>
       get copyWith =>
@@ -266,26 +272,22 @@ class _$GalleryErrorContentWarning implements GalleryErrorContentWarning {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>(
-    Result $default(String message), {
-    @required Result contentWarning(String reason),
-    @required Result notFound(),
+  TResult when<TResult extends Object?>(
+    TResult Function(String message) $default, {
+    required TResult Function(String reason) contentWarning,
+    required TResult Function() notFound,
   }) {
-    assert($default != null);
-    assert(contentWarning != null);
-    assert(notFound != null);
     return contentWarning(reason);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>(
-    Result $default(String message), {
-    Result contentWarning(String reason),
-    Result notFound(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String message)? $default, {
+    TResult Function(String reason)? contentWarning,
+    TResult Function()? notFound,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (contentWarning != null) {
       return contentWarning(reason);
     }
@@ -294,26 +296,22 @@ class _$GalleryErrorContentWarning implements GalleryErrorContentWarning {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>(
-    Result $default(_GalleryError value), {
-    @required Result contentWarning(GalleryErrorContentWarning value),
-    @required Result notFound(GalleryErrorNotFound value),
+  TResult map<TResult extends Object?>(
+    TResult Function(_GalleryError value) $default, {
+    required TResult Function(GalleryErrorContentWarning value) contentWarning,
+    required TResult Function(GalleryErrorNotFound value) notFound,
   }) {
-    assert($default != null);
-    assert(contentWarning != null);
-    assert(notFound != null);
     return contentWarning(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>(
-    Result $default(_GalleryError value), {
-    Result contentWarning(GalleryErrorContentWarning value),
-    Result notFound(GalleryErrorNotFound value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_GalleryError value)? $default, {
+    TResult Function(GalleryErrorContentWarning value)? contentWarning,
+    TResult Function(GalleryErrorNotFound value)? notFound,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (contentWarning != null) {
       return contentWarning(this);
     }
@@ -322,11 +320,13 @@ class _$GalleryErrorContentWarning implements GalleryErrorContentWarning {
 }
 
 abstract class GalleryErrorContentWarning implements GalleryError {
-  const factory GalleryErrorContentWarning({@required String reason}) =
+  const factory GalleryErrorContentWarning({required String reason}) =
       _$GalleryErrorContentWarning;
 
-  String get reason;
-  $GalleryErrorContentWarningCopyWith<GalleryErrorContentWarning> get copyWith;
+  String get reason => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $GalleryErrorContentWarningCopyWith<GalleryErrorContentWarning>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -349,6 +349,7 @@ class _$GalleryErrorNotFoundCopyWithImpl<$Res>
 }
 
 /// @nodoc
+
 class _$GalleryErrorNotFound implements GalleryErrorNotFound {
   const _$GalleryErrorNotFound();
 
@@ -367,26 +368,22 @@ class _$GalleryErrorNotFound implements GalleryErrorNotFound {
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>(
-    Result $default(String message), {
-    @required Result contentWarning(String reason),
-    @required Result notFound(),
+  TResult when<TResult extends Object?>(
+    TResult Function(String message) $default, {
+    required TResult Function(String reason) contentWarning,
+    required TResult Function() notFound,
   }) {
-    assert($default != null);
-    assert(contentWarning != null);
-    assert(notFound != null);
     return notFound();
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>(
-    Result $default(String message), {
-    Result contentWarning(String reason),
-    Result notFound(),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String message)? $default, {
+    TResult Function(String reason)? contentWarning,
+    TResult Function()? notFound,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (notFound != null) {
       return notFound();
     }
@@ -395,26 +392,22 @@ class _$GalleryErrorNotFound implements GalleryErrorNotFound {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>(
-    Result $default(_GalleryError value), {
-    @required Result contentWarning(GalleryErrorContentWarning value),
-    @required Result notFound(GalleryErrorNotFound value),
+  TResult map<TResult extends Object?>(
+    TResult Function(_GalleryError value) $default, {
+    required TResult Function(GalleryErrorContentWarning value) contentWarning,
+    required TResult Function(GalleryErrorNotFound value) notFound,
   }) {
-    assert($default != null);
-    assert(contentWarning != null);
-    assert(notFound != null);
     return notFound(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>(
-    Result $default(_GalleryError value), {
-    Result contentWarning(GalleryErrorContentWarning value),
-    Result notFound(GalleryErrorNotFound value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_GalleryError value)? $default, {
+    TResult Function(GalleryErrorContentWarning value)? contentWarning,
+    TResult Function(GalleryErrorNotFound value)? notFound,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (notFound != null) {
       return notFound(this);
     }

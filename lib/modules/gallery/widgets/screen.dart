@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:eh_redux/database/database.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/full_width.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/download/widgets/confirm_bottom_sheet.dart';
@@ -18,6 +17,7 @@ import 'package:eh_redux/services/ehentai.dart';
 import 'package:eh_redux/utils/launch.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:intl/intl.dart';
@@ -37,10 +37,9 @@ enum _AppBarAction {
 
 class GalleryScreen extends StatefulWidget {
   const GalleryScreen({
-    Key key,
-    @required this.gallery,
-  })  : assert(gallery != null),
-        super(key: key);
+    Key? key,
+    required this.gallery,
+  }) : super(key: key);
 
   static const route = '/gallery';
 
@@ -51,7 +50,7 @@ class GalleryScreen extends StatefulWidget {
 }
 
 class _GalleryScreenState extends State<GalleryScreen> {
-  GalleryScreenStore _store;
+  late GalleryScreenStore _store;
 
   @override
   void initState() {
@@ -80,11 +79,17 @@ class _GalleryScreenState extends State<GalleryScreen> {
             const _AppBar(),
             const _Header(),
             const _Divider(),
-            _SectionTitle(AppLocalizations.of(context).gallerySectionInfo),
+            _SectionTitle(AppLocalizations.of(context)!.gallerySectionInfo),
             const _Info(),
             const _Divider(),
-            _SectionTitle(AppLocalizations.of(context).gallerySectionTags),
+            _SectionTitle(AppLocalizations.of(context)!.gallerySectionTags),
             const _TagList(),
+            SliverSafeArea(
+              top: false,
+              sliver: SliverToBoxAdapter(
+                child: Container(),
+              ),
+            ),
           ],
         ),
       ),
@@ -103,7 +108,7 @@ Widget _appBar(BuildContext context) {
     actions: [
       IconButton(
         icon: const Icon(Icons.share),
-        tooltip: AppLocalizations.of(context).shareButtonTooltip,
+        tooltip: AppLocalizations.of(context)!.shareButtonTooltip,
         onPressed: () => store.share(),
       ),
       PopupMenuButton<_AppBarAction>(
@@ -114,7 +119,7 @@ Widget _appBar(BuildContext context) {
           PopupMenuItem(
             value: _AppBarAction.openInBrowser,
             child:
-                Text(AppLocalizations.of(context).galleryActionOpenInBrowser),
+                Text(AppLocalizations.of(context)!.galleryActionOpenInBrowser),
           ),
         ],
       ),
@@ -164,8 +169,8 @@ Widget _divider(BuildContext context) {
 @swidget
 Widget _horizontalSafeArea(
   BuildContext context, {
-  @required Widget sliver,
-  EdgeInsets padding,
+  required Widget sliver,
+  EdgeInsets? padding,
 }) {
   return SliverSafeArea(
     top: false,
@@ -208,8 +213,8 @@ Widget _header(BuildContext context) {
                     const SizedBox(height: 8),
                     Text(
                       titleJpn,
-                      style: theme.textTheme.bodyText2.copyWith(
-                        color: theme.textTheme.caption.color,
+                      style: theme.textTheme.bodyText2!.copyWith(
+                        color: theme.textTheme.caption!.color,
                       ),
                     ),
                   ]
@@ -239,8 +244,10 @@ Widget _headerActions(BuildContext context) {
         );
       }
 
-      if (store.error != null) {
-        return _ErrorCard(error: store.error);
+      final error = store.error;
+
+      if (error != null) {
+        return _ErrorCard(error: error);
       }
 
       return const Center(
@@ -274,7 +281,7 @@ Widget _sectionTitle(BuildContext context, String text) {
       child: Text(
         text,
         style:
-            theme.textTheme.headline6.copyWith(fontWeight: FontWeight.normal),
+            theme.textTheme.headline6!.copyWith(fontWeight: FontWeight.normal),
       ),
     ),
   );
@@ -293,7 +300,7 @@ Widget _readButton(BuildContext context) {
       );
     },
     icon: const Icon(Icons.play_arrow),
-    label: Text(AppLocalizations.of(context).readButtonLabel),
+    label: Text(AppLocalizations.of(context)!.readButtonLabel),
   );
 }
 
@@ -319,7 +326,7 @@ Widget _buttonBar(BuildContext context) {
           _ActionButton(
             onPressed: () => store.share(),
             icon: const Icon(Icons.share),
-            label: Text(AppLocalizations.of(context).shareButtonLabel),
+            label: Text(AppLocalizations.of(context)!.shareButtonLabel),
           ),
         ],
       );
@@ -330,9 +337,9 @@ Widget _buttonBar(BuildContext context) {
 @swidget
 Widget _actionButton(
   BuildContext context, {
-  @required Widget icon,
-  @required Widget label,
-  void Function() onPressed,
+  required Widget icon,
+  required Widget label,
+  void Function()? onPressed,
 }) {
   final theme = Theme.of(context);
 
@@ -350,7 +357,7 @@ Widget _actionButton(
         ),
         const SizedBox(height: 8),
         DefaultTextStyle(
-          style: theme.textTheme.caption,
+          style: theme.textTheme.caption!,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           child: label,
@@ -369,8 +376,8 @@ Widget _favButton(BuildContext context) {
   return _ActionButton(
     onPressed: () {
       if (sessionStore.loginStatus != LoginStatus.loggedIn) {
-        Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(context).logInRequiredHint),
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(AppLocalizations.of(context)!.logInRequiredHint),
         ));
         return;
       }
@@ -384,7 +391,7 @@ Widget _favButton(BuildContext context) {
       );
     },
     icon: const Icon(Icons.favorite_border),
-    label: Text(AppLocalizations.of(context).favoriteButtonLabel),
+    label: Text(AppLocalizations.of(context)!.favoriteButtonLabel),
   );
 }
 
@@ -393,7 +400,8 @@ Widget _downloadButton(BuildContext context) {
   final store = Provider.of<GalleryScreenStore>(context);
   final database = Provider.of<Database>(context);
 
-  return StreamProvider(
+  return StreamProvider<DownloadTask?>(
+    initialData: null,
     create: (_) => database.downloadTasksDao.watchSingle(store.gallery.id),
     child: const _DownloadButtonContent(),
   );
@@ -402,7 +410,7 @@ Widget _downloadButton(BuildContext context) {
 @swidget
 Widget _downloadButtonContent(BuildContext context) {
   final store = Provider.of<GalleryScreenStore>(context);
-  final task = Provider.of<DownloadTask>(context);
+  final task = Provider.of<DownloadTask?>(context);
 
   return _ActionButton(
     onPressed: () {
@@ -419,13 +427,13 @@ Widget _downloadButtonContent(BuildContext context) {
       }
     },
     icon: const _DownloadButtonIcon(),
-    label: Text(AppLocalizations.of(context).downloadButtonLabel),
+    label: Text(AppLocalizations.of(context)!.downloadButtonLabel),
   );
 }
 
 @swidget
 Widget _downloadButtonIcon(BuildContext context) {
-  final task = Provider.of<DownloadTask>(context);
+  final task = Provider.of<DownloadTask?>(context);
   final iconTheme = IconTheme.of(context);
   final theme = Theme.of(context);
 
@@ -459,22 +467,22 @@ Widget _downloadButtonIcon(BuildContext context) {
 }
 
 @swidget
-Widget _errorCard(BuildContext context, {@required GalleryError error}) {
+Widget _errorCard(BuildContext context, {required GalleryError error}) {
   final theme = Theme.of(context);
   final store = Provider.of<GalleryScreenStore>(context);
 
   final title = error.map<String>(
-    (_) => AppLocalizations.of(context).galleryErrorTitle,
+    (_) => AppLocalizations.of(context)!.galleryErrorTitle,
     contentWarning: (_) =>
-        AppLocalizations.of(context).galleryContentWarningTitle,
-    notFound: (_) => AppLocalizations.of(context).galleryNotFoundTitle,
+        AppLocalizations.of(context)!.galleryContentWarningTitle,
+    notFound: (_) => AppLocalizations.of(context)!.galleryNotFoundTitle,
   );
 
   final subtitle = error.map<String>(
     (e) => e.message,
     contentWarning: (e) =>
-        AppLocalizations.of(context).galleryContentWarningMessage(e.reason),
-    notFound: (_) => AppLocalizations.of(context).galleryNotFoundMessage,
+        AppLocalizations.of(context)!.galleryContentWarningMessage(e.reason),
+    notFound: (_) => AppLocalizations.of(context)!.galleryNotFoundMessage,
   );
 
   final actions = error.maybeMap<List<Widget>>(
@@ -484,7 +492,7 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
           store.load();
         },
         icon: const Icon(Icons.refresh),
-        label: Text(AppLocalizations.of(context).retryButtonLabel),
+        label: Text(AppLocalizations.of(context)!.retryButtonLabel),
       ),
     ],
     contentWarning: (_) => [
@@ -494,7 +502,7 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
           store.load();
         },
         icon: const Icon(Icons.close),
-        label: Text(AppLocalizations.of(context).hideButtonLabel),
+        label: Text(AppLocalizations.of(context)!.hideButtonLabel),
       ),
     ],
     orElse: () => [],
@@ -519,8 +527,8 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
                     const SizedBox(height: 4),
                     Text(
                       subtitle,
-                      style: theme.textTheme.bodyText2.copyWith(
-                        color: theme.textTheme.caption.color,
+                      style: theme.textTheme.bodyText2!.copyWith(
+                        color: theme.textTheme.caption!.color,
                       ),
                     ),
                   ],
@@ -534,7 +542,7 @@ Widget _errorCard(BuildContext context, {@required GalleryError error}) {
                 TextButtonTheme(
                   data: TextButtonThemeData(
                     style: TextButton.styleFrom(
-                      primary: theme.textTheme.bodyText1.color,
+                      primary: theme.textTheme.bodyText1!.color,
                     ),
                   ),
                   child: ButtonBar(
@@ -557,12 +565,12 @@ Widget _info(BuildContext context) {
     sliver: SliverList(
       delegate: SliverChildListDelegate.fixed([
         _InfoTile(
-          title: Text(AppLocalizations.of(context).galleryInfoPostedTime),
+          title: Text(AppLocalizations.of(context)!.galleryInfoPostedTime),
           trailing:
               Text(DateFormat.yMMMd().add_Hm().format(store.gallery.posted)),
         ),
         _InfoTile(
-          title: Text(AppLocalizations.of(context).galleryInfoUploader),
+          title: Text(AppLocalizations.of(context)!.galleryInfoUploader),
           trailing: Text(store.gallery.uploader),
           onTap: () {
             Navigator.pushNamed(
@@ -574,12 +582,12 @@ Widget _info(BuildContext context) {
           },
         ),
         _InfoTile(
-          title: Text(AppLocalizations.of(context).galleryInfoLength),
-          trailing: Text(AppLocalizations.of(context)
+          title: Text(AppLocalizations.of(context)!.galleryInfoLength),
+          trailing: Text(AppLocalizations.of(context)!
               .galleryPageCount(store.gallery.fileCount)),
         ),
         _InfoTile(
-          title: Text(AppLocalizations.of(context).galleryInfoFileSize),
+          title: Text(AppLocalizations.of(context)!.galleryInfoFileSize),
           trailing: Text(filesize(store.gallery.fileSize)),
         ),
       ]),
@@ -590,18 +598,18 @@ Widget _info(BuildContext context) {
 @swidget
 Widget _infoTile(
   BuildContext context, {
-  Widget title,
-  Widget trailing,
-  void Function() onTap,
+  Widget? title,
+  Widget? trailing,
+  void Function()? onTap,
 }) {
   final theme = Theme.of(context);
 
   return ListTile(
     dense: true,
     title: DefaultTextStyle(
-      style: theme.textTheme.bodyText2
-          .copyWith(color: theme.textTheme.caption.color),
-      child: title,
+      style: theme.textTheme.bodyText2!
+          .copyWith(color: theme.textTheme.caption!.color),
+      child: title ?? Container(),
     ),
     trailing: trailing,
     onTap: onTap,
@@ -617,7 +625,7 @@ Widget _tagList(BuildContext context) {
   if (groups.isEmpty) {
     return _HorizontalSafeArea(
       sliver: SliverToBoxAdapter(
-        child: Text(AppLocalizations.of(context).galleryNoTagsPlaceholder),
+        child: Text(AppLocalizations.of(context)!.galleryNoTagsPlaceholder),
       ),
     );
   }

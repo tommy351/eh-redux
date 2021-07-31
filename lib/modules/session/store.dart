@@ -13,22 +13,20 @@ class SessionStore = _SessionStoreBase with _$SessionStore;
 
 abstract class _SessionStoreBase with Store {
   _SessionStoreBase({
-    FlutterSecureStorage storage,
-  }) {
-    _storage = storage ?? const FlutterSecureStorage();
-    session = ObservableFuture(_storage.read(key: _sessionKey));
-  }
+    this.storage = const FlutterSecureStorage(),
+  });
 
   static const _sessionKey = 'session';
 
-  FlutterSecureStorage _storage;
+  final FlutterSecureStorage storage;
 
   @observable
-  ObservableFuture<String> session;
+  late ObservableFuture<String?> session =
+      ObservableFuture(storage.read(key: _sessionKey));
 
   @computed
   LoginStatus get loginStatus {
-    if (session.value != null && session.value.isNotEmpty) {
+    if (session.value?.isNotEmpty ?? false) {
       return LoginStatus.loggedIn;
     }
 
@@ -39,13 +37,13 @@ abstract class _SessionStoreBase with Store {
 
   @action
   Future<void> setSession(String value) async {
-    await _storage.write(key: _sessionKey, value: value);
+    await storage.write(key: _sessionKey, value: value);
     session = ObservableFuture.value(value);
   }
 
   @action
   Future<void> deleteSession() async {
-    await _storage.delete(key: _sessionKey);
+    await storage.delete(key: _sessionKey);
     session = ObservableFuture.value('');
   }
 }

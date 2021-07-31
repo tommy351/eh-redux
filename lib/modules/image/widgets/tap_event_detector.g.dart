@@ -8,10 +8,10 @@ part of 'tap_event_detector.dart';
 
 class TapEventDetector extends StatelessWidget {
   const TapEventDetector(
-      {Key key,
-      @required this.onPrevious,
-      @required this.onNext,
-      @required this.child})
+      {Key? key,
+      required this.onPrevious,
+      required this.onNext,
+      required this.child})
       : super(key: key);
 
   final void Function() onPrevious;

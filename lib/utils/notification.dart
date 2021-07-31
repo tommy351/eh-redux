@@ -7,15 +7,15 @@ part 'notification.freezed.dart';
 final notificationPlugin = FlutterLocalNotificationsPlugin();
 final didReceiveNotificationSubject = BehaviorSubject<ReceivedNotification>();
 final selectNotificationSubject = BehaviorSubject<String>();
-NotificationAppLaunchDetails notificationAppLaunchDetails;
+NotificationAppLaunchDetails? notificationAppLaunchDetails;
 
 @freezed
-abstract class ReceivedNotification with _$ReceivedNotification {
+class ReceivedNotification with _$ReceivedNotification {
   const factory ReceivedNotification({
-    @required int id,
-    @required String title,
-    @required String body,
-    @required String payload,
+    required int id,
+    String? title,
+    String? body,
+    String? payload,
   }) = _ReceivedNotification;
 }
 
@@ -23,26 +23,26 @@ Future<void> initializeNotificationPlugin() async {
   notificationAppLaunchDetails =
       await notificationPlugin.getNotificationAppLaunchDetails();
 
-  const androidSettings = AndroidInitializationSettings('app_icon');
-  final iosSettings = IOSInitializationSettings(
-    requestAlertPermission: false,
-    requestBadgePermission: false,
-    requestSoundPermission: false,
-    onDidReceiveLocalNotification: (id, title, body, payload) async {
-      didReceiveNotificationSubject.add(ReceivedNotification(
-        id: id,
-        title: title,
-        body: body,
-        payload: payload,
+  final initSettings = InitializationSettings(
+      android: const AndroidInitializationSettings('app_icon'),
+      iOS: IOSInitializationSettings(
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
+        onDidReceiveLocalNotification: (id, title, body, payload) async {
+          didReceiveNotificationSubject.add(ReceivedNotification(
+            id: id,
+            title: title,
+            body: body,
+            payload: payload,
+          ));
+        },
       ));
-    },
-  );
-  final initSettings = InitializationSettings(androidSettings, iosSettings);
 
   await notificationPlugin.initialize(
     initSettings,
     onSelectNotification: (payload) async {
-      selectNotificationSubject.add(payload);
+      if (payload != null) selectNotificationSubject.add(payload);
     },
   );
 }

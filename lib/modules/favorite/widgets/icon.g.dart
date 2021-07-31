@@ -7,7 +7,7 @@ part of 'icon.dart';
 // **************************************************************************
 
 class FavoriteIcon extends StatelessWidget {
-  const FavoriteIcon({Key key, @required this.favorite}) : super(key: key);
+  const FavoriteIcon({Key? key, required this.favorite}) : super(key: key);
 
   final int favorite;
 

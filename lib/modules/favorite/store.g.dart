@@ -27,13 +27,13 @@ mixin _$FavoriteStore on _FavoriteStoreBase, Store {
   final _$indexAtom = Atom(name: '_FavoriteStoreBase.index');
 
   @override
-  String get index {
+  String? get index {
     _$indexAtom.reportRead();
     return super.index;
   }
 
   @override
-  set index(String value) {
+  set index(String? value) {
     _$indexAtom.reportWrite(value, super.index, () {
       super.index = value;
     });

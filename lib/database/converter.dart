@@ -5,13 +5,13 @@ import 'package:moor/moor.dart';
 
 class ListConverter<T> extends TypeConverter<List<T>, String> {
   @override
-  String mapToSql(List<T> value) {
+  String? mapToSql(List<T>? value) {
     if (value == null) return null;
     return jsonEncode(value);
   }
 
   @override
-  List<T> mapToDart(String fromDb) {
+  List<T>? mapToDart(String? fromDb) {
     if (fromDb == null) return null;
     return (jsonDecode(fromDb) as List).map((e) => e as T).toList();
   }
@@ -23,13 +23,13 @@ class EnumStringConverter<T> extends TypeConverter<T, String> {
   final List<T> values;
 
   @override
-  String mapToSql(T value) {
+  String? mapToSql(T? value) {
     if (value == null) return null;
     return EnumToString.convertToString(value);
   }
 
   @override
-  T mapToDart(String fromDb) {
+  T? mapToDart(String? fromDb) {
     if (fromDb == null) return null;
     return EnumToString.fromString(values, fromDb);
   }

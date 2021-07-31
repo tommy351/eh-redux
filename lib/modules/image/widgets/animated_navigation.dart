@@ -5,10 +5,9 @@ import 'package:provider/provider.dart';
 
 class AnimatedNavigation extends StatefulWidget {
   const AnimatedNavigation({
-    Key key,
-    @required this.child,
-  })  : assert(child != null),
-        super(key: key);
+    Key? key,
+    required this.child,
+  }) : super(key: key);
 
   final Widget child;
 
@@ -18,9 +17,9 @@ class AnimatedNavigation extends StatefulWidget {
 
 class _AnimatedNavigationState extends State<AnimatedNavigation>
     with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation<double> _animation;
-  ReactionDisposer _dispose;
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  late ReactionDisposer _dispose;
 
   @override
   void initState() {

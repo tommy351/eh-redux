@@ -7,7 +7,7 @@ part of 'bottom_sheet_container.dart';
 // **************************************************************************
 
 class BottomSheetContainer extends StatelessWidget {
-  const BottomSheetContainer({Key key, @required this.child}) : super(key: key);
+  const BottomSheetContainer({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 
