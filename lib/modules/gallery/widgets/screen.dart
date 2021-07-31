@@ -84,6 +84,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
             const _Divider(),
             _SectionTitle(AppLocalizations.of(context)!.gallerySectionTags),
             const _TagList(),
+            SliverSafeArea(
+              top: false,
+              sliver: SliverToBoxAdapter(
+                child: Container(),
+              ),
+            ),
           ],
         ),
       ),
