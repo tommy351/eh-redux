@@ -33,8 +33,9 @@ class BackgroundTaskHandler {
           database: await _database,
         );
         return handler.handle(inputData);
-    }
 
-    return true;
+      default:
+        return true;
+    }
   }
 }

@@ -82,16 +82,16 @@ class _AppState extends State<App> {
               LoginScreen.route: (_) => const LoginScreen(),
               GalleryScreen.route: (context) => GalleryScreen(
                     gallery:
-                        ModalRoute.of(context)!.settings.arguments as Gallery,
+                        ModalRoute.of(context)!.settings.arguments! as Gallery,
                   ),
               CheckUpdateScreen.route: (_) => const CheckUpdateScreen(),
               SearchScreen.route: (context) => SearchScreen(
-                    arguments: ModalRoute.of(context)!.settings.arguments
+                    arguments: ModalRoute.of(context)!.settings.arguments!
                         as SearchArguments,
                   ),
               ImageScreen.route: (context) => ImageScreen(
                     gallery:
-                        ModalRoute.of(context)!.settings.arguments as Gallery,
+                        ModalRoute.of(context)!.settings.arguments! as Gallery,
                   ),
             },
           );

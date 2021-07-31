@@ -126,7 +126,7 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
     ));
   }
 
-  Future<DownloadTask> nextPendingTask() async {
+  Future<DownloadTask?> nextPendingTask() async {
     _log.fine('nextPendingTask');
     final query = select(downloadTasks)
       ..where((t) => t.state

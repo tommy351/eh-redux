@@ -29,9 +29,11 @@ Future<void> showDownloadMenuBottomSheet({
     },
   );
 
+  if (result == null) return;
+
   switch (result) {
     case _BottomSheetResult.pause:
-      Scaffold.of(context).showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(AppLocalizations.of(context)!.downloadPausedHint),
       ));
       break;

@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> with RouteAware {
   void didChangeDependencies() {
     super.didChangeDependencies();
     firebaseAnalyticsObserver.subscribe(
-        this, ModalRoute.of(context) as PageRoute);
+        this, ModalRoute.of(context)! as PageRoute);
   }
 
   @override

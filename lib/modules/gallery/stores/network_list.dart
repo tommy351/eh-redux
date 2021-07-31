@@ -86,11 +86,11 @@ abstract class _NetworkGalleryListStoreBase with Store {
       if (uri == null) continue;
 
       final segments = uri.pathSegments;
-      if (segments[0] != 'g') continue;
+      if (segments[0] != 'g' || segments.length < 3) continue;
 
       final id = int.tryParse(segments[1]);
       final token = segments[2];
-      if (id == null || token == null) continue;
+      if (id == null || token.isEmpty) continue;
 
       ids.add(GalleryId(id: id, token: token));
     }

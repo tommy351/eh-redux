@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ControllerTextField extends StatefulWidget {
   const ControllerTextField({
@@ -12,7 +13,7 @@ class ControllerTextField extends StatefulWidget {
     this.maxLines = 1,
     required this.minLines,
     required this.maxLength,
-    this.maxLengthEnforced = true,
+    this.maxLengthEnforcement = MaxLengthEnforcement.enforced,
   }) : super(key: key);
 
   final String value;
@@ -24,7 +25,7 @@ class ControllerTextField extends StatefulWidget {
   final int maxLines;
   final int minLines;
   final int maxLength;
-  final bool maxLengthEnforced;
+  final MaxLengthEnforcement maxLengthEnforcement;
 
   @override
   _ControllerTextFieldState createState() => _ControllerTextFieldState();
@@ -66,7 +67,7 @@ class _ControllerTextFieldState extends State<ControllerTextField> {
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       maxLength: widget.maxLength,
-      maxLengthEnforced: widget.maxLengthEnforced,
+      maxLengthEnforcement: widget.maxLengthEnforcement,
     );
   }
 }

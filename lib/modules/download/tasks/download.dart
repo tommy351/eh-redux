@@ -149,7 +149,7 @@ class DownloadTaskOperation {
     _log.finer('File path: ${file.path}');
 
     var fileSize = 0;
-    final completer = Completer<void>();
+    final completer = Completer<dynamic>();
 
     // Send the request
     final req = http.Request('GET', Uri.parse(url));
@@ -329,10 +329,10 @@ class DownloadTaskHandler {
     );
 
     try {
-      DownloadTask task;
+      DownloadTask? task;
 
       while (!_canceled && (task = await _nextTask()) != null) {
-        final operation = _operations[task.galleryId] = DownloadTaskOperation(
+        final operation = _operations[task!.galleryId] = DownloadTaskOperation(
           database: database,
           httpClient: _httpClient,
           client: _client,
@@ -356,7 +356,7 @@ class DownloadTaskHandler {
     return true;
   }
 
-  Future<DownloadTask> _nextTask() async {
+  Future<DownloadTask?> _nextTask() async {
     final task = await database.downloadTasksDao.nextPendingTask();
     _log.finer('Next task: $task');
     return task;

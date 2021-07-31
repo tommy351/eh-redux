@@ -17,7 +17,7 @@ Widget downloadTab(BuildContext context) {
   final database = Provider.of<Database>(context);
 
   return StreamProvider<List<DownloadTaskWithGallery>>(
-    initialData: [],
+    initialData: const [],
     create: (_) => database.downloadTasksDao.watchAllWithGallery(),
     child: NestedScrollView(
       headerSliverBuilder: (context, _) => const [_AppBar()],
@@ -51,7 +51,7 @@ Widget _resumeAllButton(BuildContext context) {
           0;
 
       if (count > 0) {
-        Scaffold.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(AppLocalizations.of(context)!.downloadResumedHint),
         ));
       }
@@ -72,7 +72,7 @@ Widget _pauseAllButton(BuildContext context) {
           0;
 
       if (count > 0) {
-        Scaffold.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(AppLocalizations.of(context)!.downloadPausedHint),
         ));
       }

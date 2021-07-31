@@ -370,7 +370,7 @@ Widget _favButton(BuildContext context) {
   return _ActionButton(
     onPressed: () {
       if (sessionStore.loginStatus != LoginStatus.loggedIn) {
-        Scaffold.of(context).showSnackBar(SnackBar(
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(AppLocalizations.of(context)!.logInRequiredHint),
         ));
         return;
@@ -427,7 +427,7 @@ Widget _downloadButtonContent(BuildContext context) {
 
 @swidget
 Widget _downloadButtonIcon(BuildContext context) {
-  final task = Provider.of<DownloadTask>(context);
+  final task = Provider.of<DownloadTask?>(context);
   final iconTheme = IconTheme.of(context);
   final theme = Theme.of(context);
 
