@@ -33,7 +33,7 @@ class DownloadedImagesDao extends DatabaseAccessor<Database>
       ..where((t) => t.galleryId.equals(galleryId) & t.page.equals(page))
       ..limit(1);
 
-    return query.getSingle();
+    return query.getSingleOrNull();
   }
 
   Future<void> upsertEntry(DownloadedImageEntry entry) async {

@@ -46,22 +46,27 @@ class DownloadTaskOperation {
 
   int get galleryId => task.galleryId;
 
-  final _galleryMemo = AsyncMemoizer<Gallery>();
+  final _galleryMemo = AsyncMemoizer<Gallery?>();
 
-  Future<Gallery> get _gallery => _galleryMemo.runOnce(() async {
+  Future<Gallery?> get _gallery => _galleryMemo.runOnce(() async {
         final entry = await database.galleriesDao.getEntry(galleryId);
+        if (entry == null) return null;
         return Gallery.fromEntry(entry);
       });
 
   final _imageStoreMemo = AsyncMemoizer<ImageStore>();
 
-  Future<ImageStore> get _imageStore =>
-      _imageStoreMemo.runOnce(() async => ImageStore(
-            client: client,
-            gallery: await _gallery,
-            galleriesDao: database.galleriesDao,
-            downloadedImagesDao: database.downloadedImagesDao,
-          ));
+  Future<ImageStore?> get _imageStore async {
+    final gallery = await _gallery;
+    if (gallery == null) return null;
+
+    _imageStoreMemo.runOnce(() async => ImageStore(
+          client: client,
+          gallery: gallery,
+          galleriesDao: database.galleriesDao,
+          downloadedImagesDao: database.downloadedImagesDao,
+        ));
+  }
 
   final _directoryMemo = AsyncMemoizer<Directory>();
 
@@ -197,10 +202,12 @@ class DownloadTaskOperation {
     }
 
     final gallery = await _gallery;
+    final thumbnail = gallery?.thumbnail;
+    if (thumbnail == null) return;
 
     final file = await _guard(() => _downloadFile(
           name: 'thumbnail',
-          url: gallery.thumbnail,
+          url: thumbnail,
         ));
 
     _thumbnailPath = file.file.path;
@@ -215,6 +222,7 @@ class DownloadTaskOperation {
     _log.fine('Download image: galleryId=$galleryId, page=$page');
 
     final imageStore = await _imageStore;
+    if (imageStore == null) return;
 
     // Load the image metadata
     final image = await _guard(() => imageStore.loadNetworkPage(page));
@@ -274,6 +282,7 @@ class DownloadTaskOperation {
     final details =
         NotificationDetails(android: androidDetails, iOS: iosDetails);
     final gallery = await _gallery;
+    if (gallery == null) return;
 
     await notificationPlugin.show(
       galleryId,

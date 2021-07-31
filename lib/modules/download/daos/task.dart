@@ -56,7 +56,7 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
     final query = select(downloadTasks)
       ..where((t) => t.galleryId.equals(galleryId));
 
-    return query.map((e) => DownloadTask.fromEntry(e)).watchSingle();
+    return query.map((e) => DownloadTask.fromEntry(e)).watchSingleOrNull();
   }
 
   Future<DownloadTask?> getSingle(int galleryId) {
@@ -65,7 +65,7 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
       ..where((t) => t.galleryId.equals(galleryId))
       ..limit(1);
 
-    return query.map((e) => DownloadTask.fromEntry(e)).getSingle();
+    return query.map((e) => DownloadTask.fromEntry(e)).getSingleOrNull();
   }
 
   Future<void> insertSingle(DownloadTask entry) async {
@@ -137,6 +137,6 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
       ])
       ..limit(1);
 
-    return query.map((e) => DownloadTask.fromEntry(e)).getSingle();
+    return query.map((e) => DownloadTask.fromEntry(e)).getSingleOrNull();
   }
 }
