@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/stateful_wrapper.dart';
 import 'package:eh_redux/modules/image/store.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:mobx/mobx.dart';
@@ -19,7 +19,7 @@ import 'tap_event_detector.dart';
 part 'body.g.dart';
 
 class ImageBody extends StatefulWidget {
-  const ImageBody({Key key}) : super(key: key);
+  const ImageBody({Key? key}) : super(key: key);
 
   @override
   _ImageBodyState createState() => _ImageBodyState();
@@ -29,8 +29,8 @@ class _ImageBodyState extends State<ImageBody> {
   static const _duration = Duration(milliseconds: 500);
   static const _curve = Curves.easeOutCubic;
 
-  PreloadPageController _controller;
-  ReactionDisposer _dispose;
+  late PreloadPageController _controller;
+  late ReactionDisposer _dispose;
 
   @override
   void initState() {
@@ -110,7 +110,7 @@ Widget _statusBar(BuildContext context) {
       builder: (context) {
         return Text(
           '${store.currentPage1} / ${store.totalPage}',
-          style: theme.textTheme.bodyText2.copyWith(color: Colors.white),
+          style: theme.textTheme.bodyText2!.copyWith(color: Colors.white),
         );
       },
     ),
@@ -120,19 +120,19 @@ Widget _statusBar(BuildContext context) {
 @swidget
 Widget _imageLoading(
   BuildContext context, {
-  ImageChunkEvent event,
+  ImageChunkEvent? event,
 }) {
   return Center(
     child: CircularProgressIndicator(
       value: event != null
-          ? event.cumulativeBytesLoaded / event.expectedTotalBytes
+          ? event.cumulativeBytesLoaded / (event.expectedTotalBytes ?? 0)
           : null,
     ),
   );
 }
 
 @swidget
-Widget _imageView(BuildContext context, {@required int page}) {
+Widget _imageView(BuildContext context, {required int page}) {
   final store = Provider.of<ImageStore>(context);
 
   return StatefulWrapper(
@@ -192,27 +192,29 @@ Widget _imageView(BuildContext context, {@required int page}) {
 @swidget
 Widget _imageError(
   BuildContext context, {
-  @required int page,
-  ImageError error,
-  String reloadKey,
+  required int page,
+  ImageError? error,
+  String? reloadKey,
 }) {
   final theme = Theme.of(context);
   final store = Provider.of<ImageStore>(context);
-  final title = error.map(
-    (_) => AppLocalizations.of(context).imageErrorTitle,
-    notFound: (_) => AppLocalizations.of(context).imageNotFoundTitle,
-    disconnected: (_) => AppLocalizations.of(context).imageDisconnectedTitle,
-    galleryUnavailable: (_) =>
-        AppLocalizations.of(context).imageGalleryUnavailableTitle,
-  );
-  final message = error.map(
+  final title = error?.map(
+        (_) => AppLocalizations.of(context)!.imageErrorTitle,
+        notFound: (_) => AppLocalizations.of(context)!.imageNotFoundTitle,
+        disconnected: (_) =>
+            AppLocalizations.of(context)!.imageDisconnectedTitle,
+        galleryUnavailable: (_) =>
+            AppLocalizations.of(context)!.imageGalleryUnavailableTitle,
+      ) ??
+      '';
+  final message = error?.map(
     (value) => value.message,
-    notFound: (_) => AppLocalizations.of(context).imageNotFoundMessage,
-    disconnected: (_) => AppLocalizations.of(context).imageDisconnectedMessage,
+    notFound: (_) => AppLocalizations.of(context)!.imageNotFoundMessage,
+    disconnected: (_) => AppLocalizations.of(context)!.imageDisconnectedMessage,
     galleryUnavailable: (_) =>
-        AppLocalizations.of(context).imageGalleryUnavailableMessage,
+        AppLocalizations.of(context)!.imageGalleryUnavailableMessage,
   );
-  final icon = error.maybeMap(
+  final icon = error?.maybeMap(
     (_) => const Icon(Icons.broken_image),
     disconnected: (_) => const Icon(Icons.cloud_off),
     orElse: () => const Icon(Icons.broken_image),
@@ -227,7 +229,7 @@ Widget _imageError(
           color: Colors.white,
           opacity: 0.5,
         ),
-        child: icon,
+        child: icon ?? Container(),
       ),
       const SizedBox(height: 16),
       Text(title, style: theme.textTheme.bodyText1),
@@ -250,7 +252,7 @@ Widget _imageError(
         style: OutlinedButton.styleFrom(
           primary: theme.accentColor,
         ),
-        child: Text(AppLocalizations.of(context).retryButtonLabel),
+        child: Text(AppLocalizations.of(context)!.retryButtonLabel),
       ),
     ],
   );

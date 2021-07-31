@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/session/store.dart';
 import 'package:eh_redux/utils/cookie.dart';
 import 'package:eh_redux/utils/firebase.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -13,7 +13,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 final _log = Logger('LoginScreen');
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key key}) : super(key: key);
+  const LoginScreen({Key? key}) : super(key: key);
 
   static String route = '/login';
 
@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).logInScreenTitle),
+        title: Text(AppLocalizations.of(context)!.logInScreenTitle),
       ),
       body: WebView(
         initialUrl: _loginUrl,

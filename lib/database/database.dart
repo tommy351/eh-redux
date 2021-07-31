@@ -103,7 +103,7 @@ class Database extends _$Database {
         requestPort.sendPort, _requestPortName);
   }
 
-  static Future<MoorIsolate> reuseIsolate() async {
+  static Future<MoorIsolate?> reuseIsolate() async {
     final shareRequestPort =
         IsolateNameServer.lookupPortByName(_requestPortName);
     if (shareRequestPort == null) return null;

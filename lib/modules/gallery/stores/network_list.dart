@@ -1,6 +1,5 @@
 import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:eh_redux/services/ehentai.dart';
-import 'package:meta/meta.dart';
 import 'package:mobx/mobx.dart';
 
 part 'network_list.g.dart';
@@ -14,14 +13,14 @@ class NetworkGalleryListStore = _NetworkGalleryListStoreBase
 
 abstract class _NetworkGalleryListStoreBase with Store {
   _NetworkGalleryListStoreBase({
-    @required this.client,
+    required this.client,
     this.path = '/',
     this.params,
-  }) : assert(client != null);
+  });
 
   final EHentaiClient client;
   final String path;
-  final Map<String, String> params;
+  final Map<String, String>? params;
 
   @observable
   ObservableMap<int, Gallery> data = ObservableMap();

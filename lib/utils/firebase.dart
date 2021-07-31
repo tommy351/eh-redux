@@ -21,6 +21,6 @@ Future<void> initializeFirebase() async {
   FlutterError.onError = (FlutterErrorDetails errorDetails) async {
     await FirebaseCrashlytics.instance.recordFlutterError(errorDetails);
     // Forward to original handler.
-    originalOnError(errorDetails);
+    originalOnError?.call(errorDetails);
   };
 }

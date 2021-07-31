@@ -8,14 +8,14 @@ part of 'select_list_tile.dart';
 
 class SelectListTile<T> extends StatelessWidget {
   const SelectListTile(
-      {Key key,
+      {Key? key,
       this.title,
-      @required this.items,
-      @required this.value,
-      @required this.onChanged})
+      required this.items,
+      required this.value,
+      required this.onChanged})
       : super(key: key);
 
-  final Widget title;
+  final Widget? title;
 
   final List<DropdownMenuItem<T>> items;
 

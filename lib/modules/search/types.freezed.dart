@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'types.dart';
 
@@ -9,11 +9,13 @@ part of 'types.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$SearchArgumentsTearOff {
   const _$SearchArgumentsTearOff();
 
-// ignore: unused_element
   _SearchArguments call({String query = ''}) {
     return _SearchArguments(
       query: query,
@@ -22,14 +24,15 @@ class _$SearchArgumentsTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $SearchArguments = _$SearchArgumentsTearOff();
 
 /// @nodoc
 mixin _$SearchArguments {
-  String get query;
+  String get query => throw _privateConstructorUsedError;
 
-  $SearchArgumentsCopyWith<SearchArguments> get copyWith;
+  @JsonKey(ignore: true)
+  $SearchArgumentsCopyWith<SearchArguments> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -51,10 +54,13 @@ class _$SearchArgumentsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object query = freezed,
+    Object? query = freezed,
   }) {
     return _then(_value.copyWith(
-      query: query == freezed ? _value.query : query as String,
+      query: query == freezed
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -82,17 +88,21 @@ class __$SearchArgumentsCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object query = freezed,
+    Object? query = freezed,
   }) {
     return _then(_SearchArguments(
-      query: query == freezed ? _value.query : query as String,
+      query: query == freezed
+          ? _value.query
+          : query // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_SearchArguments implements _SearchArguments {
-  const _$_SearchArguments({this.query = ''}) : assert(query != null);
+  const _$_SearchArguments({this.query = ''});
 
   @JsonKey(defaultValue: '')
   @override
@@ -115,6 +125,7 @@ class _$_SearchArguments implements _SearchArguments {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(query);
 
+  @JsonKey(ignore: true)
   @override
   _$SearchArgumentsCopyWith<_SearchArguments> get copyWith =>
       __$SearchArgumentsCopyWithImpl<_SearchArguments>(this, _$identity);
@@ -124,7 +135,9 @@ abstract class _SearchArguments implements SearchArguments {
   const factory _SearchArguments({String query}) = _$_SearchArguments;
 
   @override
-  String get query;
+  String get query => throw _privateConstructorUsedError;
   @override
-  _$SearchArgumentsCopyWith<_SearchArguments> get copyWith;
+  @JsonKey(ignore: true)
+  _$SearchArgumentsCopyWith<_SearchArguments> get copyWith =>
+      throw _privateConstructorUsedError;
 }

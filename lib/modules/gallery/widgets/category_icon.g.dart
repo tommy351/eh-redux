@@ -7,7 +7,7 @@ part of 'category_icon.dart';
 // **************************************************************************
 
 class CategoryIcon extends StatelessWidget {
-  const CategoryIcon({Key key, @required this.category}) : super(key: key);
+  const CategoryIcon({Key? key, required this.category}) : super(key: key);
 
   final String category;
 

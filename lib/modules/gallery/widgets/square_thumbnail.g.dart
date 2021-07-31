@@ -8,9 +8,9 @@ part of 'square_thumbnail.dart';
 
 class GallerySquareThumbnail extends StatelessWidget {
   const GallerySquareThumbnail(
-      {Key key,
-      @required this.galleryId,
-      @required this.fallbackUrl,
+      {Key? key,
+      required this.galleryId,
+      required this.fallbackUrl,
       this.size,
       this.borderRadius})
       : super(key: key);
@@ -19,9 +19,9 @@ class GallerySquareThumbnail extends StatelessWidget {
 
   final String fallbackUrl;
 
-  final double size;
+  final double? size;
 
-  final BorderRadius borderRadius;
+  final BorderRadius? borderRadius;
 
   @override
   Widget build(BuildContext _context) => gallerySquareThumbnail(_context,

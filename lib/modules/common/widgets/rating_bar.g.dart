@@ -7,7 +7,7 @@ part of 'rating_bar.dart';
 // **************************************************************************
 
 class RatingBar extends StatelessWidget {
-  const RatingBar(this.rating, {Key key}) : super(key: key);
+  const RatingBar(this.rating, {Key? key}) : super(key: key);
 
   final double rating;
 

@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'notification.dart';
 
@@ -9,16 +9,15 @@ part of 'notification.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$ReceivedNotificationTearOff {
   const _$ReceivedNotificationTearOff();
 
-// ignore: unused_element
   _ReceivedNotification call(
-      {@required int id,
-      @required String title,
-      @required String body,
-      @required String payload}) {
+      {required int id, String? title, String? body, String? payload}) {
     return _ReceivedNotification(
       id: id,
       title: title,
@@ -29,17 +28,18 @@ class _$ReceivedNotificationTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $ReceivedNotification = _$ReceivedNotificationTearOff();
 
 /// @nodoc
 mixin _$ReceivedNotification {
-  int get id;
-  String get title;
-  String get body;
-  String get payload;
+  int get id => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get body => throw _privateConstructorUsedError;
+  String? get payload => throw _privateConstructorUsedError;
 
-  $ReceivedNotificationCopyWith<ReceivedNotification> get copyWith;
+  @JsonKey(ignore: true)
+  $ReceivedNotificationCopyWith<ReceivedNotification> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -47,7 +47,7 @@ abstract class $ReceivedNotificationCopyWith<$Res> {
   factory $ReceivedNotificationCopyWith(ReceivedNotification value,
           $Res Function(ReceivedNotification) then) =
       _$ReceivedNotificationCopyWithImpl<$Res>;
-  $Res call({int id, String title, String body, String payload});
+  $Res call({int id, String? title, String? body, String? payload});
 }
 
 /// @nodoc
@@ -61,16 +61,28 @@ class _$ReceivedNotificationCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object title = freezed,
-    Object body = freezed,
-    Object payload = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? body = freezed,
+    Object? payload = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as int,
-      title: title == freezed ? _value.title : title as String,
-      body: body == freezed ? _value.body : body as String,
-      payload: payload == freezed ? _value.payload : payload as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      body: body == freezed
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String?,
+      payload: payload == freezed
+          ? _value.payload
+          : payload // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -82,7 +94,7 @@ abstract class _$ReceivedNotificationCopyWith<$Res>
           $Res Function(_ReceivedNotification) then) =
       __$ReceivedNotificationCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String title, String body, String payload});
+  $Res call({int id, String? title, String? body, String? payload});
 }
 
 /// @nodoc
@@ -98,40 +110,46 @@ class __$ReceivedNotificationCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object title = freezed,
-    Object body = freezed,
-    Object payload = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? body = freezed,
+    Object? payload = freezed,
   }) {
     return _then(_ReceivedNotification(
-      id: id == freezed ? _value.id : id as int,
-      title: title == freezed ? _value.title : title as String,
-      body: body == freezed ? _value.body : body as String,
-      payload: payload == freezed ? _value.payload : payload as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      body: body == freezed
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String?,
+      payload: payload == freezed
+          ? _value.payload
+          : payload // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_ReceivedNotification implements _ReceivedNotification {
   const _$_ReceivedNotification(
-      {@required this.id,
-      @required this.title,
-      @required this.body,
-      @required this.payload})
-      : assert(id != null),
-        assert(title != null),
-        assert(body != null),
-        assert(payload != null);
+      {required this.id, this.title, this.body, this.payload});
 
   @override
   final int id;
   @override
-  final String title;
+  final String? title;
   @override
-  final String body;
+  final String? body;
   @override
-  final String payload;
+  final String? payload;
 
   @override
   String toString() {
@@ -160,6 +178,7 @@ class _$_ReceivedNotification implements _ReceivedNotification {
       const DeepCollectionEquality().hash(body) ^
       const DeepCollectionEquality().hash(payload);
 
+  @JsonKey(ignore: true)
   @override
   _$ReceivedNotificationCopyWith<_ReceivedNotification> get copyWith =>
       __$ReceivedNotificationCopyWithImpl<_ReceivedNotification>(
@@ -168,19 +187,21 @@ class _$_ReceivedNotification implements _ReceivedNotification {
 
 abstract class _ReceivedNotification implements ReceivedNotification {
   const factory _ReceivedNotification(
-      {@required int id,
-      @required String title,
-      @required String body,
-      @required String payload}) = _$_ReceivedNotification;
+      {required int id,
+      String? title,
+      String? body,
+      String? payload}) = _$_ReceivedNotification;
 
   @override
-  int get id;
+  int get id => throw _privateConstructorUsedError;
   @override
-  String get title;
+  String? get title => throw _privateConstructorUsedError;
   @override
-  String get body;
+  String? get body => throw _privateConstructorUsedError;
   @override
-  String get payload;
+  String? get payload => throw _privateConstructorUsedError;
   @override
-  _$ReceivedNotificationCopyWith<_ReceivedNotification> get copyWith;
+  @JsonKey(ignore: true)
+  _$ReceivedNotificationCopyWith<_ReceivedNotification> get copyWith =>
+      throw _privateConstructorUsedError;
 }

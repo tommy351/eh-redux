@@ -7,14 +7,14 @@ part of 'screen.dart';
 // **************************************************************************
 
 class _Body extends StatelessWidget {
-  const _Body({Key key}) : super(key: key);
+  const _Body({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => _body(_context);
 }
 
 class _Title extends StatelessWidget {
-  const _Title(this.title, {Key key}) : super(key: key);
+  const _Title(this.title, {Key? key}) : super(key: key);
 
   final String title;
 
@@ -24,10 +24,10 @@ class _Title extends StatelessWidget {
 
 class _SelectTile<T> extends StatelessWidget {
   const _SelectTile(
-      {Key key,
-      @required this.title,
-      @required this.preference,
-      @required this.items})
+      {Key? key,
+      required this.title,
+      required this.preference,
+      required this.items})
       : super(key: key);
 
   final String title;
@@ -42,7 +42,7 @@ class _SelectTile<T> extends StatelessWidget {
 }
 
 class _SwitchTile extends StatelessWidget {
-  const _SwitchTile({Key key, @required this.title, @required this.preference})
+  const _SwitchTile({Key? key, required this.title, required this.preference})
       : super(key: key);
 
   final String title;

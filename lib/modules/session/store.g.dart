@@ -9,7 +9,7 @@ part of 'store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SessionStore on _SessionStoreBase, Store {
-  Computed<LoginStatus> _$loginStatusComputed;
+  Computed<LoginStatus>? _$loginStatusComputed;
 
   @override
   LoginStatus get loginStatus =>
@@ -20,13 +20,13 @@ mixin _$SessionStore on _SessionStoreBase, Store {
   final _$sessionAtom = Atom(name: '_SessionStoreBase.session');
 
   @override
-  ObservableFuture<String> get session {
+  ObservableFuture<String?> get session {
     _$sessionAtom.reportRead();
     return super.session;
   }
 
   @override
-  set session(ObservableFuture<String> value) {
+  set session(ObservableFuture<String?> value) {
     _$sessionAtom.reportWrite(value, super.session, () {
       super.session = value;
     });

@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'tabs.dart';
 
@@ -9,16 +9,18 @@ part of 'tabs.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$TabTearOff {
   const _$TabTearOff();
 
-// ignore: unused_element
   _Tab call(
-      {@required String name,
-      @required IconData icon,
-      @required String Function(BuildContext) title,
-      @required Widget Function(BuildContext) widget}) {
+      {required String name,
+      required IconData icon,
+      required String Function(BuildContext) title,
+      required Widget Function(BuildContext) widget}) {
     return _Tab(
       name: name,
       icon: icon,
@@ -29,17 +31,18 @@ class _$TabTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $Tab = _$TabTearOff();
 
 /// @nodoc
 mixin _$Tab {
-  String get name;
-  IconData get icon;
-  String Function(BuildContext) get title;
-  Widget Function(BuildContext) get widget;
+  String get name => throw _privateConstructorUsedError;
+  IconData get icon => throw _privateConstructorUsedError;
+  String Function(BuildContext) get title => throw _privateConstructorUsedError;
+  Widget Function(BuildContext) get widget =>
+      throw _privateConstructorUsedError;
 
-  $TabCopyWith<Tab> get copyWith;
+  @JsonKey(ignore: true)
+  $TabCopyWith<Tab> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -63,20 +66,28 @@ class _$TabCopyWithImpl<$Res> implements $TabCopyWith<$Res> {
 
   @override
   $Res call({
-    Object name = freezed,
-    Object icon = freezed,
-    Object title = freezed,
-    Object widget = freezed,
+    Object? name = freezed,
+    Object? icon = freezed,
+    Object? title = freezed,
+    Object? widget = freezed,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed ? _value.name : name as String,
-      icon: icon == freezed ? _value.icon : icon as IconData,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: icon == freezed
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as IconData,
       title: title == freezed
           ? _value.title
-          : title as String Function(BuildContext),
+          : title // ignore: cast_nullable_to_non_nullable
+              as String Function(BuildContext),
       widget: widget == freezed
           ? _value.widget
-          : widget as Widget Function(BuildContext),
+          : widget // ignore: cast_nullable_to_non_nullable
+              as Widget Function(BuildContext),
     ));
   }
 }
@@ -104,35 +115,40 @@ class __$TabCopyWithImpl<$Res> extends _$TabCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object name = freezed,
-    Object icon = freezed,
-    Object title = freezed,
-    Object widget = freezed,
+    Object? name = freezed,
+    Object? icon = freezed,
+    Object? title = freezed,
+    Object? widget = freezed,
   }) {
     return _then(_Tab(
-      name: name == freezed ? _value.name : name as String,
-      icon: icon == freezed ? _value.icon : icon as IconData,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: icon == freezed
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as IconData,
       title: title == freezed
           ? _value.title
-          : title as String Function(BuildContext),
+          : title // ignore: cast_nullable_to_non_nullable
+              as String Function(BuildContext),
       widget: widget == freezed
           ? _value.widget
-          : widget as Widget Function(BuildContext),
+          : widget // ignore: cast_nullable_to_non_nullable
+              as Widget Function(BuildContext),
     ));
   }
 }
 
 /// @nodoc
+
 class _$_Tab implements _Tab {
   const _$_Tab(
-      {@required this.name,
-      @required this.icon,
-      @required this.title,
-      @required this.widget})
-      : assert(name != null),
-        assert(icon != null),
-        assert(title != null),
-        assert(widget != null);
+      {required this.name,
+      required this.icon,
+      required this.title,
+      required this.widget});
 
   @override
   final String name;
@@ -170,6 +186,7 @@ class _$_Tab implements _Tab {
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(widget);
 
+  @JsonKey(ignore: true)
   @override
   _$TabCopyWith<_Tab> get copyWith =>
       __$TabCopyWithImpl<_Tab>(this, _$identity);
@@ -177,19 +194,21 @@ class _$_Tab implements _Tab {
 
 abstract class _Tab implements Tab {
   const factory _Tab(
-      {@required String name,
-      @required IconData icon,
-      @required String Function(BuildContext) title,
-      @required Widget Function(BuildContext) widget}) = _$_Tab;
+      {required String name,
+      required IconData icon,
+      required String Function(BuildContext) title,
+      required Widget Function(BuildContext) widget}) = _$_Tab;
 
   @override
-  String get name;
+  String get name => throw _privateConstructorUsedError;
   @override
-  IconData get icon;
+  IconData get icon => throw _privateConstructorUsedError;
   @override
-  String Function(BuildContext) get title;
+  String Function(BuildContext) get title => throw _privateConstructorUsedError;
   @override
-  Widget Function(BuildContext) get widget;
+  Widget Function(BuildContext) get widget =>
+      throw _privateConstructorUsedError;
   @override
-  _$TabCopyWith<_Tab> get copyWith;
+  @JsonKey(ignore: true)
+  _$TabCopyWith<_Tab> get copyWith => throw _privateConstructorUsedError;
 }

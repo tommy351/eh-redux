@@ -10,12 +10,10 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 @immutable
 class _LoadArguments {
   const _LoadArguments({
-    @required this.key,
-    @required this.chunkEvents,
-    @required this.decode,
-  })  : assert(key != null),
-        assert(chunkEvents != null),
-        assert(decode != null);
+    required this.key,
+    required this.chunkEvents,
+    required this.decode,
+  });
 
   final FileFallbackImage key;
   final StreamController<ImageChunkEvent> chunkEvents;
@@ -24,19 +22,17 @@ class _LoadArguments {
 
 class FileFallbackImage extends ImageProvider<FileFallbackImage> {
   FileFallbackImage({
-    @required this.getFile,
-    @required this.url,
+    required this.getFile,
+    required this.url,
     this.cacheManager,
     this.scale = 1.0,
-  })  : assert(getFile != null),
-        assert(url != null),
-        assert(scale != null);
+  });
 
   static final _httpClient = HttpClient()..autoUncompress = false;
 
-  final FutureOr<File> Function() getFile;
+  final FutureOr<File?> Function() getFile;
   final String url;
-  final BaseCacheManager cacheManager;
+  final BaseCacheManager? cacheManager;
   final double scale;
 
   @override
@@ -83,8 +79,10 @@ class FileFallbackImage extends ImageProvider<FileFallbackImage> {
         return _loadFile(args, file);
       }
 
-      if (args.key.cacheManager != null) {
-        return _loadCache(args, args.key.cacheManager);
+      final cacheManager = args.key.cacheManager;
+
+      if (cacheManager != null) {
+        return _loadCache(args, cacheManager);
       }
 
       return _loadNetwork(args);
@@ -98,7 +96,7 @@ class FileFallbackImage extends ImageProvider<FileFallbackImage> {
 
     if (bytes.lengthInBytes == 0) {
       // The file may become available later.
-      PaintingBinding.instance.imageCache.evict(args.key);
+      PaintingBinding.instance?.imageCache?.evict(args.key);
       throw StateError('$file is empty and cannot be loaded as an image.');
     }
 
@@ -137,7 +135,7 @@ class FileFallbackImage extends ImageProvider<FileFallbackImage> {
     final res = await req.close();
 
     if (!isStatusCodeOk(res.statusCode)) {
-      PaintingBinding.instance.imageCache.evict(args.key);
+      PaintingBinding.instance?.imageCache?.evict(args.key);
       throw NetworkImageLoadException(
         statusCode: res.statusCode,
         uri: uri,

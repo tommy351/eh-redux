@@ -8,26 +8,26 @@ part of 'confirm_list_tile.dart';
 
 class ConfirmListTile extends StatelessWidget {
   const ConfirmListTile(
-      {Key key,
+      {Key? key,
       this.title,
       this.leading,
       this.trailing,
       this.dialogTitle,
       this.dialogContent,
       this.disabled = false,
-      @required this.confirmActionChild,
-      @required this.onConfirm})
+      required this.confirmActionChild,
+      required this.onConfirm})
       : super(key: key);
 
-  final Widget title;
+  final Widget? title;
 
-  final Widget leading;
+  final Widget? leading;
 
-  final Widget trailing;
+  final Widget? trailing;
 
-  final Widget dialogTitle;
+  final Widget? dialogTitle;
 
-  final Widget dialogContent;
+  final Widget? dialogContent;
 
   final bool disabled;
 

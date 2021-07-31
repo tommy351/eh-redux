@@ -7,7 +7,7 @@ part of 'log_out_confirm.dart';
 // **************************************************************************
 
 class LogOutConfirm extends StatelessWidget {
-  const LogOutConfirm({Key key}) : super(key: key);
+  const LogOutConfirm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => logOutConfirm(_context);

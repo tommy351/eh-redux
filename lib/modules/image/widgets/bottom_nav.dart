@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 
 class ImageBottomNav extends StatefulWidget {
   const ImageBottomNav({
-    Key key,
+    Key? key,
     this.padding = EdgeInsets.zero,
   }) : super(key: key);
 
@@ -18,7 +18,7 @@ class ImageBottomNav extends StatefulWidget {
 
 class _ImageBottomNavState extends State<ImageBottomNav> {
   double _value = 0;
-  ReactionDisposer _dispose;
+  late ReactionDisposer _dispose;
 
   @override
   void initState() {

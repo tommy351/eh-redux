@@ -12,14 +12,15 @@ _$_GalleryResponse _$_$_GalleryResponseFromJson(Map<String, dynamic> json) {
     token: json['token'] as String,
     title: json['title'] as String,
     titleJpn: json['title_jpn'] as String,
-    category: json['category'] as String,
+    category: json['category'] as String? ?? '',
     thumbnail: json['thumb'] as String,
-    uploader: json['uploader'] as String,
+    uploader: json['uploader'] as String? ?? '',
     fileCount: int.tryParse(json['filecount'] as String),
     fileSize: json['filesize'] as int,
-    expunged: json['expunged'] as bool,
+    expunged: json['expunged'] as bool? ?? false,
     rating: double.tryParse(json['rating'] as String),
-    tags: (json['tags'] as List)?.map((e) => e as String)?.toList(),
+    tags: (json['tags'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+        [],
     posted: tryParseSecondsSinceEpoch(json['posted'] as String),
   );
 }

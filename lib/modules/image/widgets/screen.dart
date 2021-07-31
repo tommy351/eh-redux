@@ -19,10 +19,9 @@ part 'screen.g.dart';
 
 class ImageScreen extends StatefulWidget {
   const ImageScreen({
-    Key key,
-    @required this.gallery,
-  })  : assert(gallery != null),
-        super(key: key);
+    Key? key,
+    required this.gallery,
+  }) : super(key: key);
 
   static const route = '/image';
 
@@ -33,7 +32,7 @@ class ImageScreen extends StatefulWidget {
 }
 
 class _ImageScreenState extends State<ImageScreen> {
-  ImageStore _store;
+  late ImageStore _store;
 
   @override
   void initState() {

@@ -6,7 +6,7 @@ part 'category_icon.g.dart';
 @swidget
 Widget categoryIcon(
   BuildContext context, {
-  @required String category,
+  required String category,
 }) {
   final data = IconTheme.of(context);
   const colors = <String, Color>{

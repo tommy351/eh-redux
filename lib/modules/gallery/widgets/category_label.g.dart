@@ -7,7 +7,7 @@ part of 'category_label.dart';
 // **************************************************************************
 
 class CategoryLabel extends StatelessWidget {
-  const CategoryLabel({Key key, @required this.category}) : super(key: key);
+  const CategoryLabel({Key? key, required this.category}) : super(key: key);
 
   final String category;
 

@@ -7,7 +7,7 @@ part of 'body.dart';
 // **************************************************************************
 
 class HomeBody extends StatelessWidget {
-  const HomeBody({Key key, @required this.child}) : super(key: key);
+  const HomeBody({Key? key, required this.child}) : super(key: key);
 
   final Widget child;
 

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 class ControllerTextField extends StatefulWidget {
   const ControllerTextField({
-    Key key,
-    this.value,
-    this.onChanged,
+    Key? key,
+    required this.value,
+    required this.onChanged,
     this.decoration = const InputDecoration(),
     this.autofocus = false,
     this.obscuringCharacter = '•',
     this.obscureText = false,
     this.maxLines = 1,
-    this.minLines,
-    this.maxLength,
+    required this.minLines,
+    required this.maxLength,
     this.maxLengthEnforced = true,
   }) : super(key: key);
 
@@ -31,7 +31,7 @@ class ControllerTextField extends StatefulWidget {
 }
 
 class _ControllerTextFieldState extends State<ControllerTextField> {
-  TextEditingController _controller;
+  late TextEditingController _controller;
 
   @override
   void initState() {

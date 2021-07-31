@@ -7,7 +7,7 @@ part of 'rating_bottom_sheet.dart';
 // **************************************************************************
 
 class RatingBottomSheet extends StatelessWidget {
-  const RatingBottomSheet({Key key, @required this.store}) : super(key: key);
+  const RatingBottomSheet({Key? key, required this.store}) : super(key: key);
 
   final SearchStore store;
 
@@ -17,7 +17,7 @@ class RatingBottomSheet extends StatelessWidget {
 }
 
 class _Body extends StatelessWidget {
-  const _Body({Key key}) : super(key: key);
+  const _Body({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => _body(_context);

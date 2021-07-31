@@ -13,7 +13,7 @@ class SessionStore = _SessionStoreBase with _$SessionStore;
 
 abstract class _SessionStoreBase with Store {
   _SessionStoreBase({
-    FlutterSecureStorage storage,
+    FlutterSecureStorage? storage,
   }) {
     _storage = storage ?? const FlutterSecureStorage();
     session = ObservableFuture(_storage.read(key: _sessionKey));
@@ -21,14 +21,14 @@ abstract class _SessionStoreBase with Store {
 
   static const _sessionKey = 'session';
 
-  FlutterSecureStorage _storage;
+  late FlutterSecureStorage _storage;
 
   @observable
-  ObservableFuture<String> session;
+  late ObservableFuture<String?> session;
 
   @computed
   LoginStatus get loginStatus {
-    if (session.value != null && session.value.isNotEmpty) {
+    if (session.value?.isNotEmpty ?? false) {
       return LoginStatus.loggedIn;
     }
 

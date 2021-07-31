@@ -1,4 +1,3 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/bottom_sheet_container.dart';
 import 'package:eh_redux/modules/common/widgets/full_width.dart';
 import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
@@ -6,14 +5,15 @@ import 'package:eh_redux/modules/download/controller.dart';
 import 'package:eh_redux/modules/gallery/types.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:provider/provider.dart';
 
 part 'confirm_bottom_sheet.g.dart';
 
 Future<void> showDownloadConfirmBottomSheet({
-  @required BuildContext context,
-  @required Gallery gallery,
+  required BuildContext context,
+  required Gallery gallery,
 }) async {
   final result = await showModalBottomSheet(
     context: context,
@@ -24,8 +24,8 @@ Future<void> showDownloadConfirmBottomSheet({
   );
 
   if (result is bool && result) {
-    Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(AppLocalizations.of(context).downloadStartedHint),
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(AppLocalizations.of(context)!.downloadStartedHint),
     ));
   }
 }
@@ -33,7 +33,7 @@ Future<void> showDownloadConfirmBottomSheet({
 @swidget
 Widget downloadConfirmBottomSheet(
   BuildContext context, {
-  @required Gallery gallery,
+  required Gallery gallery,
 }) {
   final controller = Provider.of<DownloadController>(context);
 
@@ -43,7 +43,7 @@ Widget downloadConfirmBottomSheet(
       children: [
         ListTile(
           title: Text(
-            AppLocalizations.of(context).downloadConfirmTitle(
+            AppLocalizations.of(context)!.downloadConfirmTitle(
               gallery.fileCount,
               filesize(gallery.fileSize),
             ),
@@ -61,7 +61,7 @@ Widget downloadConfirmBottomSheet(
                 Navigator.pop(context, true);
               },
               icon: const Icon(Icons.file_download),
-              label: Text(AppLocalizations.of(context).downloadButtonLabel),
+              label: Text(AppLocalizations.of(context)!.downloadButtonLabel),
             ),
           ),
         ),

@@ -7,7 +7,7 @@ part of 'bottom_nav.dart';
 // **************************************************************************
 
 class HomeBottomNav extends StatelessWidget {
-  const HomeBottomNav({Key key}) : super(key: key);
+  const HomeBottomNav({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => homeBottomNav(_context);

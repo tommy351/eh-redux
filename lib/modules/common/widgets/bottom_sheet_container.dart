@@ -6,7 +6,7 @@ part 'bottom_sheet_container.g.dart';
 @swidget
 Widget bottomSheetContainer(
   BuildContext context, {
-  @required Widget child,
+  required Widget child,
 }) {
   final mediaQuery = MediaQuery.of(context);
 

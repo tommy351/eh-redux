@@ -7,14 +7,14 @@ part of 'screen.dart';
 // **************************************************************************
 
 class _AppBar extends StatelessWidget {
-  const _AppBar({Key key}) : super(key: key);
+  const _AppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => _appBar(_context);
 }
 
 class _Body extends StatelessWidget {
-  const _Body({Key key}) : super(key: key);
+  const _Body({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => _body(_context);

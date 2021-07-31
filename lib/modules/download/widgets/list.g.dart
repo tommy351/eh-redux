@@ -7,7 +7,7 @@ part of 'list.dart';
 // **************************************************************************
 
 class DownloadList extends StatelessWidget {
-  const DownloadList({Key key, @required this.data}) : super(key: key);
+  const DownloadList({Key? key, required this.data}) : super(key: key);
 
   final Iterable<DownloadTaskWithGallery> data;
 
@@ -16,7 +16,7 @@ class DownloadList extends StatelessWidget {
 }
 
 class _DownloadCell extends StatelessWidget {
-  const _DownloadCell({Key key, @required this.task}) : super(key: key);
+  const _DownloadCell({Key? key, required this.task}) : super(key: key);
 
   final DownloadTaskWithGallery task;
 
@@ -25,7 +25,7 @@ class _DownloadCell extends StatelessWidget {
 }
 
 class _CellRight extends StatelessWidget {
-  const _CellRight({Key key, @required this.task}) : super(key: key);
+  const _CellRight({Key? key, required this.task}) : super(key: key);
 
   final DownloadTaskWithGallery task;
 
@@ -34,7 +34,7 @@ class _CellRight extends StatelessWidget {
 }
 
 class _CellTitle extends StatelessWidget {
-  const _CellTitle({Key key, @required this.title, this.titleJpn = ''})
+  const _CellTitle({Key? key, required this.title, this.titleJpn = ''})
       : super(key: key);
 
   final String title;
@@ -47,7 +47,7 @@ class _CellTitle extends StatelessWidget {
 }
 
 class _ProgressBar extends StatelessWidget {
-  const _ProgressBar({Key key, @required this.task}) : super(key: key);
+  const _ProgressBar({Key? key, required this.task}) : super(key: key);
 
   final DownloadTask task;
 
@@ -56,7 +56,7 @@ class _ProgressBar extends StatelessWidget {
 }
 
 class _MenuButton extends StatelessWidget {
-  const _MenuButton({Key key, @required this.task}) : super(key: key);
+  const _MenuButton({Key? key, required this.task}) : super(key: key);
 
   final DownloadTask task;
 

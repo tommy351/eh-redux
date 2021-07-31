@@ -1,7 +1,7 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/stateful_wrapper.dart';
 import 'package:eh_redux/modules/gallery/stores/network_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +11,7 @@ import 'list.dart';
 part 'network_list.g.dart';
 
 class NetworkGalleryList extends StatefulWidget {
-  const NetworkGalleryList({Key key}) : super(key: key);
+  const NetworkGalleryList({Key? key}) : super(key: key);
 
   @override
   _NetworkGalleryListState createState() => _NetworkGalleryListState();
@@ -71,7 +71,7 @@ Widget _placeholder(BuildContext context) {
           ),
           child: Center(
             child: Text(
-              AppLocalizations.of(context).galleryListNoDataPlaceholderTitle,
+              AppLocalizations.of(context)!.galleryListNoDataPlaceholderTitle,
               style: theme.textTheme.headline6,
             ),
           ),

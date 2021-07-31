@@ -21,7 +21,7 @@ Future<void> callbackDispatcher() async {
   return runZonedGuarded(() async {
     final handler = BackgroundTaskHandler();
 
-    Workmanager.executeTask(
+    Workmanager().executeTask(
         (taskName, inputData) => handler.handle(taskName, inputData));
   }, (error, stackTrace) {
     FirebaseCrashlytics.instance.recordError(error, stackTrace);
@@ -31,7 +31,7 @@ Future<void> callbackDispatcher() async {
 Future<void> main() async {
   await _initializeMain();
 
-  Workmanager.initialize(callbackDispatcher, isInDebugMode: kDebugMode);
+  Workmanager().initialize(callbackDispatcher, isInDebugMode: kDebugMode);
 
   runZonedGuarded(() async {
     final isolate = await Database.createIsolate();

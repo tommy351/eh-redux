@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:eh_redux/database/database.dart';
 import 'package:eh_redux/modules/search/dao.dart';
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 part 'store.g.dart';
@@ -10,8 +9,8 @@ class SearchStore = _SearchStoreBase with _$SearchStore;
 
 abstract class _SearchStoreBase with Store {
   _SearchStoreBase({
-    @required this.searchHistoriesDao,
-  }) : assert(searchHistoriesDao != null);
+    required this.searchHistoriesDao,
+  });
 
   final SearchHistoriesDao searchHistoriesDao;
 
@@ -86,8 +85,8 @@ abstract class _SearchStoreBase with Store {
 
   @action
   void setAdvancedOption({
-    @required String key,
-    @required bool value,
+    required String key,
+    required bool value,
   }) {
     advancedOptions[key] = value;
   }

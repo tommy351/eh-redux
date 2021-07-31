@@ -13,13 +13,13 @@ part 'screen.freezed.dart';
 part 'screen.g.dart';
 
 @freezed
-abstract class GalleryError with _$GalleryError {
+class GalleryError with _$GalleryError {
   const factory GalleryError({
-    @required String message,
+    required String message,
   }) = _GalleryError;
 
   const factory GalleryError.contentWarning({
-    @required String reason,
+    required String reason,
   }) = GalleryErrorContentWarning;
 
   const factory GalleryError.notFound() = GalleryErrorNotFound;
@@ -29,17 +29,16 @@ class GalleryScreenStore = _GalleryScreenStoreBase with _$GalleryScreenStore;
 
 abstract class _GalleryScreenStoreBase with Store {
   _GalleryScreenStoreBase({
-    @required this.client,
-    @required this.gallery,
-  })  : assert(client != null),
-        assert(gallery != null);
+    required this.client,
+    required this.gallery,
+  });
 
   final EHentaiClient client;
   final Gallery gallery;
 
   GalleryId get galleryId => gallery.galleryId;
 
-  Uri getUri({Map<String, String> params}) {
+  Uri getUri({Map<String, String>? params}) {
     return client.getUri(galleryId.path, params: params);
   }
 
@@ -47,7 +46,7 @@ abstract class _GalleryScreenStoreBase with Store {
   bool contentWarningDisabled = false;
 
   @observable
-  int ratingCount;
+  int? ratingCount;
 
   @observable
   bool loaded = false;
@@ -56,7 +55,7 @@ abstract class _GalleryScreenStoreBase with Store {
   bool loading = false;
 
   @observable
-  GalleryError error;
+  GalleryError? error;
 
   @action
   void disableContentWarning() {
@@ -100,9 +99,10 @@ abstract class _GalleryScreenStoreBase with Store {
     }
 
     // Test if the content is flagged
-    final contentWarning = res.document.querySelectorAll('h1').firstWhere(
-        (element) => element.innerHtml == 'Content Warning',
-        orElse: () => null);
+    final contentWarning = res.document
+        .querySelectorAll('h1')
+        .where((element) => element.innerHtml == 'Content Warning')
+        .firstOrNull;
 
     if (contentWarning != null) {
       throw GalleryError.contentWarning(
@@ -115,7 +115,7 @@ abstract class _GalleryScreenStoreBase with Store {
     ratingCount = _getRatingCount(res.document);
   }
 
-  int _getRatingCount(Document document) {
+  int? _getRatingCount(Document document) {
     final element = document.getElementById('rating_count');
     if (element == null) return null;
     return int.tryParse(element.text);

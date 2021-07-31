@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:async/async.dart';
 import 'package:logging/logging.dart';
-import 'package:meta/meta.dart';
 
 const _reqPortName = 'download.interrupt.req';
 const _ackPortName = 'download.interrupt.ack';
@@ -15,11 +14,9 @@ String _getAckPortName(int galleryId) {
 
 class DownloadInterruptListener {
   DownloadInterruptListener({
-    @required this.onInterrupt,
-    @required this.onInterruptAll,
-  })  : assert(onInterrupt != null),
-        assert(onInterruptAll != null),
-        _port = ReceivePort() {
+    required this.onInterrupt,
+    required this.onInterruptAll,
+  }) : _port = ReceivePort() {
     _port.listen((message) {
       _log.fine('Received: $message');
       _futureGroup.add(_handleRequest(message as int));
@@ -74,7 +71,7 @@ class DownloadInterruptListener {
 class DownloadInterrupter {
   static final _log = Logger('DownloadInterrupter');
 
-  SendPort get _reqPort => IsolateNameServer.lookupPortByName(_reqPortName);
+  SendPort? get _reqPort => IsolateNameServer.lookupPortByName(_reqPortName);
 
   bool get isListening => _reqPort != null;
 
@@ -93,7 +90,7 @@ class DownloadInterrupter {
       IsolateNameServer.registerPortWithName(ackPort.sendPort, ackPortName);
 
       _log.finer('Send req: $galleryId');
-      _reqPort.send(galleryId);
+      _reqPort?.send(galleryId);
 
       await ackPort.first;
       _log.finer('Received ack: $galleryId');

@@ -8,8 +8,9 @@ class EnumAdapter<T> extends PreferenceAdapter<T> {
   final List<T> enumValues;
 
   @override
-  T getValue(SharedPreferences preferences, String key) {
+  T? getValue(SharedPreferences preferences, String key) {
     final value = preferences.getString(key);
+    if (value == null) return null;
     return EnumToString.fromString(enumValues, value);
   }
 

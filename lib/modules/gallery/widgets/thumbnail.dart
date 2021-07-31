@@ -13,11 +13,11 @@ part 'thumbnail.g.dart';
 @swidget
 Widget galleryThumbnail(
   BuildContext context, {
-  @required int galleryId,
-  @required String fallbackUrl,
-  double width,
-  double height,
-  BoxFit fit,
+  required int galleryId,
+  required String fallbackUrl,
+  double? width,
+  double? height,
+  BoxFit? fit,
 }) {
   final database = Provider.of<Database>(context);
 

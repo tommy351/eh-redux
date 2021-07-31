@@ -1,5 +1,5 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 
 part 'confirm_list_tile.g.dart';
@@ -7,14 +7,14 @@ part 'confirm_list_tile.g.dart';
 @swidget
 Widget confirmListTile(
   BuildContext context, {
-  Widget title,
-  Widget leading,
-  Widget trailing,
-  Widget dialogTitle,
-  Widget dialogContent,
+  Widget? title,
+  Widget? leading,
+  Widget? trailing,
+  Widget? dialogTitle,
+  Widget? dialogContent,
   bool disabled = false,
-  @required Widget confirmActionChild,
-  @required Function() onConfirm,
+  required Widget confirmActionChild,
+  required Function() onConfirm,
 }) {
   return ListTile(
     title: title,
@@ -33,7 +33,8 @@ Widget confirmListTile(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    child: Text(AppLocalizations.of(context).cancelButtonLabel),
+                    child:
+                        Text(AppLocalizations.of(context)!.cancelButtonLabel),
                   ),
                   TextButton(
                     onPressed: () async {

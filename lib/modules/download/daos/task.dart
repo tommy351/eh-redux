@@ -51,7 +51,7 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
     });
   }
 
-  Stream<DownloadTask> watchSingle(int galleryId) {
+  Stream<DownloadTask?> watchSingle(int galleryId) {
     _log.fine('watchSingle: galleryId=$galleryId');
     final query = select(downloadTasks)
       ..where((t) => t.galleryId.equals(galleryId));
@@ -59,7 +59,7 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
     return query.map((e) => DownloadTask.fromEntry(e)).watchSingle();
   }
 
-  Future<DownloadTask> getSingle(int galleryId) {
+  Future<DownloadTask?> getSingle(int galleryId) {
     _log.fine('getSingle: $galleryId');
     final query = select(downloadTasks)
       ..where((t) => t.galleryId.equals(galleryId))
@@ -83,11 +83,11 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
 
   Future<void> updateSingleStatus(
     int galleryId, {
-    DownloadTaskState state,
-    int downloadedCount,
-    DateTime queuedAt,
-    String errorDetails,
-    String thumbnail,
+    DownloadTaskState? state,
+    int? downloadedCount,
+    DateTime? queuedAt,
+    String? errorDetails,
+    String? thumbnail,
   }) async {
     _log.fine(
         'updateSingleStatus: galleryId=$galleryId, state=$state, downloadedCount=$downloadedCount, queuedAt=$queuedAt, errorDetails=$errorDetails, thumbnail=$thumbnail');
@@ -107,9 +107,9 @@ class DownloadTasksDao extends DatabaseAccessor<Database>
   }
 
   Future<int> updateAllStatus({
-    @required DownloadTaskState state,
-    Iterable<DownloadTaskState> stateIsIn,
-    DateTime queuedAt,
+    required DownloadTaskState state,
+    Iterable<DownloadTaskState>? stateIsIn,
+    DateTime? queuedAt,
   }) async {
     _log.fine(
         'updateAllStatus: state=$state, stateIsIn=$stateIsIn, queuedAt=$queuedAt');

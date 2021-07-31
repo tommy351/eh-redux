@@ -7,7 +7,7 @@ part of 'filter_bottom_sheet.dart';
 // **************************************************************************
 
 class FilterBottomSheet extends StatelessWidget {
-  const FilterBottomSheet({Key key, @required this.store}) : super(key: key);
+  const FilterBottomSheet({Key? key, required this.store}) : super(key: key);
 
   final SearchStore store;
 
@@ -17,7 +17,7 @@ class FilterBottomSheet extends StatelessWidget {
 }
 
 class _OptionTile extends StatelessWidget {
-  const _OptionTile({Key key, @required this.name, @required this.label})
+  const _OptionTile({Key? key, required this.name, required this.label})
       : super(key: key);
 
   final String name;

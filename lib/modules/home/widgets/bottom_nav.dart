@@ -28,7 +28,7 @@ Widget homeBottomNav(BuildContext context) {
         unselectedItemColor: theme.hintColor,
         onTap: (index) {
           homeStore.setCurrentTab(index);
-          PrimaryScrollController.of(context).animateTo(
+          PrimaryScrollController.of(context)?.animateTo(
             0,
             duration: const Duration(milliseconds: 500),
             curve: Curves.easeOutCubic,

@@ -7,7 +7,7 @@ part of 'title.dart';
 // **************************************************************************
 
 class GalleryTitle extends StatelessWidget {
-  const GalleryTitle({Key key, @required this.title, this.titleJpn = ''})
+  const GalleryTitle({Key? key, required this.title, this.titleJpn = ''})
       : super(key: key);
 
   final String title;

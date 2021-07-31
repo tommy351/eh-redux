@@ -2,16 +2,15 @@ import 'package:flutter/widgets.dart';
 
 class StatefulWrapper extends StatefulWidget {
   const StatefulWrapper({
-    Key key,
-    @required this.builder,
+    Key? key,
+    required this.builder,
     this.onInit,
     this.onDispose,
-  })  : assert(builder != null),
-        super(key: key);
+  }) : super(key: key);
 
   final Widget Function(BuildContext) builder;
-  final Function Function(BuildContext) onInit;
-  final void Function() onDispose;
+  final Function Function(BuildContext)? onInit;
+  final void Function()? onDispose;
 
   @override
   _StatefulWrapperState createState() => _StatefulWrapperState();
@@ -24,9 +23,9 @@ class _StatefulWrapperState extends State<StatefulWrapper> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       if (widget.onInit != null) {
-        _disposes.add(widget.onInit(context));
+        _disposes.add(widget.onInit!(context));
       }
     });
   }
@@ -38,7 +37,7 @@ class _StatefulWrapperState extends State<StatefulWrapper> {
     }
 
     if (widget.onDispose != null) {
-      widget.onDispose();
+      widget.onDispose!();
     }
 
     super.dispose();

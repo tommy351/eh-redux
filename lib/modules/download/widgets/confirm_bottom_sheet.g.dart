@@ -7,7 +7,7 @@ part of 'confirm_bottom_sheet.dart';
 // **************************************************************************
 
 class DownloadConfirmBottomSheet extends StatelessWidget {
-  const DownloadConfirmBottomSheet({Key key, @required this.gallery})
+  const DownloadConfirmBottomSheet({Key? key, required this.gallery})
       : super(key: key);
 
   final Gallery gallery;

@@ -21,13 +21,13 @@ part 'store.freezed.dart';
 part 'store.g.dart';
 
 @freezed
-abstract class ImageError with _$ImageError {
+class ImageError with _$ImageError {
   const factory ImageError({
-    @required String message,
+    required String message,
   }) = _ImageError;
 
   const factory ImageError.notFound({
-    @required int page,
+    required int page,
   }) = ImageErrorNotFound;
 
   const factory ImageError.disconnected() = ImageErrorDisconnected;
@@ -55,14 +55,11 @@ class ImageStore = _ImageStoreBase with _$ImageStore;
 
 abstract class _ImageStoreBase with Store {
   _ImageStoreBase({
-    @required this.client,
-    @required this.gallery,
-    @required this.galleriesDao,
-    @required this.downloadedImagesDao,
-  })  : assert(client != null),
-        assert(gallery != null),
-        assert(galleriesDao != null),
-        assert(downloadedImagesDao != null);
+    required this.client,
+    required this.gallery,
+    required this.galleriesDao,
+    required this.downloadedImagesDao,
+  });
 
   static final _reloadKeyRegExp = RegExp(r"nl\('([^']+)'\)");
 
@@ -76,7 +73,7 @@ abstract class _ImageStoreBase with Store {
   final _imageIds = <int, Completer<List<ImageId>>>{};
 
   Future<int> get _imagePerPage => _imagePerPageMemo.runOnce(() async {
-        final ids = await _getImageIds(0);
+        final ids = await _getImageIds(0) ?? [];
 
         if (ids.isEmpty) {
           throw const ImageError.galleryUnavailable();
@@ -110,7 +107,7 @@ abstract class _ImageStoreBase with Store {
   int get currentPage1 => currentPage + 1;
 
   @computed
-  GalleryImage get currentImage => data[currentPage1];
+  GalleryImage? get currentImage => data[currentPage1];
 
   @action
   void toggleNav() {
@@ -146,7 +143,7 @@ abstract class _ImageStoreBase with Store {
   @action
   Future<void> loadPage(
     int page, {
-    String reloadKey,
+    String? reloadKey,
     bool networkOnly = false,
   }) async {
     if (loading.contains(page)) return;
@@ -173,7 +170,7 @@ abstract class _ImageStoreBase with Store {
     }
   }
 
-  Future<LocalGalleryImage> loadLocalPage(int page) async {
+  Future<LocalGalleryImage?> loadLocalPage(int page) async {
     final entry = await downloadedImagesDao.getEntry(gallery.id, page);
     if (entry == null) return null;
 
@@ -191,7 +188,7 @@ abstract class _ImageStoreBase with Store {
 
   Future<NetworkGalleryImage> loadNetworkPage(
     int page, {
-    String reloadKey,
+    String? reloadKey,
   }) async {
     final id = await _getImageId(page);
 
@@ -217,14 +214,14 @@ abstract class _ImageStoreBase with Store {
       throw ImageError.notFound(page: page);
     }
 
-    final src = img.attributes['src'];
-    final style = parseRules(img.attributes['style']);
+    final src = img.attributes['src'] ?? '';
+    final style = parseRules(img.attributes['style'] ?? '');
 
     return NetworkGalleryImage(
       id: id,
       url: src,
-      width: _parseCssPixelSize(style['width']),
-      height: _parseCssPixelSize(style['height']),
+      width: _parseCssPixelSize(style['width']) ?? 0,
+      height: _parseCssPixelSize(style['height']) ?? 0,
       reloadKey: _getReloadKey(img),
     );
   }
@@ -269,7 +266,7 @@ abstract class _ImageStoreBase with Store {
     return ids;
   }
 
-  Future<List<ImageId>> _getImageIds(int galleryPage) async {
+  Future<List<ImageId>?> _getImageIds(int galleryPage) async {
     if (!_imageIds.containsKey(galleryPage)) {
       final completer = _imageIds[galleryPage] = Completer();
       _fetchImageIds(galleryPage).then(
@@ -278,33 +275,30 @@ abstract class _ImageStoreBase with Store {
       );
     }
 
-    return _imageIds[galleryPage].future;
+    return _imageIds[galleryPage]?.future;
   }
 
-  Future<ImageId> _getImageId(int imagePage) async {
+  Future<ImageId?> _getImageId(int imagePage) async {
     final galleryPage = imagePage ~/ await _imagePerPage;
-    final ids = await _getImageIds(galleryPage);
+    final ids = await _getImageIds(galleryPage) ?? [];
 
     if (ids.isEmpty) return null;
 
-    return ids.firstWhere(
-      (e) => e.page == imagePage,
-      orElse: () => null,
-    );
+    return ids.where((e) => e.page == imagePage).firstOrNull;
   }
 
-  int _parseCssPixelSize(String s) {
+  int? _parseCssPixelSize(String? s) {
     if (s == null || s.isEmpty) return null;
     return int.tryParse(trimSuffix(s, 'px'));
   }
 
-  String _getReloadKey(Element img) {
+  String? _getReloadKey(Element img) {
     final attr = img.attributes['onerror'];
     if (attr == null || attr.isEmpty) return null;
-    return _reloadKeyRegExp.firstMatch(attr).group(1);
+    return _reloadKeyRegExp.firstMatch(attr)?.group(1);
   }
 
-  Uri getUri(GalleryImage image, {Map<String, String> params}) {
+  Uri getUri(GalleryImage image, {Map<String, String>? params}) {
     return client.getUri(image.id.path);
   }
 

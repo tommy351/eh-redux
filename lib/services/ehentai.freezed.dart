@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'ehentai.dart';
 
@@ -9,15 +9,17 @@ part of 'ehentai.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$RequestExceptionTearOff {
   const _$RequestExceptionTearOff();
 
-// ignore: unused_element
   _RequestException call(
       {String method = 'GET',
-      @required Uri url,
-      @required String message,
+      required Uri url,
+      required String message,
       int statusCode = -1,
       String body = ''}) {
     return _RequestException(
@@ -31,18 +33,19 @@ class _$RequestExceptionTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $RequestException = _$RequestExceptionTearOff();
 
 /// @nodoc
 mixin _$RequestException {
-  String get method;
-  Uri get url;
-  String get message;
-  int get statusCode;
-  String get body;
+  String get method => throw _privateConstructorUsedError;
+  Uri get url => throw _privateConstructorUsedError;
+  String get message => throw _privateConstructorUsedError;
+  int get statusCode => throw _privateConstructorUsedError;
+  String get body => throw _privateConstructorUsedError;
 
-  $RequestExceptionCopyWith<RequestException> get copyWith;
+  @JsonKey(ignore: true)
+  $RequestExceptionCopyWith<RequestException> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -65,18 +68,33 @@ class _$RequestExceptionCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object method = freezed,
-    Object url = freezed,
-    Object message = freezed,
-    Object statusCode = freezed,
-    Object body = freezed,
+    Object? method = freezed,
+    Object? url = freezed,
+    Object? message = freezed,
+    Object? statusCode = freezed,
+    Object? body = freezed,
   }) {
     return _then(_value.copyWith(
-      method: method == freezed ? _value.method : method as String,
-      url: url == freezed ? _value.url : url as Uri,
-      message: message == freezed ? _value.message : message as String,
-      statusCode: statusCode == freezed ? _value.statusCode : statusCode as int,
-      body: body == freezed ? _value.body : body as String,
+      method: method == freezed
+          ? _value.method
+          : method // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as Uri,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      statusCode: statusCode == freezed
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
+              as int,
+      body: body == freezed
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -105,39 +123,49 @@ class __$RequestExceptionCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object method = freezed,
-    Object url = freezed,
-    Object message = freezed,
-    Object statusCode = freezed,
-    Object body = freezed,
+    Object? method = freezed,
+    Object? url = freezed,
+    Object? message = freezed,
+    Object? statusCode = freezed,
+    Object? body = freezed,
   }) {
     return _then(_RequestException(
-      method: method == freezed ? _value.method : method as String,
-      url: url == freezed ? _value.url : url as Uri,
-      message: message == freezed ? _value.message : message as String,
-      statusCode: statusCode == freezed ? _value.statusCode : statusCode as int,
-      body: body == freezed ? _value.body : body as String,
+      method: method == freezed
+          ? _value.method
+          : method // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: url == freezed
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as Uri,
+      message: message == freezed
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+      statusCode: statusCode == freezed
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
+              as int,
+      body: body == freezed
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
-@Implements(Exception)
-
 /// @nodoc
+
+@Implements(Exception)
 class _$_RequestException
     with DiagnosticableTreeMixin
     implements _RequestException {
   const _$_RequestException(
       {this.method = 'GET',
-      @required this.url,
-      @required this.message,
+      required this.url,
+      required this.message,
       this.statusCode = -1,
-      this.body = ''})
-      : assert(method != null),
-        assert(url != null),
-        assert(message != null),
-        assert(statusCode != null),
-        assert(body != null);
+      this.body = ''});
 
   @JsonKey(defaultValue: 'GET')
   @override
@@ -197,6 +225,7 @@ class _$_RequestException
       const DeepCollectionEquality().hash(statusCode) ^
       const DeepCollectionEquality().hash(body);
 
+  @JsonKey(ignore: true)
   @override
   _$RequestExceptionCopyWith<_RequestException> get copyWith =>
       __$RequestExceptionCopyWithImpl<_RequestException>(this, _$identity);
@@ -205,46 +234,45 @@ class _$_RequestException
 abstract class _RequestException implements RequestException, Exception {
   const factory _RequestException(
       {String method,
-      @required Uri url,
-      @required String message,
+      required Uri url,
+      required String message,
       int statusCode,
       String body}) = _$_RequestException;
 
   @override
-  String get method;
+  String get method => throw _privateConstructorUsedError;
   @override
-  Uri get url;
+  Uri get url => throw _privateConstructorUsedError;
   @override
-  String get message;
+  String get message => throw _privateConstructorUsedError;
   @override
-  int get statusCode;
+  int get statusCode => throw _privateConstructorUsedError;
   @override
-  String get body;
+  String get body => throw _privateConstructorUsedError;
   @override
-  _$RequestExceptionCopyWith<_RequestException> get copyWith;
+  @JsonKey(ignore: true)
+  _$RequestExceptionCopyWith<_RequestException> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$ResponseTearOff {
   const _$ResponseTearOff();
 
-// ignore: unused_element
-  BaseResponse base({@required int statusCode}) {
+  BaseResponse base({required int statusCode}) {
     return BaseResponse(
       statusCode: statusCode,
     );
   }
 
-// ignore: unused_element
-  HtmlResponse html({@required int statusCode, @required Document document}) {
+  HtmlResponse html({required int statusCode, required Document document}) {
     return HtmlResponse(
       statusCode: statusCode,
       document: document,
     );
   }
 
-// ignore: unused_element
-  ApiResponse api({@required int statusCode, @required dynamic data}) {
+  ApiResponse api({required int statusCode, required dynamic data}) {
     return ApiResponse(
       statusCode: statusCode,
       data: data,
@@ -253,41 +281,46 @@ class _$ResponseTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $Response = _$ResponseTearOff();
 
 /// @nodoc
 mixin _$Response {
-  int get statusCode;
+  int get statusCode => throw _privateConstructorUsedError;
 
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result base(int statusCode),
-    @required Result html(int statusCode, Document document),
-    @required Result api(int statusCode, dynamic data),
-  });
+  TResult when<TResult extends Object?>({
+    required TResult Function(int statusCode) base,
+    required TResult Function(int statusCode, Document document) html,
+    required TResult Function(int statusCode, dynamic data) api,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result base(int statusCode),
-    Result html(int statusCode, Document document),
-    Result api(int statusCode, dynamic data),
-    @required Result orElse(),
-  });
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int statusCode)? base,
+    TResult Function(int statusCode, Document document)? html,
+    TResult Function(int statusCode, dynamic data)? api,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result base(BaseResponse value),
-    @required Result html(HtmlResponse value),
-    @required Result api(ApiResponse value),
-  });
+  TResult map<TResult extends Object?>({
+    required TResult Function(BaseResponse value) base,
+    required TResult Function(HtmlResponse value) html,
+    required TResult Function(ApiResponse value) api,
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result base(BaseResponse value),
-    Result html(HtmlResponse value),
-    Result api(ApiResponse value),
-    @required Result orElse(),
-  });
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BaseResponse value)? base,
+    TResult Function(HtmlResponse value)? html,
+    TResult Function(ApiResponse value)? api,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
 
-  $ResponseCopyWith<Response> get copyWith;
+  @JsonKey(ignore: true)
+  $ResponseCopyWith<Response> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -307,10 +340,13 @@ class _$ResponseCopyWithImpl<$Res> implements $ResponseCopyWith<$Res> {
 
   @override
   $Res call({
-    Object statusCode = freezed,
+    Object? statusCode = freezed,
   }) {
     return _then(_value.copyWith(
-      statusCode: statusCode == freezed ? _value.statusCode : statusCode as int,
+      statusCode: statusCode == freezed
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -336,18 +372,21 @@ class _$BaseResponseCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object statusCode = freezed,
+    Object? statusCode = freezed,
   }) {
     return _then(BaseResponse(
-      statusCode: statusCode == freezed ? _value.statusCode : statusCode as int,
+      statusCode: statusCode == freezed
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
 
 /// @nodoc
+
 class _$BaseResponse with DiagnosticableTreeMixin implements BaseResponse {
-  const _$BaseResponse({@required this.statusCode})
-      : assert(statusCode != null);
+  const _$BaseResponse({required this.statusCode});
 
   @override
   final int statusCode;
@@ -378,32 +417,29 @@ class _$BaseResponse with DiagnosticableTreeMixin implements BaseResponse {
   int get hashCode =>
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(statusCode);
 
+  @JsonKey(ignore: true)
   @override
   $BaseResponseCopyWith<BaseResponse> get copyWith =>
       _$BaseResponseCopyWithImpl<BaseResponse>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result base(int statusCode),
-    @required Result html(int statusCode, Document document),
-    @required Result api(int statusCode, dynamic data),
+  TResult when<TResult extends Object?>({
+    required TResult Function(int statusCode) base,
+    required TResult Function(int statusCode, Document document) html,
+    required TResult Function(int statusCode, dynamic data) api,
   }) {
-    assert(base != null);
-    assert(html != null);
-    assert(api != null);
     return base(statusCode);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result base(int statusCode),
-    Result html(int statusCode, Document document),
-    Result api(int statusCode, dynamic data),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int statusCode)? base,
+    TResult Function(int statusCode, Document document)? html,
+    TResult Function(int statusCode, dynamic data)? api,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (base != null) {
       return base(statusCode);
     }
@@ -412,26 +448,22 @@ class _$BaseResponse with DiagnosticableTreeMixin implements BaseResponse {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result base(BaseResponse value),
-    @required Result html(HtmlResponse value),
-    @required Result api(ApiResponse value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(BaseResponse value) base,
+    required TResult Function(HtmlResponse value) html,
+    required TResult Function(ApiResponse value) api,
   }) {
-    assert(base != null);
-    assert(html != null);
-    assert(api != null);
     return base(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result base(BaseResponse value),
-    Result html(HtmlResponse value),
-    Result api(ApiResponse value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BaseResponse value)? base,
+    TResult Function(HtmlResponse value)? html,
+    TResult Function(ApiResponse value)? api,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (base != null) {
       return base(this);
     }
@@ -440,12 +472,14 @@ class _$BaseResponse with DiagnosticableTreeMixin implements BaseResponse {
 }
 
 abstract class BaseResponse implements Response {
-  const factory BaseResponse({@required int statusCode}) = _$BaseResponse;
+  const factory BaseResponse({required int statusCode}) = _$BaseResponse;
 
   @override
-  int get statusCode;
+  int get statusCode => throw _privateConstructorUsedError;
   @override
-  $BaseResponseCopyWith<BaseResponse> get copyWith;
+  @JsonKey(ignore: true)
+  $BaseResponseCopyWith<BaseResponse> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -469,21 +503,26 @@ class _$HtmlResponseCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object statusCode = freezed,
-    Object document = freezed,
+    Object? statusCode = freezed,
+    Object? document = freezed,
   }) {
     return _then(HtmlResponse(
-      statusCode: statusCode == freezed ? _value.statusCode : statusCode as int,
-      document: document == freezed ? _value.document : document as Document,
+      statusCode: statusCode == freezed
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
+              as int,
+      document: document == freezed
+          ? _value.document
+          : document // ignore: cast_nullable_to_non_nullable
+              as Document,
     ));
   }
 }
 
 /// @nodoc
+
 class _$HtmlResponse with DiagnosticableTreeMixin implements HtmlResponse {
-  const _$HtmlResponse({@required this.statusCode, @required this.document})
-      : assert(statusCode != null),
-        assert(document != null);
+  const _$HtmlResponse({required this.statusCode, required this.document});
 
   @override
   final int statusCode;
@@ -522,32 +561,29 @@ class _$HtmlResponse with DiagnosticableTreeMixin implements HtmlResponse {
       const DeepCollectionEquality().hash(statusCode) ^
       const DeepCollectionEquality().hash(document);
 
+  @JsonKey(ignore: true)
   @override
   $HtmlResponseCopyWith<HtmlResponse> get copyWith =>
       _$HtmlResponseCopyWithImpl<HtmlResponse>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result base(int statusCode),
-    @required Result html(int statusCode, Document document),
-    @required Result api(int statusCode, dynamic data),
+  TResult when<TResult extends Object?>({
+    required TResult Function(int statusCode) base,
+    required TResult Function(int statusCode, Document document) html,
+    required TResult Function(int statusCode, dynamic data) api,
   }) {
-    assert(base != null);
-    assert(html != null);
-    assert(api != null);
     return html(statusCode, document);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result base(int statusCode),
-    Result html(int statusCode, Document document),
-    Result api(int statusCode, dynamic data),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int statusCode)? base,
+    TResult Function(int statusCode, Document document)? html,
+    TResult Function(int statusCode, dynamic data)? api,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (html != null) {
       return html(statusCode, document);
     }
@@ -556,26 +592,22 @@ class _$HtmlResponse with DiagnosticableTreeMixin implements HtmlResponse {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result base(BaseResponse value),
-    @required Result html(HtmlResponse value),
-    @required Result api(ApiResponse value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(BaseResponse value) base,
+    required TResult Function(HtmlResponse value) html,
+    required TResult Function(ApiResponse value) api,
   }) {
-    assert(base != null);
-    assert(html != null);
-    assert(api != null);
     return html(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result base(BaseResponse value),
-    Result html(HtmlResponse value),
-    Result api(ApiResponse value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BaseResponse value)? base,
+    TResult Function(HtmlResponse value)? html,
+    TResult Function(ApiResponse value)? api,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (html != null) {
       return html(this);
     }
@@ -585,13 +617,15 @@ class _$HtmlResponse with DiagnosticableTreeMixin implements HtmlResponse {
 
 abstract class HtmlResponse implements Response {
   const factory HtmlResponse(
-      {@required int statusCode, @required Document document}) = _$HtmlResponse;
+      {required int statusCode, required Document document}) = _$HtmlResponse;
 
   @override
-  int get statusCode;
-  Document get document;
+  int get statusCode => throw _privateConstructorUsedError;
+  Document get document => throw _privateConstructorUsedError;
   @override
-  $HtmlResponseCopyWith<HtmlResponse> get copyWith;
+  @JsonKey(ignore: true)
+  $HtmlResponseCopyWith<HtmlResponse> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -615,21 +649,26 @@ class _$ApiResponseCopyWithImpl<$Res> extends _$ResponseCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object statusCode = freezed,
-    Object data = freezed,
+    Object? statusCode = freezed,
+    Object? data = freezed,
   }) {
     return _then(ApiResponse(
-      statusCode: statusCode == freezed ? _value.statusCode : statusCode as int,
-      data: data == freezed ? _value.data : data as dynamic,
+      statusCode: statusCode == freezed
+          ? _value.statusCode
+          : statusCode // ignore: cast_nullable_to_non_nullable
+              as int,
+      data: data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ));
   }
 }
 
 /// @nodoc
+
 class _$ApiResponse with DiagnosticableTreeMixin implements ApiResponse {
-  const _$ApiResponse({@required this.statusCode, @required this.data})
-      : assert(statusCode != null),
-        assert(data != null);
+  const _$ApiResponse({required this.statusCode, required this.data});
 
   @override
   final int statusCode;
@@ -667,32 +706,29 @@ class _$ApiResponse with DiagnosticableTreeMixin implements ApiResponse {
       const DeepCollectionEquality().hash(statusCode) ^
       const DeepCollectionEquality().hash(data);
 
+  @JsonKey(ignore: true)
   @override
   $ApiResponseCopyWith<ApiResponse> get copyWith =>
       _$ApiResponseCopyWithImpl<ApiResponse>(this, _$identity);
 
   @override
   @optionalTypeArgs
-  Result when<Result extends Object>({
-    @required Result base(int statusCode),
-    @required Result html(int statusCode, Document document),
-    @required Result api(int statusCode, dynamic data),
+  TResult when<TResult extends Object?>({
+    required TResult Function(int statusCode) base,
+    required TResult Function(int statusCode, Document document) html,
+    required TResult Function(int statusCode, dynamic data) api,
   }) {
-    assert(base != null);
-    assert(html != null);
-    assert(api != null);
     return api(statusCode, data);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeWhen<Result extends Object>({
-    Result base(int statusCode),
-    Result html(int statusCode, Document document),
-    Result api(int statusCode, dynamic data),
-    @required Result orElse(),
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(int statusCode)? base,
+    TResult Function(int statusCode, Document document)? html,
+    TResult Function(int statusCode, dynamic data)? api,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (api != null) {
       return api(statusCode, data);
     }
@@ -701,26 +737,22 @@ class _$ApiResponse with DiagnosticableTreeMixin implements ApiResponse {
 
   @override
   @optionalTypeArgs
-  Result map<Result extends Object>({
-    @required Result base(BaseResponse value),
-    @required Result html(HtmlResponse value),
-    @required Result api(ApiResponse value),
+  TResult map<TResult extends Object?>({
+    required TResult Function(BaseResponse value) base,
+    required TResult Function(HtmlResponse value) html,
+    required TResult Function(ApiResponse value) api,
   }) {
-    assert(base != null);
-    assert(html != null);
-    assert(api != null);
     return api(this);
   }
 
   @override
   @optionalTypeArgs
-  Result maybeMap<Result extends Object>({
-    Result base(BaseResponse value),
-    Result html(HtmlResponse value),
-    Result api(ApiResponse value),
-    @required Result orElse(),
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(BaseResponse value)? base,
+    TResult Function(HtmlResponse value)? html,
+    TResult Function(ApiResponse value)? api,
+    required TResult orElse(),
   }) {
-    assert(orElse != null);
     if (api != null) {
       return api(this);
     }
@@ -729,12 +761,14 @@ class _$ApiResponse with DiagnosticableTreeMixin implements ApiResponse {
 }
 
 abstract class ApiResponse implements Response {
-  const factory ApiResponse(
-      {@required int statusCode, @required dynamic data}) = _$ApiResponse;
+  const factory ApiResponse({required int statusCode, required dynamic data}) =
+      _$ApiResponse;
 
   @override
-  int get statusCode;
-  dynamic get data;
+  int get statusCode => throw _privateConstructorUsedError;
+  dynamic get data => throw _privateConstructorUsedError;
   @override
-  $ApiResponseCopyWith<ApiResponse> get copyWith;
+  @JsonKey(ignore: true)
+  $ApiResponseCopyWith<ApiResponse> get copyWith =>
+      throw _privateConstructorUsedError;
 }

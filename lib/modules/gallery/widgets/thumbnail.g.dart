@@ -8,9 +8,9 @@ part of 'thumbnail.dart';
 
 class GalleryThumbnail extends StatelessWidget {
   const GalleryThumbnail(
-      {Key key,
-      @required this.galleryId,
-      @required this.fallbackUrl,
+      {Key? key,
+      required this.galleryId,
+      required this.fallbackUrl,
       this.width,
       this.height,
       this.fit})
@@ -20,11 +20,11 @@ class GalleryThumbnail extends StatelessWidget {
 
   final String fallbackUrl;
 
-  final double width;
+  final double? width;
 
-  final double height;
+  final double? height;
 
-  final BoxFit fit;
+  final BoxFit? fit;
 
   @override
   Widget build(BuildContext _context) => galleryThumbnail(_context,
@@ -36,7 +36,7 @@ class GalleryThumbnail extends StatelessWidget {
 }
 
 class _Placeholder extends StatelessWidget {
-  const _Placeholder({Key key}) : super(key: key);
+  const _Placeholder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext _context) => _placeholder(_context);

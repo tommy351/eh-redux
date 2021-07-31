@@ -1,10 +1,10 @@
 import 'package:eh_redux/database/database.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/common/widgets/loading_dialog.dart';
 import 'package:eh_redux/modules/download/controller.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/home/widgets/body.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +17,7 @@ Widget downloadTab(BuildContext context) {
   final database = Provider.of<Database>(context);
 
   return StreamProvider<List<DownloadTaskWithGallery>>(
+    initialData: [],
     create: (_) => database.downloadTasksDao.watchAllWithGallery(),
     child: NestedScrollView(
       headerSliverBuilder: (context, _) => const [_AppBar()],
@@ -28,7 +29,7 @@ Widget downloadTab(BuildContext context) {
 @swidget
 Widget _appBar(BuildContext context) {
   return SliverAppBar(
-    title: Text(AppLocalizations.of(context).homeTabTitleDownload),
+    title: Text(AppLocalizations.of(context)!.homeTabTitleDownload),
     pinned: true,
     actions: const [
       _ResumeAllButton(),
@@ -43,14 +44,15 @@ Widget _resumeAllButton(BuildContext context) {
 
   return IconButton(
     icon: const Icon(Icons.play_arrow),
-    tooltip: AppLocalizations.of(context).downloadResumeAllButtonTooltip,
+    tooltip: AppLocalizations.of(context)!.downloadResumeAllButtonTooltip,
     onPressed: () async {
       final count = await showLoadingDialog(
-          context: context, future: controller.resumeAll());
+              context: context, future: controller.resumeAll()) ??
+          0;
 
       if (count > 0) {
         Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(context).downloadResumedHint),
+          content: Text(AppLocalizations.of(context)!.downloadResumedHint),
         ));
       }
     },
@@ -63,14 +65,15 @@ Widget _pauseAllButton(BuildContext context) {
 
   return IconButton(
     icon: const Icon(Icons.pause),
-    tooltip: AppLocalizations.of(context).downloadPauseAllButtonTooltip,
+    tooltip: AppLocalizations.of(context)!.downloadPauseAllButtonTooltip,
     onPressed: () async {
       final count = await showLoadingDialog(
-          context: context, future: controller.pauseAll());
+              context: context, future: controller.pauseAll()) ??
+          0;
 
       if (count > 0) {
         Scaffold.of(context).showSnackBar(SnackBar(
-          content: Text(AppLocalizations.of(context).downloadPausedHint),
+          content: Text(AppLocalizations.of(context)!.downloadPausedHint),
         ));
       }
     },
@@ -82,6 +85,6 @@ Widget _content(BuildContext context) {
   final data = Provider.of<List<DownloadTaskWithGallery>>(context);
 
   return HomeBody(
-    child: DownloadList(data: data ?? []),
+    child: DownloadList(data: data),
   );
 }

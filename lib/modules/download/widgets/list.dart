@@ -1,9 +1,9 @@
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:eh_redux/modules/download/types.dart';
 import 'package:eh_redux/modules/gallery/widgets/screen.dart';
 import 'package:eh_redux/modules/gallery/widgets/square_thumbnail.dart';
 import 'package:eh_redux/modules/gallery/widgets/title.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:functional_widget_annotation/functional_widget_annotation.dart';
 
 import 'menu_bottom_sheet.dart';
@@ -13,7 +13,7 @@ part 'list.g.dart';
 @swidget
 Widget downloadList(
   BuildContext context, {
-  @required Iterable<DownloadTaskWithGallery> data,
+  required Iterable<DownloadTaskWithGallery> data,
 }) {
   return ListView.builder(
     itemCount: data.length,
@@ -26,7 +26,7 @@ Widget downloadList(
 @swidget
 Widget _downloadCell(
   BuildContext context, {
-  @required DownloadTaskWithGallery task,
+  required DownloadTaskWithGallery task,
 }) {
   return InkWell(
     onTap: () {
@@ -78,7 +78,7 @@ Widget _downloadCell(
 @swidget
 Widget _cellRight(
   BuildContext context, {
-  @required DownloadTaskWithGallery task,
+  required DownloadTaskWithGallery task,
 }) {
   return Padding(
     padding: const EdgeInsets.all(8),
@@ -99,13 +99,13 @@ Widget _cellRight(
 @swidget
 Widget _cellTitle(
   BuildContext context, {
-  @required String title,
+  required String title,
   String titleJpn = '',
 }) {
   final theme = Theme.of(context);
 
   return DefaultTextStyle(
-    style: theme.textTheme.subtitle1.copyWith(height: 1.4),
+    style: theme.textTheme.subtitle1!.copyWith(height: 1.4),
     maxLines: 2,
     overflow: TextOverflow.ellipsis,
     child: GalleryTitle(
@@ -118,22 +118,22 @@ Widget _cellTitle(
 @swidget
 Widget _progressBar(
   BuildContext context, {
-  @required DownloadTask task,
+  required DownloadTask task,
 }) {
   final theme = Theme.of(context);
   final statusText = <DownloadTaskState, String>{
     DownloadTaskState.pending:
-        AppLocalizations.of(context).downloadTaskStatePending,
+        AppLocalizations.of(context)!.downloadTaskStatePending,
     DownloadTaskState.downloading:
-        AppLocalizations.of(context).downloadTaskStateDownloading,
+        AppLocalizations.of(context)!.downloadTaskStateDownloading,
     DownloadTaskState.paused:
-        AppLocalizations.of(context).downloadTaskStatePaused,
+        AppLocalizations.of(context)!.downloadTaskStatePaused,
     DownloadTaskState.succeeded:
-        AppLocalizations.of(context).downloadTaskStateSucceeded,
+        AppLocalizations.of(context)!.downloadTaskStateSucceeded,
     DownloadTaskState.failed:
-        AppLocalizations.of(context).downloadTaskStateFailed,
+        AppLocalizations.of(context)!.downloadTaskStateFailed,
     DownloadTaskState.deleting:
-        AppLocalizations.of(context).downloadTaskStateDeleting,
+        AppLocalizations.of(context)!.downloadTaskStateDeleting,
   };
   final statusIcon = <DownloadTaskState, Icon>{
     DownloadTaskState.pending: const Icon(Icons.schedule),
@@ -148,15 +148,15 @@ Widget _progressBar(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       DefaultTextStyle(
-        style: theme.textTheme.caption,
+        style: theme.textTheme.caption!,
         child: Row(
           children: [
             IconTheme(
               data: IconThemeData(size: 16, color: theme.hintColor),
-              child: statusIcon[task.state],
+              child: statusIcon[task.state]!,
             ),
             const SizedBox(width: 4),
-            Text(statusText[task.state]),
+            Text(statusText[task.state]!),
             const Spacer(),
             Text(
                 '${task.downloadedCount}/${task.totalCount} (${(task.downloadedCount / task.totalCount * 100).round()}%)'),
@@ -175,7 +175,7 @@ Widget _progressBar(
 @swidget
 Widget _menuButton(
   BuildContext context, {
-  @required DownloadTask task,
+  required DownloadTask task,
 }) {
   return IconButton(
     onPressed: () {

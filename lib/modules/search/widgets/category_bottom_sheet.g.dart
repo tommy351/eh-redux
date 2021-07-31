@@ -7,7 +7,7 @@ part of 'category_bottom_sheet.dart';
 // **************************************************************************
 
 class CategoryBottomSheet extends StatelessWidget {
-  const CategoryBottomSheet({Key key, @required this.store}) : super(key: key);
+  const CategoryBottomSheet({Key? key, required this.store}) : super(key: key);
 
   final SearchStore store;
 
@@ -17,7 +17,7 @@ class CategoryBottomSheet extends StatelessWidget {
 }
 
 class _CategoryTile extends StatelessWidget {
-  const _CategoryTile({Key key, @required this.category, @required this.value})
+  const _CategoryTile({Key? key, required this.category, required this.value})
       : super(key: key);
 
   final String category;

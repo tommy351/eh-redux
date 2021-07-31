@@ -15,17 +15,15 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
-import 'package:meta/meta.dart';
 import 'package:path/path.dart' as p;
 
 class _CanceledException {}
 
 class _FileWithSize {
   _FileWithSize({
-    @required this.file,
-    @required this.size,
-  })  : assert(file != null),
-        assert(size >= 0);
+    required this.file,
+    required this.size,
+  }) : assert(size >= 0);
 
   final File file;
   final int size;
@@ -33,14 +31,11 @@ class _FileWithSize {
 
 class DownloadTaskOperation {
   DownloadTaskOperation({
-    @required this.database,
-    @required this.httpClient,
-    @required this.client,
-    @required this.task,
-  })  : assert(database != null),
-        assert(httpClient != null),
-        assert(client != null),
-        assert(task != null);
+    required this.database,
+    required this.httpClient,
+    required this.client,
+    required this.task,
+  });
 
   static final _log = Logger('DownloadTaskOperation');
 
@@ -77,8 +72,8 @@ class DownloadTaskOperation {
       });
 
   bool _canceled = false;
-  Completer<void> _completer;
-  String _thumbnailPath;
+  Completer<void>? _completer;
+  String? _thumbnailPath;
 
   Future<void> start() async {
     _log.fine('Start: $task');
@@ -127,7 +122,7 @@ class DownloadTaskOperation {
       _log.severe('Failed to download the image', err, stackTrace);
       return;
     } finally {
-      _completer.complete();
+      _completer?.complete();
     }
   }
 
@@ -144,8 +139,8 @@ class DownloadTaskOperation {
   }
 
   Future<_FileWithSize> _downloadFile({
-    @required String name,
-    @required String url,
+    required String name,
+    required String url,
   }) async {
     _log.finer('downloadFile: $url');
 
@@ -255,8 +250,8 @@ class DownloadTaskOperation {
   }
 
   Future<void> _showNotification({
-    @required String title,
-    int downloadedCount,
+    required String title,
+    int downloadedCount = 0,
     bool showProgress = false,
   }) async {
     final androidDetails = AndroidNotificationDetails(
@@ -266,7 +261,7 @@ class DownloadTaskOperation {
       icon: 'download',
       playSound: false,
       enableVibration: false,
-      largeIcon: FilePathAndroidBitmap(_thumbnailPath),
+      largeIcon: FilePathAndroidBitmap(_thumbnailPath ?? ''),
       category: 'progress',
       onlyAlertOnce: true,
       maxProgress: task.totalCount,
@@ -274,8 +269,10 @@ class DownloadTaskOperation {
       channelShowBadge: false,
       showProgress: showProgress,
     );
+
     const iosDetails = IOSNotificationDetails(presentSound: false);
-    final details = NotificationDetails(androidDetails, iosDetails);
+    final details =
+        NotificationDetails(android: androidDetails, iOS: iosDetails);
     final gallery = await _gallery;
 
     await notificationPlugin.show(
@@ -298,8 +295,8 @@ class DownloadTaskOperation {
 
 class DownloadTaskHandler {
   DownloadTaskHandler({
-    @required this.database,
-  }) : assert(database != null) {
+    required this.database,
+  }) {
     final sessionStore = SessionStore();
     _httpClient = http.Client();
     _client = EHentaiClient(
@@ -311,12 +308,12 @@ class DownloadTaskHandler {
   static final _log = Logger('DownloadTaskHandler');
 
   final Database database;
-  http.Client _httpClient;
-  EHentaiClient _client;
+  late http.Client _httpClient;
+  late EHentaiClient _client;
   final _operations = <int, DownloadTaskOperation>{};
   bool _canceled = false;
 
-  Future<bool> handle(Map<String, dynamic> inputData) async {
+  Future<bool> handle(Map<String, dynamic>? inputData) async {
     _log.fine('handle: $inputData');
 
     final listener = DownloadInterruptListener(

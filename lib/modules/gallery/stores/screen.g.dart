@@ -29,13 +29,13 @@ mixin _$GalleryScreenStore on _GalleryScreenStoreBase, Store {
   final _$ratingCountAtom = Atom(name: '_GalleryScreenStoreBase.ratingCount');
 
   @override
-  int get ratingCount {
+  int? get ratingCount {
     _$ratingCountAtom.reportRead();
     return super.ratingCount;
   }
 
   @override
-  set ratingCount(int value) {
+  set ratingCount(int? value) {
     _$ratingCountAtom.reportWrite(value, super.ratingCount, () {
       super.ratingCount = value;
     });
@@ -74,13 +74,13 @@ mixin _$GalleryScreenStore on _GalleryScreenStoreBase, Store {
   final _$errorAtom = Atom(name: '_GalleryScreenStoreBase.error');
 
   @override
-  GalleryError get error {
+  GalleryError? get error {
     _$errorAtom.reportRead();
     return super.error;
   }
 
   @override
-  set error(GalleryError value) {
+  set error(GalleryError? value) {
     _$errorAtom.reportWrite(value, super.error, () {
       super.error = value;
     });

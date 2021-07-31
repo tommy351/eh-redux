@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'types.dart';
 
@@ -9,20 +9,22 @@ part of 'types.dart';
 
 T _$identity<T>(T value) => value;
 
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 /// @nodoc
 class _$DownloadTaskTearOff {
   const _$DownloadTaskTearOff();
 
-// ignore: unused_element
   _DownloadTask call(
-      {@required int galleryId,
-      @required int totalCount,
+      {required int galleryId,
+      required int totalCount,
       int downloadedCount = 0,
-      @required DateTime createdAt,
-      @required DateTime queuedAt,
+      required DateTime createdAt,
+      required DateTime queuedAt,
       DownloadTaskState state = DownloadTaskState.pending,
-      String errorDetails,
-      String thumbnail}) {
+      String? errorDetails,
+      String? thumbnail}) {
     return _DownloadTask(
       galleryId: galleryId,
       totalCount: totalCount,
@@ -37,21 +39,22 @@ class _$DownloadTaskTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DownloadTask = _$DownloadTaskTearOff();
 
 /// @nodoc
 mixin _$DownloadTask {
-  int get galleryId;
-  int get totalCount;
-  int get downloadedCount;
-  DateTime get createdAt;
-  DateTime get queuedAt;
-  DownloadTaskState get state;
-  String get errorDetails;
-  String get thumbnail;
+  int get galleryId => throw _privateConstructorUsedError;
+  int get totalCount => throw _privateConstructorUsedError;
+  int get downloadedCount => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get queuedAt => throw _privateConstructorUsedError;
+  DownloadTaskState get state => throw _privateConstructorUsedError;
+  String? get errorDetails => throw _privateConstructorUsedError;
+  String? get thumbnail => throw _privateConstructorUsedError;
 
-  $DownloadTaskCopyWith<DownloadTask> get copyWith;
+  @JsonKey(ignore: true)
+  $DownloadTaskCopyWith<DownloadTask> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -66,8 +69,8 @@ abstract class $DownloadTaskCopyWith<$Res> {
       DateTime createdAt,
       DateTime queuedAt,
       DownloadTaskState state,
-      String errorDetails,
-      String thumbnail});
+      String? errorDetails,
+      String? thumbnail});
 }
 
 /// @nodoc
@@ -80,29 +83,48 @@ class _$DownloadTaskCopyWithImpl<$Res> implements $DownloadTaskCopyWith<$Res> {
 
   @override
   $Res call({
-    Object galleryId = freezed,
-    Object totalCount = freezed,
-    Object downloadedCount = freezed,
-    Object createdAt = freezed,
-    Object queuedAt = freezed,
-    Object state = freezed,
-    Object errorDetails = freezed,
-    Object thumbnail = freezed,
+    Object? galleryId = freezed,
+    Object? totalCount = freezed,
+    Object? downloadedCount = freezed,
+    Object? createdAt = freezed,
+    Object? queuedAt = freezed,
+    Object? state = freezed,
+    Object? errorDetails = freezed,
+    Object? thumbnail = freezed,
   }) {
     return _then(_value.copyWith(
-      galleryId: galleryId == freezed ? _value.galleryId : galleryId as int,
-      totalCount: totalCount == freezed ? _value.totalCount : totalCount as int,
+      galleryId: galleryId == freezed
+          ? _value.galleryId
+          : galleryId // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       downloadedCount: downloadedCount == freezed
           ? _value.downloadedCount
-          : downloadedCount as int,
-      createdAt:
-          createdAt == freezed ? _value.createdAt : createdAt as DateTime,
-      queuedAt: queuedAt == freezed ? _value.queuedAt : queuedAt as DateTime,
-      state: state == freezed ? _value.state : state as DownloadTaskState,
+          : downloadedCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      queuedAt: queuedAt == freezed
+          ? _value.queuedAt
+          : queuedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      state: state == freezed
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as DownloadTaskState,
       errorDetails: errorDetails == freezed
           ? _value.errorDetails
-          : errorDetails as String,
-      thumbnail: thumbnail == freezed ? _value.thumbnail : thumbnail as String,
+          : errorDetails // ignore: cast_nullable_to_non_nullable
+              as String?,
+      thumbnail: thumbnail == freezed
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -121,8 +143,8 @@ abstract class _$DownloadTaskCopyWith<$Res>
       DateTime createdAt,
       DateTime queuedAt,
       DownloadTaskState state,
-      String errorDetails,
-      String thumbnail});
+      String? errorDetails,
+      String? thumbnail});
 }
 
 /// @nodoc
@@ -137,51 +159,65 @@ class __$DownloadTaskCopyWithImpl<$Res> extends _$DownloadTaskCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object galleryId = freezed,
-    Object totalCount = freezed,
-    Object downloadedCount = freezed,
-    Object createdAt = freezed,
-    Object queuedAt = freezed,
-    Object state = freezed,
-    Object errorDetails = freezed,
-    Object thumbnail = freezed,
+    Object? galleryId = freezed,
+    Object? totalCount = freezed,
+    Object? downloadedCount = freezed,
+    Object? createdAt = freezed,
+    Object? queuedAt = freezed,
+    Object? state = freezed,
+    Object? errorDetails = freezed,
+    Object? thumbnail = freezed,
   }) {
     return _then(_DownloadTask(
-      galleryId: galleryId == freezed ? _value.galleryId : galleryId as int,
-      totalCount: totalCount == freezed ? _value.totalCount : totalCount as int,
+      galleryId: galleryId == freezed
+          ? _value.galleryId
+          : galleryId // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalCount: totalCount == freezed
+          ? _value.totalCount
+          : totalCount // ignore: cast_nullable_to_non_nullable
+              as int,
       downloadedCount: downloadedCount == freezed
           ? _value.downloadedCount
-          : downloadedCount as int,
-      createdAt:
-          createdAt == freezed ? _value.createdAt : createdAt as DateTime,
-      queuedAt: queuedAt == freezed ? _value.queuedAt : queuedAt as DateTime,
-      state: state == freezed ? _value.state : state as DownloadTaskState,
+          : downloadedCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: createdAt == freezed
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      queuedAt: queuedAt == freezed
+          ? _value.queuedAt
+          : queuedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      state: state == freezed
+          ? _value.state
+          : state // ignore: cast_nullable_to_non_nullable
+              as DownloadTaskState,
       errorDetails: errorDetails == freezed
           ? _value.errorDetails
-          : errorDetails as String,
-      thumbnail: thumbnail == freezed ? _value.thumbnail : thumbnail as String,
+          : errorDetails // ignore: cast_nullable_to_non_nullable
+              as String?,
+      thumbnail: thumbnail == freezed
+          ? _value.thumbnail
+          : thumbnail // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_DownloadTask extends _DownloadTask {
   const _$_DownloadTask(
-      {@required this.galleryId,
-      @required this.totalCount,
+      {required this.galleryId,
+      required this.totalCount,
       this.downloadedCount = 0,
-      @required this.createdAt,
-      @required this.queuedAt,
+      required this.createdAt,
+      required this.queuedAt,
       this.state = DownloadTaskState.pending,
       this.errorDetails,
       this.thumbnail})
-      : assert(galleryId != null),
-        assert(totalCount != null),
-        assert(downloadedCount != null),
-        assert(createdAt != null),
-        assert(queuedAt != null),
-        assert(state != null),
-        super._();
+      : super._();
 
   @override
   final int galleryId;
@@ -198,9 +234,9 @@ class _$_DownloadTask extends _DownloadTask {
   @override
   final DownloadTaskState state;
   @override
-  final String errorDetails;
+  final String? errorDetails;
   @override
-  final String thumbnail;
+  final String? thumbnail;
 
   @override
   String toString() {
@@ -248,50 +284,52 @@ class _$_DownloadTask extends _DownloadTask {
       const DeepCollectionEquality().hash(errorDetails) ^
       const DeepCollectionEquality().hash(thumbnail);
 
+  @JsonKey(ignore: true)
   @override
   _$DownloadTaskCopyWith<_DownloadTask> get copyWith =>
       __$DownloadTaskCopyWithImpl<_DownloadTask>(this, _$identity);
 }
 
 abstract class _DownloadTask extends DownloadTask {
-  const _DownloadTask._() : super._();
   const factory _DownloadTask(
-      {@required int galleryId,
-      @required int totalCount,
+      {required int galleryId,
+      required int totalCount,
       int downloadedCount,
-      @required DateTime createdAt,
-      @required DateTime queuedAt,
+      required DateTime createdAt,
+      required DateTime queuedAt,
       DownloadTaskState state,
-      String errorDetails,
-      String thumbnail}) = _$_DownloadTask;
+      String? errorDetails,
+      String? thumbnail}) = _$_DownloadTask;
+  const _DownloadTask._() : super._();
 
   @override
-  int get galleryId;
+  int get galleryId => throw _privateConstructorUsedError;
   @override
-  int get totalCount;
+  int get totalCount => throw _privateConstructorUsedError;
   @override
-  int get downloadedCount;
+  int get downloadedCount => throw _privateConstructorUsedError;
   @override
-  DateTime get createdAt;
+  DateTime get createdAt => throw _privateConstructorUsedError;
   @override
-  DateTime get queuedAt;
+  DateTime get queuedAt => throw _privateConstructorUsedError;
   @override
-  DownloadTaskState get state;
+  DownloadTaskState get state => throw _privateConstructorUsedError;
   @override
-  String get errorDetails;
+  String? get errorDetails => throw _privateConstructorUsedError;
   @override
-  String get thumbnail;
+  String? get thumbnail => throw _privateConstructorUsedError;
   @override
-  _$DownloadTaskCopyWith<_DownloadTask> get copyWith;
+  @JsonKey(ignore: true)
+  _$DownloadTaskCopyWith<_DownloadTask> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 class _$DownloadTaskWithGalleryTearOff {
   const _$DownloadTaskWithGalleryTearOff();
 
-// ignore: unused_element
   _DownloadTaskWithGallery call(
-      {@required DownloadTask task, @required Gallery gallery}) {
+      {required DownloadTask task, required Gallery gallery}) {
     return _DownloadTaskWithGallery(
       task: task,
       gallery: gallery,
@@ -300,15 +338,16 @@ class _$DownloadTaskWithGalleryTearOff {
 }
 
 /// @nodoc
-// ignore: unused_element
 const $DownloadTaskWithGallery = _$DownloadTaskWithGalleryTearOff();
 
 /// @nodoc
 mixin _$DownloadTaskWithGallery {
-  DownloadTask get task;
-  Gallery get gallery;
+  DownloadTask get task => throw _privateConstructorUsedError;
+  Gallery get gallery => throw _privateConstructorUsedError;
 
-  $DownloadTaskWithGalleryCopyWith<DownloadTaskWithGallery> get copyWith;
+  @JsonKey(ignore: true)
+  $DownloadTaskWithGalleryCopyWith<DownloadTaskWithGallery> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -333,20 +372,23 @@ class _$DownloadTaskWithGalleryCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object task = freezed,
-    Object gallery = freezed,
+    Object? task = freezed,
+    Object? gallery = freezed,
   }) {
     return _then(_value.copyWith(
-      task: task == freezed ? _value.task : task as DownloadTask,
-      gallery: gallery == freezed ? _value.gallery : gallery as Gallery,
+      task: task == freezed
+          ? _value.task
+          : task // ignore: cast_nullable_to_non_nullable
+              as DownloadTask,
+      gallery: gallery == freezed
+          ? _value.gallery
+          : gallery // ignore: cast_nullable_to_non_nullable
+              as Gallery,
     ));
   }
 
   @override
   $DownloadTaskCopyWith<$Res> get task {
-    if (_value.task == null) {
-      return null;
-    }
     return $DownloadTaskCopyWith<$Res>(_value.task, (value) {
       return _then(_value.copyWith(task: value));
     });
@@ -354,9 +396,6 @@ class _$DownloadTaskWithGalleryCopyWithImpl<$Res>
 
   @override
   $GalleryCopyWith<$Res> get gallery {
-    if (_value.gallery == null) {
-      return null;
-    }
     return $GalleryCopyWith<$Res>(_value.gallery, (value) {
       return _then(_value.copyWith(gallery: value));
     });
@@ -392,22 +431,26 @@ class __$DownloadTaskWithGalleryCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object task = freezed,
-    Object gallery = freezed,
+    Object? task = freezed,
+    Object? gallery = freezed,
   }) {
     return _then(_DownloadTaskWithGallery(
-      task: task == freezed ? _value.task : task as DownloadTask,
-      gallery: gallery == freezed ? _value.gallery : gallery as Gallery,
+      task: task == freezed
+          ? _value.task
+          : task // ignore: cast_nullable_to_non_nullable
+              as DownloadTask,
+      gallery: gallery == freezed
+          ? _value.gallery
+          : gallery // ignore: cast_nullable_to_non_nullable
+              as Gallery,
     ));
   }
 }
 
 /// @nodoc
+
 class _$_DownloadTaskWithGallery implements _DownloadTaskWithGallery {
-  const _$_DownloadTaskWithGallery(
-      {@required this.task, @required this.gallery})
-      : assert(task != null),
-        assert(gallery != null);
+  const _$_DownloadTaskWithGallery({required this.task, required this.gallery});
 
   @override
   final DownloadTask task;
@@ -435,6 +478,7 @@ class _$_DownloadTaskWithGallery implements _DownloadTaskWithGallery {
       const DeepCollectionEquality().hash(task) ^
       const DeepCollectionEquality().hash(gallery);
 
+  @JsonKey(ignore: true)
   @override
   _$DownloadTaskWithGalleryCopyWith<_DownloadTaskWithGallery> get copyWith =>
       __$DownloadTaskWithGalleryCopyWithImpl<_DownloadTaskWithGallery>(
@@ -443,13 +487,15 @@ class _$_DownloadTaskWithGallery implements _DownloadTaskWithGallery {
 
 abstract class _DownloadTaskWithGallery implements DownloadTaskWithGallery {
   const factory _DownloadTaskWithGallery(
-      {@required DownloadTask task,
-      @required Gallery gallery}) = _$_DownloadTaskWithGallery;
+      {required DownloadTask task,
+      required Gallery gallery}) = _$_DownloadTaskWithGallery;
 
   @override
-  DownloadTask get task;
+  DownloadTask get task => throw _privateConstructorUsedError;
   @override
-  Gallery get gallery;
+  Gallery get gallery => throw _privateConstructorUsedError;
   @override
-  _$DownloadTaskWithGalleryCopyWith<_DownloadTaskWithGallery> get copyWith;
+  @JsonKey(ignore: true)
+  _$DownloadTaskWithGalleryCopyWith<_DownloadTaskWithGallery> get copyWith =>
+      throw _privateConstructorUsedError;
 }
